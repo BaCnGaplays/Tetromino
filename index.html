@@ -26,9 +26,9 @@
   #boardWrap{position:relative;max-width:640px;margin:0 auto}
   canvas{display:block;width:100%;image-rendering:crisp-edges;image-rendering:pixelated;
     border:4px solid #2a2a55;box-shadow:0 0 0 4px #000, 0 6px 0 #000;background:#10102a}
-  #status{position:absolute;top:6px;left:6px;right:120px;z-index:6;min-height:16px;font-size:11px;
-    background:rgba(20,20,50,.88);border:2px solid var(--panel-edge);box-shadow:0 2px 0 #000;padding:5px 8px;pointer-events:none}
   #axisPanel,#damePanel,#tutPanel,#puzPanel{pointer-events:none}
+  .axbtn.armed{background:#4a3a10;border-color:var(--accent)}
+  .dbIco svg{display:block;image-rendering:crisp-edges}
   #axisPanel .btn,#damePanel .btn,#tutPanel .btn,#puzPanel .btn{pointer-events:auto}
   #axisPanel{position:absolute;left:6px;right:6px;bottom:6px;z-index:6;background:rgba(20,20,50,.93);
     border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:6px 8px;margin:0}
@@ -36,30 +36,31 @@
     border:2px solid #3fbf3f;box-shadow:0 3px 0 #000;padding:6px 8px;margin:0}
   #dameLbl{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
   .dameRow{display:flex;align-items:center;gap:6px;margin:4px 0 0;flex-wrap:wrap}
-  .dbtn{min-width:48px}
+  .dbtn{min-width:48px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;padding:4px 8px}
   #slideInfo{font-size:10px;color:#ff9a6a;margin-top:4px;min-height:12px}
   .axisRow{display:flex;align-items:center;gap:6px;margin:4px 0 0;flex-wrap:wrap}
   .axbtn{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:4px 6px}
   .axIco svg,.camIco svg{display:block;image-rendering:crisp-edges}
-  .axLbl{font-size:10px}
+  #axLegend{font-size:9px;color:#9a9ac8;letter-spacing:1px;margin:2px 0 4px;text-transform:uppercase}
   #camRow{position:absolute;top:6px;right:6px;z-index:6;display:flex;align-items:center;gap:6px;margin:0;background:transparent}
+  #menuRow{position:absolute;top:6px;left:6px;z-index:6;margin:0;background:transparent}
   .camBtn{display:inline-flex;align-items:center;gap:6px;padding:4px 6px}
   #scan{position:absolute;inset:4px;pointer-events:none;z-index:5;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px)}
   .modeChip{border:1px solid #000;background:#0d0d24;padding:2px 6px;font-size:10px;color:#ffd23f;letter-spacing:1px}
   .verTag{display:inline-block;border:1px solid #7a2a1a;color:#ff9a6a;padding:1px 6px;font-size:10px;letter-spacing:1px;background:#141432}
-  #tutPanel{position:absolute;top:40px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
+  #tutPanel{position:absolute;top:76px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
     border:2px solid #3fbf3f;box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:none}
   #tutPanel::after{content:'';position:absolute;top:12px;right:-13px;border:7px solid transparent;border-left-color:#3fbf3f}
   #tutPanel::before{content:'';position:absolute;top:14px;right:-8px;border:5px solid transparent;border-left-color:#0d0d20}
   #tutPanel .btn{pointer-events:auto}
-  #tutMascot{position:absolute;top:40px;right:6px;z-index:6;text-align:center;pointer-events:auto;cursor:pointer}
+  #tutMascot{position:absolute;top:76px;right:6px;z-index:6;text-align:center;pointer-events:auto;cursor:pointer}
   #mascotName{font-size:9px;color:#3fbf3f;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
   #tutHead{font-size:9px;color:#3fbf3f;text-transform:uppercase;letter-spacing:2px}
   #tutTitle{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin:2px 0}
   #tutText{font-size:11px;color:#c8c8e8;line-height:1.5}
   #tutHint{font-size:10px;color:#ff9a6a;margin-top:4px;min-height:12px}
-  #puzPanel{position:absolute;top:40px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
+  #puzPanel{position:absolute;top:76px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
     border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:none}
   #puzPanel::after{content:'';position:absolute;top:12px;right:-13px;border:7px solid transparent;border-left-color:var(--accent)}
   #puzPanel::before{content:'';position:absolute;top:14px;right:-8px;border:5px solid transparent;border-left-color:#0d0d20}
@@ -72,7 +73,7 @@
   #puzTitle{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin:2px 0}
   #puzText{font-size:11px;color:#c8c8e8;line-height:1.5}
   #puzHint{font-size:10px;color:#ff9a6a;margin-top:4px;min-height:12px}
-  .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,.94);display:flex;align-items:center;
+  .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,1);display:flex;align-items:center;
     justify-content:center;padding:16px;z-index:100;overflow-y:auto}
   .menuBox{background:var(--panel);border:3px solid var(--accent);box-shadow:0 6px 0 #000;
     padding:20px;max-width:520px;width:100%;text-align:center}
@@ -86,7 +87,7 @@
   .btn.selOpt{background:#4a3a10;border-color:var(--accent)}
   #srcArea{width:100%;height:46vh;background:#0d0d20;color:#b8e0b8;border:2px solid #3d3d7a;
     font-family:inherit;font-size:10px;padding:8px;white-space:pre;resize:vertical}
-  #setVol{accent-color:#ffd23f;width:180px}
+  #setVol,#setMusVol{accent-color:#ffd23f;width:180px}
   .setLbl{font-size:11px;color:#b8b8e0;display:inline-block;width:140px;text-align:left}
   .setRow{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
   #pivotInfo{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
@@ -107,6 +108,14 @@
   .badge.dead{opacity:.25;text-decoration:line-through}
   #logList{margin:0;padding-left:20px;font-size:11px;line-height:1.7;max-height:200px;overflow-y:auto;color:#c8c8e8;list-style:none}
   .hidden{display:none!important}
+  #puzWinBar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#1a2a4a;border:2px solid #4a9;
+    box-shadow:0 3px 0 #000;padding:8px 10px;margin-bottom:12px}
+  #puzWinLbl{font-size:13px;color:#ffd23f;text-transform:uppercase;letter-spacing:1px}
+  #annPanel{position:absolute;top:76px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
+    border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:auto;cursor:pointer;
+    font-size:12px;color:#ffd23f;line-height:1.5}
+  #annPanel::after{content:'';position:absolute;top:12px;right:-13px;border:7px solid transparent;border-left-color:var(--accent)}
+  #annPanel::before{content:'';position:absolute;top:14px;right:-8px;border:5px solid transparent;border-left-color:#0d0d20}
   #overOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:12px;background:rgba(8,8,26,.88);text-align:center;padding:12px;z-index:10}
   #overTitle{font-size:24px;color:var(--accent);text-transform:uppercase;letter-spacing:3px;text-shadow:2px 2px 0 #7a2a1a}
@@ -123,20 +132,22 @@
 <div id="wrap">
   <header>
     <h1>Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.5</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.11</span></div>
   </header>
   <div id="main">
     <div id="left">
       <div id="turnbar">
-        <span id="turnChip"></span><span id="turnText">Weiß am Zug</span><span id="modeChip" class="modeChip">Mehrspieler</span><span id="halfNo">Halbzug 1</span>
+        <span id="turnChip"></span><span id="modeChip" class="modeChip">Mehrspieler</span><span id="halfNo">Halbzug 1</span>
       </div>
       <div id="boardWrap">
         <canvas id="board" width="320" height="288"></canvas>
         <div id="scan"></div>
-        <div id="status"></div>
         <div id="camRow">
           <button id="camL" class="btn camBtn" title="Ansicht um 90&deg; nach links drehen (Pfeiltaste links)"><span class="camIco" id="camIcoL"></span></button>
           <button id="camR" class="btn camBtn" title="Ansicht um 90&deg; nach rechts drehen (Pfeiltaste rechts)"><span class="camIco" id="camIcoR"></span></button>
+        </div>
+        <div id="menuRow">
+          <button id="menuBtn" class="btn small" title="Zum Hauptmen&uuml; (Neues Spiel, Einstellungen, Regeln)">Men&uuml;</button>
         </div>
         <div id="tutPanel" class="hidden">
           <div id="tutHead"></div>
@@ -157,25 +168,38 @@
           <div id="puzHint"></div>
           <div id="puzBtns" class="btnRow" style="margin-top:8px"></div>
         </div>
+        <div id="puzWinBar" class="hidden">
+          <span id="puzWinLbl">Level gel&ouml;st!</span>
+          <button id="puzWinNext" class="btn small">N&auml;chstes Level</button>
+          <button id="puzWinRetry" class="btn small">Wiederholen</button>
+          <button id="puzWinMenu" class="btn small">Hauptmen&uuml;</button>
+        </div>
+        <div id="annPanel" class="hidden">
+          <div id="annText"></div>
+        </div>
         <div id="axisPanel" class="hidden">
           <div id="pivotInfo"></div>
+          <div id="axLegend"><span style="color:#ef7c1a">X&nbsp;West&ndash;Ost</span> &middot; <span style="color:#31c7ef">Y&nbsp;S&uuml;d&ndash;Nord</span> &middot; <span style="color:#3fbf3f">Z&nbsp;H&ouml;he</span></div>
           <div class="axisRow">
-            <button class="btn axbtn" data-axis="x" data-dir="1"  title="Drehung +90&deg; um die West&ndash;Ost-Achse: gegen den Uhrzeigersinn, gesehen von Osten."><span class="axIco"></span><span class="axLbl">X+</span></button>
-            <button class="btn axbtn" data-axis="x" data-dir="-1" title="Drehung &minus;90&deg; um die West&ndash;Ost-Achse: im Uhrzeigersinn, gesehen von Osten."><span class="axIco"></span><span class="axLbl">X&minus;</span></button>
-            <button class="btn axbtn" data-axis="y" data-dir="1"  title="Drehung +90&deg; um die S&uuml;d&ndash;Nord-Achse: gegen den Uhrzeigersinn, gesehen von Norden."><span class="axIco"></span><span class="axLbl">Y+</span></button>
-            <button class="btn axbtn" data-axis="y" data-dir="-1" title="Drehung &minus;90&deg; um die S&uuml;d&ndash;Nord-Achse: im Uhrzeigersinn, gesehen von Norden."><span class="axIco"></span><span class="axLbl">Y&minus;</span></button>
-            <button class="btn axbtn" data-axis="z" data-dir="1"  title="Drehung +90&deg; um die senkrechte Achse: gegen den Uhrzeigersinn, gesehen von oben."><span class="axIco"></span><span class="axLbl">Z+</span></button>
-            <button class="btn axbtn" data-axis="z" data-dir="-1" title="Drehung &minus;90&deg; um die senkrechte Achse: im Uhrzeigersinn, gesehen von oben."><span class="axIco"></span><span class="axLbl">Z&minus;</span></button>
+            <button class="btn axbtn" data-axis="x" data-dir="1"  title="Drehung +90&deg; um die West&ndash;Ost-Achse: gegen den Uhrzeigersinn, gesehen von Osten."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="x" data-dir="-1" title="Drehung &minus;90&deg; um die West&ndash;Ost-Achse: im Uhrzeigersinn, gesehen von Osten."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="y" data-dir="1"  title="Drehung +90&deg; um die S&uuml;d&ndash;Nord-Achse: gegen den Uhrzeigersinn, gesehen von Norden."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="y" data-dir="-1" title="Drehung &minus;90&deg; um die S&uuml;d&ndash;Nord-Achse: im Uhrzeigersinn, gesehen von Norden."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="z" data-dir="1"  title="Drehung +90&deg; um die senkrechte Achse: gegen den Uhrzeigersinn, gesehen von oben."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="z" data-dir="-1" title="Drehung &minus;90&deg; um die senkrechte Achse: im Uhrzeigersinn, gesehen von oben."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="x" data-dir="2" title="Drehung 180&deg; um die West&ndash;Ost-Achse (nur T-Figur)."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="y" data-dir="2" title="Drehung 180&deg; um die S&uuml;d&ndash;Nord-Achse (nur T-Figur)."><span class="axIco"></span></button>
+            <button class="btn axbtn" data-axis="z" data-dir="2" title="Drehung 180&deg; um die senkrechte Achse (nur T-Figur)."><span class="axIco"></span></button>
             <button id="cancelBtn" class="btn small">Abbrechen (Esc)</button>
           </div>
         </div>
         <div id="damePanel" class="hidden">
           <div id="dameLbl">Dame (O-Stein) schieben &ndash; ohne Schlagen</div>
           <div class="dameRow">
-            <button class="btn small dbtn" data-sdir="W" title="Dame ein Feld nach Westen schieben (jeder Klick ein Feld weiter)">&#8592;</button>
-            <button class="btn small dbtn" data-sdir="E" title="Dame ein Feld nach Osten schieben (jeder Klick ein Feld weiter)">&#8594;</button>
-            <button class="btn small dbtn" data-sdir="N" title="Dame ein Feld nach Norden schieben (jeder Klick ein Feld weiter)">&#8593;</button>
-            <button class="btn small dbtn" data-sdir="S" title="Dame ein Feld nach S&uuml;den schieben (jeder Klick ein Feld weiter)">&#8595;</button>
+            <button class="btn small dbtn" data-sdir="W" title="Versetzung ein Feld nach Westen (jeder Klick ein Feld weiter)"><span class="dbIco"></span></button>
+            <button class="btn small dbtn" data-sdir="E" title="Versetzung ein Feld nach Osten (jeder Klick ein Feld weiter)"><span class="dbIco"></span></button>
+            <button class="btn small dbtn" data-sdir="N" title="Versetzung ein Feld nach Norden (jeder Klick ein Feld weiter)"><span class="dbIco"></span></button>
+            <button class="btn small dbtn" data-sdir="S" title="Versetzung ein Feld nach S&uuml;den (jeder Klick ein Feld weiter)"><span class="dbIco"></span></button>
             <button id="slideGo" class="btn small" title="Verschiebung als Zug ausf&uuml;hren">Zug ausf&uuml;hren</button>
           </div>
           <div id="slideInfo"></div>
@@ -190,22 +214,15 @@
     </div>
     <div id="side">
       <div class="panel">
-        <h2>Figuren</h2>
-        <div class="sideRow"><span class="sideLbl">Weiß</span><span id="listW"></span></div>
-        <div class="sideRow"><span class="sideLbl">Schwarz</span><span id="listB"></span></div>
-      </div>
-      <div class="panel">
-        <h2>Zugliste</h2>
-        <ul id="logList"></ul>
-      </div>
-      <div class="panel">
-        <div class="btnRow" style="margin-top:0">
-          <button id="newBtn" class="btn">Neues Spiel</button>
-          <button id="menuBtn" class="btn">Hauptmen&uuml;</button>
-          <button id="setBtn" class="btn">Einstellungen</button>
-          <button id="rulesBtn" class="btn">Regeln</button>
-          <button id="muteBtn" class="btn">Ton: an</button>
+        <h2 id="figHead" style="cursor:pointer;user-select:none">Figuren <span id="figTog">&minus;</span></h2>
+        <div id="figBody">
+          <div class="sideRow"><span class="sideLbl">Weiß</span><span id="listW"></span></div>
+          <div class="sideRow"><span class="sideLbl">Schwarz</span><span id="listB"></span></div>
         </div>
+      </div>
+      <div class="panel">
+        <h2 id="logHead" style="cursor:pointer;user-select:none">Zugliste <span id="logTog">&minus;</span></h2>
+        <ul id="logList"></ul>
       </div>
     </div>
   </div>
@@ -214,7 +231,7 @@
 <div id="menuOverlay" class="menuOverlay">
   <div class="menuBox">
     <h1>Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.5</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.11</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -224,13 +241,13 @@
       <button class="btn" data-diff="3">Schwer</button>
     </div>
     <h3>Lernen</h3>
-    <button id="tutBtn" class="btn menuBtn">Tutorial starten (8 Lektionen)</button>
+    <button id="tutBtn" class="btn menuBtn">Tutorial starten (12 Lektionen)</button>
     <button id="lvlBtn" class="btn menuBtn">Level-R&auml;tsel (10 Level)</button>
+    <div id="lvlNote" class="hidden" style="color:#ff9a6a;font-size:11px;margin:6px 0 0;letter-spacing:1px">Die Level-R&auml;tsel kehren in einer sp&auml;teren Version zur&uuml;ck.</div>
     <h3>Sonstiges</h3>
     <button id="mRulesBtn" class="btn menuBtn">Regeln anzeigen</button>
     <button id="mSetBtn" class="btn menuBtn">Einstellungen</button>
     <button id="mInfoBtn" class="btn menuBtn">Open Source &amp; Urheberschaft</button>
-    <button id="mSrcBtn" class="btn menuBtn">Quellcode anzeigen</button>
     <div class="btnRow"><button id="menuBack" class="btn small">Zur&uuml;ck zum Spiel (Esc)</button></div>
   </div>
 </div>
@@ -240,18 +257,15 @@
     <h2>Einstellungen</h2>
     <h3>Ton</h3>
     <div class="setRow"><span class="setLbl">Sound</span><button id="setMute" class="btn small">Ton: an</button></div>
-    <div class="setRow"><span class="setLbl">Lautst&auml;rke</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
+    <div class="setRow"><span class="setLbl">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
+    <div class="setRow"><span class="setLbl">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
+    <div class="setRow"><span class="setLbl">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
     <h3>Spiel</h3>
     <div class="setRow"><span class="setLbl">Drehgeschwindigkeit</span>
       <button class="btn small setDur" data-dur="760">Langsam</button>
       <button class="btn small setDur selOpt" data-dur="480">Normal</button>
       <button class="btn small setDur" data-dur="280">Schnell</button></div>
     <div class="setRow"><span class="setLbl">Geistervorschau</span><button id="setGhost" class="btn small">An</button></div>
-    <h3>Open Source</h3>
-    <div class="btnRow">
-      <button id="setInfo" class="btn small">Open Source &amp; Urheberschaft</button>
-      <button id="setSrc" class="btn small">Quellcode anzeigen</button>
-    </div>
     <div class="btnRow"><button id="setClose" class="btn">Schlie&szlig;en</button></div>
   </div>
 </div>
@@ -278,14 +292,15 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.5</li></ul>
+    <ul><li>Alpha 0.11</li></ul>
+    <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
 </div>
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.5</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.11</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -309,37 +324,39 @@
     <ul>
       <li>10&times;10-Brett, zwei Parteien: Wei&szlig; (unten) und Schwarz (oben).</li>
       <li>Jede Partei besitzt f&uuml;nf Tetromino-Figuren &ndash; I, O, T, L, S &ndash; aus je vier W&uuml;rfeln (H&ouml;he zun&auml;chst 1 Feld). Der I-Stein wird als K&ouml;nigstein, der O-Stein als Dame bezeichnet.</li>
-      <li>K&ouml;nigstein (I) und Dame (O) starten stets auf den Grundlinien (Wei&szlig;: Reihe 1, Schwarz: Reihe 10); die &uuml;brigen Figuren stehen zwei Reihen davor, sodass im ersten Zug niemand geschlagen werden kann.</li>
+      <li>K&ouml;nigstein (I) und Dame (O) starten stets auf den Grundlinien (Wei&szlig;: Reihe 1, Schwarz: Reihe 10). Die &uuml;brigen Figuren werden zu Beginn jeder Partei zufällig, aber spiegelsymmetrisch in der eigenen Bretthälfte verteilt; die Reihen 5 und 6 bleiben als Niemandsland frei. Im ersten Zug kann daher niemand geschlagen werden.</li>
     </ul>
     <h3>Ein Zug</h3>
     <ul>
-      <li>Ein Zug besteht aus genau einer 90&deg;-Drehung einer eigenen Figur &ndash; als einzige Ausnahme darf die Dame (O-Stein) stattdessen verschoben werden (siehe unten).</li>
+      <li>Ein Zug besteht aus einer 90&deg;-Drehung einer eigenen Figur &ndash; die T-Figur darf stattdessen auch 180&deg; drehen; die Dame (O), die L-Figur (erster Zug) und der aufrechte K&ouml;nigstein d&uuml;rfen sich zus&auml;tzlich versetzen (siehe unten).</li>
       <li>Die Drehachse verl&auml;uft parallel zur X-Achse (West&ndash;Ost), zur Y-Achse (S&uuml;d&ndash;Nord) oder zur Z-Achse (senkrecht) und durch das Zentrum eines W&uuml;rfels der Figur (Drehpunkt).</li>
-      <li>Ablauf: Figur anklicken &rarr; Drehpunkt-W&uuml;rfel anklicken &rarr; Drehachse anklicken.</li>
-      <li>Ber&uuml;hrungsregel: Der Klick auf die Drehachse f&uuml;hrt den Zug sofort aus. Die Wahl der Achse verpflichtet zum Zug.</li>
+      <li>Ablauf: Figur anklicken &rarr; Drehpunkt-W&uuml;rfel anklicken &rarr; Drehachse antippen (zeigt die Vorschau) und erneut antippen (f&uuml;hrt den Zug aus).</li>
+      <li>Zwei-Tipp-Regel: Der erste Tipp auf die Drehachse stellt die Vorschau scharf, der zweite Tipp auf denselben Knopf f&uuml;hrt den Zug aus. Am Desktop zeigt bereits das &Uuml;berfahren mit der Maus die Vorschau.</li>
+      <li>Versetzung: Erreichbare Zielfelder werden auf dem Brett unterlegt (Gelb = ohne Schlag, Rot = mit Schlag). Ein Klick darauf versetzt die Figur dorthin; alternativ stehen Schiebe-Pfeile bereit.</li>
     </ul>
-    <h3>Die Dame (O-Stein)</h3>
+    <h3>Figuren-Besonderheiten</h3>
     <ul>
-      <li>Die Dame darf zus&auml;tzlich wie ein Turm verschoben werden: geradlinig entlang der X- oder Y-Achse, ohne sich zu drehen.</li>
-      <li>Jeder Klick auf einen Schiebe-Pfeil schiebt die Dame ein Feld in diese Richtung; weitere Klicks schieben sie ein Feld weiter. Die Schaltfl&auml;che „Zug ausf&uuml;hren“ beendet die Verschiebung als einen einzigen Zug.</li>
-      <li>Weg und Ziel m&uuml;ssen vollst&auml;ndig frei sein. Durch Verschieben wird niemals geschlagen &ndash; Schlagen gelingt ausschlie&szlig;lich durch Drehungen.</li>
+      <li><b>T-Figur:</b> darf 90&deg;- und 180&deg;-Drehungen ausf&uuml;hren (die drei Halbkreis-Kn&ouml;pfe; die Achsenfarbe X/Y/Z zeigt die Drehachse an).</li>
+      <li><b>S-Figur:</b> darf auf anderen Figuren stapeln; selbst darf sie jedoch nicht als Unterlage benutzt werden &ndash; keine Figur darf auf der S-Figur stehen, auch keine andere S-Figur nicht.</li>
+      <li><b>L-Figur:</b> darf in ihrem ersten Zug zus&auml;tztlich versetzt werden (geradlinig beliebig weit). Dabei darf sie am Ziel gegnerische Figuren &uuml;berlappen und schlagen; der Weg dorthin muss frei sein.</li>
+      <li><b>K&ouml;nigstein (I):</b> darf sich, solange er aufrecht steht (senkrechte S&auml;ule), um genau ein Feld versetzen und dabei gegnerische Figuren schlagen. Der K&ouml;nigstein darf nicht mehr schweben.</li>
+      <li><b>Dame (O):</b> versetzt sich wie ein Turm, ohne zu schlagen. Sie hinterl&auml;sst bei jeder Versetzung ein Phantom auf der Startposition: Dreht sich die Dame, dreht sich das Phantom mit und kann dabei Gegner schlagen. Wird das Phantom geschlagen, stirbt nur das Phantom; f&auml;llt die Dame, verschwindet auch das Phantom. Das Phantom darf das Brett verlassen &ndash; verliert es den Kontakt zum Brett, f&auml;llt es herab. Bei der n&auml;chsten Versetzung verschwindet das Phantom und erscheint an der letzten Zugstelle neu.</li>
     </ul>
     <h3>Schlagen</h3>
     <ul>
-      <li>Geschlagen wird, indem sich eine Figur mit ihrer Drehung auf Zellen einer gegnerischen Figur dreht (&Uuml;berlappung).</li>
-      <li>Die &uuml;berlappte Figur wird vollst&auml;ndig vom Brett entfernt; mehrere betroffene Figuren werden alle geschlagen.</li>
-      <li>Eine Kollision mit einer eigenen Figur ist unzul&auml;ssig. Verschiebungen der Dame schlagen nie und d&uuml;rfen deshalb nicht auf besetzte Felder f&uuml;hren.</li>
+      <li>Geschlagen wird, indem sich eine Figur mit ihrer Drehung oder Versetzung auf Zellen einer gegnerischen Figur bewegt (&Uuml;berlappung). Die &uuml;berlappte Figur f&auml;llt vollst&auml;ndig vom Brett; mehrere betroffene Figuren werden alle geschlagen.</li>
+      <li>Eine Kollision mit einer eigenen Figur ist unzul&auml;ssig. Verschiebungen der Dame schlagen nie und d&uuml;rfen nicht auf besetzte Felder f&uuml;hren.</li>
+      <li>Ein getroffenes Phantom der Gegnerin verschwindet nur als Phantom; die dazugeh&ouml;rige Dame bleibt.</li>
     </ul>
-    <h3>Bodenregel</h3>
+    <h3>Halt und Boden</h3>
     <ul>
-      <li>Mit Ausnahme des I-Steins (K&ouml;nigstein) muss jede Figur nach der Drehung mit mindestens einem W&uuml;rfel die unterste Ebene (Boden, H&ouml;he 0) ber&uuml;hren.</li>
-      <li>Drehungen, die eine Figur ausschlie&szlig;lich auf anderen Figuren oder frei in der Luft enden lassen, sind daher unzul&auml;ssig.</li>
-      <li>Nur der I-Stein darf nach der Drehung vollst&auml;ndig schweben.</li>
+      <li>Eine Figur hat Halt, sobald mindestens einer ihrer W&uuml;rfel auf einer intakten Bodenplatte oder auf einer anderen Figur ruht. Sie darf deshalb auch &uuml;ber eingebrochenen Feldern ragen oder mit nur einem W&uuml;rfel auf einem Feld liegen, solange dieser eine W&uuml;rfel Halt beh&auml;lt.</li>
+      <li>Nur die S-Figur darf auf anderen Figuren stapeln; auf der S-Figur ruht keine Figur. Drehungen, die eine Figur vollst&auml;ndig ohne Halt enden lassen, sind unzul&auml;ssig.</li>
     </ul>
-    <h3>Grenzen</h3>
+    <h3>Br&ouml;ckelnde Felder</h3>
     <ul>
-      <li>Unzul&auml;ssig: das Brett seitlich verlassen, unter den Boden drehen, h&ouml;her als 12 Ebenen sowie Drehungen ohne Positions&auml;nderung.</li>
-      <li>H&ouml;here Ebenen sind erlaubt, solange die Bodenregel erf&uuml;llt bleibt (mindestens ein W&uuml;rfel auf H&ouml;he 0).</li>
+      <li>Ab dem 15. Halbzug br&ouml;ckelt nach jedem Zug eine weitere Bodenplatte: Das jeweils n&auml;chste Feld wird zun&auml;chst rot umrandet, rissig und wackelnd auf dem Brett markiert; erst im darauffolgenden Halbzug st&uuml;rzt es in sich zusammen und wird zum Loch im Brett. Tetromino weist in der Sprechblase darauf hin.</li>
+      <li>Figuren ohne jeden Halt fallen herab; finden sie auf dem Weg kein Feld und keine Figur mehr, st&uuml;rzen sie vom Brett und gelten als verloren.</li>
     </ul>
     <h3>Kamera und Pfeile</h3>
     <ul>
@@ -351,13 +368,15 @@
     <ul>
       <li>Der K&ouml;nigstein (I-Stein) ist der K&ouml;nig: Er darf nur geschlagen werden, wenn er die letzte verbliebene Figur des Gegners ist.</li>
       <li>Schach: Steht der eigene K&ouml;nigstein so, dass ihn eine gegnerische Drehung treffen k&ouml;nnte, ist er im Schach. Ein Schach muss mit dem n&auml;chsten Zug beseitigt werden &ndash; Z&uuml;ge, die es bestehen lassen, sind unzul&auml;ssig.</li>
-      <li>Sieg: alle gegnerischen Figuren schlagen (der K&ouml;nigstein f&auml;llt zuletzt), den Gegner schachmatt setzen (Schach ohne legale Antwort) oder ihn ohne legalen Zug lassen (Zugzwang).</li>
+      <li>Sieg: alle gegnerischen Figuren schlagen (der K&ouml;nigstein f&auml;llt zuletzt), den Gegner schachmatt setzen (Schach, dem keine legale Antwort mehr entgegensteht &ndash; der K&ouml;nigstein kann sich nicht mehr entziehen) oder ihn ohne legalen Zug lassen (Zugzwang).</li>
       <li>Remis: Nur die beiden K&ouml;nigsteine sind &uuml;brig oder 60 Halbz&uuml;ge ohne Schlagzug.</li>
     </ul>
     <h3>Hilfen</h3>
     <ul>
+      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Maskottchen zeigt die letzte Meldung erneut.</li>
+      <li>Die Figuren- und die Zugliste der Seitenleiste lassen sich &uuml;ber ihre &Uuml;berschriften ein- und ausklappen.</li>
       <li>W&uuml;rfel mit gelbem Marker k&ouml;nnen als Drehpunkt dienen.</li>
-      <li>Das &Uuml;berfahren einer Achsen- oder Schiebe-Schaltfl&auml;che zeigt die Zielposition als Geisterfigur; geschlagene Figuren werden rot markiert.</li>
+      <li>Am Desktop zeigt das &Uuml;berfahren einer Achsen- oder Schiebe-Schaltfl&auml;che die Zielposition als Geisterfigur; am Handy zeigt der erste Tipp die Vorschau und der zweite f&uuml;hrt den Zug aus. Unterlegte Zielfelder kennzeichnen m&ouml;gliche Versetzungen; geschlagene Figuren werden rot markiert.</li>
     </ul>
     <div class="btnRow"><button id="rulesClose" class="btn">Schließen</button></div>
   </div>
@@ -368,13 +387,24 @@
 /* ============================================================
    Tetromino – 3D-Tetromino-Schach (8-Bit)
    Koordinaten: x = West→Ost (0..9), y = Süd→Nord (0..9, Weiß unten), z = Höhe (0..)
-   Ein Zug = genau eine 90°-Drehung um eine achsenparallele
-   Drehachse durch den gewählten Drehpunkt-Würfel.
-   Ausnahme Dame (O-Stein): Sie darf stattdessen wie ein Turm
-   verschoben werden (Schieben); durch Verschieben wird nie geschlagen.
+   Ein Zug = eine 90°-Drehung um eine achsenparallele Drehachse
+   durch den gewählten Drehpunkt-Würfel – die T-Figur darf auch
+   180° drehen. Versetzungen: Dame (O) ohne Schlagen (hinterlässt
+   ein verschränktes Phantom), L-Figur im ersten Zug mit Schlag
+   am Ziel, aufrechter Königstein (I) um ein Feld mit Schlag.
+   Halt: Eine Figur steht, sobald mindestens einer ihrer Würfel
+   auf intaktem Boden oder auf einer anderen Figur ruht; sie darf
+   also auch über eingebrochene Felder ragen. Nur der S-Stein darf
+   auf Figuren stapeln; auf dem S-Stein ruht niemand. Der I-Stein
+   schwebt nicht mehr.
+   Ab Halbzug 14 wird das jeweils nächste bröckelnde Feld einen
+   Halbzug vorher angekündigt; ab Halbzug 15 stürzt es ein.
+   Figuren ohne jeden Halt fallen und stürzen notfalls vom Brett.
    Königsregel: Der I-Stein (Königstein) darf nur als letzte
    verbliebene Figur des Gegners geschlagen werden; Züge, die den
    eigenen Königstein im Schach stehen lassen, sind unzulässig.
+   Schachmatt nennt das Spiel nur, wenn der Königstein im Schach
+   steht und keinen legalen Zug mehr hat.
    ============================================================ */
 
 // ---------- Konstanten ----------
@@ -383,6 +413,7 @@ var CANW = 320, CANH = 288, OX = 160;  // interne Auflösung
 var TW = 12, TH = 6, CU = 10, SLAB = 12; // Iso-Projektion: Halbbreite, Halbhöhe, Würfelhöhe, Brettrand
 var FILES = 'abcdefghij';
 var DRAW_RULE = 60;                     // Halbzüge ohne Schlagzug → Remis
+var CRUMBLE_FROM = 15;                  // ab diesem Halbzug bröckelt nach jedem Zug eine Bodenplatte
 
 // ---------- Kamera ----------
 var view = 0; // Drehung der Ansicht um die senkrechte Achse (0..3, je 90°)
@@ -419,9 +450,9 @@ var SHAPES = {
   L: [[0,0],[0,1],[1,1],[2,1]],
   S: [[1,0],[2,0],[0,1],[1,1]]
 };
-// Ausgangsstellung Weiß (Schwarz = Spiegelung y → 9−y), alle flach auf z = 0.
+// Klassische Ausgangsstellung Weiß für das Tutorial (Schwarz = Spiegelung y → 9−y),
 // I-Stein (Königstein) und O-Stein (Dame) starten auf der Grundlinie (y = 0);
-// die übrigen Figuren stehen zwei Reihen davor, sodass im ersten Zug nicht geschlagen werden kann.
+// alle flach auf z = 0. Duell-Partien verwenden stattdessen randomStartPieces().
 var START_W = {
   I: [[0,0],[1,0],[2,0],[3,0]],
   O: [[8,0],[9,0],[8,1],[9,1]],
@@ -429,6 +460,65 @@ var START_W = {
   L: [[0,3],[1,3],[2,3],[2,2]],
   S: [[6,2],[7,2],[5,3],[6,3]]
 };
+// Randomisierte, aber symmetrische Startaufstellung für Duell-Partien:
+// Königstein (I) liegt immer vollständig auf der Grundlinie, die Dame (O)
+// mit ihrer Unterkante auf der Grundlinie; T, L und S werden zufällig
+// (flach, z = 0) innerhalb der eigenen Bretthälfte verteilt. Die Reihen
+// 5 und 6 bleiben als Niemandsland frei. Schwarz erhält die an der
+// Mittellinie gespiegelte (parallele) Aufstellung.
+var BASE_SHAPES = {
+  T: [[0,0],[1,0],[2,0],[1,1]],
+  L: [[0,0],[1,0],[2,0],[2,1]],
+  S: [[1,0],[2,0],[0,1],[1,1]]
+};
+function rot2(cells){ // 90°-Drehung einer flachen Form in der Ebene, normalisiert
+  var r = cells.map(function(c){ return [-c[1], c[0]]; }), mx = 0, my = 0;
+  r.forEach(function(c){ if (c[0] < mx) mx = c[0]; if (c[1] < my) my = c[1]; });
+  return r.map(function(c){ return [c[0] - mx, c[1] - my]; });
+}
+function randomStartPieces(){
+  var used = {}, layout = [], k, i;
+  function mark(cells){ cells.forEach(function(c){ used[c[0] + ',' + c[1]] = true; }); }
+  var ix = Math.floor(Math.random() * 7);   // Königstein: 4er-Reihe auf y = 0
+  // Dame: 2×2 mit Unterkante auf y = 0, ohne Überlappung mit dem Königstein
+  var oOpts = [], ox2;
+  for (ox2 = 0; ox2 <= 8; ox2++){
+    if (ox2 + 1 < ix || ox2 > ix + 3) oOpts.push(ox2);
+  }
+  var ox = oOpts[Math.floor(Math.random() * oOpts.length)];
+  layout.push({ type: 'I', cells: [[ix,0],[ix+1,0],[ix+2,0],[ix+3,0]] });
+  layout.push({ type: 'O', cells: [[ox,0],[ox+1,0],[ox,1],[ox+1,1]] });
+  mark(layout[0].cells); mark(layout[1].cells);
+  ['T','L','S'].forEach(function(t){
+    // Alle flachen Platzierungen in der eigenen Hälfte (y = 0..3) sammeln
+    var sh = BASE_SHAPES[t], opts = [], r, w, h, px, py, ok;
+    for (r = 0; r < 4; r++){
+      if (r > 0) sh = rot2(sh);
+      w = 0; h = 0;
+      sh.forEach(function(c){ if (c[0] > w) w = c[0]; if (c[1] > h) h = c[1]; });
+      for (py = 0; py + h <= 3; py++){
+        for (px = 0; px + w <= 9; px++){
+          ok = true;
+          for (i = 0; i < sh.length; i++)
+            if (used[(sh[i][0] + px) + ',' + (sh[i][1] + py)]) { ok = false; break; }
+          if (ok) opts.push(sh.map(function(c){ return [c[0] + px, c[1] + py]; }));
+        }
+      }
+    }
+    var pick = opts.length ? opts[Math.floor(Math.random() * opts.length)] : START_W[t];
+    layout.push({ type: t, cells: pick });
+    mark(pick);
+  });
+  var arr = [], id = 0;
+  ['w','b'].forEach(function(color){
+    layout.forEach(function(d){
+      arr.push(mkPiece(id++, color, d.type, d.cells.map(function(c){
+        return [c[0], color === 'w' ? c[1] : 9 - c[1], 0];
+      })));
+    });
+  });
+  return arr;
+}
 
 // ---------- DOM ----------
 function $(id){ return document.getElementById(id); }
@@ -440,15 +530,29 @@ PAGE_SRC = '<!doctype html>\n' + document.documentElement.outerHTML;
 // ---------- Zustand ----------
 var pieces, occ, turn, phase, sel, pivotIdx, selMoves, preview, anim,
     gameOver, moveNo, sinceCap, logEntries, shakeUntil, hover, OY, OYt;
-var slide = null; // akkumulierte Verschiebung der Dame: { ux, uy, steps, res }
+var slide = null; // akkumulierte Verschiebung: { ux, uy, steps, res }
+var crumbled = {};   // eingebrochene Bodenplatten: 'x,y' → true
+var crumbleWarn = null; // angekündigtes, noch intaktes Feld
+var crumbleWarnMove = -1; // Halbzug, in dem die Ankündigung erfolgte
+var crumbleEvt = '';    // Ereignis dieses Halbzugs: 'warn' | 'fall' | ''
+var ann = '';        // aktuelle Ansage des Masköttchens (Duell-Modi)
+var lastAnn = '';    // zuletzt angezeigte Ansage (Änderungserkennung)
+var annUntil = 0;    // Zeitstempel, bis zu dem die Sprechblase sichtbar bleibt
+var ANN_MS = 6000;   // Anzeigedauer der Sprechblase in Millisekunden
+var nextId = 100;    // fortlaufende IDs für Phantome
 var speakCollapsed = false; // Sprechblase des Maskottchens eingeklappt?
 var hitPolys = [];
+var slideTargets = [];   // erreichbare Versetzungsziele: { dx, dy, k, res }
+var slideHitPolys = []; // Klick-Flächen der unterlegten Zielfelder (dieser Frame)
+var armedBtn = null;    // Zwei-Tipp-Mechanik: Rotationknopf mit scharf gestellter Vorschau
+var speech = '';        // Status-Ansage des Maskottchens (ersetzt das frühere Statusfeld)
 var capturedByW = [], capturedByB = [];
 // Modi und Einstellungen
 var mode = '2p';          // '2p' | 'ai' | 'tutorial'
 var aiLevel = 2;          // 1 = Leicht, 2 = Mittel, 3 = Schwer
 var aiTimer = null;
-var masterVol = 1;         // 0..1 (Lautstärke-Regler)
+var masterVol = 1;         // 0..1 (Effekt-Lautstärke)
+var musVol = 1;            // 0..1 (Musik-Lautstärke, eigener Regler)
 var DUR = 480;            // Dauer der Drehanimation in ms
 var ghostOn = true;       // Geistervorschau beim Überfahren der Achsenknöpfe
 var PAGE_SRC;             // wird unmittelbar nach dem DOM-Aufbau eingefroren (s. u.)
@@ -460,7 +564,7 @@ function initialPieces(){
       var cubes = START_W[type].map(function(cell){
         return { x: cell[0], y: color === 'w' ? cell[1] : N - 1 - cell[1], z: 0 };
       });
-      arr.push({ id: id++, color: color, type: type, cubes: cubes });
+      arr.push({ id: id++, color: color, type: type, cubes: cubes, moved: false });
     });
   });
   return arr;
@@ -476,6 +580,11 @@ function coordName(c){ return FILES[c.x] + (c.y + 1); }
 
 // ---------- Rotations-Geometrie ----------
 function rotOffset(axis, dir, dx, dy, dz){
+  if (dir === 2){ // 180°-Drehung (nur T-Figur)
+    if (axis === 'x') return [dx, -dy, -dz];
+    if (axis === 'y') return [-dx, dy, -dz];
+    return [-dx, -dy, dz];
+  }
   if (axis === 'z') return dir > 0 ? [-dy, dx, dz] : [dy, -dx, dz];
   if (axis === 'x') return dir > 0 ? [dx, -dz, dy] : [dx, dz, -dy];
   return dir > 0 ? [dz, dy, -dx] : [-dz, dy, dx];
@@ -495,21 +604,27 @@ function chessRulesOn(){ return mode === '2p' || mode === 'ai'; }
 function kingAttacked(color){
   var king = null, i, e, ci, ax, di, r, k2;
   for (i = 0; i < pieces.length; i++)
-    if (pieces[i].type === 'I' && pieces[i].color === color) king = pieces[i];
+    if (!pieces[i].phantom && pieces[i].type === 'I' && pieces[i].color === color) king = pieces[i];
   if (!king) return false;
   for (e = 0; e < pieces.length; e++){
     var en = pieces[e];
-    if (en.color === color) continue;
+    if (en.phantom || en.color === color) continue;
+    var dirs = en.type === 'T' ? [1, -1, 2] : [1, -1];
     for (ci = 0; ci < en.cubes.length; ci++){
       for (ax = 0; ax < 3; ax++){
-        for (di = 0; di < 2; di++){
-          r = tryMove(en, en.cubes[ci], ['x','y','z'][ax], di === 0 ? 1 : -1, false, false);
+        for (di = 0; di < dirs.length; di++){
+          r = tryMove(en, en.cubes[ci], ['x','y','z'][ax], dirs[di], false, false);
           if (!r) continue;
           for (k2 = 0; k2 < r.captured.length; k2++)
             if (r.captured[k2] === king) return true;
         }
       }
     }
+    // Versetzungen als Angriff: L (erster Zug, Schlag am Ziel) und aufrechter I
+    var sl = slidesFor(en, true);
+    for (i = 0; i < sl.length; i++)
+      for (k2 = 0; k2 < sl[i].res.captured.length; k2++)
+        if (sl[i].res.captured[k2] === king) return true;
   }
   return false;
 }
@@ -531,7 +646,30 @@ function kingSafeAfter(piece, cap, newCubes){
   return safe;
 }
 
+// Halt-Regel: Eine Figur hat Halt, sobald mindestens einer ihrer Würfel auf
+// einer intakten Bodenplatte ruht. Sie darf daher auch über eingebrochenen
+// Feldern ragen oder mit nur einem Würfel auf einem Feld liegen, solange
+// dieser Halt behält. Zusätzlich darf der S-Stein auf anderen Figuren stapeln;
+// auf dem S-Stein ruht niemand; ein Phantom trägt nichts.
+function cubesSupported(p, cubes){
+  var i, c, b;
+  for (i = 0; i < cubes.length; i++){
+    c = cubes[i];
+    if (c.z === 0 && !crumbled[c.x + ',' + c.y]) return true; // intakte Bodenplatte
+    if (p.type === 'S' && c.z > 0){
+      b = occ[ck({ x: c.x, y: c.y, z: c.z - 1 })];
+      if (b && b !== p && !b.phantom && b.type !== 'S') return true; // S stapelt auf Figuren
+    }
+  }
+  return false;
+}
+// Aufrecht: alle Würfel auf derselben Grundfläche (senkrechte Säule)
+function isUpright(p){
+  return p.cubes.every(function(c){ return c.x === p.cubes[0].x && c.y === p.cubes[0].y; });
+}
+
 function tryMove(piece, pivot, axis, dir, safety, kingCap){
+  if (dir === 2 && piece.type !== 'T') return null; // 180° nur für die T-Figur
   var newCubes = piece.cubes.map(function(c){
     var o = rotOffset(axis, dir, c.x - pivot.x, c.y - pivot.y, c.z - pivot.z);
     return { x: pivot.x + o[0], y: pivot.y + o[1], z: pivot.z + o[2] };
@@ -540,12 +678,9 @@ function tryMove(piece, pivot, axis, dir, safety, kingCap){
     var c = newCubes[i];
     if (c.x < 0 || c.x >= N || c.y < 0 || c.y >= N || c.z < 0 || c.z >= H_LIM) return null;
   }
-  // Bodenregel: Nur der I-Stein (Königstein) darf nach der Drehung schweben;
-  // jede andere Figur muss mindestens einen Würfel auf Höhe 0 behalten.
-  if (piece.type !== 'I'){
-    var grounded = newCubes.some(function(c){ return c.z === 0; });
-    if (!grounded) return null;
-  }
+  // Halt-Regel: Jeder freihängende Würfel muss Boden oder eine andere Figur berühren;
+  // auf der S-Figur darf niemand stapeln, ein Phantom trägt nichts.
+  if (!cubesSupported(piece, newCubes)) return null;
   var oldKeys = {};
   piece.cubes.forEach(function(c){ oldKeys[ck(c)] = true; });
   var allSame = newCubes.every(function(c){ return oldKeys[ck(c)]; });
@@ -553,7 +688,7 @@ function tryMove(piece, pivot, axis, dir, safety, kingCap){
   var captured = [];
   for (var j = 0; j < newCubes.length; j++){
     var o = occ[ck(newCubes[j])];
-    if (o && o !== piece){
+    if (o && o !== piece && !(o.phantom && o.master === piece)){
       if (o.color === piece.color) return null;
       if (captured.indexOf(o) < 0) captured.push(o);
     }
@@ -577,9 +712,10 @@ function tryMove(piece, pivot, axis, dir, safety, kingCap){
 
 function movesFor(p){
   var out = [];
+  var dirs = p.type === 'T' ? [1, -1, 2] : [1, -1]; // 180°-Drehungen nur für die T-Figur
   p.cubes.forEach(function(c, ci){
     ['x','y','z'].forEach(function(axis){
-      [1,-1].forEach(function(dir){
+      dirs.forEach(function(dir){
         var res = tryMove(p, c, axis, dir);
         if (res) out.push({ cubeIdx: ci, axis: axis, dir: dir, res: res });
       });
@@ -589,31 +725,55 @@ function movesFor(p){
 }
 function cubeHasMove(ci){ return selMoves.some(function(m){ return m.cubeIdx === ci; }); }
 
-// ---------- Verschiebung der Dame (O-Stein) ----------
-// Turmartiges Schieben entlang der X- oder Y-Achse: Weg und Ziel müssen frei sein;
-// durch Verschieben wird niemals geschlagen (Schlagen nur durch Drehungen).
+// ---------- Versetzungen (O, L, I) ----------
+// O (Dame): turmartiges Verschieben ohne Schlagen; hinterlässt ein Phantom.
+// L: nur im ersten Zug; Weg frei, am Ziel darf geschlagen werden.
+// I: nur aufrecht und genau ein Feld; Schlagen erlaubt.
 function trySlide(p, tx, ty, safety){
   var steps = Math.max(Math.abs(tx), Math.abs(ty));
-  if (p.type !== 'O' || steps === 0) return null;
+  if (steps === 0 || (tx !== 0 && ty !== 0)) return null; // nur geradlinig
   var ux = Math.round(tx / steps), uy = Math.round(ty / steps);
+  var capMode;
+  if (p.type === 'O') capMode = 'none';
+  else if (p.type === 'L'){ if (p.moved) return null; capMode = 'end'; }
+  else if (p.type === 'I'){ if (!isUpright(p) || steps !== 1) return null; capMode = 'always'; }
+  else return null;
+  var captured = [];
   for (var s = 1; s <= steps; s++){
     for (var i = 0; i < p.cubes.length; i++){
       var c = p.cubes[i];
-      var nx = c.x + ux * s, ny = c.y + uy * s, nz = c.z;
-      if (nx < 0 || nx >= N || ny < 0 || ny >= N || nz < 0 || nz >= H_LIM) return null;
-      var o = occ[ck({ x: nx, y: ny, z: nz })];
-      if (o && o !== p) return null; // Weg oder Ziel besetzt – kein Schlagen durch Schieben
+      var nx = c.x + ux * s, ny = c.y + uy * s;
+      if (nx < 0 || nx >= N || ny < 0 || ny >= N) return null;
+      var o = occ[ck({ x: nx, y: ny, z: c.z })];
+      if (o && o !== p && !(o.phantom && o.master === p)){
+        if (o.color === p.color) return null;
+        if (capMode === 'none') return null;
+        if (capMode === 'end' && s < steps) return null; // Gegner blockiert den Weg
+        if (captured.indexOf(o) < 0) captured.push(o);
+      }
     }
   }
-  var res = { newCubes: p.cubes.map(function(c){ return { x: c.x + tx, y: c.y + ty, z: c.z }; }), captured: [] };
-  if (safety !== false && !kingSafeAfter(p, [], res.newCubes)) return null;
+  var res = { newCubes: p.cubes.map(function(c){ return { x: c.x + tx, y: c.y + ty, z: c.z }; }), captured: captured };
+  // Königs-Schlagbeschränkung gilt auch für Versetzungen
+  if (chessRulesOn()){
+    var capI = captured.some(function(q){ return q.type === 'I' && !q.phantom; });
+    if (capI){
+      var enemyLeft = pieces.some(function(q){
+        return q.color !== p.color && !q.phantom && captured.indexOf(q) < 0;
+      });
+      if (enemyLeft) return null;
+    }
+  }
+  if (!cubesSupported(p, res.newCubes)) return null;
+  if (safety !== false && !kingSafeAfter(p, captured, res.newCubes)) return null;
   return res;
 }
 function slidesFor(p, fast){
   var out = [], dirs = [[1,0],[-1,0],[0,1],[0,-1]], d, k, res;
-  if (p.type !== 'O') return out;
+  var maxK = p.type === 'I' ? 1 : N - 1; // I versetzt sich nur um ein Feld
+  if (p.type !== 'O' && p.type !== 'L' && p.type !== 'I') return out;
   for (d = 0; d < 4; d++){
-    for (k = 1; k < N; k++){
+    for (k = 1; k <= maxK; k++){
       res = fast ? trySlide(p, dirs[d][0] * k, dirs[d][1] * k, false) : trySlide(p, dirs[d][0] * k, dirs[d][1] * k);
       if (!res) break;
       out.push({ dx: dirs[d][0], dy: dirs[d][1], k: k, res: res });
@@ -629,9 +789,9 @@ function dirName(ux, uy){
 
 function anyMoves(color){
   return pieces.some(function(p){
-    if (p.color !== color) return false;
+    if (p.color !== color || p.phantom) return false;
     if (movesFor(p).length > 0) return true;
-    return p.type === 'O' && slidesFor(p).length > 0;
+    return slidesFor(p).length > 0;
   });
 }
 
@@ -639,8 +799,11 @@ function anyMoves(color){
 function selectPiece(p){
   sel = p; phase = 'piece'; pivotIdx = -1; preview = null; slide = null;
   selMoves = movesFor(p);
+  // Erreichbare Versetzungsziele unterlegen (O, L im ersten Zug, aufrechter I)
+  slideTargets = (p.type === 'O' || (p.type === 'L' && !p.moved) || (p.type === 'I' && isUpright(p)))
+    ? slidesFor(p) : [];
   sfxSelect();
-  updateHUD(selMoves.length === 0 && slidesFor(p).length === 0
+  updateHUD(selMoves.length === 0 && slideTargets.length === 0
     ? 'Diese Figur hat derzeit keinen legalen Zug – bitte eine andere Figur wählen.'
     : null);
   if (mode === 'tutorial') tutEvent('select', { piece: p });
@@ -649,12 +812,14 @@ function selectPiece(p){
 function deselect(){
   if (gameOver || phase === 'anim') return;
   sel = null; pivotIdx = -1; phase = 'idle'; preview = null; slide = null;
+  slideTargets = []; clearArmed();
   updateHUD();
 }
 
 function commitMove(m){
   var p = sel;
-  phase = 'anim'; preview = null; slide = null;
+  phase = 'anim'; preview = null; slide = null; slideTargets = [];
+  clearArmed();
   if (m.axis === 't'){
     // Verschiebung der Dame: lineare Interpolation von der Start- zur Zielposition
     anim = {
@@ -679,29 +844,81 @@ function commitMove(m){
 function finalizeMove(){
   var a = anim, p = a.p, cap = a.res.captured;
   p.cubes = a.res.newCubes;
+  p.moved = true;
   if (cap.length){
-    pieces = pieces.filter(function(q){ return cap.indexOf(q) < 0; });
+    // Fällt eine echte Figur, verschwindet auch ihr Phantom
+    var deadMasters = cap.filter(function(q){ return !q.phantom; });
+    pieces = pieces.filter(function(q){
+      if (cap.indexOf(q) >= 0) return false;
+      if (q.phantom && deadMasters.indexOf(q.master) >= 0) return false;
+      return true;
+    });
     if (p.color === 'w') capturedByW = capturedByW.concat(cap);
     else capturedByB = capturedByB.concat(cap);
     shakeUntil = performance.now() + 220;
     sfxCap();
+  }
+  // Phantom der Dame: bei Versetzung altes Phantom entfernen und an der
+  // letzten Zugstelle neu erscheinen lassen; bei Drehung dreht das Phantom
+  // mit und kann dabei Gegner schlagen.
+  if (p.type === 'O' && !p.phantom){
+    if (a.axis === 't'){
+      pieces = pieces.filter(function(q){ return !(q.phantom && q.master === p); });
+      pieces.push({ id: nextId++, color: p.color, type: 'O', phantom: true, master: p,
+        cubes: a.cubes0.map(function(c){ return { x: c.x, y: c.y, z: c.z }; }), moved: true });
+    } else {
+      var ph = null;
+      pieces.forEach(function(q){ if (q.phantom && q.master === p) ph = q; });
+      if (ph){
+        var pivQ = ph.cubes[pivotIdx] || ph.cubes[0];
+        var phCubes = ph.cubes.map(function(c){
+          var o = rotOffset(a.axis, a.dir, c.x - pivQ.x, c.y - pivQ.y, c.z - pivQ.z);
+          return { x: pivQ.x + o[0], y: pivQ.y + o[1], z: pivQ.z + o[2] };
+        });
+        var phCap = [], j;
+        for (j = 0; j < phCubes.length; j++){
+          var o2 = occ[ck(phCubes[j])];
+          if (o2 && o2 !== ph && o2 !== p && o2.master !== p && o2.color !== p.color && phCap.indexOf(o2) < 0) phCap.push(o2);
+        }
+        if (phCap.length){
+          pieces = pieces.filter(function(q){
+            if (phCap.indexOf(q) >= 0) return false;
+            if (q.phantom && q.master && phCap.indexOf(q.master) >= 0) return false;
+            return true;
+          });
+          if (p.color === 'w') capturedByW = capturedByW.concat(phCap);
+          else capturedByB = capturedByB.concat(phCap);
+          logEntries.push('Das Phantom der ' + (p.color === 'w' ? 'weißen' : 'schwarzen') +
+            ' Dame schlägt ' + phCap.map(function(q){ return q.type; }).join('') + '.');
+          shakeUntil = performance.now() + 220;
+          sfxCap();
+        }
+        ph.cubes = phCubes;
+        // Das Phantom darf das Brett verlassen; ohne Bodenkontakt fällt es herab.
+        if (!phCubes.some(function(c){ return c.z === 0; })){
+          pieces = pieces.filter(function(q){ return q !== ph; });
+          logEntries.push('Das Phantom der Dame verliert den Halt und fällt herab.');
+        }
+      }
+    }
   }
   occ = rebuildOcc(pieces);
   moveNo++;
   sinceCap = cap.length ? 0 : sinceCap + 1;
   if (a.axis === 't'){
     logEntries.push(moveNo + '. ' + (p.color === 'w' ? 'Weiß' : 'Schwarz') + ' ' + p.type +
-      ': schiebt die Dame ' + a.steps + '× nach ' + dirName(a.targets[0].x - a.cubes0[0].x, a.targets[0].y - a.cubes0[0].y) +
-      ' (' + coordName(a.cubes0[0]) + ' \u2192 ' + coordName(a.res.newCubes[0]) + ')');
+      ': versetzt ' + a.steps + '× nach ' + dirName(a.targets[0].x - a.cubes0[0].x, a.targets[0].y - a.cubes0[0].y) +
+      ' (' + coordName(a.cubes0[0]) + ' \u2192 ' + coordName(a.res.newCubes[0]) + ')' +
+      (cap.length ? ' ×' + cap.map(function(q){ return q.type; }).join('') : ''));
   } else {
     logEntries.push(moveNo + '. ' + (p.color === 'w' ? 'Weiß' : 'Schwarz') + ' ' + p.type +
-      ': ' + a.axis.toUpperCase() + (a.dir > 0 ? '+' : '−') + ' um ' + coordName(a.pivot) +
+      ': ' + a.axis.toUpperCase() + (a.dir === 2 ? '180' : (a.dir > 0 ? '+' : '−')) + ' um ' + coordName(a.pivot) +
       (cap.length ? ' ×' + cap.map(function(q){ return q.type; }).join('') : ''));
   }
   sel = null; pivotIdx = -1; selMoves = []; phase = 'idle'; anim = null; slide = null;
   if (mode === 'tutorial'){
     // Im Tutorial bleibt Weiß dauerhaft am Zug; Partieende-Prüfungen entfallen.
-    tutEvent('move', { piece: p, capCount: cap.length, res: a.res, axis: a.axis });
+    tutEvent('move', { piece: p, capCount: cap.length, res: a.res, axis: a.axis, dir: a.dir });
     updateHUD();
     return;
   }
@@ -712,19 +929,103 @@ function finalizeMove(){
     else { puz.state = 'play'; puzRender(); updateHUD(); }
     return;
   }
+  // Bröckelnde Felder und Gravitation (nur im Duell)
+  applyCrumbleAndGravity();
+  occ = rebuildOcc(pieces);
   turn = (turn === 'w') ? 'b' : 'w';
-  var enemyCount = pieces.filter(function(q){ return q.color === turn; }).length;
+  var realPieces = pieces.filter(function(q){ return !q.phantom; });
+  var enemyCount = realPieces.filter(function(q){ return q.color === turn; }).length;
   if (enemyCount === 0) endGame(p.color, cap.some(function(q){ return q.type === 'I'; })
-    ? 'Schachmatt: Der Königstein wurde als letzte Figur geschlagen.'
+    ? 'Der Königstein wurde als letzte Figur geschlagen – die Partie ist entschieden.'
     : 'Alle Figuren des Gegners wurden geschlagen.');
-  else if (pieces.length === 2 && pieces.every(function(q){ return q.type === 'I'; }))
+  else if (realPieces.length === 2 && realPieces.every(function(q){ return q.type === 'I'; }))
     endGame(null, 'Remis: Nur die beiden Königsteine sind übrig.');
   else if (!anyMoves(turn)) endGame(p.color, inCheck(turn)
     ? 'Schachmatt: Der Gegner steht im Schach und hat keinen legalen Zug mehr.'
     : 'Der Gegner hat keinen legalen Zug mehr (Zugzwang).');
   else if (sinceCap >= DRAW_RULE) endGame(null, 'Remis: ' + DRAW_RULE + ' Halbzüge ohne Schlagzug.');
+  else if (mode === 'ai' || mode === '2p'){
+    if (inCheck(turn)) ann = (turn === 'w' ? 'Weiß' : 'Schwarz') + ' steht im Schach!';
+    else if (crumbleEvt === 'warn') ann = 'Vorsicht: Ein Feld beginnt zu bröckeln!';
+    else if (crumbleEvt === 'fall') ann = 'Ein Feld stürzt in sich zusammen!';
+    else ann = '';
+  }
   updateHUD();
   if (!gameOver && mode === 'ai' && turn === 'b') aiSchedule();
+}
+
+// ---------- Bröckelnde Felder und Gravitation (Duell) ----------
+// Jedes Feld wird einen Halbzug vorher angekündigt (crumbleWarn) und stürzt
+// erst im darauffolgenden Halbzug tatsächlich ein (crumbled).
+function applyCrumbleAndGravity(){
+  crumbleEvt = '';
+  if (!chessRulesOn()) return;
+  var i, j, x, y, key;
+  if (moveNo >= CRUMBLE_FROM - 1){
+    // Zuerst das angekündigte Feld einstürzen lassen (falls einen Halbzug vorher gewarnt)
+    if (crumbleWarn && moveNo >= CRUMBLE_FROM && moveNo > crumbleWarnMove){
+      crumbled[crumbleWarn] = true;
+      logEntries.push('Feld ' + crumbleWarn + ' stürzt in sich zusammen.');
+      crumbleEvt = 'fall';
+      crumbleWarn = null;
+    }
+    // Anschließend das nächste Feld ankündigen (einen Halbzug vor seinem Einbruch)
+    if (!crumbleWarn){
+      var free = [];
+      for (x = 0; x < N; x++) for (y = 0; y < N; y++){
+        key = x + ',' + y;
+        if (crumbled[key]) continue;
+        if (occ[ck({ x: x, y: y, z: 0 })]) continue; // unter einer Figur bricht nichts ein
+        free.push(key);
+      }
+      if (!free.length){
+        for (x = 0; x < N; x++) for (y = 0; y < N; y++){ key = x + ',' + y; if (!crumbled[key]) free.push(key); }
+      }
+      if (free.length){
+        crumbleWarn = free[Math.floor(Math.random() * free.length)];
+        crumbleWarnMove = moveNo;
+        // Kein Log-Eintrag: Das bröckelnde Feld wird auf dem Brett rot umrandet
+        // und wackelnd angezeigt; die Ansage erfolgt über die Sprechblase.
+        if (!crumbleEvt) crumbleEvt = 'warn';
+      }
+    }
+  }
+  // Gravitation: Figuren ohne jeden Halt fallen ab; finden sie unterwegs Halt,
+  // bleiben sie liegen, sonst stürzen sie vom Brett.
+  var fallen = [];
+  for (i = 0; i < pieces.length; i++){
+    var p = pieces[i];
+    if (p.phantom){
+      // Ein Phantom ohne Bodenkontakt fällt herab und verschwindet.
+      if (!p.cubes.some(function(c){ return c.z === 0 && !crumbled[c.x + ',' + c.y]; })) fallen.push(p);
+      continue;
+    }
+    var guard = 0;
+    while (!cubesSupported(p, p.cubes) && guard++ < H_LIM){
+      var minZ = H_LIM;
+      for (j = 0; j < p.cubes.length; j++) if (p.cubes[j].z < minZ) minZ = p.cubes[j].z;
+      if (minZ <= 0){ fallen.push(p); break; } // kann nicht weiter fallen → stürzt vom Brett
+      for (j = 0; j < p.cubes.length; j++) p.cubes[j].z--;
+    }
+  }
+  if (fallen.length){
+    var fIds = {};
+    fallen.forEach(function(q){ fIds[q.id] = true; });
+    pieces = pieces.filter(function(q){
+      if (fIds[q.id]) return false;
+      if (q.phantom && q.master && fIds[q.master.id]) return false;
+      return true;
+    });
+    fallen.forEach(function(q){
+      logEntries.push(q.phantom
+        ? 'Das Phantom der Dame verliert den Halt und fällt herab.'
+        : (q.color === 'w' ? 'Weiß' : 'Schwarz') + ' ' + q.type + ' verliert den Halt und stürzt vom Brett.');
+    });
+    capturedByB = capturedByB.concat(fallen.filter(function(q){ return !q.phantom && q.color === 'w'; }));
+    capturedByW = capturedByW.concat(fallen.filter(function(q){ return !q.phantom && q.color === 'b'; }));
+    if (!crumbleEvt) crumbleEvt = 'fall';
+    sfxCap();
+  }
 }
 
 function endGame(winner, reason){
@@ -732,18 +1033,21 @@ function endGame(winner, reason){
   var t = $('overTitle'), r = $('overReason');
   t.textContent = winner === 'w' ? 'Weiß gewinnt!' : winner === 'b' ? 'Schwarz gewinnt!' : 'Remis!';
   r.textContent = reason;
+  // Tetromino verkündet das Ergebnis in jedem Duell-Modus
+  ann = winner ? (winner === 'w' ? 'Weiß gewinnt die Partie!' : 'Schwarz gewinnt die Partie!') : 'Die Partie endet Remis!';
   $('overOverlay').classList.remove('hidden');
   if (winner) sfxWin();
 }
 
 function newGame(){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
-  pieces = initialPieces();
+  pieces = randomStartPieces(); // jedes Duell startet mit frischer, symmetrischer Aufstellung
   occ = rebuildOcc(pieces);
   turn = 'w'; phase = 'idle'; sel = null; pivotIdx = -1; selMoves = [];
   preview = null; anim = null; gameOver = false; moveNo = 0; sinceCap = 0;
   capturedByW = []; capturedByB = []; logEntries = ['Neue Partie – Weiß beginnt.'];
   shakeUntil = 0; hover = null; OY = 96; OYt = 96; slide = null;
+  crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = '';
   $('overOverlay').classList.add('hidden');
   updateHUD();
 }
@@ -753,21 +1057,20 @@ var PIECE_VAL = { I: 5, O: 4, T: 2, L: 2, S: 2 }; // Königstein und Dame sind a
 function aiMovesOf(color, fast){
   var list = [];
   pieces.forEach(function(p){
-    if (p.color !== color) return;
+    if (p.color !== color || p.phantom) return;
+    var dirs = p.type === 'T' ? [1, -1, 2] : [1, -1];
     p.cubes.forEach(function(c, ci){
       ['x','y','z'].forEach(function(axis){
-        [1,-1].forEach(function(dir){
+        dirs.forEach(function(dir){
           var res = fast ? tryMove(p, c, axis, dir, false) : tryMove(p, c, axis, dir);
           if (res) list.push({ p: p, ci: ci, axis: axis, dir: dir, res: res });
         });
       });
     });
-    if (p.type === 'O'){
-      // Verschiebungen der Dame: schlagen nie, erweitern aber die Zugmöglichkeiten
-      slidesFor(p, fast).forEach(function(s){
-        list.push({ p: p, ci: -1, axis: 't', dir: 1, steps: s.k, res: s.res });
-      });
-    }
+    // Versetzungen: Dame ohne Schlag, L im ersten Zug, aufrechter Königstein
+    slidesFor(p, fast).forEach(function(s){
+      list.push({ p: p, ci: -1, axis: 't', dir: 1, steps: s.k, res: s.res });
+    });
   });
   return list;
 }
@@ -777,10 +1080,10 @@ function aiGain(m){
 function aiCloneBoard(m){
   var capIds = {};
   m.res.captured.forEach(function(q){ capIds[q.id] = true; });
-  return pieces.map(function(p){
+  return pieces.filter(function(p){ return !p.phantom; }).map(function(p){
     var cubes = (p === m.p ? m.res.newCubes : p.cubes)
       .map(function(c){ return { x: c.x, y: c.y, z: c.z }; });
-    return { id: p.id, color: p.color, type: p.type, cubes: cubes };
+    return { id: p.id, color: p.color, type: p.type, cubes: cubes, moved: true };
   }).filter(function(p){ return !capIds[p.id]; });
 }
 function aiWithBoard(list, fn){
@@ -829,33 +1132,45 @@ function aiSchedule(){
 // ---------- Tutorial ----------
 var tut = { step: -1, goalA: false, goalB: false };
 function mkPiece(id, color, type, cells){
-  return { id: id, color: color, type: type,
+  return { id: id, color: color, type: type, moved: false,
     cubes: cells.map(function(c){ return { x: c[0], y: c[1], z: c[2] }; }) };
 }
 var TUT_LESSONS = [
   { title: 'Willkommen',
-    text: 'Willkommen zu Tetromino. Jeder Zug besteht aus genau einer 90-Grad-Drehung einer eigenen Figur – mit einer Ausnahme: Die Dame (O-Stein) darf zusätzlich verschoben werden. Diese Tour führt in acht Lektionen durch alle Grundlagen.',
+    text: 'Willkommen zu Tetromino. Jede Partei führt fünf Figuren: den Königstein (I), die Dame (O), die T-Figur, die L-Figur und die S-Figur. Jeder Zug besteht aus einer Drehung einer eigenen Figur – die T-Figur darf auch um 180° drehen. Die Dame, die L-Figur (nur im ersten Zug) und der aufrechte Königstein dürfen sich zusätzlich versetzen. Diese Tour führt in zwölf Lektionen durch jede Figur und jeden Zugtyp.',
     board: 'start', goal: 'next' },
   { title: 'Figur wählen',
     text: 'Klicken Sie eine eigene (weiße) Figur an. Würfel mit gelbem Marker können später als Drehpunkt dienen.',
     board: 'start', goal: 'select' },
   { title: 'Drehpunkt wählen',
-    text: 'Klicken Sie nun einen Würfel mit gelbem Marker der gewählten Figur an. Er wird zum Drehpunkt: Die Drehachse verläuft durch sein Zentrum.',
+    text: 'Klicken Sie nun einen Würfel mit gelbem Marker der gewählten T-Figur an. Er wird zum Drehpunkt: Die Drehachse verläuft durch sein Zentrum.',
     board: 'soloT', goal: 'pivot' },
   { title: 'Drehung ausführen',
-    text: 'Klicken Sie eine Drehachse an (Kreis-Pfeil = Drehrichtung). Der Klick führt den Zug sofort aus. Das Überfahren der Knöpfe mit der Maus zeigt die Zielposition als Geistervorschau.',
+    text: 'Klicken Sie eine Drehachse an. Der erste Tipp zeigt die Zielposition als Geisterfigur, der zweite Tipp führt den Zug aus. Am Desktop zeigt bereits das Überfahren des Knopfes mit der Maus die Vorschau.',
     board: 'soloT', goal: 'move' },
+  { title: 'Die T-Figur: 180°',
+    text: 'Alle Figuren drehen um 90°. Nur die T-Figur darf zusätzlich um 180° drehen (die Halbkreis-Knöpfe) – das spart einen Zug, wenn die Figur anders herum stehen soll. Führen Sie eine 180°-Drehung aus.',
+    board: 'soloT', goal: 'move180' },
   { title: 'Schlagen',
     text: 'Geschlagen wird durch Überlappen: Drehen Sie die weiße T-Figur so, dass sie Zellen der schwarzen S-Figur überlappt. Die überlappte Figur wird vollständig vom Brett entfernt.',
     board: 'capture', goal: 'capture' },
-  { title: 'Die Dame (O-Stein)',
-    text: 'Die Dame darf zusätzlich wie ein Turm verschoben werden: Jeder Klick auf einen Schiebe-Pfeil bewegt sie ein Feld in diese Richtung, jeder weitere Klick ein Feld weiter. Der Weg muss frei sein, und durch Verschieben wird niemals geschlagen – Schlagen gelingt ausschließlich durch Drehungen. Schieben Sie die Dame ein Feld und führen Sie den Zug aus.',
-    board: 'dame', goal: 'slide' },
-  { title: 'Bodenregel und Königstein',
-    text: 'Aufgabe 1: Stellen Sie den O-Stein (die Dame) auf (mindestens ein Würfel über Höhe 0). Aufgabe 2: Lassen Sie den I-Stein (Königstein) vollständig schweben – zuerst aufstellen, dann zur Seite kippen. Nur der Königstein darf schweben. Im Duell gilt zudem: Der Königstein darf nur als letzte Figur geschlagen werden, und ein Schach auf ihn muss stets beseitigt werden.',
+  { title: 'Die S-Figur: Stapeln',
+    text: 'Die S-Figur ist die einzige Figur, die auf anderen Figuren stapeln darf – hier ruht sie bereits auf der Dame. Auf der S-Figur selbst ruht dagegen niemand. Bewegen Sie die S-Figur; sie behält dabei ihren Halt auf der Dame.',
+    board: 'stack', goal: 'smove' },
+  { title: 'Die L-Figur: Versetzen',
+    text: 'Die L-Figur darf sich in ihrem allerersten Zug geradlinig versetzen: Der Weg muss frei sein, am Ziel darf sie Gegner überlappen und schlagen. Die erreichbaren Zielfelder sind unterlegt – klicken Sie eines an, um die L-Figur dorthin zu versetzen. Schlagen Sie die schwarze T-Figur.',
+    board: 'lslide', goal: 'lslide' },
+  { title: 'Halt und Höhe',
+    text: 'Aufgabe 1: Stellen Sie die Dame (O) auf – mindestens ein Würfel über Höhe 0. Aufgabe 2: Richten Sie den Königstein (I) senkrecht auf, als Säule. Halt hat eine Figur, sobald mindestens einer ihrer Würfel den intakten Boden oder eine andere Figur berührt.',
     board: 'ground', goal: 'ground' },
+  { title: 'Der Königstein: Versetzen',
+    text: 'Der aufrechte Königstein (I) ist der König des Spiels: Er darf sich um genau ein Feld versetzen und dabei schlagen. Versetzen Sie ihn nach Norden auf die S-Figur und schlagen Sie sie.',
+    board: 'ishift', goal: 'islide' },
+  { title: 'Die Dame: Versetzen und Phantom',
+    text: 'Die Dame versetzt sich wie ein Turm, ohne zu schlagen – die Zielfelder sind unterlegt. Dabei hinterlässt sie ein Phantom auf ihrer Startposition: Dreht sie sich später, dreht das Phantom mit und kann dabei Gegner schlagen. Versetzen Sie die Dame ein Feld.',
+    board: 'dame', goal: 'slide' },
   { title: 'Geschafft',
-    text: 'Sie kennen jetzt alle Regeln: Drehpunkt, Achse, Dame-Schieben, Bodenregel und Königstein. Viel Erfolg im richtigen Duell – gegen den Computer oder zu zweit.',
+    text: 'Sie kennen jetzt jede Figur und jeden Zugtyp: Drehung, 180°-Drehung, Schlagen, Stapeln, Versetzen, Haltregel, Phantom und Königstein. Viel Erfolg im Duell – gegen den Computer oder zu zweit.',
     board: 'start', goal: 'end' }
 ];
 function tutBoardSetup(which){
@@ -883,10 +1198,31 @@ function tutBoardSetup(which){
       mkPiece(1, 'w', 'I', [[4,5,0],[5,5,0],[6,5,0],[7,5,0]]),
       mkPiece(2, 'b', 'I', [[0,9,0],[1,9,0],[2,9,0],[3,9,0]])
     ];
+  } else if (which === 'stack'){
+    // S-Figur ruht bereits auf der Dame: Stapel-Mechanik erleben
+    list = [
+      mkPiece(0, 'w', 'O', [[4,4,0],[5,4,0],[4,5,0],[5,5,0]]),
+      mkPiece(1, 'w', 'S', [[5,4,1],[6,4,1],[4,5,1],[5,5,1]]),
+      mkPiece(2, 'b', 'I', [[0,9,0],[1,9,0],[2,9,0],[3,9,0]])
+    ];
+  } else if (which === 'lslide'){
+    // L-Versetzung mit Schlag am Ziel: schwarze T-Figur drei Felder östlich
+    list = [
+      mkPiece(0, 'w', 'L', [[1,4,0],[1,5,0],[2,5,0],[3,5,0]]),
+      mkPiece(1, 'b', 'T', [[6,4,0],[7,4,0],[6,5,0],[7,5,0]]),
+      mkPiece(2, 'b', 'I', [[0,9,0],[1,9,0],[2,9,0],[3,9,0]])
+    ];
+  } else if (which === 'ishift'){
+    // Aufrechter Königstein: Versetzung um ein Feld mit Schlag auf die S-Figur
+    list = [
+      mkPiece(0, 'w', 'I', [[4,4,0],[4,4,1],[4,4,2],[4,4,3]]),
+      mkPiece(1, 'b', 'S', [[3,5,0],[4,5,0],[2,6,0],[3,6,0]]),
+      mkPiece(2, 'b', 'I', [[0,9,0],[1,9,0],[2,9,0],[3,9,0]])
+    ];
   }
   pieces = list; occ = rebuildOcc(list);
   sel = null; pivotIdx = -1; selMoves = []; phase = 'idle'; preview = null; anim = null; slide = null;
-  gameOver = false; turn = 'w';
+  gameOver = false; turn = 'w'; crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = '';
 }
 function tutRender(){
   var L = TUT_LESSONS[tut.step];
@@ -935,6 +1271,26 @@ function tutEvent(kind, data){
   if (L.goal === 'select' && kind === 'select') tutAdvance();
   else if (L.goal === 'pivot' && kind === 'pivot') tutAdvance();
   else if (L.goal === 'move' && kind === 'move') tutAdvance();
+  else if (L.goal === 'move180' && kind === 'move'){
+    if (data.dir === 2) tutAdvance();
+    else tutHint('Für diese Lektion bitte eine der 180°-Drehungen (einen Halbkreis-Knopf) nutzen.');
+  }
+  else if (L.goal === 'smove' && kind === 'move'){
+    if (data.piece.type === 'S') tutAdvance();
+    else tutHint('Für diese Lektion bitte die S-Figur bewegen – sie ruht derzeit auf der Dame.');
+  }
+  else if (L.goal === 'lslide' && kind === 'move'){
+    if (data.piece.type === 'L' && data.axis === 't' && data.capCount > 0) tutAdvance();
+    else if (data.piece.type === 'L' && data.axis === 't')
+      tutHint('Am Ziel darf geschlagen werden – versetzen Sie die L-Figur bis zur schwarzen T-Figur.');
+    else tutHint('Für diese Lektion bitte die L-Figur versetzen (unterlegtes Zielfeld oder Schiebe-Pfeile).');
+  }
+  else if (L.goal === 'islide' && kind === 'move'){
+    if (data.piece.type === 'I' && data.axis === 't' && data.capCount > 0) tutAdvance();
+    else if (data.piece.type === 'I' && data.axis === 't')
+      tutHint('Der Königstein versetzt sich um genau ein Feld – hier nach Norden auf die S-Figur.');
+    else tutHint('Für diese Lektion bitte den aufrechten Königstein versetzen (unterlegtes Zielfeld oder Pfeile).');
+  }
   else if (L.goal === 'slide' && kind === 'move'){
     if (data.axis === 't') tutAdvance();
     else tutHint('Für diese Lektion bitte die Schiebe-Pfeile der Dame nutzen – keine Drehung.');
@@ -944,12 +1300,13 @@ function tutEvent(kind, data){
     else tutHint('Noch nicht geschlagen – überlappen Sie mit der Drehung Zellen der schwarzen S-Figur.');
   } else if (L.goal === 'ground' && kind === 'move'){
     var anyUp = data.res.newCubes.some(function(c){ return c.z > 0; });
-    var allUp = data.res.newCubes.every(function(c){ return c.z > 0; });
+    var upCol = data.piece.type === 'I' &&
+      data.res.newCubes.every(function(c){ return c.x === data.res.newCubes[0].x && c.y === data.res.newCubes[0].y; });
     if (data.piece.type === 'O' && anyUp) tut.goalA = true;
-    if (data.piece.type === 'I' && allUp) tut.goalB = true;
+    if (upCol) tut.goalB = true;
     if (tut.goalA && tut.goalB) tutAdvance();
     else tutHint((tut.goalA ? 'Aufgabe 1 (O aufstellen) erledigt.' : 'Aufgabe 1: O-Stein aufstellen.') + ' ' +
-                 (tut.goalB ? 'Aufgabe 2 (I schweben) erledigt.' : 'Aufgabe 2: I-Stein vollständig schweben lassen.'));
+                 (tut.goalB ? 'Aufgabe 2 (I aufrichten) erledigt.' : 'Aufgabe 2: I-Stein senkrecht aufrichten.'));
   }
 }
 
@@ -957,123 +1314,15 @@ function tutEvent(kind, data){
 // Zehn gestellte Aufgaben: Weiß ist immer am Zug; Schwarz antwortet mit
 // gescripteten Zügen (oder notfalls einem harmlosen Fallback-Zug). Geprüft wird
 // das Levelziel – nicht der exakte Lösungsweg; ein Zuglimit (max) begrenzt die Versuche.
-var puz = { level: 0, moves: 0, capTotal: 0, replyIdx: 0, state: 'play', solutionShown: false, solved: {} };
-var PUZZLES = [
-  { title: 'Erster Schlag', max: 1, goal: 'capAny', script: [],
-    text: 'Warm werden: Schlagen Sie mit genau einem Zug eine schwarze Figur. Geschlagen wird, indem die Zielzellen der Drehung Zellen der gegnerischen Figur überlappen – die getroffene Figur fällt vollständig.',
-    hint: 'Die T-Figur braucht nur eine einzige Drehung, um die schwarze S-Figur zu erreichen.',
-    sol: 'Lösung: Drehpunkt e4 (Stiel-Würfel der T-Figur), Achse Z+. Die T-Figur belegt danach f3, f4, f5 und e4 – die Überlappung auf f5 schlägt die S-Figur.',
-    lesson: 'Eine Drehung schlägt jede Figur, deren Zellen sie überlappt – die gesamte Figur, nicht nur den getroffenen Würfel.',
-    board: [
-      { c: 'w', t: 'T', cells: [[3,2,0],[4,2,0],[5,2,0],[4,3,0]] },
-      { c: 'b', t: 'S', cells: [[4,4,0],[5,4,0],[3,5,0],[4,5,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Doppelschlag', max: 1, goal: 'capTwo', script: [],
-    text: 'Ein einziger Zug kann mehrere Figuren gleichzeitig schlagen: Die Drehung muss dazu Zellen zweier verschiedener gegnerischer Figuren überlappen. Schlagen Sie die S-Figur und die Dame (O) in einem Zug.',
-    hint: 'Suchen Sie einen Drehpunkt, von dem aus die Drehung sowohl eine Zelle der S-Figur als auch eine Zelle der Dame überlappt.',
-    sol: 'Lösung: Drehpunkt d4 (Stiel-Würfel), Achse Z+. Die T-Figur belegt danach e3, e4, e5 und d4 – e4 trifft die S-Figur, e5 die Dame; beide fallen.',
-    lesson: 'Bündelung spart Züge: Wer mit einer Drehung zwei Figuren trifft, entscheidet Kämpfe auf einen Schlag.',
-    board: [
-      { c: 'w', t: 'T', cells: [[2,2,0],[3,2,0],[4,2,0],[3,3,0]] },
-      { c: 'b', t: 'S', cells: [[5,2,0],[6,2,0],[4,3,0],[5,3,0]] },
-      { c: 'b', t: 'O', cells: [[4,4,0],[5,4,0],[4,5,0],[5,5,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Die Dame stellen', max: 1, goal: 'capType', type: 'O', script: [],
-    text: 'Der Königstein (I) ist die längste Figur des Spiels. Schlagen Sie die schwarze Dame (O) mit genau einem Zug.',
-    hint: 'Eine Z-Drehung um den östlichen Würfel richtet den I-Stein in einer Linie auf – und trägt ihn zwei Reihen nach Norden.',
-    sol: 'Lösung: Drehpunkt g6 (östlicher Würfel des I-Steins), Achse Z+. Der I-Stein richtet sich in der g-Linie auf (g3 bis g6) und überlappt g4/g5 – die Dame fällt.',
-    lesson: 'Lange Figuren wie der I-Stein decken mit einer einzigen Drehung weit entfernte Ziele.',
-    board: [
-      { c: 'w', t: 'I', cells: [[3,5,0],[4,5,0],[5,5,0],[6,5,0]] },
-      { c: 'b', t: 'O', cells: [[5,3,0],[6,3,0],[5,4,0],[6,4,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Vorsturm in zwei Zügen', max: 2, goal: 'capType', type: 'O',
-    script: [{ t: 'S', ci: 0, axis: 'z', dir: 1 }],
-    text: 'Die Dame steht diesmal außerhalb der Reichweite der T-Figur. Bringen Sie die T-Figur heran und schlagen Sie die Dame mit dem zweiten Zug. Schwarz zieht dazwischen – planen Sie die Zugfolge wie ein Matt in zwei Zügen.',
-    hint: 'Z+-Drehungen tragen die T-Figur schrittweise nach Nordosten; der Angriff muss erst vorbereitet werden.',
-    sol: 'Lösung: 1. Drehpunkt c3, Achse Z+ (die T-Figur steht danach in der d-Linie). 2. Drehpunkt d4, Achse Z+ – die T-Figur überlappt e4 und f4 und schlägt die Dame.',
-    lesson: 'Ohne direkten Schlag zuerst die Angriffsstellung drehen: Jede Drehung verändert Reichweite und Ausrichtung der Figur.',
-    board: [
-      { c: 'w', t: 'T', cells: [[1,1,0],[2,1,0],[3,1,0],[2,2,0]] },
-      { c: 'b', t: 'O', cells: [[4,3,0],[5,3,0],[4,4,0],[5,4,0]] },
-      { c: 'b', t: 'S', cells: [[1,7,0],[2,7,0],[0,8,0],[1,8,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Hoch hinaus', max: 2, goal: 'capStand',
-    script: [{ t: 'T', ci: 3, axis: 'z', dir: 1 }],
-    text: 'Erhöht stehende Figuren zu schlagen verlangt Planung: Schlagen Sie in zwei Zügen die schwarze Figur, die Würfel über dem Boden trägt (Höhe größer 0). Ein direkter Weg dorthin ist versperrt.',
-    hint: 'Richten Sie den I-Stein zuerst senkrecht auf – erst die umgelegte Säule reicht weit genug nach Osten.',
-    sol: 'Lösung: 1. Drehpunkt f4, Achse Y+ – der I-Stein steht als Säule auf f4. 2. Drehpunkt f4 (unterster Würfel), Achse Y+ – der Stein legt sich nach Osten auf die Felder f4 bis i4 und schlägt über h4/i4 den schwarzen Turm.',
-    lesson: 'Aufstell-Drehungen (Y) wandeln Länge in Höhe; die Folgedrehung wandelt Höhe in Reichweite über das halbe Brett.',
-    board: [
-      { c: 'w', t: 'I', cells: [[2,3,0],[3,3,0],[4,3,0],[5,3,0]] },
-      { c: 'b', t: 'L', cells: [[7,3,0],[7,3,1],[7,3,2],[8,3,0]] },
-      { c: 'b', t: 'T', cells: [[7,7,0],[8,7,0],[9,7,0],[8,8,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Jagd auf die T-Figur', max: 2, goal: 'capType', type: 'T',
-    script: [{ t: 'S', ci: 0, axis: 'z', dir: 1 }],
-    text: 'Die schwarze T-Figur steht im Osten des Brettes. Schlagen Sie sie in höchstens zwei Zügen mit der L-Figur.',
-    hint: 'Zwei Z+-Drehungen hintereinander tragen die L-Figur diagonal über das Brett.',
-    sol: 'Lösung: 1. Drehpunkt f6, Achse Z+ (die L-Figur rückt auf die g-Linie). 2. Drehpunkt g6, Achse Z+ – die L-Figur erreicht i6 und schlägt die T-Figur.',
-    lesson: 'Drehketten vorplanen: Jeder Zug verändert die Ausrichtung – und damit alle Folgezüge.',
-    board: [
-      { c: 'w', t: 'L', cells: [[3,4,0],[4,4,0],[5,4,0],[5,5,0]] },
-      { c: 'b', t: 'T', cells: [[7,4,0],[8,4,0],[9,4,0],[8,5,0]] },
-      { c: 'b', t: 'S', cells: [[1,7,0],[2,7,0],[0,8,0],[1,8,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Der Königstein fällt', max: 2, goal: 'capType', type: 'I',
-    script: [{ t: 'S', ci: 1, axis: 'z', dir: -1 }],
-    text: 'Der Königstein (I) ist die wertvollste Figur des Spiels. Schlagen Sie den schwarzen Königstein in höchstens zwei Zügen – diesmal mit der Dame (O).',
-    hint: 'Die Dame nähert sich mit zwei Drehungen entlang der h-Linie; Schlagen bleibt auch ihr nur über Drehungen möglich.',
-    sol: 'Lösung: 1. Drehpunkt h5, Achse Z+ (die Dame steht danach auf h5/h6 und i5/i6). 2. Drehpunkt h6, Achse Z+ – die Dame überlappt h7 und schlägt den Königstein.',
-    lesson: 'Auch die Dame schlägt ausschließlich durch Drehungen – ihr Schiebezug dient nur dem Positionsspiel.',
-    board: [
-      { c: 'w', t: 'O', cells: [[7,3,0],[8,3,0],[7,4,0],[8,4,0]] },
-      { c: 'b', t: 'I', cells: [[7,6,0],[7,7,0],[7,8,0],[7,9,0]] },
-      { c: 'b', t: 'S', cells: [[2,6,0],[3,6,0],[1,7,0],[2,7,0]] }
-    ] },
-  { title: 'Matt in drei Zügen', max: 3, goal: 'capType', type: 'O',
-    script: [{ t: 'L', ci: 3, axis: 'z', dir: 1 }, { t: 'L', ci: 3, axis: 'z', dir: 1 }],
-    text: 'Die Dame ist weit im Osten verschanzt. Schlagen Sie sie in höchstens drei Zügen. Schwarz rückt unterdessen mit der L-Figur heran – kalkulieren Sie die Antwortzüge ein.',
-    hint: 'Zwei Vorrück-Drehungen und eine Rückdrehung: Der dritte Zug (Z−) vollendet den Angriff.',
-    sol: 'Lösung: Drehpunkte d4 (Z+) → e5 (Z+) → g5 (Z−) – der Umweg trägt die T-Figur heran; die Dame fällt über g6/g7.',
-    lesson: 'Lange Angriffe gelingen, wenn jeder Zug die Figur näher bringt, ohne sie selbst in Reichweite des Gegners zu stellen.',
-    board: [
-      { c: 'w', t: 'T', cells: [[2,2,0],[3,2,0],[4,2,0],[3,3,0]] },
-      { c: 'b', t: 'O', cells: [[6,5,0],[7,5,0],[6,6,0],[7,6,0]] },
-      { c: 'b', t: 'L', cells: [[0,6,0],[0,7,0],[1,7,0],[2,7,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] },
-  { title: 'Der lange Weg', max: 3, goal: 'capType', type: 'I',
-    script: [{ t: 'S', ci: 1, axis: 'z', dir: -1 }, { t: 'S', ci: 3, axis: 'z', dir: -1 }],
-    text: 'Der schwarze Königstein (I) steht verschanzt am Ostrand des Brettes. Schlagen Sie ihn in höchstens drei Zügen mit der L-Figur.',
-    hint: 'Zwei Z+-Drehungen tragen die L-Figur nach Osten; die Rückdrehung (Z−) am Ziel schlägt zu.',
-    sol: 'Lösung: Drehpunkte g6 (Z+) → h6 (Z+) → j6 (Z−) – die Drehung überlappt j7 und i8 und schlägt den Königstein.',
-    lesson: 'Weite Angriffe erfordern eine geplante Kette von Drehungen – oft ist der Umweg der kürzeste Weg zum Ziel.',
-    board: [
-      { c: 'w', t: 'L', cells: [[4,4,0],[5,4,0],[6,4,0],[6,5,0]] },
-      { c: 'b', t: 'I', cells: [[9,6,0],[9,7,0],[9,8,0],[9,9,0]] },
-      { c: 'b', t: 'S', cells: [[1,1,0],[2,1,0],[0,2,0],[1,2,0]] }
-    ] },
-  { title: 'Doppelpack', max: 2, goal: 'capSum', k: 2,
-    script: [{ t: 'O', ci: 3, axis: 'x', dir: -1 }],
-    text: 'Zum Abschluss ein echtes Rätsel in zwei Zügen: Schlagen Sie mit der T-Figur und dem Königstein (I) je eine schwarze Figur – zusammen zwei Figuren in zwei Zügen. Schwarz verteidigt sich mit der Dame.',
-    hint: 'Beide Angriffe sind unabhängig voneinander – die Reihenfolge der Züge ist frei.',
-    sol: 'Lösung: 1. T-Figur: Drehpunkt d5, Achse Z+ – sie schlägt über e6 die S-Figur. 2. I-Stein: Drehpunkt h3, Achse Z− – er kippt in die h-Linie und schlägt über h4/h5 die Dame.',
-    lesson: 'Zwei Drohungen zugleich aufzubauen zwingt den Gegner dauernd zum Reagieren – die Grundlage jeder Strategie.',
-    board: [
-      { c: 'w', t: 'T', cells: [[2,3,0],[3,3,0],[4,3,0],[3,4,0]] },
-      { c: 'w', t: 'I', cells: [[4,2,0],[5,2,0],[6,2,0],[7,2,0]] },
-      { c: 'b', t: 'S', cells: [[3,5,0],[4,5,0],[2,6,0],[3,6,0]] },
-      { c: 'b', t: 'O', cells: [[7,3,0],[8,3,0],[7,4,0],[8,4,0]] },
-      { c: 'b', t: 'I', cells: [[0,9,0],[1,9,0],[2,9,0],[3,9,0]] }
-    ] }
-];
+var puz = { level: 0, moves: 0, capTotal: 0, replyIdx: 0, state: 'play', solutionShown: false, solIdx: 0, solved: {} };
+// Strategie-Level: Die zehn gestellten Aufgaben sind vorübergehend aus dem Code
+// entfernt, damit Regel- und Rendering-Änderungen nicht jedes Mal angepasst
+// werden müssen. Das Format bleibt unverändert: PUZZLES[level] = { title, max,
+// goal, type, k, script, wm, text, hint, sol, lesson, board }; der Menü-Knopf
+// (lvlBtn) bleibt funktionsfähig – sobald hier wieder Einträge stehen, sind
+// die Level-Rätsel ohne weitere Codeänderungen spielbar.
+var PUZZLES = [];
+
 function puzSolvedCount(){
   var n = 0, i;
   for (i = 0; i < PUZZLES.length; i++) if (puz.solved[i]) n++;
@@ -1083,7 +1332,8 @@ function puzStart(level){
   mode = 'puzzle';
   speakCollapsed = false;
   puz.level = level; puz.moves = 0; puz.capTotal = 0; puz.replyIdx = 0;
-  puz.state = 'play'; puz.solutionShown = false;
+  puz.state = 'play'; puz.solutionShown = false; puz.solIdx = 0;
+  crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = '';
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
   var L = PUZZLES[level], list = [], id = 0;
   L.board.forEach(function(s){ list.push(mkPiece(id++, s.c, s.t, s.cells)); });
@@ -1133,23 +1383,41 @@ function puzReply(){
   aiTimer = null;
   if (mode !== 'puzzle' || puz.state !== 'wait') return;
   var L = PUZZLES[puz.level], mv = null;
+  // Schwarze Antworten schlagen im Rätsel niemals: Der gescriptete Zug wird
+  // nur ausgeführt, wenn er nichts schlägt; andernfalls greift der Fallback.
   if (L.script && puz.replyIdx < L.script.length){
     var s = L.script[puz.replyIdx], q = null;
     pieces.forEach(function(p){ if (!q && p.color === 'b' && p.type === s.t) q = p; });
     if (q && s.axis !== 't'){
       var res = tryMove(q, q.cubes[s.ci], s.axis, s.dir);
-      if (res) mv = { p: q, ci: s.ci, axis: s.axis, dir: s.dir, res: res };
+      if (res && res.captured.length === 0) mv = { p: q, ci: s.ci, axis: s.axis, dir: s.dir, res: res };
     }
   }
   puz.replyIdx++;
   if (!mv){
-    var ms = aiMovesOf('b');
+    var ms = aiMovesOf('b').filter(function(m){ return m.res.captured.length === 0; });
+    if (!ms.length) ms = aiMovesOf('b');
     if (ms.length) mv = ms[0];
   }
   if (!mv){ puz.state = 'play'; puzRender(); updateHUD(); return; }
   sel = mv.p;
   pivotIdx = mv.axis === 't' ? -1 : mv.ci;
   commitMove({ axis: mv.axis, dir: mv.dir, slide: { steps: mv.steps || 1 }, res: mv.res });
+}
+// Lösungs-Durchführung: Trimino führt die Lösungszugfolge vor, Zug für Zug.
+function puzDoSolutionMove(){
+  if (mode !== 'puzzle' || puz.state !== 'play' || !puz.solutionShown || phase === 'anim') return;
+  var L = PUZZLES[puz.level];
+  var wmv = L.wm && L.wm[puz.solIdx];
+  if (!wmv){ puzRender(); updateHUD(); return; }
+  var q = null;
+  pieces.forEach(function(p){ if (!q && p.color === 'w' && p.type === wmv.t) q = p; });
+  if (!q){ puzRender(); updateHUD(); return; }
+  var res = tryMove(q, q.cubes[wmv.ci], wmv.axis, wmv.dir);
+  if (!res){ puzRender(); updateHUD(); return; }
+  sel = q; pivotIdx = wmv.ci; selMoves = movesFor(q);
+  commitMove({ axis: wmv.axis, dir: wmv.dir, res: res });
+  puz.solIdx++;
 }
 function puzRender(){
   var L = PUZZLES[puz.level], hint, btns = '', i, chips = '';
@@ -1169,14 +1437,26 @@ function puzRender(){
     btns += '<button class="btn small" data-pact="retry">Level wiederholen</button>' +
             '<button class="btn small" data-pact="menu">Hauptmen&uuml;</button>';
   } else if (puz.state === 'fail'){
-    hint = 'Nicht geschafft – ' + L.hint;
+    hint = 'Nicht geschafft – lassen Sie sich die Schritt-für-Schritt-Lösung vorführen und versuchen Sie es danach erneut.';
     btns = '<button class="btn small" data-pact="retry">Erneut versuchen</button>' +
            '<button class="btn small" data-pact="sol">L&ouml;sung zeigen</button>' +
            '<button class="btn small" data-pact="menu">Hauptmen&uuml;</button>';
   } else if (puz.state === 'wait'){
-    hint = 'Schwarz antwortet …';
+    hint = puz.solutionShown
+      ? 'Tetromino: „Schwarz antwortet – danach geht die Vorführung weiter.“'
+      : 'Schwarz antwortet …';
+  } else if (puz.solutionShown){
+    var wmv = L.wm && L.wm[puz.solIdx];
+    hint = wmv
+      ? 'Tetromino: „Zug ' + (puz.solIdx + 1) + ' von ' + L.wm.length + ': ' + wmv.cmt + '“'
+      : 'Tetromino: „Die Vorführung ist abgeschlossen.“';
+    btns = (wmv
+      ? '<button class="btn small" data-pact="domove">Zug ' + (puz.solIdx + 1) + ' zeigen</button>'
+      : '') +
+      '<button class="btn small" data-pact="retry">Selbst versuchen</button>' +
+      '<button class="btn small" data-pact="menu">Hauptmen&uuml;</button>';
   } else {
-    hint = puz.solutionShown ? ('Lösung: ' + L.sol) : L.hint;
+    hint = 'Wenn Sie nicht weiterkommen, können Sie sich die Lösung Schritt für Schritt vorführen lassen – Tetromino kommentiert jeden Zug.';
     btns = '<button class="btn small" data-pact="sol">L&ouml;sung zeigen</button>' +
            '<button class="btn small" data-pact="retry">Neustart</button>' +
            '<button class="btn small" data-pact="menu">Hauptmen&uuml;</button>';
@@ -1207,6 +1487,37 @@ function pickCube(pos){
   }
   return null;
 }
+// Unterlegtes Versetzungsziel treffen; bei überlappenden Zielen (breite
+// Figuren) gewinnt der kürzeste Weg – das minimal verschiebende Ziel.
+function pickSlideTarget(pos){
+  var best = null, i;
+  for (i = 0; i < slideHitPolys.length; i++){
+    if (pip(pos, slideHitPolys[i].top)){
+      var t = slideHitPolys[i].target;
+      if (!best || t.k < best.k) best = t;
+    }
+  }
+  return best;
+}
+
+// Tipp-Toleranz für Touch-Eingaben: Wird zusätzlich zum exakten Punkt ein
+// kleines Umfeld geprüft, damit kleine Würfelflächen auf dem Handy dennoch
+// treffbar sind. Die exakte Trefferprüfung hat immer Vorrang.
+var TAP_OFFS = [[3,0],[-3,0],[0,3],[0,-3],[5,0],[-5,0],[0,5],[0,-5],[7,0],[-7,0],[0,7],[0,-7]];
+function pickCubeTap(pos){
+  for (var i = 0; i < TAP_OFFS.length; i++){
+    var h = pickCube({ x: pos.x + TAP_OFFS[i][0], y: pos.y + TAP_OFFS[i][1] });
+    if (h) return h;
+  }
+  return null;
+}
+function pickSlideTap(pos){
+  for (var i = 0; i < TAP_OFFS.length; i++){
+    var t = pickSlideTarget({ x: pos.x + TAP_OFFS[i][0], y: pos.y + TAP_OFFS[i][1] });
+    if (t) return t;
+  }
+  return null;
+}
 
 function onCanvasClick(e){
   if (gameOver || phase === 'anim') return;
@@ -1218,7 +1529,21 @@ function onCanvasClick(e){
     return;
   }
   var pos = canvasPos(e);
-  var h = pickCube(pos);
+  // Klick-Priorität: erst die exakte Figur (Würfel), dann die tolerante
+  // Würfel-Prüfung (Tipp-Toleranz), erst danach die Versetzungsziele.
+  // Grund: Bei versetzungsberechtigten Figuren umlagern Zielfelder die
+  // Figur unmittelbar; ein Finger auf dem Stein selbst darf nie versehentlich
+  // eine Versetzung auslösen. Ein bewusst auf ein Zielfeld mittig gesetzter
+  // Tipp liegt außerhalb der Toleranz und versetzt weiterhin korrekt.
+  var h = pickCube(pos) || pickCubeTap(pos);
+  var tg = null;
+  if (!h && phase === 'piece' && slideTargets.length) tg = pickSlideTarget(pos) || pickSlideTap(pos);
+  // Versetzung per Klick auf ein unterlegtes Zielfeld
+  if (tg){
+    slide = { ux: tg.dx, uy: tg.dy, steps: tg.k, res: tg.res };
+    commitMove({ axis: 't', dir: 1, slide: slide, res: tg.res });
+    return;
+  }
   if (!h){ deselect(); return; }
   var p = h.piece;
   if (p.color !== turn){ updateHUD('Dies ist eine gegnerische Figur.'); return; }
@@ -1274,6 +1599,13 @@ function updateCursor(){
 
 // ---------- Achsen-Panel ----------
 var axBtns = [];
+// Zwei-Tipp-Mechanik: Der erste Tipp auf einen Drehknopf zeigt die Vorschau
+// (scharf gestellt), der zweite Tipp auf denselben Knopf führt den Zug aus.
+// Am Desktop zeigt zusätzlich weiterhin das Überfahren mit der Maus die Vorschau.
+function clearArmed(){
+  if (armedBtn){ armedBtn.classList.remove('armed'); armedBtn = null; }
+  preview = null;
+}
 function initAxisButtons(){
   axBtns = Array.prototype.slice.call(document.querySelectorAll('.axbtn'));
   axBtns.forEach(function(btn){
@@ -1282,19 +1614,35 @@ function initAxisButtons(){
     btn.addEventListener('mouseenter', function(){
       if (ghostOn && !btn.disabled && btn._res) preview = { res: btn._res, axis: axis, dir: dir };
     });
-    btn.addEventListener('mouseleave', function(){ preview = null; });
+    btn.addEventListener('mouseleave', function(){
+      preview = (armedBtn === btn && ghostOn && btn._res)
+        ? { res: btn._res, axis: axis, dir: dir } : null;
+    });
     btn.addEventListener('focus', function(){
       if (ghostOn && !btn.disabled && btn._res) preview = { res: btn._res, axis: axis, dir: dir };
     });
-    btn.addEventListener('blur', function(){ preview = null; });
+    btn.addEventListener('blur', function(){
+      preview = (armedBtn === btn && ghostOn && btn._res)
+        ? { res: btn._res, axis: axis, dir: dir } : null;
+    });
     btn.addEventListener('click', function(){
       if (btn.disabled || !btn._res || phase !== 'axis') return;
-      commitMove({ axis: axis, dir: dir, res: btn._res });
+      if (armedBtn === btn){
+        commitMove({ axis: axis, dir: dir, res: btn._res });
+      } else {
+        clearArmed();
+        armedBtn = btn;
+        btn.classList.add('armed');
+        if (ghostOn) preview = { res: btn._res, axis: axis, dir: dir };
+        sfxPivot();
+        updateHUD('Vorschau scharf gestellt – bitte denselben Knopf erneut antippen, um die Drehung auszuführen.');
+      }
     });
     btn._baseTitle = baseTitle;
   });
 }
 function buildAxisPanel(){
+  clearArmed();
   var pivot = sel.cubes[pivotIdx];
   axBtns.forEach(function(btn){
     var axis = btn.getAttribute('data-axis'), dir = parseInt(btn.getAttribute('data-dir'), 10);
@@ -1316,12 +1664,22 @@ function slideDirOf(sdir){ // Bildschirmrichtung → Brett-Vektor (kamerarelativ
   return vdir(0, -1, 0);
 }
 function slideAccum(sdir){
-  if (gameOver || phase !== 'piece' || !sel || sel.type !== 'O') return;
+  if (gameOver || phase !== 'piece' || !sel) return;
+  var canShift = sel.type === 'O' || (sel.type === 'L' && !sel.moved) || (sel.type === 'I' && isUpright(sel));
+  if (!canShift) return;
   var d = slideDirOf(sdir), ux = d[0], uy = d[1], res;
   if (!slide || slide.ux !== ux || slide.uy !== uy) slide = { ux: ux, uy: uy, steps: 0, res: null };
-  res = trySlide(sel, ux * (slide.steps + 1), uy * (slide.steps + 1));
+  if (sel.type === 'I'){ // Königstein: genau ein Feld
+    if (slide.steps >= 1 && slide.res){ updateHUD(); return; }
+    res = trySlide(sel, ux, uy);
+  } else {
+    res = trySlide(sel, ux * (slide.steps + 1), uy * (slide.steps + 1));
+  }
   if (!res){
-    updateHUD('Schieben blockiert: Weg oder Ziel sind in dieser Richtung besetzt. Die Dame kann nur auf freie Felder geschoben werden.');
+    updateHUD('Versetzen blockiert: Weg oder Ziel sind in dieser Richtung nicht frei. ' +
+      (sel.type === 'I' ? 'Der Königstein kann nur auf ein freies oder gegnerisches Feld versetzt werden.'
+      : sel.type === 'L' ? 'Der Weg muss frei sein; nur am Ziel darf geschlagen werden.'
+      : 'Die Dame kann nur auf freie Felder geschoben werden.'));
     return;
   }
   slide.steps++;
@@ -1334,9 +1692,12 @@ function initDameButtons(){
   Array.prototype.slice.call(document.querySelectorAll('.dbtn')).forEach(function(btn){
     btn._sdir = btn.getAttribute('data-sdir');
     btn.addEventListener('mouseenter', function(){
-      if (!ghostOn || !sel || sel.type !== 'O' || phase !== 'piece') return;
+      if (!ghostOn || !sel || phase !== 'piece') return;
+      var canShift = sel.type === 'O' || (sel.type === 'L' && !sel.moved) || (sel.type === 'I' && isUpright(sel));
+      if (!canShift) return;
       var d = slideDirOf(btn._sdir);
       var st = (slide && slide.ux === d[0] && slide.uy === d[1]) ? slide.steps : 0;
+      if (sel.type === 'I') st = 0; // Königstein zeigt immer den Ein-Feld-Schritt
       var res = trySlide(sel, d[0] * (st + 1), d[1] * (st + 1));
       if (res) preview = { res: res, axis: 't', dir: 1 };
     });
@@ -1355,7 +1716,6 @@ function initDameButtons(){
 function updateHUD(statusOverride){
   var chip = $('turnChip');
   chip.style.background = (turn === 'w') ? '#f0f0e8' : '#23233c';
-  $('turnText').textContent = gameOver ? 'Partie beendet' : ((turn === 'w' ? 'Weiß' : 'Schwarz') + ' am Zug');
   $('halfNo').textContent = 'Halbzug ' + (moveNo + 1);
   var st;
   if (statusOverride) st = statusOverride;
@@ -1366,29 +1726,46 @@ function updateHUD(statusOverride){
   else if (mode === 'puzzle' && puz.state === 'fail') st = 'Zuglimit erreicht – bitte erneut versuchen oder die Lösung ansehen.';
   else if (mode === 'ai' && turn === 'b') st = 'Der Computer ist am Zug …';
   else if (phase === 'idle') st = (turn === 'w' ? 'Weiß' : 'Schwarz') + ' am Zug – bitte eine eigene Figur anklicken.';
-  else if (phase === 'piece') st = (sel && sel.type === 'O'
-    ? 'Dame (O) gewählt – für eine Drehung den Drehpunkt-Würfel anklicken, für eine Verschiebung die Schiebe-Pfeile nutzen.'
-    : 'Figur ' + sel.type + ' gewählt – bitte den Drehpunkt-Würfel anklicken (Würfel mit gelbem Marker).');
-  else if (phase === 'axis') st = 'Drehpunkt steht fest – bitte Drehachse anklicken. Der Klick führt den Zug sofort aus.';
+  else if (phase === 'piece') st = 'Figur ' + sel.type + ' gewählt.';
+  else if (phase === 'axis') st = 'Drehpunkt gewählt – bitte Drehachse antippen.';
   if (!gameOver && !statusOverride && inCheck(turn)) st = 'Schach! ' + st;
-  $('status').textContent = st;
+  speech = st;
   $('modeChip').textContent = mode === 'ai'
     ? ('Einzelspieler · ' + ['Leicht', 'Mittel', 'Schwer'][aiLevel - 1])
     : (mode === 'tutorial' ? 'Tutorial'
-    : (mode === 'puzzle' ? ('Level-Rätsel ' + (puz.level + 1) + '/10') : 'Mehrspieler'));
+    : (mode === 'puzzle' ? ('Level-Rätsel ' + (puz.level + 1) + '/' + PUZZLES.length) : 'Mehrspieler'));
   var tutVis = (mode === 'tutorial' && tut.step >= 0);
   var puzVis = (mode === 'puzzle');
+  var bubbleVis = tutVis || puzVis || mode === '2p' || mode === 'ai';
   $('tutPanel').classList.toggle('hidden', !tutVis || speakCollapsed);
-  $('tutMascot').classList.toggle('hidden', !(tutVis || puzVis));
+  $('tutMascot').classList.toggle('hidden', !bubbleVis);
   $('puzPanel').classList.toggle('hidden', !puzVis || speakCollapsed);
+  // Tetromino spricht alle Meldungen als Sprechblase auf dem Brett: Zugwechsel,
+  // Schach, Matt, Remis, Bröckel-Warnungen und Bedienhinweise. Die Blase blendet
+  // sich nach kurzer Zeit selbst aus; ein Klick auf das Maskottchen zeigt die
+  // letzte Meldung erneut, ein Klick auf die Blase verwirft sie.
+  var msg = ann || speech;
+  if (msg !== lastAnn){ lastAnn = msg; if (msg) annUntil = performance.now() + ANN_MS; }
+  $('annText').textContent = msg;
+  $('annPanel').classList.toggle('hidden', !((mode === '2p' || mode === 'ai') && msg &&
+    !speakCollapsed && performance.now() <= annUntil));
+  $('puzWinBar').classList.toggle('hidden', !(puzVis && puz.state === 'win'));
   $('axisPanel').classList.toggle('hidden', phase !== 'axis');
-  $('damePanel').classList.toggle('hidden',
-    !(sel && sel.type === 'O' && phase === 'piece' && !gameOver));
+  var canShift = sel && phase === 'piece' && !gameOver &&
+    (sel.type === 'O' || (sel.type === 'L' && !sel.moved) || (sel.type === 'I' && isUpright(sel)));
+  $('damePanel').classList.toggle('hidden', !canShift);
+  $('dameLbl').textContent = sel && sel.type === 'L'
+    ? 'L-Figur versetzen (nur im ersten Zug) – am Ziel darf geschlagen werden'
+    : sel && sel.type === 'I'
+    ? 'Königstein (I) versetzen – nur aufrecht, genau ein Feld, Schlag erlaubt'
+    : 'Dame (O-Stein) verschieben – ohne Schlagen';
   $('slideGo').disabled = !(slide && slide.res);
+  // Nur eine knappe Zustandsanzeige; die Erklärung der Versetzungsregeln
+  // steht im Regel-Dialog, nicht als Dauertext auf dem Brett.
   $('slideInfo').textContent = slide && slide.res
-    ? 'Schieben: ' + slide.steps + '× nach ' + dirName(slide.ux, slide.uy) +
-      ' \u2192 Ziel ' + coordName(slide.res.newCubes[0]) + '. Weitere Pfeil-Klicks schieben weiter, „Zug ausführen“ beendet den Zug.'
-    : 'Jeder Klick auf einen Pfeil schiebt die Dame ein Feld in diese Richtung. Der Weg muss frei sein; durch Schieben wird nicht geschlagen.';
+    ? 'Versetzen: ' + slide.steps + '× nach ' + dirName(slide.ux, slide.uy) +
+      ' \u2192 Ziel ' + coordName(slide.res.newCubes[0]) + '.'
+    : '';
   renderPieceLists();
   renderLog();
   updateCursor();
@@ -1518,6 +1895,7 @@ function draw(now){
   if (now < shakeUntil){ shx = Math.round(Math.sin(now * 0.09) * 2); shy = Math.round(Math.cos(now * 0.11) * 2); }
   ctx.translate(shx, shy);
   hitPolys.length = 0;
+  slideHitPolys.length = 0;
 
   // Renderliste aufbauen (Maler-Algorithmus über Sichtkoordinaten vx+vy+vz)
   var items = [];
@@ -1572,16 +1950,58 @@ function draw(now){
                    key: (gv[0] + gv[1] + gv[2]) * 4 + 1 });
     }
   }
+  // Unterlegte Zielfelder der Versetzung (O, L, aufrechter I): Bodenflächen der
+  // möglichen Endpositionen; Rot kennzeichnet Ziele mit Schlag, Gelb solche ohne.
+  if (phase === 'piece' && slideTargets.length && !anim && !gameOver){
+    var seen = {};
+    for (i = 0; i < slideTargets.length; i++){
+      var tgt = slideTargets[i];
+      for (j = 0; j < tgt.res.newCubes.length; j++){
+        var tcc = tgt.res.newCubes[j];
+        var tk = tcc.x + ',' + tcc.y;
+        if (seen[tk]) continue;
+        seen[tk] = true;
+        var tv = vw(tcc.x, tcc.y, 0);
+        items.push({ k: 'tspot', vx: tv[0], vy: tv[1], target: tgt, key: (tv[0] + tv[1]) * 4 + 0.5 });
+      }
+    }
+  }
   items.sort(function(a, b){ return a.key - b.key; });
 
   for (i = 0; i < items.length; i++){
     var it = items[i];
     if (it.k === 'floor'){
       var fsx = rr(OX + (it.vx - it.vy) * TW), fsy = rr(oy + (it.vx + it.vy) * TH);
+      var isWarn = (crumbleWarn === it.x + ',' + it.y);
+      // Angekündigtes bröckelndes Feld: leichte, zeitabhängige Wackelbewegung
+      if (isWarn) fsx += Math.round(Math.sin(now * 0.02 + it.y) * 1);
       var ftop = [[fsx, fsy], [fsx+TW, fsy+TH], [fsx, fsy+2*TH], [fsx-TW, fsy+TH]];
-      var light = (it.x + it.y) % 2 === 0; // Originalfeldfarbe bleibt beim Kameraschwenken erhalten
-      poly(ftop, light ? PAL.floorA : PAL.floorB);
-      strokePoly(ftop, light ? PAL.edgeA : PAL.edgeB);
+      if (crumbled[it.x + ',' + it.y]){
+        // eingebrochene Bodenplatte: dunkles Loch
+        poly(ftop, '#05051a');
+        strokePoly(ftop, '#000000');
+      } else {
+        var light = (it.x + it.y) % 2 === 0; // Originalfeldfarbe bleibt beim Kameraschwenken erhalten
+        poly(ftop, light ? PAL.floorA : PAL.floorB);
+        strokePoly(ftop, light ? PAL.edgeA : PAL.edgeB);
+        if (isWarn){
+          // Bröckel-Markierung: rötlicher Schimmer, roter Rand und Risse
+          poly(ftop, 'rgba(255,90,90,0.14)');
+          strokePoly(ftop, '#ff5a5a');
+          ctx.strokeStyle = '#4a0d0d';
+          ctx.lineWidth = 1;
+          ctx.beginPath();
+          ctx.moveTo(fsx, fsy + TH);
+          ctx.lineTo(fsx - 4, fsy + TH - 2);
+          ctx.lineTo(fsx - 8, fsy + TH + 1);
+          ctx.stroke();
+          ctx.beginPath();
+          ctx.moveTo(fsx + 3, fsy + TH - 3);
+          ctx.lineTo(fsx + 7, fsy + TH);
+          ctx.lineTo(fsx + 5, fsy + TH + 3);
+          ctx.stroke();
+        }
+      }
     } else if (it.k === 'slabL'){
       var lsx = rr(OX + (it.vx - it.vy) * TW), lsy = rr(oy + (it.vx + it.vy) * TH);
       var lface = [[lsx-TW, lsy+TH], [lsx, lsy+2*TH], [lsx, lsy+2*TH+SLAB], [lsx-TW, lsy+TH+SLAB]];
@@ -1597,6 +2017,11 @@ function draw(now){
       poly([[ssx, ssy], [ssx+TW, ssy+TH], [ssx, ssy+2*TH], [ssx-TW, ssy+TH]], 'rgba(8,8,24,0.30)');
     } else if (it.k === 'cube' || it.k === 'acube'){
       var pp = it.piece, pal = PAL[pp.color];
+      if (pp.phantom){
+        // Phantom der Dame: durchscheinend, nicht anklickbar
+        drawCube(it.x, it.y, it.z, pal, oy, { alpha: 0.45, gem: TYPE_COLOR[pp.type], record: false });
+        continue;
+      }
       var outStyle = null;
       if (pp === sel && (phase === 'piece' || phase === 'axis')) outStyle = PAL.sel;
       else if (hover && hover.piece === pp && !gameOver && pp.color === turn) outStyle = '#c9d2ff';
@@ -1609,6 +2034,13 @@ function draw(now){
       });
     } else if (it.k === 'ghost'){
       drawCube(it.x, it.y, it.z, PAL[it.piece.color], oy, { alpha: 0.55, ghost: true });
+    } else if (it.k === 'tspot'){
+      var hsx = rr(OX + (it.vx - it.vy) * TW), hsy = rr(oy + (it.vx + it.vy) * TH);
+      var htop = [[hsx, hsy], [hsx+TW, hsy+TH], [hsx, hsy+2*TH], [hsx-TW, hsy+TH]];
+      var capTgt = it.target.res.captured.length > 0;
+      poly(htop, capTgt ? 'rgba(255,90,90,0.30)' : 'rgba(255,210,63,0.35)');
+      strokePoly(htop, capTgt ? PAL.danger : '#ffd23f');
+      slideHitPolys.push({ top: htop, target: it.target });
     }
   }
 
@@ -1636,6 +2068,11 @@ function draw(now){
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
+  // Sprechblase nach Ablauf der Anzeigedauer automatisch ausblenden
+  if ((mode === '2p' || mode === 'ai') && !$('annPanel').classList.contains('hidden') && now > annUntil){
+    $('annPanel').classList.add('hidden');
+  }
+
   if (anim && now - anim.t0 >= anim.dur) finalizeMove();
 }
 
@@ -1650,14 +2087,14 @@ function ac(){
   if (actx && actx.state === 'suspended') actx.resume();
   return actx;
 }
-function tone(f, dur, vol, when, slide){
+function tone(f, dur, vol, when, slide, grp){
   var c = ac(); if (!c || muted) return;
   var t0 = c.currentTime + (when || 0);
   var o = c.createOscillator(), g = c.createGain();
   o.type = 'square';
   o.frequency.setValueAtTime(f, t0);
   if (slide) o.frequency.linearRampToValueAtTime(slide, t0 + dur);
-  g.gain.setValueAtTime(Math.max(0.0001, (vol || 0.12) * masterVol), t0);
+  g.gain.setValueAtTime(Math.max(0.0001, (vol || 0.12) * (grp === 'mus' ? musVol : masterVol)), t0);
   g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
   o.connect(g); g.connect(c.destination);
   o.start(t0); o.stop(t0 + dur + 0.02);
@@ -1669,6 +2106,37 @@ function sfxMove(){ tone(220, 0.10, 0.12, 0, 440); }
 function sfxCap(){ tone(200, 0.10, 0.16); tone(140, 0.16, 0.14, 0.09); }
 function sfxWin(){ [523, 659, 784, 1047].forEach(function(f, i){ tone(f, 0.12, 0.12, i * 0.11); }); }
 
+// ---------- Hintergrundmusik (8-Bit-Schleife, zur Laufzeit erzeugt) ----------
+// Eigene kurze Chiptune-Schleife: Melodie in A-Moll über einem durchgehenden
+// Bass-Puls, rein mit dem vorhandenen Square-Oszillator erzeugt. Jeder Eintrag
+// ist [Frequenz, Länge in Achteln]; 0 = Pause. Ein Schritt entspricht einem
+// Achtel bei ca. 136 bpm (0,22 s).
+var musOn = false, musTimer = null, musStep = 0, MUS_STEP_MS = 220;
+var MUS_LEAD = [
+  [440,1],[523,1],[659,2],[587,1],[659,1],[523,2],
+  [440,1],[494,1],[523,2],[587,2],[523,1],[494,1],[440,2],[0,2],
+  [659,1],[587,1],[523,2],[494,1],[523,1],[587,2],
+  [440,1],[392,1],[330,2],[392,2],[0,2]
+];
+var MUS_BASS = [ // ein Eintrag pro Melodie-Schritt-Start: [Frequenz, Länge]
+  [220,2],[247,2],[262,2],[220,2],[196,2],[220,2],[165,2],[175,2]
+];
+function musTick(){
+  if (!musOn) return;
+  var lead = MUS_LEAD[musStep % MUS_LEAD.length];
+  if (lead[0]) tone(lead[0], lead[1] * MUS_STEP_MS / 1000 * 0.9, 0.045, 0, null, 'mus');
+  var bass = MUS_BASS[Math.floor(musStep / 2) % MUS_BASS.length];
+  if (musStep % 2 === 0 && bass[0]) tone(bass[0], MUS_STEP_MS / 1000 * 1.7, 0.035, 0, null, 'mus');
+  musStep++;
+  musTimer = setTimeout(musTick, lead[1] * MUS_STEP_MS);
+}
+function toggleMusic(){
+  musOn = !musOn;
+  if (musOn){ musStep = 0; musTick(); }
+  else if (musTimer){ clearTimeout(musTimer); musTimer = null; }
+  $('setMus').textContent = musOn ? 'Musik: an' : 'Musik: aus';
+}
+
 // ---------- Menü, Einstellungen, Quellcode ----------
 function startGame(m, lvl){
   mode = m;
@@ -1679,7 +2147,9 @@ function startGame(m, lvl){
 }
 function openMenu(){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
-  $('lvlBtn').textContent = 'Level-Rätsel (' + puzSolvedCount() + '/10 gelöst)';
+  $('lvlBtn').textContent = PUZZLES.length
+    ? ('Level-Rätsel (' + puzSolvedCount() + '/' + PUZZLES.length + ' gelöst)')
+    : 'Level-Rätsel (folgt bald)';
   $('menuOverlay').classList.remove('hidden');
 }
 function closeMenu(){
@@ -1690,6 +2160,8 @@ function closeMenu(){
 function openSettings(){
   $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
   $('setMute').classList.toggle('selOpt', muted);
+  $('setMus').textContent = musOn ? 'Musik: an' : 'Musik: aus';
+  $('setMus').classList.toggle('selOpt', musOn);
   $('setGhost').textContent = ghostOn ? 'An' : 'Aus';
   $('setGhost').classList.toggle('selOpt', !ghostOn);
   $('setModal').classList.remove('hidden');
@@ -1701,7 +2173,6 @@ function openSource(){
 }
 function toggleMute(){
   muted = !muted;
-  $('muteBtn').textContent = muted ? 'Ton: aus' : 'Ton: an';
   $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
 }
 function restartMode(){
@@ -1719,23 +2190,18 @@ $('tutBtn').addEventListener('click', function(){ closeMenu(); tutStart(); });
 $('mRulesBtn').addEventListener('click', function(){ $('rulesModal').classList.remove('hidden'); });
 $('mSetBtn').addEventListener('click', openSettings);
 $('mInfoBtn').addEventListener('click', openInfo);
-$('mSrcBtn').addEventListener('click', openSource);
 $('menuBack').addEventListener('click', closeMenu);
 
-$('newBtn').addEventListener('click', restartMode);
 $('menuBtn').addEventListener('click', openMenu);
-$('setBtn').addEventListener('click', openSettings);
 $('overBtn').addEventListener('click', restartMode);
 $('overMenuBtn').addEventListener('click', function(){ newGame(); openMenu(); });
 $('cancelBtn').addEventListener('click', deselect);
 $('camL').addEventListener('click', function(){ rotateView(-1); });
 $('camR').addEventListener('click', function(){ rotateView(1); });
-$('rulesBtn').addEventListener('click', function(){ $('rulesModal').classList.remove('hidden'); });
 $('rulesClose').addEventListener('click', function(){ $('rulesModal').classList.add('hidden'); });
 $('rulesModal').addEventListener('click', function(e){
   if (e.target === $('rulesModal')) $('rulesModal').classList.add('hidden');
 });
-$('muteBtn').addEventListener('click', toggleMute);
 
 $('tutBtns').addEventListener('click', function(e){
   var t = e.target.getAttribute && e.target.getAttribute('data-tact');
@@ -1747,27 +2213,61 @@ $('tutBtns').addEventListener('click', function(e){
 });
 
 $('lvlBtn').addEventListener('click', function(){
+  // Ohne eingefügte Level erscheint nur der Hinweis; der Knopf bleibt erhalten.
+  if (!PUZZLES.length){ $('lvlNote').classList.toggle('hidden'); return; }
   closeMenu();
   var i = 0;
   while (i < PUZZLES.length && puz.solved[i]) i++;
   puzStart(Math.min(i, PUZZLES.length - 1));
 });
 $('tutMascot').addEventListener('click', function(){
-  speakCollapsed = !speakCollapsed;
+  var vis = !$('annPanel').classList.contains('hidden');
+  if (vis){ speakCollapsed = true; }                 // sichtbare Blase einklappen
+  else if (!speakCollapsed){ annUntil = performance.now() + 12000; } // Timeout-Ausblendung: erneut zeigen
+  else { speakCollapsed = false; annUntil = performance.now() + 12000; } // eingeklappt: ausklappen
   sfxPivot();
   updateHUD();
 });
+// Klick auf die Sprechblase verwirft die aktuelle Ansage vorzeitig.
+$('annPanel').addEventListener('click', function(){
+  annUntil = 0;
+  $('annPanel').classList.add('hidden');
+});
+
+// ---------- Seitenleisten: Figuren- und Zugliste einklappbar ----------
+var figOpen = true, logOpen = true;
+function applySideToggles(){
+  $('figBody').classList.toggle('hidden', !figOpen);
+  $('logList').classList.toggle('hidden', !logOpen);
+  $('figTog').textContent = figOpen ? '\u2212' : '+';
+  $('logTog').textContent = logOpen ? '\u2212' : '+';
+}
+$('figHead').addEventListener('click', function(){ figOpen = !figOpen; applySideToggles(); });
+$('logHead').addEventListener('click', function(){ logOpen = !logOpen; applySideToggles(); });
+applySideToggles();
 $('puzBtns').addEventListener('click', function(e){
   var t = e.target.getAttribute && e.target.getAttribute('data-pact');
   if (!t) return;
-  if (t === 'sol'){ puz.solutionShown = true; puzRender(); }
+  if (t === 'sol'){ // Vorführung startet mit einer frischen Stellung des Levels
+    puzStart(puz.level);
+    puz.solutionShown = true;
+    puzRender(); updateHUD();
+  }
+  else if (t === 'domove') puzDoSolutionMove();
   else if (t === 'retry') puzStart(puz.level);
   else if (t === 'next') puzStart(Math.min(puz.level + 1, PUZZLES.length - 1));
   else if (t === 'menu'){ mode = '2p'; newGame(); openMenu(); }
 });
 
+// Gewinn-Leiste: bleibt auch dann sichtbar, wenn die Sprechblase eingeklappt ist.
+$('puzWinNext').addEventListener('click', function(){ puzStart(Math.min(puz.level + 1, PUZZLES.length - 1)); });
+$('puzWinRetry').addEventListener('click', function(){ puzStart(puz.level); });
+$('puzWinMenu').addEventListener('click', function(){ mode = '2p'; newGame(); openMenu(); });
+
 $('setMute').addEventListener('click', function(){ toggleMute(); openSettings(); });
+$('setMus').addEventListener('click', function(){ toggleMusic(); openSettings(); });
 $('setVol').addEventListener('input', function(){ masterVol = parseInt($('setVol').value, 10) / 100; });
+$('setMusVol').addEventListener('input', function(){ musVol = parseInt($('setMusVol').value, 10) / 100; });
 Array.prototype.slice.call(document.querySelectorAll('.setDur')).forEach(function(btn){
   btn.addEventListener('click', function(){
     DUR = parseInt(btn.getAttribute('data-dur'), 10);
@@ -1778,8 +2278,11 @@ Array.prototype.slice.call(document.querySelectorAll('.setDur')).forEach(functio
 });
 $('setGhost').addEventListener('click', function(){ ghostOn = !ghostOn; openSettings(); });
 $('setClose').addEventListener('click', function(){ $('setModal').classList.add('hidden'); });
-$('setInfo').addEventListener('click', function(){ $('setModal').classList.add('hidden'); openInfo(); });
-$('setSrc').addEventListener('click', function(){ $('setModal').classList.add('hidden'); openSource(); });
+// Quellcode ist ausschließlich über den Open-Source-Dialog erreichbar.
+$('infoSrc').addEventListener('click', function(){
+  $('infoModal').classList.add('hidden');
+  openSource();
+});
 $('infoClose').addEventListener('click', function(){ $('infoModal').classList.add('hidden'); });
 $('infoModal').addEventListener('click', function(e){
   if (e.target === $('infoModal')) $('infoModal').classList.add('hidden');
@@ -1810,18 +2313,59 @@ var PIX_CCW = [
   '...#######...',
   '.............'
 ];
-// Gerader Pfeil nach links, 12×7 Pixel; Spiegelung ergibt den Pfeil nach rechts
+// Gerader Pfeil nach links, 12×12 Pixel: deutliche Pfeilspitze (fünfspaltige
+// Dreiecksspitze) plus dünner zweizeiliger Schaft – klar als Pfeil lesbar.
+// PIX_UP wird als 90°-Rotation daraus berechnet, sodass alle vier
+// Versetzungs-Pfeile exakt dieselbe Form und Dicke besitzen.
 var PIX_LEFT = [
-  '...##.......',
-  '..##........',
-  '.##.........',
+  '............',
+  '....##......',
+  '...###......',
+  '..####......',
+  '.#####......',
   '############',
-  '.##.........',
-  '..##........',
-  '...##.......'
+  '############',
+  '.#####......',
+  '..####......',
+  '...###......',
+  '....##......',
+  '............'
 ];
+// Halbkreis-Ring für die 180°-Drehung, 13×13 Pixel (symmetrisch, mit
+// Mittelstrich als Halbdrehungs-Marker)
+var PIX_180 = [
+  '.....#####...',
+  '...########..',
+  '..###....###.',
+  '.###......##.',
+  '.##.......##.',
+  '.##.......##.',
+  '.##..####.##.',
+  '.##.......##.',
+  '.###......##.',
+  '..###....###.',
+  '...########..',
+  '.....#####...',
+  '.............'
+];
+// Gerader Pfeil nach oben: 90°-Drehung des Links-Pfeils – dadurch besitzen
+// alle vier Richtungen dieselbe Form, Dicke und Größe; pixFlip ergibt den
+// Pfeil nach unten, pixMirror die Richtungen links/rechts.
+var PIX_UP = pixRot90CW(PIX_LEFT);
 function pixMirror(rows){
   return rows.map(function(r){ return r.split('').reverse().join(''); });
+}
+function pixFlip(rows){
+  return rows.slice().reverse();
+}
+function pixRot90CW(rows){ // Pixelraster um 90° im Uhrzeigersinn drehen (quadratisch)
+  var h = rows.length, w = rows[0].length, out = [], y, x, s;
+  for (y = 0; y < w; y++){
+    s = '';
+    for (x = 0; x < h; x++) s += rows[h - 1 - x][y];
+    out.push(s);
+  }
+  return out;
 }
 function pixSVG(rows, color, scale){
   var r = '', x, y;
@@ -1843,14 +2387,26 @@ function mascotSVG(){
     '</svg>';
 }
 function initIcons(){
-  var ccw = pixSVG(PIX_CCW, '#ffffff', 2);
-  var cw = pixSVG(pixMirror(PIX_CCW), '#ffffff', 2);
-  var left = pixSVG(PIX_LEFT, '#ffd23f', 2);
-  var right = pixSVG(pixMirror(PIX_LEFT), '#ffd23f', 2);
+  // Achsen-Farbkodierung (identisch zur Legende im Dreh-Panel)
+  var AX_COL = { x: '#ef7c1a', y: '#31c7ef', z: '#3fbf3f' };
   axBtns.forEach(function(btn){
     var dir = parseInt(btn.getAttribute('data-dir'), 10);
+    var axis = btn.getAttribute('data-axis');
+    var col = AX_COL[axis] || '#ffffff';
     var slot = btn.querySelector('.axIco');
-    if (slot) slot.innerHTML = dir > 0 ? ccw : cw;
+    if (slot) slot.innerHTML = dir === 2 ? pixSVG(PIX_180, col, 2)
+      : (dir > 0 ? pixSVG(PIX_CCW, col, 2) : pixSVG(pixMirror(PIX_CCW), col, 2));
+  });
+  var left = pixSVG(PIX_LEFT, '#ffd23f', 2);
+  var right = pixSVG(pixMirror(PIX_LEFT), '#ffd23f', 2);
+  // 8-Bit-Pfeile für die Versetzungsrichtungen (W, E, N, S)
+  Array.prototype.slice.call(document.querySelectorAll('.dbtn')).forEach(function(btn){
+    var sd = btn.getAttribute('data-sdir'), slot = btn.querySelector('.dbIco');
+    if (!slot) return;
+    slot.innerHTML = sd === 'W' ? pixSVG(PIX_LEFT, '#ffffff', 2)
+      : sd === 'E' ? pixSVG(pixMirror(PIX_LEFT), '#ffffff', 2)
+      : sd === 'N' ? pixSVG(PIX_UP, '#ffffff', 2)
+      : pixSVG(pixFlip(PIX_UP), '#ffffff', 2);
   });
   $('camIcoL').innerHTML = left;
   $('camIcoR').innerHTML = right;
