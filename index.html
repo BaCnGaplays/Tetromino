@@ -84,6 +84,13 @@
   .menuBtn{display:block;width:100%;margin:8px 0;font-size:14px;padding:12px}
   #diffRow{display:flex;gap:8px}
   #diffRow .btn{flex:1}
+  .catBtn{display:flex;align-items:center;gap:10px;width:100%;margin:8px 0;font-size:13px;padding:10px;text-align:left}
+  .catBadge{width:26px;height:26px;flex:0 0 26px;border:2px solid #000;box-shadow:2px 2px 0 #000;
+    font-size:13px;line-height:22px;text-align:center;color:#0d0d20;font-weight:bold}
+  .catBody{flex:1;display:block}
+  .catBody b{display:block;letter-spacing:1px;color:#fff}
+  .catDesc{display:block;font-size:11px;color:#b8b8e0;margin-top:2px}
+  .catCount{display:block;font-size:10px;color:#9a9ac8;margin-top:2px;letter-spacing:1px}
   .btn.selOpt{background:#4a3a10;border-color:var(--accent)}
   #srcArea{width:100%;height:46vh;background:#0d0d20;color:#b8e0b8;border:2px solid #3d3d7a;
     font-family:inherit;font-size:10px;padding:8px;white-space:pre;resize:vertical}
@@ -132,7 +139,7 @@
 <div id="wrap">
   <header>
     <h1>Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.11</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.14</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -231,7 +238,7 @@
 <div id="menuOverlay" class="menuOverlay">
   <div class="menuBox">
     <h1>Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.11</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.14</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -242,13 +249,23 @@
     </div>
     <h3>Lernen</h3>
     <button id="tutBtn" class="btn menuBtn">Tutorial starten (12 Lektionen)</button>
-    <button id="lvlBtn" class="btn menuBtn">Level-R&auml;tsel (10 Level)</button>
-    <div id="lvlNote" class="hidden" style="color:#ff9a6a;font-size:11px;margin:6px 0 0;letter-spacing:1px">Die Level-R&auml;tsel kehren in einer sp&auml;teren Version zur&uuml;ck.</div>
+    <button id="lvlBtn" class="btn menuBtn">Level-R&auml;tsel (R&auml;tsel-Kategorien)</button>
     <h3>Sonstiges</h3>
     <button id="mRulesBtn" class="btn menuBtn">Regeln anzeigen</button>
     <button id="mSetBtn" class="btn menuBtn">Einstellungen</button>
     <button id="mInfoBtn" class="btn menuBtn">Open Source &amp; Urheberschaft</button>
     <div class="btnRow"><button id="menuBack" class="btn small">Zur&uuml;ck zum Spiel (Esc)</button></div>
+  </div>
+</div>
+
+<div id="catOverlay" class="menuOverlay hidden">
+  <div class="menuBox">
+    <h1>R&auml;tsel</h1>
+    <div class="sub">Strategietraining &ndash; w&auml;hlen Sie eine Kategorie</div>
+    <h3>Kategorie</h3>
+    <div id="catList"></div>
+    <div id="catNote" class="hidden" style="color:#ff9a6a;font-size:11px;margin:10px 0 0;letter-spacing:1px"></div>
+    <div class="btnRow"><button id="catBack" class="btn small">Zur&uuml;ck</button></div>
   </div>
 </div>
 
@@ -292,7 +309,7 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.11</li></ul>
+    <ul><li>Alpha 0.14</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -300,7 +317,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.11</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.14</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -340,7 +357,7 @@
       <li><b>S-Figur:</b> darf auf anderen Figuren stapeln; selbst darf sie jedoch nicht als Unterlage benutzt werden &ndash; keine Figur darf auf der S-Figur stehen, auch keine andere S-Figur nicht.</li>
       <li><b>L-Figur:</b> darf in ihrem ersten Zug zus&auml;tztlich versetzt werden (geradlinig beliebig weit). Dabei darf sie am Ziel gegnerische Figuren &uuml;berlappen und schlagen; der Weg dorthin muss frei sein.</li>
       <li><b>K&ouml;nigstein (I):</b> darf sich, solange er aufrecht steht (senkrechte S&auml;ule), um genau ein Feld versetzen und dabei gegnerische Figuren schlagen. Der K&ouml;nigstein darf nicht mehr schweben.</li>
-      <li><b>Dame (O):</b> versetzt sich wie ein Turm, ohne zu schlagen. Sie hinterl&auml;sst bei jeder Versetzung ein Phantom auf der Startposition: Dreht sich die Dame, dreht sich das Phantom mit und kann dabei Gegner schlagen. Wird das Phantom geschlagen, stirbt nur das Phantom; f&auml;llt die Dame, verschwindet auch das Phantom. Das Phantom darf das Brett verlassen &ndash; verliert es den Kontakt zum Brett, f&auml;llt es herab. Bei der n&auml;chsten Versetzung verschwindet das Phantom und erscheint an der letzten Zugstelle neu.</li>
+      <li><b>Dame (O):</b> versetzt sich wie ein Turm, ohne zu schlagen. Sie hinterl&auml;sst bei jeder Versetzung ein Phantom auf der Startposition: Dreht sich die Dame, dreht sich das Phantom mit und kann dabei Gegner schlagen. Wird das Phantom geschlagen, stirbt nur das Phantom; f&auml;llt die Dame, verschwindet auch das Phantom. Das Phantom darf das Brett verlassen &ndash; verliert es den Kontakt zum Brett, f&auml;llt es herab. Bei der n&auml;chsten Versetzung verschwindet das Phantom und erscheint an der letzten Zugstelle neu. Ein drohendes Phantom z&auml;hlt wie eine Figur f&uuml;r Schach, und die K&ouml;nigs-Schlagbeschr&auml;nkung gilt auch f&uuml;r Schl&auml;ge des Phantoms: Der K&ouml;nigstein kann niemals vor den &uuml;brigen Figuren fallen.</li>
     </ul>
     <h3>Schlagen</h3>
     <ul>
@@ -553,6 +570,12 @@ var aiLevel = 2;          // 1 = Leicht, 2 = Mittel, 3 = Schwer
 var aiTimer = null;
 var masterVol = 1;         // 0..1 (Effekt-Lautstärke)
 var musVol = 1;            // 0..1 (Musik-Lautstärke, eigener Regler)
+// Hintergrundmusik bleibt dezent hinter den Effekten: Musik ist eine
+// durchgehende Kulisse und wirkt subjektiv lauter als kurze Blips gleicher
+// Amplitude. MUS_GAIN senkt die Musik daher im Verhältnis zu den Effekten
+// ab; die Skala des Reglers ist zusätzlich gekrümmt (s. setMusVol-Handler),
+// damit der untere Bereich fein abgestuft bleibt.
+var MUS_GAIN = 0.5;
 var DUR = 480;            // Dauer der Drehanimation in ms
 var ghostOn = true;       // Geistervorschau beim Überfahren der Achsenknöpfe
 var PAGE_SRC;             // wird unmittelbar nach dem DOM-Aufbau eingefroren (s. u.)
@@ -668,6 +691,27 @@ function isUpright(p){
   return p.cubes.every(function(c){ return c.x === p.cubes[0].x && c.y === p.cubes[0].y; });
 }
 
+// Phantom-Schwung: Dreht die Dame, schwingt ihr Phantom um denselben
+// Pivot-Index mit und erfasst Gegner auf seinen Zielwürfeln.
+function phantomSwing(p, axis, dir, ciP){
+  var ph = null, i, j, o2;
+  for (i = 0; i < pieces.length; i++)
+    if (pieces[i].phantom && pieces[i].master === p) ph = pieces[i];
+  if (!ph) return null;
+  var pivQ = ph.cubes[ciP] || ph.cubes[0];
+  var cubes = ph.cubes.map(function(c){
+    var o = rotOffset(axis, dir, c.x - pivQ.x, c.y - pivQ.y, c.z - pivQ.z);
+    return { x: pivQ.x + o[0], y: pivQ.y + o[1], z: pivQ.z + o[2] };
+  });
+  var captured = [];
+  for (j = 0; j < cubes.length; j++){
+    o2 = occ[ck(cubes[j])];
+    if (o2 && o2 !== ph && o2 !== p && o2.master !== p &&
+        o2.color !== p.color && captured.indexOf(o2) < 0) captured.push(o2);
+  }
+  return { ph: ph, cubes: cubes, captured: captured };
+}
+
 function tryMove(piece, pivot, axis, dir, safety, kingCap){
   if (dir === 2 && piece.type !== 'T') return null; // 180° nur für die T-Figur
   var newCubes = piece.cubes.map(function(c){
@@ -691,6 +735,18 @@ function tryMove(piece, pivot, axis, dir, safety, kingCap){
     if (o && o !== piece && !(o.phantom && o.master === piece)){
       if (o.color === piece.color) return null;
       if (captured.indexOf(o) < 0) captured.push(o);
+    }
+  }
+  // Mitschwingendes Phantom der Dame: Bei einer Drehung schwingt ihr Phantom
+  // um denselben Pivot mit und schlägt Gegner auf seinen Zielwürfeln. Diese
+  // Schläge gehören zum Zug und unterliegen daher der Königs-Schlagbeschränkung
+  // und dem Schachschutz – ein Phantom kann den Königstein nicht vor den
+  // übrigen Figuren schlagen, und Schach durch ein Phantom wird erkannt.
+  if (piece.type === 'O' && !piece.phantom && chessRulesOn()){
+    var swing = phantomSwing(piece, axis, dir, piece.cubes.indexOf(pivot));
+    if (swing){
+      for (var s2 = 0; s2 < swing.captured.length; s2++)
+        if (captured.indexOf(swing.captured[s2]) < 0) captured.push(swing.captured[s2]);
     }
   }
   // Königs-Schlagbeschränkung: Der Königstein darf nur geschlagen werden,
@@ -867,20 +923,14 @@ function finalizeMove(){
       pieces.push({ id: nextId++, color: p.color, type: 'O', phantom: true, master: p,
         cubes: a.cubes0.map(function(c){ return { x: c.x, y: c.y, z: c.z }; }), moved: true });
     } else {
-      var ph = null;
-      pieces.forEach(function(q){ if (q.phantom && q.master === p) ph = q; });
-      if (ph){
-        var pivQ = ph.cubes[pivotIdx] || ph.cubes[0];
-        var phCubes = ph.cubes.map(function(c){
-          var o = rotOffset(a.axis, a.dir, c.x - pivQ.x, c.y - pivQ.y, c.z - pivQ.z);
-          return { x: pivQ.x + o[0], y: pivQ.y + o[1], z: pivQ.z + o[2] };
-        });
-        var phCap = [], j;
-        for (j = 0; j < phCubes.length; j++){
-          var o2 = occ[ck(phCubes[j])];
-          if (o2 && o2 !== ph && o2 !== p && o2.master !== p && o2.color !== p.color && phCap.indexOf(o2) < 0) phCap.push(o2);
-        }
-        if (phCap.length){
+      var sw = phantomSwing(p, a.axis, a.dir, pivotIdx);
+      if (sw){
+        var ph = sw.ph;
+        // Im Duell (Schach-Modus) hat tryMove die Phantom-Schläge bereits in
+        // die Schlagliste des Zuges übernommen; außerhalb der Schach-Modi
+        // werden sie hier verarbeitet.
+        var phCap = sw.captured.filter(function(q){ return cap.indexOf(q) < 0; }), j;
+        if (phCap.length && !chessRulesOn()){
           pieces = pieces.filter(function(q){
             if (phCap.indexOf(q) >= 0) return false;
             if (q.phantom && q.master && phCap.indexOf(q.master) >= 0) return false;
@@ -888,14 +938,17 @@ function finalizeMove(){
           });
           if (p.color === 'w') capturedByW = capturedByW.concat(phCap);
           else capturedByB = capturedByB.concat(phCap);
-          logEntries.push('Das Phantom der ' + (p.color === 'w' ? 'weißen' : 'schwarzen') +
-            ' Dame schlägt ' + phCap.map(function(q){ return q.type; }).join('') + '.');
           shakeUntil = performance.now() + 220;
           sfxCap();
         }
-        ph.cubes = phCubes;
+        if (sw.captured.length){
+          logEntries.push('Das Phantom der ' + (p.color === 'w' ? 'weißen' : 'schwarzen') +
+            ' Dame schlägt ' + sw.captured.map(function(q){ return q.type; }).join('') + '.');
+          if (!cap.length){ shakeUntil = performance.now() + 220; sfxCap(); }
+        }
+        ph.cubes = sw.cubes;
         // Das Phantom darf das Brett verlassen; ohne Bodenkontakt fällt es herab.
-        if (!phCubes.some(function(c){ return c.z === 0; })){
+        if (!sw.cubes.some(function(c){ return c.z === 0; })){
           pieces = pieces.filter(function(q){ return q !== ph; });
           logEntries.push('Das Phantom der Dame verliert den Halt und fällt herab.');
         }
@@ -1314,36 +1367,61 @@ function tutEvent(kind, data){
 // Zehn gestellte Aufgaben: Weiß ist immer am Zug; Schwarz antwortet mit
 // gescripteten Zügen (oder notfalls einem harmlosen Fallback-Zug). Geprüft wird
 // das Levelziel – nicht der exakte Lösungsweg; ein Zuglimit (max) begrenzt die Versuche.
-var puz = { level: 0, moves: 0, capTotal: 0, replyIdx: 0, state: 'play', solutionShown: false, solIdx: 0, solved: {} };
-// Strategie-Level: Die zehn gestellten Aufgaben sind vorübergehend aus dem Code
-// entfernt, damit Regel- und Rendering-Änderungen nicht jedes Mal angepasst
-// werden müssen. Das Format bleibt unverändert: PUZZLES[level] = { title, max,
-// goal, type, k, script, wm, text, hint, sol, lesson, board }; der Menü-Knopf
-// (lvlBtn) bleibt funktionsfähig – sobald hier wieder Einträge stehen, sind
-// die Level-Rätsel ohne weitere Codeänderungen spielbar.
-var PUZZLES = [];
-
-function puzSolvedCount(){
+var puz = { cat: null, level: 0, moves: 0, capTotal: 0, replyIdx: 0, state: 'play', solutionShown: false, solIdx: 0, solved: {} };
+// Rätsel-Kategorien für das Strategietraining. Der Menü-Knopf (lvlBtn) öffnet
+// die Auswahlseite (catOverlay); dort wird eine Kategorie gewählt. Rätsel werden
+// je Kategorie ergänzt: PUZZLES[cat] = [ { title, max, goal, type, k, script,
+// wm, text, hint, sol, lesson, board }, ... ] – das Format je Rätsel bleibt
+// unverändert, sodass die Generierung später ohne Codeänderung möglich ist.
+// Solange eine Kategorie leer ist, meldet die Auswahlseite, dass die Rätsel
+// folgen.
+var PUZ_CATS = [
+  { id: 'strike',  sigil: '×', color: '#ef7c1a', title: 'Schlagen in Zügen',
+    desc: 'Figuren gezielt mit Drehungen und Versetzungen schlagen.' },
+  { id: 'check',   sigil: '+', color: '#ffd23f', title: 'Schach setzen',
+    desc: 'Den gegnerischen Königstein mit einer Drohung in Schach stellen.' },
+  { id: 'mate',    sigil: '#', color: '#3fbf3f', title: 'Mattsetzen & Endspiel',
+    desc: 'Schachmatt setzen und den Königstein als letzte Figur schlagen.' },
+  { id: 'defense', sigil: 'S', color: '#31c7ef', title: 'Bedrohungen abwehren',
+    desc: 'Gegnerische Drohungen abwenden und selbst Druck aufbauen.' }
+];
+var PUZZLES = { strike: [], check: [], mate: [], defense: [] };
+function puzCat(id){
+  var i;
+  for (i = 0; i < PUZ_CATS.length; i++) if (PUZ_CATS[i].id === id) return PUZ_CATS[i];
+  return null;
+}
+function puzList(){ return PUZZLES[puz.cat] || []; }
+function puzSolvedKey(level){ return puz.cat + ':' + level; }
+function puzTotal(){
   var n = 0, i;
-  for (i = 0; i < PUZZLES.length; i++) if (puz.solved[i]) n++;
+  for (i = 0; i < PUZ_CATS.length; i++) n += (PUZZLES[PUZ_CATS[i].id] || []).length;
   return n;
 }
-function puzStart(level){
+function puzSolvedCount(cat){
+  var n = 0, i;
+  for (i = 0; i < (PUZZLES[cat] || []).length; i++) if (puz.solved[cat + ':' + i]) n++;
+  return n;
+}
+function puzStart(cat, level){
+  var list = PUZZLES[cat] || [];
+  if (!list.length || !list[level]) return false;
   mode = 'puzzle';
   speakCollapsed = false;
-  puz.level = level; puz.moves = 0; puz.capTotal = 0; puz.replyIdx = 0;
+  puz.cat = cat; puz.level = level; puz.moves = 0; puz.capTotal = 0; puz.replyIdx = 0;
   puz.state = 'play'; puz.solutionShown = false; puz.solIdx = 0;
   crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = '';
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
-  var L = PUZZLES[level], list = [], id = 0;
-  L.board.forEach(function(s){ list.push(mkPiece(id++, s.c, s.t, s.cells)); });
-  pieces = list; occ = rebuildOcc(list);
+  var C = puzCat(cat), L = list[level], list2 = [], id = 0;
+  L.board.forEach(function(s){ list2.push(mkPiece(id++, s.c, s.t, s.cells)); });
+  pieces = list2; occ = rebuildOcc(list2);
   turn = 'w'; phase = 'idle'; sel = null; pivotIdx = -1; selMoves = [];
   preview = null; anim = null; gameOver = false; moveNo = 0; sinceCap = 0;
   capturedByW = []; capturedByB = []; shakeUntil = 0; hover = null; slide = null;
-  logEntries = ['Level-Rätsel ' + (level + 1) + '/10 – ' + L.title];
+  logEntries = ['Level-Rätsel · ' + (C ? C.title : cat) + ' · Rätsel ' + (level + 1) + '/' + list.length + ' – ' + L.title];
   $('overOverlay').classList.add('hidden');
   puzRender(); updateHUD();
+  return true;
 }
 function puzGoalMet(data, L){
   if (L.goal === 'capAny') return data.capCount >= 1;
@@ -1356,7 +1434,7 @@ function puzGoalMet(data, L){
   return false;
 }
 function puzAfterWhite(data){
-  var L = PUZZLES[puz.level];
+  var L = puzList()[puz.level];
   puz.moves++;
   puz.capTotal += data.capCount;
   if (puzGoalMet(data, L)){ puzWin(); return; }
@@ -1366,7 +1444,7 @@ function puzAfterWhite(data){
   puzScheduleReply();
 }
 function puzWin(){
-  puz.solved[puz.level] = true;
+  puz.solved[puzSolvedKey(puz.level)] = true;
   puz.state = 'win';
   sfxWin();
   puzRender(); updateHUD();
@@ -1382,7 +1460,7 @@ function puzScheduleReply(){
 function puzReply(){
   aiTimer = null;
   if (mode !== 'puzzle' || puz.state !== 'wait') return;
-  var L = PUZZLES[puz.level], mv = null;
+  var L = puzList()[puz.level], mv = null;
   // Schwarze Antworten schlagen im Rätsel niemals: Der gescriptete Zug wird
   // nur ausgeführt, wenn er nichts schlägt; andernfalls greift der Fallback.
   if (L.script && puz.replyIdx < L.script.length){
@@ -1407,7 +1485,7 @@ function puzReply(){
 // Lösungs-Durchführung: Trimino führt die Lösungszugfolge vor, Zug für Zug.
 function puzDoSolutionMove(){
   if (mode !== 'puzzle' || puz.state !== 'play' || !puz.solutionShown || phase === 'anim') return;
-  var L = PUZZLES[puz.level];
+  var L = puzList()[puz.level];
   var wmv = L.wm && L.wm[puz.solIdx];
   if (!wmv){ puzRender(); updateHUD(); return; }
   var q = null;
@@ -1420,20 +1498,21 @@ function puzDoSolutionMove(){
   puz.solIdx++;
 }
 function puzRender(){
-  var L = PUZZLES[puz.level], hint, btns = '', i, chips = '';
-  $('puzHead').textContent = 'Level-Rätsel · Level ' + (puz.level + 1) + '/10 · Zug ' + puz.moves + '/' + L.max;
-  for (i = 0; i < PUZZLES.length; i++){
-    chips += '<span class="lvlChip' + (puz.solved[i] ? ' done' : (i === puz.level ? ' cur' : '')) +
+  var L = puzList()[puz.level], C = puzCat(puz.cat), list = puzList(), hint, btns = '', i, chips = '';
+  $('puzHead').textContent = 'Level-Rätsel · ' + (C ? C.title : '') +
+    ' · Rätsel ' + (puz.level + 1) + '/' + list.length + ' · Zug ' + puz.moves + '/' + L.max;
+  for (i = 0; i < list.length; i++){
+    chips += '<span class="lvlChip' + (puz.solved[puzSolvedKey(i)] ? ' done' : (i === puz.level ? ' cur' : '')) +
              '">' + (i + 1) + '</span>';
   }
   $('puzStreak').innerHTML = chips;
-  $('puzTitle').textContent = 'Level ' + (puz.level + 1) + ': ' + L.title;
+  $('puzTitle').textContent = 'Rätsel ' + (puz.level + 1) + ': ' + L.title;
   $('puzText').textContent = L.text;
   if (puz.state === 'win'){
     hint = 'Gelöst! ' + L.lesson;
-    btns = puz.level + 1 < PUZZLES.length
-      ? '<button class="btn small" data-pact="next">Nächstes Level</button>'
-      : '<button class="btn small" data-pact="menu">Alle Level geschafft – zum Hauptmenü</button>';
+    btns = puz.level + 1 < list.length
+      ? '<button class="btn small" data-pact="next">Nächstes Rätsel</button>'
+      : '<button class="btn small" data-pact="menu">Alle Rätsel der Kategorie geschafft – zum Hauptmenü</button>';
     btns += '<button class="btn small" data-pact="retry">Level wiederholen</button>' +
             '<button class="btn small" data-pact="menu">Hauptmen&uuml;</button>';
   } else if (puz.state === 'fail'){
@@ -1582,6 +1661,7 @@ window.addEventListener('keydown', function(e){
       var mEl = $(modals[i]);
       if (!mEl.classList.contains('hidden')){ mEl.classList.add('hidden'); return; }
     }
+    if (!$('catOverlay').classList.contains('hidden')){ closeCatMenu(); return; }
     if (!$('menuOverlay').classList.contains('hidden')){ closeMenu(); return; }
     deselect();
   }
@@ -2094,7 +2174,7 @@ function tone(f, dur, vol, when, slide, grp){
   o.type = 'square';
   o.frequency.setValueAtTime(f, t0);
   if (slide) o.frequency.linearRampToValueAtTime(slide, t0 + dur);
-  g.gain.setValueAtTime(Math.max(0.0001, (vol || 0.12) * (grp === 'mus' ? musVol : masterVol)), t0);
+  g.gain.setValueAtTime(Math.max(0.0001, (vol || 0.12) * (grp === 'mus' ? MUS_GAIN * musVol : masterVol)), t0);
   g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
   o.connect(g); g.connect(c.destination);
   o.start(t0); o.stop(t0 + dur + 0.02);
@@ -2147,15 +2227,56 @@ function startGame(m, lvl){
 }
 function openMenu(){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
-  $('lvlBtn').textContent = PUZZLES.length
-    ? ('Level-Rätsel (' + puzSolvedCount() + '/' + PUZZLES.length + ' gelöst)')
-    : 'Level-Rätsel (folgt bald)';
+  $('lvlBtn').textContent = puzTotal()
+    ? ('Level-Rätsel (' + puzTotal() + ' Rätsel)')
+    : 'Level-Rätsel (Rätsel-Kategorien)';
   $('menuOverlay').classList.remove('hidden');
 }
 function closeMenu(){
   $('menuOverlay').classList.add('hidden');
   if (!gameOver && mode === 'ai' && turn === 'b' && phase !== 'anim') aiSchedule();
   if (!gameOver && mode === 'puzzle' && puz.state === 'wait' && phase !== 'anim') puzScheduleReply();
+}
+// ---------- Rätsel-Kategorien (Auswahlseite) ----------
+// Der Level-Rätsel-Knopf öffnet zunächst diese Auswahlseite; die Rätsel je
+// Kategorie werden später ergänzt, ohne dass diese Seite geändert werden muss.
+function openCatMenu(){
+  var html = '', i, c, n, solved;
+  for (i = 0; i < PUZ_CATS.length; i++){
+    c = PUZ_CATS[i];
+    n = (PUZZLES[c.id] || []).length;
+    solved = puzSolvedCount(c.id);
+    html += '<button class="btn catBtn" data-cat="' + c.id + '">' +
+      '<span class="catBadge" style="background:' + c.color + '">' + c.sigil + '</span>' +
+      '<span class="catBody"><b>' + c.title + '</b><span class="catDesc">' + c.desc + '</span>' +
+      '<span class="catCount">' + (n ? solved + '/' + n + ' gelöst' : 'Rätsel folgen in einer späteren Version') +
+      '</span></span></button>';
+  }
+  $('catList').innerHTML = html;
+  $('catNote').textContent = '';
+  $('catNote').classList.add('hidden');
+  $('catOverlay').classList.remove('hidden');
+}
+function closeCatMenu(){ $('catOverlay').classList.add('hidden'); }
+function catFromEvent(e){
+  var el = e.target;
+  while (el && (!el.getAttribute || !el.getAttribute('data-cat'))) el = el.parentNode;
+  return el && el.getAttribute ? el.getAttribute('data-cat') : null;
+}
+function pickCat(id){
+  var c = puzCat(id);
+  if (!c) return;
+  var list = PUZZLES[id] || [];
+  if (!list.length){
+    // Noch keine Rätsel generiert: Die Auswahlseite bleibt offen und begründet dies.
+    $('catNote').textContent = '„' + c.title + '“: Für diese Kategorie werden die Rätsel in einer späteren Version ergänzt.';
+    $('catNote').classList.remove('hidden');
+    return;
+  }
+  var i = 0;
+  while (i < list.length && puz.solved[id + ':' + i]) i++;
+  closeCatMenu();
+  puzStart(id, Math.min(i, list.length - 1));
 }
 function openSettings(){
   $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
@@ -2177,7 +2298,7 @@ function toggleMute(){
 }
 function restartMode(){
   if (mode === 'tutorial') tutStart();
-  else if (mode === 'puzzle') puzStart(puz.level);
+  else if (mode === 'puzzle') puzStart(puz.cat, puz.level);
   else newGame();
 }
 
@@ -2212,14 +2333,12 @@ $('tutBtns').addEventListener('click', function(e){
   else if (t === '2p') startGame('2p');
 });
 
-$('lvlBtn').addEventListener('click', function(){
-  // Ohne eingefügte Level erscheint nur der Hinweis; der Knopf bleibt erhalten.
-  if (!PUZZLES.length){ $('lvlNote').classList.toggle('hidden'); return; }
-  closeMenu();
-  var i = 0;
-  while (i < PUZZLES.length && puz.solved[i]) i++;
-  puzStart(Math.min(i, PUZZLES.length - 1));
+$('lvlBtn').addEventListener('click', function(){ openCatMenu(); });
+$('catList').addEventListener('click', function(e){
+  var id = catFromEvent(e);
+  if (id) pickCat(id);
 });
+$('catBack').addEventListener('click', closeCatMenu);
 $('tutMascot').addEventListener('click', function(){
   var vis = !$('annPanel').classList.contains('hidden');
   if (vis){ speakCollapsed = true; }                 // sichtbare Blase einklappen
@@ -2248,26 +2367,31 @@ applySideToggles();
 $('puzBtns').addEventListener('click', function(e){
   var t = e.target.getAttribute && e.target.getAttribute('data-pact');
   if (!t) return;
-  if (t === 'sol'){ // Vorführung startet mit einer frischen Stellung des Levels
-    puzStart(puz.level);
+  if (t === 'sol'){ // Vorführung startet mit einer frischen Stellung des Rätsels
+    puzStart(puz.cat, puz.level);
     puz.solutionShown = true;
     puzRender(); updateHUD();
   }
   else if (t === 'domove') puzDoSolutionMove();
-  else if (t === 'retry') puzStart(puz.level);
-  else if (t === 'next') puzStart(Math.min(puz.level + 1, PUZZLES.length - 1));
+  else if (t === 'retry') puzStart(puz.cat, puz.level);
+  else if (t === 'next') puzStart(puz.cat, Math.min(puz.level + 1, puzList().length - 1));
   else if (t === 'menu'){ mode = '2p'; newGame(); openMenu(); }
 });
 
 // Gewinn-Leiste: bleibt auch dann sichtbar, wenn die Sprechblase eingeklappt ist.
-$('puzWinNext').addEventListener('click', function(){ puzStart(Math.min(puz.level + 1, PUZZLES.length - 1)); });
-$('puzWinRetry').addEventListener('click', function(){ puzStart(puz.level); });
+$('puzWinNext').addEventListener('click', function(){ puzStart(puz.cat, Math.min(puz.level + 1, puzList().length - 1)); });
+$('puzWinRetry').addEventListener('click', function(){ puzStart(puz.cat, puz.level); });
 $('puzWinMenu').addEventListener('click', function(){ mode = '2p'; newGame(); openMenu(); });
 
 $('setMute').addEventListener('click', function(){ toggleMute(); openSettings(); });
 $('setMus').addEventListener('click', function(){ toggleMusic(); openSettings(); });
 $('setVol').addEventListener('input', function(){ masterVol = parseInt($('setVol').value, 10) / 100; });
-$('setMusVol').addEventListener('input', function(){ musVol = parseInt($('setMusVol').value, 10) / 100; });
+$('setMusVol').addEventListener('input', function(){
+  // Gekrümmte Skala (Exponent 1,6): 100% bleibt 100%, aber 50% wirkt wie ein
+  // Drittel und 10% wie ein Vierzigstel – so löst „leise“ die Musik tatsächlich
+  // in Hintergrundlautstärke auf, statt wie die volle Effekt-Lautstärke zu klingen.
+  musVol = Math.pow(parseInt($('setMusVol').value, 10) / 100, 1.6);
+});
 Array.prototype.slice.call(document.querySelectorAll('.setDur')).forEach(function(btn){
   btn.addEventListener('click', function(){
     DUR = parseInt(btn.getAttribute('data-dur'), 10);
