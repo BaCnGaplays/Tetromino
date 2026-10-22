@@ -12,15 +12,21 @@
   }
   *{box-sizing:border-box}
   html,body{margin:0;padding:0;background:var(--bg);color:var(--ink)}
-  #wrap{max-width:1080px;margin:0 auto;padding:14px}
+  #wrap{max-width:720px;margin:0 auto;padding:14px}
   header{margin:6px 0 12px}
   h1{margin:0;color:var(--accent);text-transform:uppercase;letter-spacing:3px;font-size:26px;text-shadow:2px 2px 0 #7a2a1a}
+  h1>svg{display:block;image-rendering:pixelated;margin:0 auto}
+  header h1>svg{margin:0}
   header .sub{color:#9a9ac8;font-size:12px;margin-top:4px}
   #main{display:flex;gap:16px;flex-wrap:wrap;align-items:flex-start}
   #left{flex:1 1 520px;min-width:320px}
-  #side{flex:1 1 250px;min-width:250px}
-  #turnbar{display:flex;align-items:center;gap:10px;background:var(--panel);border:2px solid var(--panel-edge);
-    box-shadow:0 3px 0 #000;padding:8px 10px;margin-bottom:8px;font-size:13px;text-transform:uppercase;letter-spacing:1px}
+  /* Statusleiste: liegt als schmales Band am oberen Rand INNERHALB des
+     Spielfelds (ueber dem Brett, unterhalb des Kopfes); pointer-events:none,
+     damit Klicks auf das Brett darunter ungehindert durchgehen. */
+  #turnbar{position:absolute;top:6px;left:6px;right:6px;z-index:6;display:flex;align-items:center;gap:10px;
+    background:rgba(13,13,32,.95);border:2px solid var(--panel-edge);
+    box-shadow:0 3px 0 #000;padding:4px 8px;margin:0;font-size:11px;text-transform:uppercase;letter-spacing:1px;
+    pointer-events:none}
   #turnChip{width:14px;height:14px;border:2px solid #000;display:inline-block}
   #halfNo{margin-left:auto;color:#9a9ac8}
   #boardWrap{position:relative;max-width:640px;margin:0 auto}
@@ -42,28 +48,24 @@
   .axbtn{flex:1;min-width:0;display:inline-flex;align-items:center;justify-content:center;gap:5px;min-height:34px;padding:4px 6px}
   .axIco svg,.camIco svg{display:block;image-rendering:crisp-edges}
   #axLegend{font-size:9px;color:#9a9ac8;letter-spacing:1px;margin:2px 0 4px;text-transform:uppercase}
-  #camRow{position:absolute;top:6px;right:6px;z-index:6;display:flex;align-items:center;gap:6px;margin:0;background:transparent}
-  #menuRow{position:absolute;top:6px;left:6px;z-index:6;margin:0;background:transparent}
+  #camRow{position:absolute;top:40px;right:6px;z-index:6;display:flex;align-items:center;gap:6px;margin:0;background:transparent}
+  #menuRow{position:absolute;top:40px;left:6px;z-index:6;margin:0;background:transparent}
   .camBtn{display:inline-flex;align-items:center;gap:6px;padding:4px 6px}
   #scan{position:absolute;inset:4px;pointer-events:none;z-index:5;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px)}
   .modeChip{border:1px solid #000;background:#0d0d24;padding:2px 6px;font-size:10px;color:#ffd23f;letter-spacing:1px}
   .verTag{display:inline-block;border:1px solid #7a2a1a;color:#ff9a6a;padding:1px 6px;font-size:10px;letter-spacing:1px;background:#141432}
-  #tutPanel{position:absolute;top:76px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
+  #tutPanel{position:absolute;top:112px;right:56px;width:78%;max-width:500px;max-height:min(440px,62vh);overflow-y:auto;z-index:6;background:rgba(13,13,32,.95);
     border:2px solid #3fbf3f;box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:none}
-  #tutPanel::after{content:'';position:absolute;top:12px;right:-13px;border:7px solid transparent;border-left-color:#3fbf3f}
-  #tutPanel::before{content:'';position:absolute;top:14px;right:-8px;border:5px solid transparent;border-left-color:#0d0d20}
   #tutPanel .btn{pointer-events:auto}
-  #tutMascot{position:absolute;top:76px;right:6px;z-index:6;text-align:center;pointer-events:auto;cursor:pointer}
+  #tutMascot{position:absolute;top:112px;right:6px;z-index:6;text-align:center;pointer-events:auto;cursor:pointer}
   #mascotName{font-size:9px;color:#3fbf3f;text-transform:uppercase;letter-spacing:1px;margin-top:2px}
   #tutHead{font-size:9px;color:#3fbf3f;text-transform:uppercase;letter-spacing:2px}
   #tutTitle{font-size:12px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin:2px 0}
   #tutText{font-size:11px;color:#c8c8e8;line-height:1.5}
   #tutHint{font-size:10px;color:#ff9a6a;margin-top:4px;min-height:12px}
-  #puzPanel{position:absolute;top:76px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
+  #puzPanel{position:absolute;top:112px;right:56px;width:78%;max-width:500px;max-height:min(440px,62vh);overflow-y:auto;z-index:6;background:rgba(13,13,32,.95);
     border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:none}
-  #puzPanel::after{content:'';position:absolute;top:12px;right:-13px;border:7px solid transparent;border-left-color:var(--accent)}
-  #puzPanel::before{content:'';position:absolute;top:14px;right:-8px;border:5px solid transparent;border-left-color:#0d0d20}
   #puzHead{font-size:9px;color:var(--accent);text-transform:uppercase;letter-spacing:2px}
   #puzStreak{margin:2px 0}
   .lvlChip{display:inline-block;border:1px solid #3d3d7a;background:#0d0d24;color:#9a9ac8;font-size:10px;
@@ -76,6 +78,7 @@
   .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,1);display:flex;align-items:center;
     justify-content:center;padding:16px;z-index:100;overflow-y:auto}
   .menuBox{background:var(--panel);border:3px solid var(--accent);box-shadow:0 6px 0 #000;
+    background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.10) 0 1px,transparent 1px 3px);
     padding:20px;max-width:520px;width:100%;text-align:center}
   .menuBox h1{margin:0 0 4px;color:var(--accent);text-transform:uppercase;letter-spacing:4px;
     font-size:30px;text-shadow:3px 3px 0 #7a2a1a}
@@ -91,6 +94,10 @@
   .catBody b{display:block;letter-spacing:1px;color:#fff}
   .catDesc{display:block;font-size:11px;color:#b8b8e0;margin-top:2px}
   .catCount{display:block;font-size:10px;color:#9a9ac8;margin-top:2px;letter-spacing:1px}
+  .tutBtn{display:flex;align-items:center;gap:10px;width:100%;margin:6px 0;font-size:13px;padding:8px;text-align:left}
+  .tutNum{width:26px;height:26px;flex:0 0 26px;border:2px solid #000;box-shadow:2px 2px 0 #000;
+    background:#3d3d7a;color:#fff;font-size:12px;line-height:22px;text-align:center;font-weight:bold}
+  .tutNum.done{background:#3fbf3f;color:#0d0d20}
   .btn.selOpt{background:#4a3a10;border-color:var(--accent)}
   #srcArea{width:100%;height:46vh;background:#0d0d20;color:#b8e0b8;border:2px solid #3d3d7a;
     font-family:inherit;font-size:10px;padding:8px;white-space:pre;resize:vertical}
@@ -98,15 +105,18 @@
   .setLbl{font-size:11px;color:#b8b8e0;display:inline-block;width:140px;text-align:left}
   .setRow{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
   #pivotInfo{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
-  .btn{background:var(--btn);color:#fff;border:2px solid var(--btn-edge);box-shadow:0 3px 0 #000;
-    padding:8px 10px;font-family:inherit;font-size:13px;text-transform:uppercase;letter-spacing:1px;cursor:pointer}
+  .btn{background:var(--btn);color:#fff;border:3px solid var(--btn-edge);
+    box-shadow:0 4px 0 #000, inset 3px 3px 0 rgba(255,255,255,.14), inset -3px -3px 0 rgba(0,0,0,.32);
+    padding:7px 9px;font-family:inherit;font-size:13px;text-transform:uppercase;letter-spacing:1px;cursor:pointer}
   .btn:hover:not(:disabled){background:#343472}
-  .btn:active:not(:disabled){transform:translateY(2px);box-shadow:0 1px 0 #000}
+  .btn:active:not(:disabled){transform:translateY(3px);
+    box-shadow:0 1px 0 #000, inset 3px 3px 0 rgba(255,255,255,.14), inset -3px -3px 0 rgba(0,0,0,.32)}
   .btn:disabled{opacity:.32;cursor:default}
   .btn.small{padding:4px 8px;font-size:11px}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  .panel{background:var(--panel);border:2px solid var(--panel-edge);box-shadow:0 3px 0 #000;padding:10px;margin-bottom:12px}
-  .panel h2{margin:0 0 8px;font-size:13px;color:var(--accent);text-transform:uppercase;letter-spacing:1px}
+  .bubBlock{border-top:1px solid #3d3d7a;margin-top:6px;padding-top:5px}
+  .bubBlock h2{margin:0;font-size:10px;color:#9a9ac8;text-transform:uppercase;letter-spacing:1px;cursor:pointer;user-select:none}
+  #bubSections{pointer-events:auto}
   .sideRow{display:flex;align-items:center;gap:6px;margin:4px 0;flex-wrap:wrap}
   .sideLbl{width:64px;font-size:11px;color:#9a9ac8}
   .badge{display:inline-flex;align-items:center;gap:4px;border:1px solid #000;padding:2px 4px;background:#0d0d24}
@@ -115,20 +125,38 @@
   .badge.dead{opacity:.25;text-decoration:line-through}
   #logList{margin:0;padding-left:20px;font-size:11px;line-height:1.7;max-height:200px;overflow-y:auto;color:#c8c8e8;list-style:none}
   .hidden{display:none!important}
+  /* Pixel-Art-Scrollleisten: alle Laufflächen im 8-Bit-Stil (Firefox und WebKit) */
+  *{scrollbar-color:#6666c0 #0d0d24}
+  ::-webkit-scrollbar{width:14px;height:14px}
+  ::-webkit-scrollbar-track{background:#0d0d24;box-shadow:inset 1px 0 0 #000,inset 0 1px 0 #000}
+  ::-webkit-scrollbar-thumb{background:#26264e;border:3px solid #6666c0;
+    box-shadow:inset 2px 2px 0 rgba(255,255,255,.14),inset -2px -2px 0 rgba(0,0,0,.32)}
+  ::-webkit-scrollbar-thumb:hover{background:#343472}
+  ::-webkit-scrollbar-corner{background:#0d0d24}
+  ::-webkit-scrollbar-button{display:none}
   #puzWinBar{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#1a2a4a;border:2px solid #4a9;
     box-shadow:0 3px 0 #000;padding:8px 10px;margin-bottom:12px}
   #puzWinLbl{font-size:13px;color:#ffd23f;text-transform:uppercase;letter-spacing:1px}
-  #annPanel{position:absolute;top:76px;right:56px;width:60%;max-width:430px;z-index:6;background:rgba(13,13,32,.95);
+  #annPanel{position:absolute;top:112px;right:56px;width:78%;max-width:500px;max-height:min(440px,62vh);overflow-y:auto;z-index:6;background:rgba(13,13,32,.95);
     border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:auto;cursor:pointer;
     font-size:12px;color:#ffd23f;line-height:1.5}
-  #annPanel::after{content:'';position:absolute;top:12px;right:-13px;border:7px solid transparent;border-left-color:var(--accent)}
-  #annPanel::before{content:'';position:absolute;top:14px;right:-8px;border:5px solid transparent;border-left-color:#0d0d20}
+  /* Schwanz der Sprechblasen: sitzt als eigenes Element außerhalb des
+     scrollbaren Kastens und weist zum Masköttchen – echte Comic-Blase */
+  .bubTail{position:absolute;top:124px;right:43px;width:0;height:0;z-index:6;pointer-events:none;
+    border:8px solid transparent;display:none}
+  #tutTail{border-left-color:#3fbf3f}
+  #puzTail,#annTail{border-left-color:var(--accent)}
+  #tutPanel:not(.hidden) ~ #tutTail{display:block}
+  #puzPanel:not(.hidden) ~ #puzTail{display:block}
+  #annPanel:not(.hidden) ~ #annTail{display:block}
+  #helpBody{font-size:11px;color:#c8c8e8;line-height:1.5}
   #overOverlay{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;
     gap:12px;background:rgba(8,8,26,.88);text-align:center;padding:12px;z-index:10}
   #overTitle{font-size:24px;color:var(--accent);text-transform:uppercase;letter-spacing:3px;text-shadow:2px 2px 0 #7a2a1a}
   #overReason{font-size:12px;color:#c8c8e8;max-width:420px}
   .modal{position:fixed;inset:0;background:rgba(8,8,26,.85);display:flex;align-items:center;justify-content:center;padding:16px;z-index:200}
-  .modalBox{background:var(--panel);border:2px solid var(--accent);box-shadow:0 6px 0 #000;max-width:640px;max-height:86vh;
+  .modalBox{background:var(--panel);border:3px solid var(--accent);box-shadow:0 6px 0 #000;max-width:640px;max-height:86vh;
+    background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.10) 0 1px,transparent 1px 3px);
     overflow-y:auto;padding:16px;font-size:12px;line-height:1.75}
   .modalBox h2{margin:0 0 10px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-size:16px}
   .modalBox h3{color:#b8b8e0;font-size:12px;margin:12px 0 4px;text-transform:uppercase}
@@ -138,17 +166,17 @@
 <body>
 <div id="wrap">
   <header>
-    <h1>Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.14</span></div>
+    <h1 id="logoH">Tetromino</h1>
+    <div class="sub"><span class="verTag">Alpha 0.22</span></div>
   </header>
   <div id="main">
     <div id="left">
-      <div id="turnbar">
-        <span id="turnChip"></span><span id="modeChip" class="modeChip">Mehrspieler</span><span id="halfNo">Halbzug 1</span>
-      </div>
       <div id="boardWrap">
         <canvas id="board" width="320" height="288"></canvas>
         <div id="scan"></div>
+        <div id="turnbar">
+          <span id="turnChip"></span><span id="modeChip" class="modeChip">Mehrspieler</span><span id="halfNo">Halbzug 1</span>
+        </div>
         <div id="camRow">
           <button id="camL" class="btn camBtn" title="Ansicht um 90&deg; nach links drehen (Pfeiltaste links)"><span class="camIco" id="camIcoL"></span></button>
           <button id="camR" class="btn camBtn" title="Ansicht um 90&deg; nach rechts drehen (Pfeiltaste rechts)"><span class="camIco" id="camIcoR"></span></button>
@@ -163,6 +191,7 @@
           <div id="tutHint"></div>
           <div id="tutBtns" class="btnRow" style="margin-top:8px"></div>
         </div>
+        <div id="tutTail" class="bubTail"></div>
         <div id="tutMascot" class="hidden" title="Sprechblase ein-/ausklappen">
           <span id="mascotArt"></span>
           <div id="mascotName">Tetromino</div>
@@ -175,6 +204,7 @@
           <div id="puzHint"></div>
           <div id="puzBtns" class="btnRow" style="margin-top:8px"></div>
         </div>
+        <div id="puzTail" class="bubTail"></div>
         <div id="puzWinBar" class="hidden">
           <span id="puzWinLbl">Level gel&ouml;st!</span>
           <button id="puzWinNext" class="btn small">N&auml;chstes Level</button>
@@ -183,6 +213,24 @@
         </div>
         <div id="annPanel" class="hidden">
           <div id="annText"></div>
+        </div>
+        <div id="annTail" class="bubTail"></div>
+        <div id="bubSections" class="hidden">
+          <div class="bubBlock">
+            <h2 id="figHead" style="cursor:pointer;user-select:none">Figuren <span id="figTog">+</span></h2>
+            <div id="figBody" class="hidden">
+              <div class="sideRow"><span class="sideLbl">Weiß</span><span id="listW"></span></div>
+              <div class="sideRow"><span class="sideLbl">Schwarz</span><span id="listB"></span></div>
+            </div>
+          </div>
+          <div class="bubBlock">
+            <h2 id="logHead" style="cursor:pointer;user-select:none">Zugliste <span id="logTog">+</span></h2>
+            <ul id="logList" class="hidden"></ul>
+          </div>
+          <div class="bubBlock" id="helpBlock">
+            <h2 id="helpHead" style="cursor:pointer;user-select:none">Hilfe <span id="helpTog">+</span></h2>
+            <div id="helpBody" class="hidden"></div>
+          </div>
         </div>
         <div id="axisPanel" class="hidden">
           <div id="pivotInfo"></div>
@@ -219,26 +267,13 @@
         </div>
       </div>
     </div>
-    <div id="side">
-      <div class="panel">
-        <h2 id="figHead" style="cursor:pointer;user-select:none">Figuren <span id="figTog">&minus;</span></h2>
-        <div id="figBody">
-          <div class="sideRow"><span class="sideLbl">Weiß</span><span id="listW"></span></div>
-          <div class="sideRow"><span class="sideLbl">Schwarz</span><span id="listB"></span></div>
-        </div>
-      </div>
-      <div class="panel">
-        <h2 id="logHead" style="cursor:pointer;user-select:none">Zugliste <span id="logTog">&minus;</span></h2>
-        <ul id="logList"></ul>
-      </div>
-    </div>
   </div>
 </div>
 
 <div id="menuOverlay" class="menuOverlay">
   <div class="menuBox">
-    <h1>Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.14</span></div>
+    <h1 id="menuLogoH">Tetromino</h1>
+    <div class="sub"><span class="verTag">Alpha 0.22</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -248,8 +283,8 @@
       <button class="btn" data-diff="3">Schwer</button>
     </div>
     <h3>Lernen</h3>
-    <button id="tutBtn" class="btn menuBtn">Tutorial starten (12 Lektionen)</button>
-    <button id="lvlBtn" class="btn menuBtn">Level-R&auml;tsel (R&auml;tsel-Kategorien)</button>
+    <button id="tutBtn" class="btn menuBtn">Tutorials</button>
+    <button id="lvlBtn" class="btn menuBtn">R&auml;tselkategorien (Strategietraining)</button>
     <h3>Sonstiges</h3>
     <button id="mRulesBtn" class="btn menuBtn">Regeln anzeigen</button>
     <button id="mSetBtn" class="btn menuBtn">Einstellungen</button>
@@ -260,12 +295,22 @@
 
 <div id="catOverlay" class="menuOverlay hidden">
   <div class="menuBox">
-    <h1>R&auml;tsel</h1>
+    <h1 id="catLogoH">R&auml;tsel</h1>
     <div class="sub">Strategietraining &ndash; w&auml;hlen Sie eine Kategorie</div>
     <h3>Kategorie</h3>
     <div id="catList"></div>
     <div id="catNote" class="hidden" style="color:#ff9a6a;font-size:11px;margin:10px 0 0;letter-spacing:1px"></div>
     <div class="btnRow"><button id="catBack" class="btn small">Zur&uuml;ck</button></div>
+  </div>
+</div>
+
+<div id="tutOverlay" class="menuOverlay hidden">
+  <div class="menuBox">
+    <h1 id="tutLogoH">Tutorial</h1>
+    <div class="sub">Elf Lektionen &ndash; jede einzeln w&auml;hlbar; absolvierte Lektionen sind gr&uuml;n markiert</div>
+    <h3>Lektion w&auml;hlen</h3>
+    <div id="tutList"></div>
+    <div class="btnRow"><button id="tutBack" class="btn small">Zur&uuml;ck</button></div>
   </div>
 </div>
 
@@ -309,7 +354,7 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.14</li></ul>
+    <ul><li>Alpha 0.22</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -317,7 +362,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.14</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.22</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -334,8 +379,9 @@
     <ul>
       <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz).</li>
       <li>Einzelspieler: der Computer steuert Schwarz &ndash; in drei Schwierigkeitsstufen (Leicht: zuf&auml;llige Z&uuml;ge; Mittel: schlagorientierte Bewertung; Schwer: vorausschauende Suche &uuml;ber zwei Halbz&uuml;ge).</li>
-      <li>Tutorial: acht gef&uuml;hrte Lektionen mit gestellten Aufgaben.</li>
-      <li>Level-R&auml;tsel: zehn gestellene Aufgaben mit Zuglimit, Strategie-Lektion und L&ouml;sungs-Anzeige pro Level; der Fortschritt wird als Folge von 10 Level-Chips angezeigt.</li>
+      <li>Tutorial: elf gef&uuml;hrte Lektionen mit gestellten Aufgaben; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert.</li>
+      <li>Level-R&auml;tsel: gestellte Aufgaben mit Zuglimit, Strategie-Lektion und L&ouml;sungs-Anzeige, sortiert in vier Kategorien (Schlagen, Schach, Mattsetzen, Abwehr); der Fortschritt wird je Kategorie als Level-Chips angezeigt.</li>
+      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus und den aktuellen Halbzug.</li>
     </ul>
     <h3>Brett und Figuren</h3>
     <ul>
@@ -380,6 +426,7 @@
       <li>Die Ansicht l&auml;sst sich mit den Pfeiltasten links/rechts oder den Kamerakn&ouml;pfen in 90&deg;-Schritten um das Brett drehen.</li>
       <li>Die Kreis-Pfeile der Achsenkn&ouml;pfe zeigen die Drehrichtung: gegen den Uhrzeigersinn = +90&deg;, im Uhrzeigersinn = &minus;90&deg; (jeweils gesehen entlang der Achse: Z von oben, X von Osten, Y von Norden).</li>
       <li>Achsen, Koordinaten und Zugliste beziehen sich stets auf das Brett, unabh&auml;ngig von der Kamerastellung.</li>
+      <li>Der braune Brettrand tr&auml;gt zur Orientierung die Dateibuchstaben (a&ndash;j) und die Rangnummern (1&ndash;10); bei jeder Kameradrehung wandern die Beschriftungen korrekt mit.</li>
     </ul>
     <h3>K&ouml;nigstein, Schach und Partieende</h3>
     <ul>
@@ -390,8 +437,9 @@
     </ul>
     <h3>Hilfen</h3>
     <ul>
-      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Maskottchen zeigt die letzte Meldung erneut.</li>
-      <li>Die Figuren- und die Zugliste der Seitenleiste lassen sich &uuml;ber ihre &Uuml;berschriften ein- und ausklappen.</li>
+      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Mask&ouml;ttchen klappt die Sprechblase ein und wieder aus; im Duell zeigt der erneute Klick die letzte Meldung wieder an.</li>
+      <li>Figuren und Zugliste liegen als einklappbare Abschnitte innerhalb der Sprechblase: Die Blase w&auml;chst dynamisch mit, und das Brett bleibt die einzige gro&szlig;e Fl&auml;che. Beide Abschnitte lassen sich &uuml;ber ihre &Uuml;berschriften ein- und ausklappen.</li>
+      <li>In Duell-Partien liegt in der Sprechblase unter Figuren und Zugliste ein zus&auml;tzlicher Abschnitt Hilfe: Beim Aufklappen empfiehlt Tetromino der Partei am Zug konkret einen Zug (Figur, Drehachse und Drehpunkt beziehungsweise Versetzungsziel). Die Empfehlung folgt der jeweiligen Stellung, wird nicht automatisch ausgef&uuml;hrt und ist unverbindlich.</li>
       <li>W&uuml;rfel mit gelbem Marker k&ouml;nnen als Drehpunkt dienen.</li>
       <li>Am Desktop zeigt das &Uuml;berfahren einer Achsen- oder Schiebe-Schaltfl&auml;che die Zielposition als Geisterfigur; am Handy zeigt der erste Tipp die Vorschau und der zweite f&uuml;hrt den Zug aus. Unterlegte Zielfelder kennzeichnen m&ouml;gliche Versetzungen; geschlagene Figuren werden rot markiert.</li>
     </ul>
@@ -451,9 +499,20 @@ function rotateView(d){
   sfxCam();
 }
 
+// Umkehrung der Kamera-Projektion: Sicht- zurueck nach Brett-Koordinaten.
+// vwInv(vw(x, y)[0], vw(x, y)[1]) ergibt stets wieder (x, y) – die
+// Randbeschriftung (s. u.) rechnet damit die sichtbaren Kanten in echte
+// Brett-Koordinaten zurueck, sodass Buchstaben und Rangnummern bei jeder
+// Kameradrehung korrekt mitwandern.
+function vwInv(vx, vy){
+  if (view === 0) return [vx, vy];
+  if (view === 1) return [vy, N - 1 - vx];
+  if (view === 2) return [N - 1 - vx, N - 1 - vy];
+  return [N - 1 - vy, vx];
+}
 var PAL = {
   bg: '#10102a',
-  floorA: '#e8e8d0', floorB: '#6f9a52', edgeA: '#b8b894', edgeB: '#54763c',
+  floorA: '#e8e8d0', floorB: '#6f9a52', edgeA: '#b8b894', edgeB: '#54763c', rimInk: '#e8e8d0',
   slabL: '#8a5a34', slabR: '#5d3a22', slabLine: '#241608',
   w: { top: '#f8f8f0', l: '#d4d4e8', r: '#9c9cd0', line: '#2a2a4a' },
   b: { top: '#7c7cb0', l: '#52528a', r: '#32325e', line: '#101028' },
@@ -1183,14 +1242,14 @@ function aiSchedule(){
 }
 
 // ---------- Tutorial ----------
-var tut = { step: -1, goalA: false, goalB: false };
+var tut = { step: -1, goalA: false, goalB: false, done: {} };
 function mkPiece(id, color, type, cells){
   return { id: id, color: color, type: type, moved: false,
     cubes: cells.map(function(c){ return { x: c[0], y: c[1], z: c[2] }; }) };
 }
 var TUT_LESSONS = [
   { title: 'Willkommen',
-    text: 'Willkommen zu Tetromino. Jede Partei führt fünf Figuren: den Königstein (I), die Dame (O), die T-Figur, die L-Figur und die S-Figur. Jeder Zug besteht aus einer Drehung einer eigenen Figur – die T-Figur darf auch um 180° drehen. Die Dame, die L-Figur (nur im ersten Zug) und der aufrechte Königstein dürfen sich zusätzlich versetzen. Diese Tour führt in zwölf Lektionen durch jede Figur und jeden Zugtyp.',
+    text: 'Willkommen zu Tetromino. Jede Partei führt fünf Figuren: den Königstein (I), die Dame (O), die T-Figur, die L-Figur und die S-Figur. Jeder Zug besteht aus einer Drehung einer eigenen Figur – die T-Figur darf auch um 180° drehen. Die Dame, die L-Figur (nur im ersten Zug) und der aufrechte Königstein dürfen sich zusätzlich versetzen. Diese Tour führt in elf Lektionen durch jede Figur und jeden Zugtyp.',
     board: 'start', goal: 'next' },
   { title: 'Figur wählen',
     text: 'Klicken Sie eine eigene (weiße) Figur an. Würfel mit gelbem Marker können später als Drehpunkt dienen.',
@@ -1221,10 +1280,7 @@ var TUT_LESSONS = [
     board: 'ishift', goal: 'islide' },
   { title: 'Die Dame: Versetzen und Phantom',
     text: 'Die Dame versetzt sich wie ein Turm, ohne zu schlagen – die Zielfelder sind unterlegt. Dabei hinterlässt sie ein Phantom auf ihrer Startposition: Dreht sie sich später, dreht das Phantom mit und kann dabei Gegner schlagen. Versetzen Sie die Dame ein Feld.',
-    board: 'dame', goal: 'slide' },
-  { title: 'Geschafft',
-    text: 'Sie kennen jetzt jede Figur und jeden Zugtyp: Drehung, 180°-Drehung, Schlagen, Stapeln, Versetzen, Haltregel, Phantom und Königstein. Viel Erfolg im Duell – gegen den Computer oder zu zweit.',
-    board: 'start', goal: 'end' }
+    board: 'dame', goal: 'slide' }
 ];
 function tutBoardSetup(which){
   var list = [];
@@ -1284,25 +1340,26 @@ function tutRender(){
   $('tutText').textContent = L.text;
   $('tutHint').textContent = '';
   var btns = '';
-  if (L.goal === 'next') btns = '<button class="btn small" data-tact="next">Weiter</button>';
-  else if (L.goal === 'end'){
-    btns = '<button class="btn small" data-tact="ai">Einzelspieler</button>' +
-           '<button class="btn small" data-tact="2p">Mehrspieler</button>' +
-           '<button class="btn small" data-tact="menu">Hauptmen&uuml;</button>';
-  } else {
-    btns = '<button class="btn small" data-tact="skip">Lektion &uuml;berspringen</button>' +
-           '<button class="btn small" data-tact="menu">Tutorial beenden</button>';
-  }
+  // Einheitliche Knopfführung in jeder Lektion: direkt zur nächsten Lektion
+  // (falls eine folgt) und zurück ins Hauptmenü. Sonderknöpfe zum Überspringen
+  // oder vorzeitigen Beenden gibt es nicht mehr; absolvierte Lektionen werden
+  // in der Lektionsauswahl grün markiert.
+  if (tut.step + 1 < TUT_LESSONS.length)
+    btns += '<button class="btn small" data-tact="next">Weiter zur n&auml;chsten Lektion</button>';
+  btns += '<button class="btn small" data-tact="menu">Zur&uuml;ck zum Hauptmen&uuml;</button>';
   $('tutBtns').innerHTML = btns;
 }
-function tutStart(){
+function tutStart(idx){
   mode = 'tutorial';
   speakCollapsed = false;
-  tut.step = 0; tut.goalA = false; tut.goalB = false;
+  // Ohne Angabe startet das Tutorial wie bisher mit Lektion 1; mit Index
+  // (Auswahlseite) wird direkt in die gewählte Lektion gewechselt.
+  var i = (typeof idx === 'number' && idx >= 0 && idx < TUT_LESSONS.length) ? idx : 0;
+  tut.step = i; tut.goalA = false; tut.goalB = false;
   moveNo = 0; sinceCap = 0; capturedByW = []; capturedByB = [];
-  logEntries = ['Tutorial – Lektion 1: ' + TUT_LESSONS[0].title];
+  logEntries = ['Tutorial – Lektion ' + (i + 1) + ': ' + TUT_LESSONS[i].title];
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
-  tutBoardSetup(TUT_LESSONS[0].board);
+  tutBoardSetup(TUT_LESSONS[i].board);
   $('overOverlay').classList.add('hidden');
   tutRender(); updateHUD();
 }
@@ -1312,44 +1369,53 @@ function tutGo(step){
   logEntries.push('Tutorial – Lektion ' + (step + 1) + ': ' + TUT_LESSONS[step].title);
   tutRender(); updateHUD();
 }
-function tutAdvance(){
+function tutComplete(){
   sfxWin();
-  if (tut.step + 1 < TUT_LESSONS.length) tutGo(tut.step + 1);
-  else { mode = '2p'; newGame(); openMenu(); }
+  tut.done[tut.step] = true; // absolvierte Lektionen sind in der Auswahl ablesbar
+  // Kein automatischer Wechsel mehr: Die Spielerin entscheidet selbst über
+  // „Weiter zur nächsten Lektion“ oder „Zurück zum Hauptmenü“.
+  tutHint(tut.step + 1 < TUT_LESSONS.length
+    ? 'Geschafft! Fahren Sie mit „Weiter zur nächsten Lektion“ fort – oder kehren Sie zum Hauptmenü zurück.'
+    : 'Alle Lektionen geschafft! Sie kennen jetzt jede Figur und jeden Zugtyp – viel Erfolg im Duell, gegen den Computer oder zu zweit.');
+}
+function tutNext(){
+  if (tut.step + 1 >= TUT_LESSONS.length) return;
+  if (TUT_LESSONS[tut.step].goal === 'next') tut.done[tut.step] = true; // Willkommenslektion
+  tutGo(tut.step + 1);
 }
 function tutHint(msg){ $('tutHint').textContent = msg; }
 function tutEvent(kind, data){
   if (mode !== 'tutorial' || tut.step < 0) return;
   var L = TUT_LESSONS[tut.step];
-  if (L.goal === 'select' && kind === 'select') tutAdvance();
-  else if (L.goal === 'pivot' && kind === 'pivot') tutAdvance();
-  else if (L.goal === 'move' && kind === 'move') tutAdvance();
+  if (L.goal === 'select' && kind === 'select') tutComplete();
+  else if (L.goal === 'pivot' && kind === 'pivot') tutComplete();
+  else if (L.goal === 'move' && kind === 'move') tutComplete();
   else if (L.goal === 'move180' && kind === 'move'){
-    if (data.dir === 2) tutAdvance();
+    if (data.dir === 2) tutComplete();
     else tutHint('Für diese Lektion bitte eine der 180°-Drehungen (einen Halbkreis-Knopf) nutzen.');
   }
   else if (L.goal === 'smove' && kind === 'move'){
-    if (data.piece.type === 'S') tutAdvance();
+    if (data.piece.type === 'S') tutComplete();
     else tutHint('Für diese Lektion bitte die S-Figur bewegen – sie ruht derzeit auf der Dame.');
   }
   else if (L.goal === 'lslide' && kind === 'move'){
-    if (data.piece.type === 'L' && data.axis === 't' && data.capCount > 0) tutAdvance();
+    if (data.piece.type === 'L' && data.axis === 't' && data.capCount > 0) tutComplete();
     else if (data.piece.type === 'L' && data.axis === 't')
       tutHint('Am Ziel darf geschlagen werden – versetzen Sie die L-Figur bis zur schwarzen T-Figur.');
     else tutHint('Für diese Lektion bitte die L-Figur versetzen (unterlegtes Zielfeld oder Schiebe-Pfeile).');
   }
   else if (L.goal === 'islide' && kind === 'move'){
-    if (data.piece.type === 'I' && data.axis === 't' && data.capCount > 0) tutAdvance();
+    if (data.piece.type === 'I' && data.axis === 't' && data.capCount > 0) tutComplete();
     else if (data.piece.type === 'I' && data.axis === 't')
       tutHint('Der Königstein versetzt sich um genau ein Feld – hier nach Norden auf die S-Figur.');
     else tutHint('Für diese Lektion bitte den aufrechten Königstein versetzen (unterlegtes Zielfeld oder Pfeile).');
   }
   else if (L.goal === 'slide' && kind === 'move'){
-    if (data.axis === 't') tutAdvance();
+    if (data.axis === 't') tutComplete();
     else tutHint('Für diese Lektion bitte die Schiebe-Pfeile der Dame nutzen – keine Drehung.');
   }
   else if (L.goal === 'capture' && kind === 'move'){
-    if (data.capCount > 0) tutAdvance();
+    if (data.capCount > 0) tutComplete();
     else tutHint('Noch nicht geschlagen – überlappen Sie mit der Drehung Zellen der schwarzen S-Figur.');
   } else if (L.goal === 'ground' && kind === 'move'){
     var anyUp = data.res.newCubes.some(function(c){ return c.z > 0; });
@@ -1357,14 +1423,14 @@ function tutEvent(kind, data){
       data.res.newCubes.every(function(c){ return c.x === data.res.newCubes[0].x && c.y === data.res.newCubes[0].y; });
     if (data.piece.type === 'O' && anyUp) tut.goalA = true;
     if (upCol) tut.goalB = true;
-    if (tut.goalA && tut.goalB) tutAdvance();
+    if (tut.goalA && tut.goalB) tutComplete();
     else tutHint((tut.goalA ? 'Aufgabe 1 (O aufstellen) erledigt.' : 'Aufgabe 1: O-Stein aufstellen.') + ' ' +
                  (tut.goalB ? 'Aufgabe 2 (I aufrichten) erledigt.' : 'Aufgabe 2: I-Stein senkrecht aufrichten.'));
   }
 }
 
 // ---------- Level-Rätsel ----------
-// Zehn gestellte Aufgaben: Weiß ist immer am Zug; Schwarz antwortet mit
+// Gestellte Aufgaben: Weiß ist immer am Zug; Schwarz antwortet mit
 // gescripteten Zügen (oder notfalls einem harmlosen Fallback-Zug). Geprüft wird
 // das Levelziel – nicht der exakte Lösungsweg; ein Zuglimit (max) begrenzt die Versuche.
 var puz = { cat: null, level: 0, moves: 0, capTotal: 0, replyIdx: 0, state: 'play', solutionShown: false, solIdx: 0, solved: {} };
@@ -1661,6 +1727,7 @@ window.addEventListener('keydown', function(e){
       var mEl = $(modals[i]);
       if (!mEl.classList.contains('hidden')){ mEl.classList.add('hidden'); return; }
     }
+    if (!$('tutOverlay').classList.contains('hidden')){ closeTutMenu(); return; }
     if (!$('catOverlay').classList.contains('hidden')){ closeCatMenu(); return; }
     if (!$('menuOverlay').classList.contains('hidden')){ closeMenu(); return; }
     deselect();
@@ -1813,22 +1880,38 @@ function updateHUD(statusOverride){
   $('modeChip').textContent = mode === 'ai'
     ? ('Einzelspieler · ' + ['Leicht', 'Mittel', 'Schwer'][aiLevel - 1])
     : (mode === 'tutorial' ? 'Tutorial'
-    : (mode === 'puzzle' ? ('Level-Rätsel ' + (puz.level + 1) + '/' + PUZZLES.length) : 'Mehrspieler'));
+    : (mode === 'puzzle' ? ('Level-Rätsel ' + (puz.level + 1) + '/' + puzList().length) : 'Mehrspieler'));
   var tutVis = (mode === 'tutorial' && tut.step >= 0);
   var puzVis = (mode === 'puzzle');
-  var bubbleVis = tutVis || puzVis || mode === '2p' || mode === 'ai';
+  var duelVis = (mode === '2p' || mode === 'ai');
+  var bubbleVis = tutVis || puzVis || duelVis;
   $('tutPanel').classList.toggle('hidden', !tutVis || speakCollapsed);
   $('tutMascot').classList.toggle('hidden', !bubbleVis);
   $('puzPanel').classList.toggle('hidden', !puzVis || speakCollapsed);
   // Tetromino spricht alle Meldungen als Sprechblase auf dem Brett: Zugwechsel,
-  // Schach, Matt, Remis, Bröckel-Warnungen und Bedienhinweise. Die Blase blendet
-  // sich nach kurzer Zeit selbst aus; ein Klick auf das Maskottchen zeigt die
-  // letzte Meldung erneut, ein Klick auf die Blase verwirft sie.
+  // Schach, Matt, Bröckel-Warnungen und Bedienhinweise. Die Blase blendet
+  // sich nach kurzer Zeit selbst aus; ein Klick auf das Maskottchen klappt sie
+  // ein und wieder aus und zeigt die letzte Meldung erneut.
   var msg = ann || speech;
   if (msg !== lastAnn){ lastAnn = msg; if (msg) annUntil = performance.now() + ANN_MS; }
+  var msgLive = !!(msg && performance.now() <= annUntil);
+  // Figuren und Zugliste liegen als einklappbare Abschnitte innerhalb der
+  // Sprechblase: Der Abschnittsblock wandert in die Blase des aktiven Modus,
+  // und die Blase wächst dynamisch mit – das Brett bleibt die einzige große
+  // Fläche der Ansicht.
+  var bubHost = tutVis ? $('tutPanel') : (puzVis ? $('puzPanel') : (duelVis ? $('annPanel') : null));
+  if (bubHost){
+    if ($('bubSections').parentNode !== bubHost) bubHost.appendChild($('bubSections'));
+    $('bubSections').classList.remove('hidden');
+  } else {
+    $('bubSections').classList.add('hidden');
+  }
+  // Duell-Modi: Die Ansage verschwindet wie bisher nach kurzer Zeit; sind
+  // Figuren oder Zugliste ausgeklappt, bleibt die Blase als Behälter offen
+  // und zeigt nur noch die offenen Abschnitte.
   $('annText').textContent = msg;
-  $('annPanel').classList.toggle('hidden', !((mode === '2p' || mode === 'ai') && msg &&
-    !speakCollapsed && performance.now() <= annUntil));
+  $('annText').classList.toggle('hidden', !msgLive);
+  $('annPanel').classList.toggle('hidden', !(duelVis && !speakCollapsed && (msgLive || figOpen || logOpen || helpOpen)));
   $('puzWinBar').classList.toggle('hidden', !(puzVis && puz.state === 'win'));
   $('axisPanel').classList.toggle('hidden', phase !== 'axis');
   var canShift = sel && phase === 'piece' && !gameOver &&
@@ -1848,6 +1931,7 @@ function updateHUD(statusOverride){
     : '';
   renderPieceLists();
   renderLog();
+  renderHelp();
   updateCursor();
 }
 
@@ -1946,6 +2030,32 @@ function drawRod(pivot, axis, oy){
   ctx.setLineDash([]);
 }
 
+// ---------- Randbeschriftung (Dateibuchstaben a-j, Rangnummern 1-10) ----------
+// Der braune Brettrand traegt die Brett-Koordinaten: Entlang einer Kante,
+// die mit der Brett-x-Achse verlaeuft, steht je Randfeld sein Dateibuchstabe
+// (a-j), auf den Querenden die Rangnummer (1-10). rimLabel rechnet die
+// Sichtkoordinate der Kante mit vwInv in Brett-Koordinaten zurueck, sodass
+// die Beschriftung bei jeder Kameradrehung korrekt mitwandert.
+function rimLabel(isLeft, v){
+  var b0 = isLeft ? vwInv(v, N - 1) : vwInv(N - 1, v);
+  var b1 = isLeft ? vwInv((v + 1) % N, N - 1) : vwInv(N - 1, (v + 1) % N);
+  return (b0[0] !== b1[0]) ? FILES[b0[0]] : String(b0[1] + 1);
+}
+// 5x7-Pixelschrift direkt in den Canvas zeichnen: slope verschiebt jede
+// Zeile horizontal nach (Scherung passend zur schraegen Braun-Flaeche,
+// 0.5 Pixel je Zeile). Kein umlautbehafteter Text – reine ASCII-Glyphen.
+function drawPix(str, x0, y0, slope, color){
+  var i, x, y, g;
+  ctx.fillStyle = color;
+  for (i = 0; i < str.length; i++){
+    g = PXFONT[str.charAt(i).toUpperCase()];
+    if (!g) continue;
+    for (y = 0; y < g.length; y++)
+      for (x = 0; x < g[y].length; x++)
+        if (g[y][x] === '#')
+          ctx.fillRect(x0 + i * 6 + x + Math.round(y * slope), y0 + y, 1, 1);
+  }
+}
 function drawPivotMarker(c, oy){
   var v = vw(c.x, c.y, c.z);
   var cx = rr(OX + (v[0] - v[1]) * TW);
@@ -1984,8 +2094,8 @@ function draw(now){
     var fv = vw(x, y, 0);
     items.push({ k: 'floor', x: x, y: y, vx: fv[0], vy: fv[1], key: (fv[0] + fv[1]) * 4 });
   }
-  for (x = 0; x < N; x++) items.push({ k: 'slabL', vx: x, vy: N - 1, key: (x + N - 1) * 4 + 2 });
-  for (y = 0; y < N; y++) items.push({ k: 'slabR', vx: N - 1, vy: y, key: (N - 1 + y) * 4 + 2 });
+  for (x = 0; x < N; x++) items.push({ k: 'slabL', vx: x, vy: N - 1, key: (x + N - 1) * 4 + 2, lbl: rimLabel(true, x) });
+  for (y = 0; y < N; y++) items.push({ k: 'slabR', vx: N - 1, vy: y, key: (N - 1 + y) * 4 + 2, lbl: rimLabel(false, y) });
 
   for (p = 0; p < pieces.length; p++){
     var pc = pieces[p];
@@ -2087,11 +2197,13 @@ function draw(now){
       var lface = [[lsx-TW, lsy+TH], [lsx, lsy+2*TH], [lsx, lsy+2*TH+SLAB], [lsx-TW, lsy+TH+SLAB]];
       poly(lface, PAL.slabL);
       strokePoly(lface, PAL.slabLine);
+      drawPix(it.lbl, lsx - TW + (it.lbl.length === 1 ? 3 : -1), lsy + TH + 5, 0.5, PAL.rimInk);
     } else if (it.k === 'slabR'){
       var rsx = rr(OX + (it.vx - it.vy) * TW), rsy = rr(oy + (it.vx + it.vy) * TH);
       var rface = [[rsx, rsy+2*TH], [rsx+TW, rsy+TH], [rsx+TW, rsy+TH+SLAB], [rsx, rsy+2*TH+SLAB]];
       poly(rface, PAL.slabR);
       strokePoly(rface, PAL.slabLine);
+      drawPix(it.lbl, rsx + (it.lbl.length === 1 ? 4 : 2), rsy + TH + 5, -0.5, PAL.rimInk);
     } else if (it.k === 'shadow'){
       var ssx = rr(OX + (it.vx - it.vy) * TW), ssy = rr(oy + (it.vx + it.vy) * TH);
       poly([[ssx, ssy], [ssx+TW, ssy+TH], [ssx, ssy+2*TH], [ssx-TW, ssy+TH]], 'rgba(8,8,24,0.30)');
@@ -2148,9 +2260,12 @@ function draw(now){
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-  // Sprechblase nach Ablauf der Anzeigedauer automatisch ausblenden
-  if ((mode === '2p' || mode === 'ai') && !$('annPanel').classList.contains('hidden') && now > annUntil){
-    $('annPanel').classList.add('hidden');
+  // Ansage nach Ablauf der Anzeigedauer automatisch ausblenden; sind die
+  // Figurenliste oder die Zugliste ausgeklappt, bleibt die Blase als
+  // Behälter stehen und zeigt nur noch die offenen Abschnitte.
+  if ((mode === '2p' || mode === 'ai') && now > annUntil){
+    $('annText').classList.add('hidden');
+    if (!figOpen && !logOpen && !helpOpen) $('annPanel').classList.add('hidden');
   }
 
   if (anim && now - anim.t0 >= anim.dur) finalizeMove();
@@ -2228,8 +2343,8 @@ function startGame(m, lvl){
 function openMenu(){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
   $('lvlBtn').textContent = puzTotal()
-    ? ('Level-Rätsel (' + puzTotal() + ' Rätsel)')
-    : 'Level-Rätsel (Rätsel-Kategorien)';
+    ? ('Rätselkategorien (' + puzTotal() + ' Rätsel)')
+    : 'Rätselkategorien (Strategietraining)';
   $('menuOverlay').classList.remove('hidden');
 }
 function closeMenu(){
@@ -2277,6 +2392,34 @@ function pickCat(id){
   while (i < list.length && puz.solved[id + ':' + i]) i++;
   closeCatMenu();
   puzStart(id, Math.min(i, list.length - 1));
+  closeMenu(); // auch hier: Das Rätsel steht im Vordergrund, nicht das Hauptmenü
+}
+// ---------- Tutorial-Auswahl ----------
+// Der Tutorial-Knopf öffnet zunächst diese Auswahlseite: Alle elf Lektionen
+// sind einzeln wählbar; absolvierte Lektionen sind ablesbar (tut.done).
+function openTutMenu(){
+  var html = '', i;
+  for (i = 0; i < TUT_LESSONS.length; i++){
+    html += '<button class="btn tutBtn" data-tut="' + i + '">' +
+      '<span class="tutNum' + (tut.done[i] ? ' done' : '') + '">' + (i + 1) + '</span>' +
+      '<span class="catBody"><b>Lektion ' + (i + 1) + ': ' + TUT_LESSONS[i].title + '</b>' +
+      (tut.done[i] ? '<span class="catCount">absolviert</span>' : '') + '</span></button>';
+  }
+  $('tutList').innerHTML = html;
+  $('tutOverlay').classList.remove('hidden');
+}
+function closeTutMenu(){ $('tutOverlay').classList.add('hidden'); }
+function tutFromEvent(e){
+  var el = e.target;
+  while (el && (!el.getAttribute || !el.getAttribute('data-tut'))) el = el.parentNode;
+  return el && el.getAttribute ? el.getAttribute('data-tut') : null;
+}
+function pickTut(i){
+  var idx = parseInt(i, 10);
+  if (isNaN(idx) || idx < 0 || idx >= TUT_LESSONS.length) return;
+  closeTutMenu();
+  tutStart(idx);
+  closeMenu(); // Hauptmenü schließen: Die gewählte Lektion steht im Vordergrund
 }
 function openSettings(){
   $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
@@ -2297,7 +2440,7 @@ function toggleMute(){
   $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
 }
 function restartMode(){
-  if (mode === 'tutorial') tutStart();
+  if (mode === 'tutorial') tutStart(tut.step >= 0 ? tut.step : 0); // aktuelle Lektion erneut beginnen
   else if (mode === 'puzzle') puzStart(puz.cat, puz.level);
   else newGame();
 }
@@ -2307,7 +2450,12 @@ $('spBtn').addEventListener('click', function(){ $('diffRow').classList.toggle('
 Array.prototype.slice.call(document.querySelectorAll('#diffRow .btn')).forEach(function(btn){
   btn.addEventListener('click', function(){ startGame('ai', parseInt(btn.getAttribute('data-diff'), 10)); });
 });
-$('tutBtn').addEventListener('click', function(){ closeMenu(); tutStart(); });
+$('tutBtn').addEventListener('click', openTutMenu);
+$('tutList').addEventListener('click', function(e){
+  var i = tutFromEvent(e);
+  if (i !== null) pickTut(i);
+});
+$('tutBack').addEventListener('click', closeTutMenu);
 $('mRulesBtn').addEventListener('click', function(){ $('rulesModal').classList.remove('hidden'); });
 $('mSetBtn').addEventListener('click', openSettings);
 $('mInfoBtn').addEventListener('click', openInfo);
@@ -2327,10 +2475,8 @@ $('rulesModal').addEventListener('click', function(e){
 $('tutBtns').addEventListener('click', function(e){
   var t = e.target.getAttribute && e.target.getAttribute('data-tact');
   if (!t) return;
-  if (t === 'next' || t === 'skip') tutAdvance();
+  if (t === 'next') tutNext();
   else if (t === 'menu'){ mode = '2p'; newGame(); openMenu(); }
-  else if (t === 'ai') startGame('ai', 2);
-  else if (t === '2p') startGame('2p');
 });
 
 $('lvlBtn').addEventListener('click', function(){ openCatMenu(); });
@@ -2340,29 +2486,108 @@ $('catList').addEventListener('click', function(e){
 });
 $('catBack').addEventListener('click', closeCatMenu);
 $('tutMascot').addEventListener('click', function(){
-  var vis = !$('annPanel').classList.contains('hidden');
+  // Aktive Blase je nach Modus: Tutorial-Leiste, Rätsel-Leiste oder Duell-
+  // Ansage. Das Masköttchen klappt genau diese Blase ein und wieder aus –
+  // die alte Fassung prüfte versehentlich immer die Duell-Blase, sodass sich
+  // die Lektions-Leiste im Tutorial nicht einklappen ließ.
+  var active = mode === 'tutorial' ? $('tutPanel')
+             : (mode === 'puzzle' ? $('puzPanel') : $('annPanel'));
+  var vis = !active.classList.contains('hidden');
   if (vis){ speakCollapsed = true; }                 // sichtbare Blase einklappen
   else if (!speakCollapsed){ annUntil = performance.now() + 12000; } // Timeout-Ausblendung: erneut zeigen
   else { speakCollapsed = false; annUntil = performance.now() + 12000; } // eingeklappt: ausklappen
   sfxPivot();
   updateHUD();
 });
-// Klick auf die Sprechblase verwirft die aktuelle Ansage vorzeitig.
-$('annPanel').addEventListener('click', function(){
+// Klick auf die Sprechblase verwirft die aktuelle Ansage vorzeitig. Klicks
+// in die Abschnitte Figuren/Zugliste dürfen das nicht auslösen: Der Klick
+// steigt zwar vom Abschnittskopf zur Blase auf, gehört aber dem Abschnitt.
+$('annPanel').addEventListener('click', function(e){
+  var el = e.target;
+  while (el && el !== this){
+    if (el === $('bubSections')) return;
+    el = el.parentNode;
+  }
   annUntil = 0;
-  $('annPanel').classList.add('hidden');
+  $('annText').classList.add('hidden');
+  if (!figOpen && !logOpen && !helpOpen) $('annPanel').classList.add('hidden');
 });
 
-// ---------- Seitenleisten: Figuren- und Zugliste einklappbar ----------
-var figOpen = true, logOpen = true;
+// ---------- Blasen-Abschnitte: Figuren und Zugliste einklappbar ----------
+// Die Figuren- und die Zugliste liegen innerhalb der Sprechblase; beide
+// Abschnitte lassen sich über ihre Überschriften ein- und ausklappen, und
+// die Blase wächst dynamisch mit. Standardmäßig sind beide eingeklappt,
+// damit das Brett frei bleibt.
+var figOpen = false, logOpen = false;
 function applySideToggles(){
   $('figBody').classList.toggle('hidden', !figOpen);
   $('logList').classList.toggle('hidden', !logOpen);
   $('figTog').textContent = figOpen ? '\u2212' : '+';
   $('logTog').textContent = logOpen ? '\u2212' : '+';
+  $('helpBody').classList.toggle('hidden', !helpOpen);
+  $('helpTog').textContent = helpOpen ? '\u2212' : '+';
 }
-$('figHead').addEventListener('click', function(){ figOpen = !figOpen; applySideToggles(); });
-$('logHead').addEventListener('click', function(){ logOpen = !logOpen; applySideToggles(); });
+$('figHead').addEventListener('click', function(){ figOpen = !figOpen; applySideToggles(); updateHUD(); });
+$('logHead').addEventListener('click', function(){ logOpen = !logOpen; applySideToggles(); updateHUD(); });
+
+// ---------- Hilfe-Abschnitt: Zugempfehlung in der Sprechblase ----------
+// Ein dritter einklappbarer Abschnitt in der Sprechblase (Duell-Modi): Beim
+// Aufklappen empfiehlt Tetromino der Partei am Zug einen konkreten Zug.
+// Die Empfehlung nutzt dieselbe Bewertung wie der Computer-Gegner (Material-
+// gewinn, Schach, abgezogener Gegenschlag), ist aber deterministisch – bei
+// gleicher Stellung erscheint derselbe Vorschlag, und nichts wird automatisch
+// ausgefuehrt. Im Tutorial und in den Raetseln bleibt der Abschnitt verborgen,
+// im Einzelspieler waehrend des Computerzugs ebenfalls.
+var helpOpen = false, helpKey = '', helpTxt = '';
+function recommendMove(color){
+  var ms = aiMovesOf(color);
+  if (!ms.length) return null;
+  var opp = color === 'w' ? 'b' : 'w';
+  var best = null, bs = -1e18, i;
+  for (i = 0; i < ms.length; i++){
+    var m = ms[i];
+    var s = 12 * aiGain(m);
+    var nb = aiCloneBoard(m);
+    s += aiWithBoard(nb, function(){
+      var replies = aiMovesOf(opp, true);
+      if (!replies.length) return 60; // Gegner ohne Antwort: entscheidender Zug
+      var worst = 0;
+      replies.forEach(function(r){ var g = aiGain(r); if (g > worst) worst = g; });
+      return -11 * worst + (kingAttacked(opp) ? 6 : 0); // Gegenschlag abziehen, Schach belohnen
+    });
+    if (s > bs){ bs = s; best = m; } // stabile Reihenfolge: erster Treffer gewinnt Gleichstand
+  }
+  return best;
+}
+function describeMove(m){
+  var who = m.p.color === 'w' ? 'Wei\u00df' : 'Schwarz';
+  var cap = m.res.captured.length
+    ? ' \u2013 schl\u00e4gt ' + m.res.captured.map(function(q){ return q.type; }).join('') : '';
+  if (m.axis === 't'){
+    var o = m.p.cubes[0], z = m.res.newCubes[0];
+    return who + ' ' + m.p.type + ': Versetzung ' + m.steps + '\u00d7 nach ' +
+      dirName(z.x - o.x, z.y - o.y) + ' (' + coordName(o) + ' \u2192 ' + coordName(z) + ')' + cap + '.';
+  }
+  var piv = m.p.cubes[m.ci];
+  return who + ' ' + m.p.type + ': ' + m.axis.toUpperCase() +
+    (m.dir === 2 ? '180' : (m.dir > 0 ? '+90' : '\u221290')) + '\u00b0-Drehung um den Drehpunkt ' +
+    coordName(piv) + cap + '.';
+}
+function renderHelp(){
+  var duel = (mode === '2p' || mode === 'ai') && !gameOver && !(mode === 'ai' && turn === 'b');
+  $('helpBlock').classList.toggle('hidden', !duel);
+  if (!duel || !helpOpen || phase === 'anim') return;
+  var key = mode + ':' + aiLevel + ':' + turn + ':' + moveNo;
+  if (key !== helpKey){ // Empfehlung je Stellung einmal berechnen und dann halten
+    helpKey = key;
+    var rec = recommendMove(turn);
+    helpTxt = rec ? 'Tetromino empfiehlt: ' + describeMove(rec) +
+      ' Figur und Drehpunkt wie beschrieben waehlen \u2013 oder frei entscheiden.' :
+      'Kein legaler Zug mehr verf\u00fcgbar.';
+  }
+  $('helpBody').innerHTML = helpTxt;
+}
+$('helpHead').addEventListener('click', function(){ helpOpen = !helpOpen; applySideToggles(); updateHUD(); });
 applySideToggles();
 $('puzBtns').addEventListener('click', function(e){
   var t = e.target.getAttribute && e.target.getAttribute('data-pact');
@@ -2500,6 +2725,53 @@ function pixSVG(rows, color, scale){
     '" width="' + rows[0].length * scale + '" height="' + rows.length * scale +
     '" fill="' + color + '" shape-rendering="crispEdges">' + r + '</svg>';
 }
+// 5×7-Pixelschrift für die Überschriften (Tetromino, Rätsel, Tutorial): Die
+// Logos werden als Vektor-Pixelraster gerendert – echter 8-Bit-Look ohne
+// eingebettete Fremd-Schriftdatei, das Spiel bleibt vollständig abhängigkeitsfrei.
+var PXFONT = {
+  'A': ['.###.','#...#','#...#','#####','#...#','#...#','#...#'],
+  'B': ['####.','#...#','#...#','####.','#...#','#...#','####.'],
+  'C': ['.###.','#...#','#....','#....','#....','#...#','.###.'],
+  'D': ['####.','#...#','#...#','#...#','#...#','#...#','####.'],
+  'F': ['#####','#....','#....','####.','#....','#....','#....'],
+  'G': ['.###.','#...#','#....','#.###','#...#','#...#','.####'],
+  'H': ['#...#','#...#','#...#','#####','#...#','#...#','#...#'],
+  'J': ['..###','....#','....#','....#','....#','#...#','.###.'],
+  '0': ['.###.','#...#','#...#','#...#','#...#','#...#','.###.'],
+  '1': ['..#..','.##..','..#..','..#..','..#..','..#..','#####'],
+  '2': ['.###.','#...#','....#','...#.','..#..','.#...','#####'],
+  '3': ['####.','....#','....#','.###.','....#','....#','####.'],
+  '4': ['...#.','..##.','.#.#.','#..#.','#####','...#.','...#.'],
+  '5': ['#####','#....','####.','....#','....#','#...#','.###.'],
+  '6': ['..##.','.#...','#....','####.','#...#','#...#','.###.'],
+  '7': ['#####','....#','...#.','..#..','..#..','..#..','..#..'],
+  '8': ['.###.','#...#','#...#','.###.','#...#','#...#','.###.'],
+  '9': ['.###.','#...#','#...#','.####','....#','...#.','.##..'],
+  'E': ['#####','#....','#....','####.','#....','#....','#####'],
+  'I': ['#####','..#..','..#..','..#..','..#..','..#..','#####'],
+  'L': ['#....','#....','#....','#....','#....','#....','#####'],
+  'M': ['#...#','##.##','#.#.#','#...#','#...#','#...#','#...#'],
+  'N': ['#...#','##..#','#.#.#','#..##','#...#','#...#','#...#'],
+  'O': ['.###.','#...#','#...#','#...#','#...#','#...#','.###.'],
+  'R': ['####.','#...#','#...#','####.','#.#..','#..#.','#...#'],
+  'S': ['.####','#....','#....','.###.','....#','....#','####.'],
+  'T': ['#####','..#..','..#..','..#..','..#..','..#..','..#..'],
+  'U': ['#...#','#...#','#...#','#...#','#...#','#...#','.###.'],
+  'Ä': ['.#.#.','.....','.###.','#...#','#...#','#...#','#...#']
+};
+function pixText(str, color, scale){
+  var rows = ['','','','','','',''], i, y, g;
+  for (i = 0; i < str.length; i++){
+    var ch = str.charAt(i);
+    g = PXFONT[ch];
+    if (ch === ' ' || !g){ // Leerzeichen oder unbekanntes Zeichen: eine Leerzeichenspalte
+      for (y = 0; y < 7; y++) rows[y] += '.';
+    } else {
+      for (y = 0; y < 7; y++) rows[y] += g[y] + '.';
+    }
+  }
+  return pixSVG(rows, color, scale);
+}
 // 8-Bit-Maskottchen „Tetromino“ (T-Figur mit Augen) für die Tutorial-Sprechblase
 function mascotSVG(){
   var c = TYPE_COLOR.T;
@@ -2535,6 +2807,11 @@ function initIcons(){
   $('camIcoL').innerHTML = left;
   $('camIcoR').innerHTML = right;
   $('mascotArt').innerHTML = mascotSVG();
+  // Pixel-Logos der Überschriften (Header, Hauptmenü, Rätsel, Tutorial)
+  $('logoH').innerHTML = pixText('TETROMINO', '#ffd23f', 4);
+  $('menuLogoH').innerHTML = pixText('TETROMINO', '#ffd23f', 4);
+  $('catLogoH').innerHTML = pixText('RÄTSEL', '#ffd23f', 4);
+  $('tutLogoH').innerHTML = pixText('TUTORIAL', '#ffd23f', 4);
 }
 
 // ---------- Start ----------
