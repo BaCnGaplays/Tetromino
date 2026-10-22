@@ -266,7 +266,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.36</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.37</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -369,7 +369,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.36</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.37</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -501,7 +501,7 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.36</li></ul>
+    <ul><li>Alpha 0.37</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -509,7 +509,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.36</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.37</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -2552,6 +2552,12 @@ function startGame(m, lvl, seed, side){
 function openMenu(){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
   $('menuOverlay').classList.remove('hidden');
+  // Easter-Eggs ruhen: Die Animationsklassen werden zurückgesetzt, damit die
+  // Effekte ausschließlich durch einen Klick ausgelöst werden. Ohne diese
+  // Zeile würden die CSS-Animationen beim erneuten Einblenden des Menüs von
+  // vorn ablaufen (unterbrochene Läufe feuern kein animationend).
+  $('eggWalk').classList.remove('run');
+  $('euTag').classList.remove('pop');
   $('diffRow').classList.add('hidden');
 }
 function closeMenu(){
@@ -2874,6 +2880,16 @@ qsa('.setDur').forEach(function(btn){
       b.classList.toggle('selOpt', b === btn);
     });
   });
+});
+// Easter-Eggs lösen ausschließlich den Klick aus: Nach dem Ende der jeweiligen
+// Haupt-Animation wird die Klasse wieder entfernt (animationend bläht vom
+// Kind-SVG herauf, daher Filterung nach Animationsname), sodass beim
+// nächsten Einblenden des Menüs nichts von selbst erneut abläuft.
+$('eggWalk').addEventListener('animationend', function(ev){
+  if (ev.animationName === 'eggRun') this.classList.remove('run');
+});
+$('euTag').addEventListener('animationend', function(ev){
+  if (ev.animationName === 'euPop') this.classList.remove('pop');
 });
 // Easter-Egg: Ein Klick auf die Europaflagge lässt den 8-Bit-Schriftzug
 // MADE IN EUROPE in Pixel-Schritten aus der Flagge hervorfahren, kurz
