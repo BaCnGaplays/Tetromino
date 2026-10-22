@@ -87,6 +87,7 @@
   .menuBtn{display:block;width:100%;margin:8px 0;font-size:14px;padding:12px}
   #diffRow{display:flex;gap:8px}
   #diffRow .btn{flex:1}
+  #seedInput{width:100%;box-sizing:border-box;padding:8px 10px;background:#0d0d20;border:2px solid var(--btn-edge);color:var(--ink);font-family:inherit;font-size:14px;margin:4px 0}
   .catBtn{display:flex;align-items:center;gap:10px;width:100%;margin:8px 0;font-size:13px;padding:10px;text-align:left}
   .catBadge{width:26px;height:26px;flex:0 0 26px;border:2px solid #000;box-shadow:2px 2px 0 #000;
     font-size:13px;line-height:22px;text-align:center;color:#0d0d20;font-weight:bold}
@@ -167,7 +168,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.22</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.23</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -273,14 +274,16 @@
 <div id="menuOverlay" class="menuOverlay">
   <div class="menuBox">
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.22</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.23</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
     <div id="diffRow" class="hidden">
-      <button class="btn" data-diff="1">Leicht</button>
-      <button class="btn" data-diff="2">Mittel</button>
-      <button class="btn" data-diff="3">Schwer</button>
+      <button class="btn diffBtn" data-diff="1">Leicht</button>
+      <button class="btn diffBtn" data-diff="2">Mittel</button>
+      <button class="btn diffBtn" data-diff="3">Schwer</button>
+      <button id="mpQuick" class="btn hidden">Schnellstart</button>
+      <button id="seedOpen" class="btn">Mit Startwert &hellip;</button>
     </div>
     <h3>Lernen</h3>
     <button id="tutBtn" class="btn menuBtn">Tutorials</button>
@@ -332,6 +335,26 @@
   </div>
 </div>
 
+<div id="seedModal" class="modal hidden">
+  <div class="modalBox">
+    <h2>Partie mit Startwert</h2>
+    <p style="font-size:12px;color:#9a9ac8;line-height:1.5;margin:6px 0">Mit demselben Startwert (Seed) entsteht dieselbe Aufstellung &ndash; so lassen sich Partien exakt wiederholen und nachspielen. Der Startwert wird in der Statusleiste hinter dem Spielmodus angezeigt.</p>
+    <h3 id="seedDiffHead">Schwierigkeit</h3>
+    <div class="btnRow" id="seedDiffRow">
+      <button class="btn small seedDiff" data-diff="1">Leicht</button>
+      <button class="btn small seedDiff selOpt" data-diff="2">Mittel</button>
+      <button class="btn small seedDiff" data-diff="3">Schwer</button>
+    </div>
+    <h3>Startwert</h3>
+    <input type="text" id="seedInput" inputmode="numeric" placeholder="Zahl zwischen 0 und 999999" autocomplete="off"/>
+    <div class="btnRow">
+      <button id="seedRandom" class="btn small">Zufallswert</button>
+      <button id="seedStart" class="btn">Partie starten</button>
+      <button id="seedClose" class="btn small">Abbrechen</button>
+    </div>
+  </div>
+</div>
+
 <div id="infoModal" class="modal hidden">
   <div class="modalBox">
     <h2>Open Source und Urheberschaft</h2>
@@ -354,7 +377,7 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.22</li></ul>
+    <ul><li>Alpha 0.23</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -362,7 +385,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.22</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.23</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -377,11 +400,13 @@
     <h2>Regeln von Tetromino</h2>
     <h3>Spielmodi</h3>
     <ul>
-      <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz).</li>
-      <li>Einzelspieler: der Computer steuert Schwarz &ndash; in drei Schwierigkeitsstufen (Leicht: zuf&auml;llige Z&uuml;ge; Mittel: schlagorientierte Bewertung; Schwer: vorausschauende Suche &uuml;ber zwei Halbz&uuml;ge).</li>
+      <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>
+      <li>Einzelspieler: der Computer steuert Schwarz in drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>
+      <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>
+      <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>
       <li>Tutorial: elf gef&uuml;hrte Lektionen mit gestellten Aufgaben; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert.</li>
       <li>Level-R&auml;tsel: gestellte Aufgaben mit Zuglimit, Strategie-Lektion und L&ouml;sungs-Anzeige, sortiert in vier Kategorien (Schlagen, Schach, Mattsetzen, Abwehr); der Fortschritt wird je Kategorie als Level-Chips angezeigt.</li>
-      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus und den aktuellen Halbzug.</li>
+      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>
     </ul>
     <h3>Brett und Figuren</h3>
     <ul>
@@ -552,16 +577,24 @@ function rot2(cells){ // 90°-Drehung einer flachen Form in der Ebene, normalisi
   r.forEach(function(c){ if (c[0] < mx) mx = c[0]; if (c[1] < my) my = c[1]; });
   return r.map(function(c){ return [c[0] - mx, c[1] - my]; });
 }
+// ---------- Startwert (Seed): gleicher Startwert => gleiche Aufstellung ----------
+var gameSeed = 0;
+var rngS = 1;
+function srandSeed(s){
+  rngS = Math.floor(s) % 4294967296 + 1;
+  var w; for (w = 0; w < 4; w++) rngS = (rngS * 1664525 + 1013904223) % 4294967296;
+}
+function srand(){ rngS = (rngS * 1664525 + 1013904223) % 4294967296; return rngS / 4294967296; }
 function randomStartPieces(){
   var used = {}, layout = [], k, i;
   function mark(cells){ cells.forEach(function(c){ used[c[0] + ',' + c[1]] = true; }); }
-  var ix = Math.floor(Math.random() * 7);   // Königstein: 4er-Reihe auf y = 0
+  var ix = Math.floor(srand() * 7);   // Königstein: 4er-Reihe auf y = 0
   // Dame: 2×2 mit Unterkante auf y = 0, ohne Überlappung mit dem Königstein
   var oOpts = [], ox2;
   for (ox2 = 0; ox2 <= 8; ox2++){
     if (ox2 + 1 < ix || ox2 > ix + 3) oOpts.push(ox2);
   }
-  var ox = oOpts[Math.floor(Math.random() * oOpts.length)];
+  var ox = oOpts[Math.floor(srand() * oOpts.length)];
   layout.push({ type: 'I', cells: [[ix,0],[ix+1,0],[ix+2,0],[ix+3,0]] });
   layout.push({ type: 'O', cells: [[ox,0],[ox+1,0],[ox,1],[ox+1,1]] });
   mark(layout[0].cells); mark(layout[1].cells);
@@ -581,7 +614,7 @@ function randomStartPieces(){
         }
       }
     }
-    var pick = opts.length ? opts[Math.floor(Math.random() * opts.length)] : START_W[t];
+    var pick = opts.length ? opts[Math.floor(srand() * opts.length)] : START_W[t];
     layout.push({ type: t, cells: pick });
     mark(pick);
   });
@@ -1151,8 +1184,11 @@ function endGame(winner, reason){
   if (winner) sfxWin();
 }
 
-function newGame(){
+function newGame(seed){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
+  gameSeed = (typeof seed === 'number' && seed >= 0) ? (Math.floor(seed) % 1000000)
+    : Math.floor(Math.random() * 1000000);
+  srandSeed(gameSeed);
   pieces = randomStartPieces(); // jedes Duell startet mit frischer, symmetrischer Aufstellung
   occ = rebuildOcc(pieces);
   turn = 'w'; phase = 'idle'; sel = null; pivotIdx = -1; selMoves = [];
@@ -1203,31 +1239,46 @@ function aiWithBoard(list, fn){
   pieces = list; occ = rebuildOcc(list);
   try { return fn(); } finally { pieces = sp; occ = so; }
 }
+function aiScore(m, color){
+  // Deterministische Bewertung ueber zwei Halbzuege: eigener Schlaggewinn minus
+  // bester Schlagantwort des Gegners. Kein Rauschen hier - die Streuung der
+  // Schwierigkeitsstufen steckt allein in der Pool-Auswahl von aiComputeMove.
+  var opp = (color === 'b' ? 'w' : 'b');
+  var nb = aiCloneBoard(m);
+  return aiWithBoard(nb, function(){
+    var replies = aiMovesOf(opp, true);
+    if (!replies.length) return 1000 + 12 * aiGain(m); // Gegner ohne Antwortzug: entscheidend
+    var worst = 0;
+    replies.forEach(function(r){ var g = aiGain(r); if (g > worst) worst = g; });
+    return 12 * aiGain(m) - 11 * worst;
+  });
+}
 function aiComputeMove(level, color){
   color = color || 'b';
-  var ms = aiMovesOf(color), best = null, bs = -1e18, i;
+  var ms = aiMovesOf(color), i;
   if (!ms.length) return null;
-  if (level === 1) return ms[Math.floor(Math.random() * ms.length)];
+  var scored = [], bs = -1e18;
   for (i = 0; i < ms.length; i++){
-    var m = ms[i], s;
-    if (level === 2){
-      s = 12 * aiGain(m) + 0.05 * (m.res.newCubes.some(function(c){ return c.z === 0; }) ? 1 : 0) + Math.random() * 3;
-    } else {
-      var opp = color === 'b' ? 'w' : 'b';
-      var nb = aiCloneBoard(m);
-      s = aiWithBoard(nb, function(){
-        // Antwortzüge „fast“ (ohne erneute Schach-Simulation) – die Legalität
-        // des eigenen Zuges ist bereits geprüft, hier wird nur bewertet.
-        var replies = aiMovesOf(opp, true);
-        if (!replies.length) return 1000 + 12 * aiGain(m); // Gegner ohne Zug: Sieg (Vernichtung/Zugzwang)
-        var worst = 0;
-        replies.forEach(function(r){ var g = aiGain(r); if (g > worst) worst = g; });
-        return 12 * aiGain(m) - 11 * worst + Math.random();
-      });
-    }
-    if (s > bs){ bs = s; best = m; }
+    var s = aiScore(ms[i], color);
+    scored.push({ m: ms[i], s: s });
+    if (s > bs) bs = s;
   }
-  return best;
+  var pool;
+  if (level === 1){
+    // Leicht: hoher Zufallsanteil; teils schwache Zuege, eigene Figuren koennen
+    // geopfert werden (T/L/S deutlich haeufiger als Dame oder Koenigstein).
+    if (Math.random() < 0.45) return ms[Math.floor(Math.random() * ms.length)];
+    pool = scored.filter(function(e){ return e.s >= bs - 33; });
+  } else if (level === 2){
+    // Mittel: gute Zuege mit Streuung, aber ohne Figurenopfer - Zuege, die eine eigene Figur
+    // durch den Gegner schlagen lassen, bleiben ausgeschlossen.
+    pool = scored.filter(function(e){ return e.s >= bs - 2; });
+  } else {
+    // Schwer: optimale, vorausschauende Auswahl ueber zwei Halbzuege.
+    pool = scored.filter(function(e){ return e.s >= bs - 0.001; });
+  }
+  if (!pool.length) pool = scored;
+  return pool[Math.floor(Math.random() * pool.length)].m;
 }
 function aiPlay(){
   if (gameOver || mode !== 'ai' || turn !== 'b') return;
@@ -1722,7 +1773,7 @@ cv.addEventListener('click', onCanvasClick);
 cv.addEventListener('contextmenu', function(e){ e.preventDefault(); deselect(); });
 window.addEventListener('keydown', function(e){
   if (e.key === 'Escape'){
-    var modals = ['rulesModal', 'setModal', 'infoModal', 'srcModal'], i;
+    var modals = ['rulesModal', 'setModal', 'infoModal', 'srcModal', 'seedModal'], i;
     for (i = 0; i < modals.length; i++){
       var mEl = $(modals[i]);
       if (!mEl.classList.contains('hidden')){ mEl.classList.add('hidden'); return; }
@@ -1878,9 +1929,9 @@ function updateHUD(statusOverride){
   if (!gameOver && !statusOverride && inCheck(turn)) st = 'Schach! ' + st;
   speech = st;
   $('modeChip').textContent = mode === 'ai'
-    ? ('Einzelspieler · ' + ['Leicht', 'Mittel', 'Schwer'][aiLevel - 1])
+    ? ('Einzelspieler \u00b7 ' + ['Leicht', 'Mittel', 'Schwer'][aiLevel - 1] + ' \u00b7 #' + gameSeed)
     : (mode === 'tutorial' ? 'Tutorial'
-    : (mode === 'puzzle' ? ('Level-Rätsel ' + (puz.level + 1) + '/' + puzList().length) : 'Mehrspieler'));
+    : (mode === 'puzzle' ? ('Level-R\u00e4tsel ' + (puz.level + 1) + '/' + puzList().length) : 'Mehrspieler \u00b7 #' + gameSeed));
   var tutVis = (mode === 'tutorial' && tut.step >= 0);
   var puzVis = (mode === 'puzzle');
   var duelVis = (mode === '2p' || mode === 'ai');
@@ -2333,11 +2384,11 @@ function toggleMusic(){
 }
 
 // ---------- Menü, Einstellungen, Quellcode ----------
-function startGame(m, lvl){
+function startGame(m, lvl, seed){
   mode = m;
   if (typeof lvl === 'number') aiLevel = lvl;
   tut.step = -1;
-  newGame();
+  newGame(seed);
   closeMenu();
 }
 function openMenu(){
@@ -2346,6 +2397,7 @@ function openMenu(){
     ? ('Rätselkategorien (' + puzTotal() + ' Rätsel)')
     : 'Rätselkategorien (Strategietraining)';
   $('menuOverlay').classList.remove('hidden');
+  $('diffRow').classList.add('hidden');
 }
 function closeMenu(){
   $('menuOverlay').classList.add('hidden');
@@ -2445,11 +2497,52 @@ function restartMode(){
   else newGame();
 }
 
-$('mpBtn').addEventListener('click', function(){ startGame('2p'); });
-$('spBtn').addEventListener('click', function(){ $('diffRow').classList.toggle('hidden'); });
-Array.prototype.slice.call(document.querySelectorAll('#diffRow .btn')).forEach(function(btn){
+var diffCtx = 'ai';
+var seedDiffLvl = 2;
+function showDiffRow(ctx){
+  diffCtx = ctx;
+  $('diffRow').classList.remove('hidden');
+  var isAi = (ctx === 'ai');
+  Array.prototype.slice.call(document.querySelectorAll('#diffRow .diffBtn')).forEach(function(b){
+    b.classList.toggle('hidden', !isAi);
+  });
+  $('mpQuick').classList.toggle('hidden', isAi);
+}
+function openSeedModal(ctx){
+  diffCtx = ctx;
+  var isAi = (ctx === 'ai');
+  $('seedDiffHead').classList.toggle('hidden', !isAi);
+  $('seedDiffRow').classList.toggle('hidden', !isAi);
+  if (isAi) setSeedDiff(seedDiffLvl);
+  $('seedModal').classList.remove('hidden');
+}
+function setSeedDiff(lvl){
+  seedDiffLvl = lvl;
+  Array.prototype.slice.call(document.querySelectorAll('#seedDiffRow .seedDiff')).forEach(function(b){
+    b.classList.toggle('selOpt', parseInt(b.getAttribute('data-diff'), 10) === lvl);
+  });
+}
+$('mpBtn').addEventListener('click', function(){ showDiffRow('2p'); });
+$('spBtn').addEventListener('click', function(){ showDiffRow('ai'); });
+$('mpQuick').addEventListener('click', function(){ startGame('2p'); });
+$('seedOpen').addEventListener('click', function(){ openSeedModal(diffCtx); });
+Array.prototype.slice.call(document.querySelectorAll('#diffRow .diffBtn')).forEach(function(btn){
   btn.addEventListener('click', function(){ startGame('ai', parseInt(btn.getAttribute('data-diff'), 10)); });
 });
+Array.prototype.slice.call(document.querySelectorAll('#seedDiffRow .seedDiff')).forEach(function(btn){
+  btn.addEventListener('click', function(){ setSeedDiff(parseInt(btn.getAttribute('data-diff'), 10)); });
+});
+$('seedRandom').addEventListener('click', function(){
+  $('seedInput').value = String(Math.floor(Math.random() * 1000000));
+});
+$('seedStart').addEventListener('click', function(){
+  var digits = String($('seedInput').value || '').replace(/[^0-9]/g, '');
+  var seed = digits ? (parseInt(digits, 10) % 1000000) : Math.floor(Math.random() * 1000000);
+  $('seedModal').classList.add('hidden');
+  if (diffCtx === '2p') startGame('2p', undefined, seed);
+  else startGame('ai', seedDiffLvl, seed);
+});
+$('seedClose').addEventListener('click', function(){ $('seedModal').classList.add('hidden'); });
 $('tutBtn').addEventListener('click', openTutMenu);
 $('tutList').addEventListener('click', function(e){
   var i = tutFromEvent(e);
