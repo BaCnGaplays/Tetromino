@@ -77,7 +77,7 @@
   #puzHint{font-size:10px;color:#ff9a6a;margin-top:4px;min-height:12px}
   .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,1);display:flex;align-items:center;
     justify-content:center;padding:16px;z-index:100;overflow-y:auto}
-  .menuBox{background:var(--panel);border:3px solid var(--accent);box-shadow:0 6px 0 #000;
+  .menuBox{position:relative;background:var(--panel);border:3px solid var(--accent);box-shadow:0 6px 0 #000;
     background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.10) 0 1px,transparent 1px 3px);
     padding:20px;max-width:520px;width:100%;text-align:center}
   .menuBox h1{margin:0 0 4px;color:var(--accent);text-transform:uppercase;letter-spacing:4px;
@@ -85,8 +85,13 @@
   .menuBox .sub{color:#9a9ac8;font-size:11px;margin-bottom:10px;letter-spacing:1px}
   .menuBox h3{color:#b8b8e0;font-size:11px;margin:12px 0 6px;text-transform:uppercase;letter-spacing:2px}
   .menuBtn{display:block;width:100%;margin:8px 0;font-size:14px;padding:12px}
-  #diffRow{display:flex;gap:8px}
-  #diffRow .btn{flex:1}
+  #diffRow{display:block;background:#101030;border:3px solid var(--btn-edge);box-shadow:0 4px 0 #000;
+    padding:10px;margin:10px 0;text-align:center}
+  #diffCap{font-size:10px;color:#ffd23f;text-transform:uppercase;letter-spacing:2px;margin-bottom:8px}
+  #diffInner{display:flex;gap:8px;flex-wrap:wrap}
+  #diffInner .btn{flex:1}
+  #euFlag{position:absolute;top:14px;right:14px;width:48px;pointer-events:none}
+  #euFlag svg{width:100%;height:auto;display:block}
   #seedInput{width:100%;box-sizing:border-box;padding:8px 10px;background:#0d0d20;border:2px solid var(--btn-edge);color:var(--ink);font-family:inherit;font-size:14px;margin:4px 0}
   .catBtn{display:flex;align-items:center;gap:10px;width:100%;margin:8px 0;font-size:13px;padding:10px;text-align:left}
   .catBadge{width:26px;height:26px;flex:0 0 26px;border:2px solid #000;box-shadow:2px 2px 0 #000;
@@ -162,13 +167,24 @@
   .modalBox h2{margin:0 0 10px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-size:16px}
   .modalBox h3{color:#b8b8e0;font-size:12px;margin:12px 0 4px;text-transform:uppercase}
   .modalBox ul{margin:4px 0;padding-left:18px}
+  @media (max-width:560px){
+    .menuBox{padding:14px 10px}
+    .menuBox h1{font-size:22px}
+    .menuBtn{font-size:11px;padding:10px 6px}
+    #euFlag{width:34px;top:10px;right:10px}
+    #diffRow{padding:8px}
+    #diffInner{gap:6px}
+    #diffInner .btn{flex:1 1 44%;font-size:11px;padding:8px 4px}
+    .modal{padding:8px}
+    .modalBox{padding:12px}
+  }
 </style>
 </head>
 <body>
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.23</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.24</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -273,17 +289,21 @@
 
 <div id="menuOverlay" class="menuOverlay">
   <div class="menuBox">
+    <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.23</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.24</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
     <div id="diffRow" class="hidden">
-      <button class="btn diffBtn" data-diff="1">Leicht</button>
-      <button class="btn diffBtn" data-diff="2">Mittel</button>
-      <button class="btn diffBtn" data-diff="3">Schwer</button>
-      <button id="mpQuick" class="btn hidden">Schnellstart</button>
-      <button id="seedOpen" class="btn">Mit Startwert &hellip;</button>
+      <div id="diffCap">Schwierigkeit w&auml;hlen</div>
+      <div id="diffInner">
+        <button class="btn diffBtn" data-diff="1">Leicht</button>
+        <button class="btn diffBtn" data-diff="2">Mittel</button>
+        <button class="btn diffBtn" data-diff="3">Schwer</button>
+        <button id="mpQuick" class="btn hidden">Schnellstart</button>
+        <button id="seedOpen" class="btn">Mit Startwert &hellip;</button>
+      </div>
     </div>
     <h3>Lernen</h3>
     <button id="tutBtn" class="btn menuBtn">Tutorials</button>
@@ -361,6 +381,7 @@
     <h3>Urheberschaft</h3>
     <ul>
       <li>Diese Anwendung (Tetromino) wurde von Vibe (KI-Assistent von Mistral AI, basierend auf dem Modell GLM) gemeinsam mit BaCnGaplays im Jahr 2026 entwickelt.</li>
+      <li>Die Europaflagge oben rechts im Hauptmen&uuml; (Pixelgrafik) kennzeichnet Tetromino als ein in der Europ&auml;ischen Union entwickeltes Spiel; das Flaggen-Emblem der EU dient hier ausschlie&szlig;lich dieser Herkunftsangabe.</li>
       <li>Der Quellcode liegt vollst&auml;ndig und offen in dieser HTML-Datei vor und kann frei eingesehen und angepasst werden.</li>
     </ul>
     <h3>Verwendete Software Dritter</h3>
@@ -377,7 +398,7 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.23</li></ul>
+    <ul><li>Alpha 0.24</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -385,7 +406,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.23</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.24</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -2501,6 +2522,7 @@ var diffCtx = 'ai';
 var seedDiffLvl = 2;
 function showDiffRow(ctx){
   diffCtx = ctx;
+  $('diffCap').textContent = (ctx === 'ai') ? 'Schwierigkeit w\u00e4hlen' : 'Partie starten';
   $('diffRow').classList.remove('hidden');
   var isAi = (ctx === 'ai');
   Array.prototype.slice.call(document.querySelectorAll('#diffRow .diffBtn')).forEach(function(b){
@@ -2875,6 +2897,23 @@ function mascotSVG(){
     '<rect x="5" y="3" width="1" height="1" fill="#101024"/><rect x="10" y="3" width="1" height="1" fill="#101024"/>' +
     '</svg>';
 }
+function euFlagSVG(){
+  // Pixelgrafik der Europaflagge: blaues Feld im Verhaeltnis 3:2 mit zwoelf
+  // fuenf-Pixel-Sternen auf einem unsichtbaren Kreis. Kennzeichnet das Spiel
+  // als in der EU entwickelt (erklaert im Bereich Urheberschaft).
+  var stars = '', k;
+  for (k = 0; k < 12; k++){
+    var a = k * Math.PI / 6;
+    var cx = Math.round(13.5 + 5.5 * Math.cos(a)), cy = Math.round(8.5 + 5.5 * Math.sin(a));
+    stars += '<rect x="' + cx + '" y="' + (cy - 1) + '" width="1" height="1"/>' +
+      '<rect x="' + (cx - 1) + '" y="' + cy + '" width="1" height="1"/>' +
+      '<rect x="' + cx + '" y="' + cy + '" width="1" height="1"/>' +
+      '<rect x="' + (cx + 1) + '" y="' + cy + '" width="1" height="1"/>' +
+      '<rect x="' + cx + '" y="' + (cy + 1) + '" width="1" height="1"/>';
+  }
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 27 18" shape-rendering="crispEdges">' +
+    '<rect width="27" height="18" fill="#003399"/><g fill="#ffcc00">' + stars + '</g></svg>';
+}
 function initIcons(){
   // Achsen-Farbkodierung (identisch zur Legende im Dreh-Panel)
   var AX_COL = { x: '#ef7c1a', y: '#31c7ef', z: '#3fbf3f' };
@@ -2900,6 +2939,7 @@ function initIcons(){
   $('camIcoL').innerHTML = left;
   $('camIcoR').innerHTML = right;
   $('mascotArt').innerHTML = mascotSVG();
+  $('euFlag').innerHTML = euFlagSVG();
   // Pixel-Logos der Überschriften (Header, Hauptmenü, Rätsel, Tutorial)
   $('logoH').innerHTML = pixText('TETROMINO', '#ffd23f', 4);
   $('menuLogoH').innerHTML = pixText('TETROMINO', '#ffd23f', 4);
