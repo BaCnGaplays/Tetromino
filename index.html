@@ -50,6 +50,23 @@
   #axLegend{font-size:9px;color:#9a9ac8;letter-spacing:1px;margin:2px 0 4px;text-transform:uppercase}
   #camRow{position:absolute;top:40px;right:6px;z-index:6;display:flex;align-items:center;gap:6px;margin:0;background:transparent}
   #menuRow{position:absolute;top:40px;left:6px;z-index:6;margin:0;background:transparent}
+  #replayBar{position:absolute;left:6px;right:6px;bottom:6px;z-index:6;display:flex;align-items:center;gap:10px;
+    background:rgba(13,13,32,.95);border:2px solid var(--panel-edge);
+    box-shadow:0 3px 0 #000;padding:4px 8px;margin:0;font-size:11px;text-transform:uppercase;letter-spacing:1px}
+  #replayLbl{color:#c8c8e8;white-space:nowrap}
+  #replaySlider{flex:1;min-width:60px;margin:0;height:20px;background:transparent;cursor:pointer;
+    -webkit-appearance:none;appearance:none}
+  #replaySlider::-webkit-slider-runnable-track{height:12px;
+    background:repeating-linear-gradient(90deg,#101030 0 4px,#1c1c44 4px 8px);
+    box-shadow:0 0 0 2px var(--btn-edge),0 2px 0 #000}
+  #replaySlider::-webkit-slider-thumb{-webkit-appearance:none;appearance:none;width:14px;height:20px;margin-top:-4px;
+    background:#ffd23f;border:2px solid #4d3800;border-radius:0;
+    box-shadow:inset -3px -3px 0 rgba(0,0,0,.35),0 2px 0 #000}
+  #replaySlider::-moz-range-track{height:12px;
+    background:repeating-linear-gradient(90deg,#101030 0 4px,#1c1c44 4px 8px);
+    box-shadow:0 0 0 2px var(--btn-edge),0 2px 0 #000}
+  #replaySlider::-moz-range-thumb{width:10px;height:16px;border-radius:0;background:#ffd23f;
+    border:2px solid #4d3800;box-shadow:inset -3px -3px 0 rgba(0,0,0,.35)}
   .camBtn{display:inline-flex;align-items:center;gap:6px;padding:4px 6px}
   #scan{position:absolute;inset:4px;pointer-events:none;z-index:5;
     background:repeating-linear-gradient(0deg,rgba(0,0,0,.16) 0 1px,transparent 1px 3px)}
@@ -257,6 +274,8 @@
     #sideRow{padding:8px}
     #diffInner{gap:6px}
     #diffInner .btn{flex:1 1 44%;font-size:11px;padding:8px 4px}
+    #replayBar{gap:6px;padding:4px 6px}
+    #replayLbl{display:none}
     .modal{padding:8px}
     .modalBox{padding:12px}
   }
@@ -266,7 +285,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.39</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.42</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -277,11 +296,17 @@
           <span id="turnChip"></span><span id="modeChip" class="modeChip">Mehrspieler</span><span id="halfNo">Halbzug 1</span>
         </div>
         <div id="camRow">
+          <button id="undoBtn" class="btn camBtn hidden" title="Zug zur&uuml;cknehmen: der eigene und der Computerzug werden zur&uuml;ckgesetzt (nur auf Leicht und Mittel)"><span class="camIco" id="undoIco"></span></button>
           <button id="camL" class="btn camBtn" title="Ansicht um 90&deg; nach links drehen (Pfeiltaste links)"><span class="camIco" id="camIcoL"></span></button>
           <button id="camR" class="btn camBtn" title="Ansicht um 90&deg; nach rechts drehen (Pfeiltaste rechts)"><span class="camIco" id="camIcoR"></span></button>
         </div>
         <div id="menuRow">
           <button id="menuBtn" class="btn small" title="Zum Hauptmen&uuml; (Neues Spiel, Einstellungen, Regeln)">Men&uuml;</button>
+        </div>
+        <div id="replayBar" class="hidden">
+          <span id="replayLbl">Replay</span>
+          <input type="range" id="replaySlider" min="0" max="1" value="0"/>
+          <button id="replayEnd" class="btn small" title="Replay beenden und zum Endscreen zur&uuml;ckkehren">Ende</button>
         </div>
         <div id="tutPanel" class="hidden">
           <div id="tutHead"></div>
@@ -355,6 +380,7 @@
             <div id="overTitle"></div>
             <div id="overReason"></div>
             <button id="overBtn" class="btn menuBtn">Neues Spiel (gleicher Modus)</button>
+            <button id="overReplayBtn" class="btn menuBtn">Replay ansehen</button>
             <button id="overMenuBtn" class="btn menuBtn">Hauptmen&uuml;</button>
           </div>
         </div>
@@ -369,7 +395,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.39</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.42</span></div>
     <h3>Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -506,7 +532,7 @@
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
     <h3>Version</h3>
-    <ul><li>Alpha 0.39</li></ul>
+    <ul><li>Alpha 0.42</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -514,7 +540,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.39</span></h2>
+    <h2>Quellcode <span class="verTag">Alpha 0.42</span></h2>
     <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -532,6 +558,8 @@
       <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>
       <li>Einzelspieler: der Computer steuert die jeweils andere Farbe; vor dem Start wird Weiß oder Schwarz gewählt (Standard: Weiß). Drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>
       <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>
+      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>
+      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>
       <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>
       <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat.</li>
       <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), vierzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>
@@ -1175,9 +1203,13 @@ function finalizeMove(){
     else capturedByB = capturedByB.concat(cap);
     shakeUntil = performance.now() + 220;
     sfxCap();
-    // Erfolge (nur Duell): geschlagenes Phantom und eingeholtes Erstzug-Opfer
+    // Erfolge (nur Duell): eingeholtes Erstzug-Opfer; „Phantom geopfert“
+    // zählt nur für das eigene Phantom – schlägt der Spieler das Phantom
+    // des Gegners (im Duell gegen den Computer also des Computers),
+    // bleibt dieser Erfolg gesperrt, denn es ist nicht das eigene.
     if (chessRulesOn()){
-      if (cap.some(function(q){ return q.phantom; })) unlockAch('phantomSac');
+      if (cap.some(function(q){ return q.phantom && (mode !== 'ai' || q.color === humanSide); }))
+        unlockAch('phantomSac');
       if (lastLSacId !== null && cap.some(function(q){ return q.id === lastLSacId; }))
         unlockAch('lSac');
     }
@@ -1217,7 +1249,9 @@ function finalizeMove(){
           logEntries.push('Das Phantom der ' + (p.color === 'w' ? 'weißen' : 'schwarzen') +
             ' Dame schlägt ' + sw.captured.map(function(q){ return q.type; }).join('') + '.');
           if (!cap.length){ shakeUntil = performance.now() + 220; sfxCap(); }
-          if (chessRulesOn()) unlockAch('phantomHit'); // Phantomschlag im Duell
+          // „Phantomschlag“ zählt nur, wenn das eigene Phantom zuschlägt –
+          // der Zuschlag des gegnerischen Phantoms bleibt ohne Erfolg.
+          if (chessRulesOn() && (mode !== 'ai' || p.color === humanSide)) unlockAch('phantomHit');
         }
         ph.cubes = sw.cubes;
         // Das Phantom darf das Brett verlassen; verliert es dabei jeden
@@ -1286,6 +1320,7 @@ function finalizeMove(){
     // Erfolgs-Ansagen (falls in diesem Zug freigeschaltet) anhängen
     if (achPending){ ann = (ann ? ann + ' ' : '') + achPending; achPending = ''; }
   }
+  if (mode === '2p' || mode === 'ai') hist.push(takeSnap()); // Verlauf für Zurücknehmen und Replay
   updateHUD();
   if (!gameOver && mode === 'ai' && turn === aiColor) aiSchedule();
 }
@@ -1391,6 +1426,86 @@ function resetSelection(){
 function resetFieldEvents(){
   crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = '';
 }
+// ---------- Partieverlauf: Züge zurücknehmen und Replay ----------
+// Nach jedem Halbzug wird eine vollständige Kopie der Stellung abgelegt
+// (Figuren inklusive Phantom-Verweise, Zugrecht, Beutelisten, Bröckel-Felder
+// und Zugliste). Daraus speist sich das Zurücknehmen im Einzelspieler
+// (Leicht und Mittel: ein eigener plus ein Computer-Halbzug) sowie nach dem
+// Partieende das Replay. Der Verlauf bleibt ungespeichert: Mit der nächsten
+// Partie beginnt er von vorn.
+var hist = [];          // Stellungen je Halbzug; hist[0] ist die Anfangsaufstellung
+var replayOn = false;   // Replay aktiv: Ansicht drehbar, Züge gesperrt
+var replayIdx = 0;      // aktuell angezeigter Halbzug des Replays
+function snapPieces(list){
+  var byId = {}, out = [];
+  list.forEach(function(p){
+    var q = { id: p.id, color: p.color, type: p.type, moved: !!p.moved,
+      phantom: !!p.phantom, cubes: p.cubes.map(function(c){ return { x: c.x, y: c.y, z: c.z }; }) };
+    byId[p.id] = q; out.push(q);
+  });
+  list.forEach(function(p, i){
+    if (p.phantom && p.master) out[i].master = byId[p.master.id] || null;
+  });
+  return out;
+}
+function takeSnap(){
+  var cr = {}, k;
+  for (k in crumbled) cr[k] = true;
+  return { pieces: snapPieces(pieces), turn: turn, moveNo: moveNo,
+    sinceCap: sinceCap, checkStreak: checkStreak, lastLSacId: lastLSacId,
+    crumbled: cr, crumbleWarn: crumbleWarn, crumbleWarnMove: crumbleWarnMove,
+    capturedByW: capturedByW.slice(), capturedByB: capturedByB.slice(),
+    log: logEntries.slice() };
+}
+function restoreSnap(s){
+  pieces = snapPieces(s.pieces);
+  occ = rebuildOcc(pieces);
+  turn = s.turn; moveNo = s.moveNo; sinceCap = s.sinceCap;
+  checkStreak = s.checkStreak; lastLSacId = s.lastLSacId;
+  crumbled = {}; for (var k in s.crumbled) crumbled[k] = true;
+  crumbleWarn = s.crumbleWarn; crumbleWarnMove = s.crumbleWarnMove;
+  capturedByW = s.capturedByW.slice(); capturedByB = s.capturedByB.slice();
+  logEntries = s.log.slice();
+  resetSelection(); shakeUntil = 0; hover = null; ann = '';
+}
+// Zurücknehmen: verfügbar im Einzelspieler auf Leicht oder Mittel, sobald
+// ein voller Zug (eigener plus Computer-Halbzug) vorliegt und der Spieler
+// wieder am Zug ist. Nach dem Partieende und im Replay bleibt der Knopf weg.
+function undoAvailable(){
+  return mode === 'ai' && (aiLevel === 1 || aiLevel === 2) && !gameOver && !replayOn &&
+    phase !== 'anim' && turn === humanSide && hist.length >= 3;
+}
+function takeBackMove(){
+  if (!undoAvailable()) return;
+  if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
+  var idx = hist.length - 3;
+  var snap = hist[idx];
+  hist.length = idx + 1; // beide letzten Halbzüge verwerfen
+  restoreSnap(snap);
+  logEntries.push((humanSide === 'w' ? 'Weiß' : 'Schwarz') +
+    ' nimmt den letzten vollen Zug zurück.');
+  tone(392, .07, .09); tone(330, .09, .09, .09); // absteigender Rückblendeton
+  updateHUD();
+}
+function startReplay(){
+  if (!hist.length) return;
+  replayOn = true; replayIdx = hist.length - 1;
+  $('overOverlay').classList.add('hidden');
+  restoreSnap(hist[replayIdx]);
+  var s = $('replaySlider');
+  s.max = String(hist.length - 1);
+  s.value = String(replayIdx);
+  $('replayBar').classList.remove('hidden');
+  ann = 'Replay: Die eigene Partie mit dem Schieberegeler noch einmal durchgehen.';
+  updateHUD();
+}
+function stopReplay(){
+  replayOn = false;
+  $('replayBar').classList.add('hidden');
+  if (hist.length) restoreSnap(hist[hist.length - 1]); // Endstellung wiederherstellen
+  $('overOverlay').classList.remove('hidden');
+  updateHUD();
+}
 function newGame(seed){
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
   gameSeed = (typeof seed === 'number' && seed >= 0) ? (Math.floor(seed) % 1000000)
@@ -1404,6 +1519,11 @@ function newGame(seed){
   shakeUntil = 0; hover = null; OY = 96; OYt = 96;
   resetFieldEvents();
   checkStreak = 0; lastLSacId = null; // Erfolgs-Zähler je Partie zurücksetzen
+  // Partieverlauf (Zurücknehmen, Replay) je Partie neu: Ein Replay endet mit
+  // der Partie; sobald die nächste beginnt, ist der alte Verlauf verworfen.
+  replayOn = false; hist = [];
+  $('replayBar').classList.add('hidden');
+  if (mode === '2p' || mode === 'ai') hist.push(takeSnap()); // Anfangsaufstellung
   $('overOverlay').classList.add('hidden');
   updateHUD();
 }
@@ -1863,7 +1983,7 @@ function pickSlideTap(pos){
 }
 
 function onCanvasClick(e){
-  if (gameOver || phase === 'anim') return;
+  if (replayOn || gameOver || phase === 'anim') return;
   if (mode === 'ai' && turn === aiColor){ updateHUD('Der Computer ist am Zug – bitte warten.'); return; }
   var pos = canvasPos(e);
   // Klick-Priorität: erst die exakte Figur (Würfel), dann die tolerante
@@ -2062,8 +2182,15 @@ function updateHUD(statusOverride){
   // Schlagzug selbst.
   var halfDone = gameOver;
   $('halfNo').textContent = 'Halbzug ' + (halfDone ? moveNo : moveNo + 1);
+  // Knopf „Zug zurücknehmen“ nur im Einzelspieler auf Leicht oder Mittel,
+  // solange ein voller Zug zurückgenommen werden kann; im Replay läuft
+  // die Positionsangabe der Leiste mit dem Schieberegeler mit.
+  $('undoBtn').classList.toggle('hidden', !undoAvailable());
+  if (replayOn) $('replayLbl').textContent = 'Replay: ' + replayIdx + ' / ' + (hist.length - 1) + ' Halbzüge';
   var st;
   if (statusOverride) st = statusOverride;
+  else if (replayOn) st = 'Replay: Halbzug ' + replayIdx + ' von ' + (hist.length - 1) +
+    ' – Ansicht drehbar, Züge bleiben gesperrt.';
   else if (gameOver) st = 'Die Partie ist beendet. Bitte neues Spiel starten.';
   else if (phase === 'anim') st = 'Drehung läuft …';
   else if (mode === 'ai' && turn === aiColor) st = 'Der Computer ist am Zug …';
@@ -2779,6 +2906,17 @@ $('overMenuBtn').addEventListener('click', function(){ newGame(); openMenu(); })
 $('cancelBtn').addEventListener('click', deselect);
 $('camL').addEventListener('click', function(){ rotateView(-1); });
 $('camR').addEventListener('click', function(){ rotateView(1); });
+// Zug zurücknehmen (Leicht und Mittel), Replay nach Partieende: Der Verlauf
+// speist beide Funktionen; im Replay bleibt nur die Ansicht bedienbar.
+$('undoBtn').addEventListener('click', takeBackMove);
+$('overReplayBtn').addEventListener('click', startReplay);
+$('replayEnd').addEventListener('click', function(){ if (replayOn) stopReplay(); });
+$('replaySlider').addEventListener('input', function(){
+  if (!replayOn) return;
+  replayIdx = parseInt($('replaySlider').value, 10) || 0;
+  restoreSnap(hist[replayIdx]);
+  updateHUD();
+});
 $('rulesClose').addEventListener('click', function(){ $('rulesModal').classList.add('hidden'); });
 $('rulesModal').addEventListener('click', function(e){
   if (e.target === $('rulesModal')) $('rulesModal').classList.add('hidden');
@@ -3034,6 +3172,25 @@ var PIX_180 = [
   '.....#####...',
   '.............'
 ];
+// U-Turn-Pfeil (Zug zurücknehmen): Die Linie kommt von unten links,
+// kurvt am rechten Rand um 180 Grad und endet oben links mit der Spitze,
+// die zurück nach links zeigt – klassisches Zurücknehmen-Symbol im
+// 8-Bit-Stil der übrigen Knopfpfeile. Dasselbe 12×12-Raster wie der
+// Links-Pfeil, damit der Knopf exakt die Maße der Ansichtspfeile hat.
+var PIX_UNDO = [
+  '............',
+  '............',
+  '..##........',
+  '.##########.',
+  '.##########.',
+  '..##.....##.',
+  '.........##.',
+  '.........##.',
+  '.##########.',
+  '.##########.',
+  '............',
+  '............'
+];
 // Gerader Pfeil nach oben: 90°-Drehung des Links-Pfeils – dadurch besitzen
 // alle vier Richtungen dieselbe Form, Dicke und Größe; pixFlip ergibt den
 // Pfeil nach unten, pixMirror die Richtungen links/rechts.
@@ -3162,6 +3319,7 @@ function initIcons(){
   });
   $('camIcoL').innerHTML = left;
   $('camIcoR').innerHTML = right;
+  $('undoIco').innerHTML = pixSVG(PIX_UNDO, '#ffd23f', 2);
   $('mascotArt').innerHTML = mascotSVG();
   $('euFlag').innerHTML = euFlagSVG();
   // Pixel-Logos der Überschriften (Header, Hauptmenü, Tutorial)
@@ -3202,9 +3360,9 @@ var ACH = [
   { id: 'lSac', sig: 'L', name: 'Erstzug-Opfer',
     desc: 'Die L-Figur schlägt in ihrer ersten Versetzung und fällt umgehend der Antwort.' },
   { id: 'phantomHit', sig: 'P', name: 'Phantomschlag',
-    desc: 'Erstmals mit dem Phantom einer Dame geschlagen.' },
+    desc: 'Erstmals mit dem eigenen Phantom der Dame geschlagen.' },
   { id: 'phantomSac', sig: 'X', name: 'Phantom geopfert',
-    desc: 'Ein Phantom der Dame wurde vom Gegner geschlagen.' },
+    desc: 'Das eigene Phantom der Dame wurde vom Gegner geschlagen – das gegnerische Phantom zu schlagen zählt nicht.' },
   { id: 'firstFall', sig: 'F', name: 'Vom Brett gestürzt',
     desc: 'Eine Figur verlor den Halt und stürzte vom Brett.' },
   { id: 'phantomFall', sig: 'G', name: 'Phantom gestürzt',
