@@ -221,6 +221,7 @@
   .setOpts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
     flex:1 1 150px;min-width:0}
   .setOpts.full{flex-basis:100%;flex-grow:1;margin-top:2px}
+  .setOpts.wide{flex-basis:100%;flex-grow:1;margin-top:2px;grid-template-columns:repeat(2,minmax(0,1fr))}
   .setOpts .btn{min-width:0;white-space:nowrap;overflow:hidden}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .bubBlock{border-top:1px solid #3d3d7a;margin-top:6px;padding-top:5px}
@@ -295,7 +296,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.52</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.54</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -405,7 +406,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.52</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.54</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -485,6 +486,15 @@
     <div class="setRow"><span class="setLbl" id="setLblMus">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
     <div class="setRow"><span class="setLbl" id="setLblVol">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
     <div class="setRow"><span class="setLbl" id="setLblMusVol">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
+    <div class="setRow"><span class="setLbl" id="setLblMusTrack">Musiktitel</span>
+      <div class="setOpts wide">
+        <button class="btn small setMusTrack" data-mus="orig">Original</button>
+        <button class="btn small setMusTrack" data-mus="klassik">Klassik</button>
+        <button class="btn small setMusTrack" data-mus="metal">Metal</button>
+        <button class="btn small setMusTrack" data-mus="techno">Techno</button>
+        <button class="btn small setMusTrack" data-mus="entspannung">Entspannung</button>
+        <button class="btn small setMusTrack" data-mus="hardbass">Russian Hardbass</button>
+      </div></div>
     <h3 id="setHGame">Spiel</h3>
     <div class="setRow"><span class="setLbl" id="setLblDur">Drehgeschwindigkeit</span>
       <div class="setOpts">
@@ -555,7 +565,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.52</li></ul>
+    <ul><li>Alpha 0.54</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -563,7 +573,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.52</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.54</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -586,7 +596,7 @@
       <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>
       <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>
       <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat.</li>
-      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), sechzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>
+      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), siebzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>
       <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>
     </ul>
     <h3>Brett und Figuren</h3>
@@ -701,7 +711,7 @@ var RULES_DE =
 '      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>\n' +
 '      <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>\n' +
 '      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat.</li>\n' +
-'      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), sechzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>\n' +
+'      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), siebzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>\n' +
 '      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>\n' +
 '    </ul>\n' +
 '    <h3>Brett und Figuren</h3>\n' +
@@ -801,7 +811,7 @@ var RULES_CS =
 '      <li>Replay: Po konci partie proti počítači otevře tlačítko „Sledovat replay“ průběh partie. Posuvník dole ve hracím poli listuje pozicemi půltah za půltahem, pohled lze otáčet jako obvykle, tahy zůstávají až do konce replaye uzamčeny. Replay se neukládá a končí, jakmile začne nová partie.</li>\n' +
 '      <li>Tetromino-nápověda (bublina) doporučuje vždy optimální tah nezávisle na stupni obtížnosti; stupně se týkají jen volby tahů počítače.</li>\n' +
 '      <li>Tutoriál: pět lekcí – po jedné na figurku (T, L, S, královský kámen, dáma) – s několika dílčími úkoly od kliknutí až po braní; každou lekci lze vybrat jednotlivě, absolvované lekce se označují zeleně. Text úkolu stojí ve sklopitelné schránce úkolu v bublině, tipy se krátce ukazují jako vyskakovací okno a zůstávají žlutě ve schránce; po každé vyřešené lekci nabízí závěrečná obrazovka Pokračovat, Restart a Hlavní menu. Tlačítko „Resetovat úkol“ postaví desku aktuálního dílčího úkolu znovu – například když nechtěný tah úkol zneschopnil.</li>\n' +
-'      <li>Uložená hra, statistika a úspěchy: několik pojmenovaných uložených her se ukládá v prohlížeči; každá vede statistiku partie režimu jednoho hráče (vítězství, prohry a remízy proti počítači), šestnáct úspěchů a postup tutoriálu. Úspěchy „Učeň“, „Tovaryš“ a „Velmistr“ odměňují vítězství proti počítači na stupních Lehká, Střední a Těžká. Každá proti počítači ukončená partie započítá své počáteční číslo; úspěch „Všechny světy“ se odemkne teprve, když bylo odehráno každé z 1 000 000 možných počátečních čísel aspoň jednou – prakticky nemožný úspěch. Uložené hry lze exportovat jako úplný soubor HTML s vloženou uloženou hrou – otevření takového souboru vytvoří uloženou hru jako nový záznam – a resetovat jednotlivě nebo kompletně.</li>\n' +
+'      <li>Uložená hra, statistika a úspěchy: několik pojmenovaných uložených her se ukládá v prohlížeči; každá vede statistiku partie režimu jednoho hráče (vítězství, prohry a remízy proti počítači), sedmnáct úspěchů a postup tutoriálu. Úspěchy „Učeň“, „Tovaryš“ a „Velmistr“ odměňují vítězství proti počítači na stupních Lehká, Střední a Těžká. Každá proti počítači ukončená partie započítá své počáteční číslo; úspěch „Všechny světy“ se odemkne teprve, když bylo odehráno každé z 1 000 000 možných počátečních čísel aspoň jednou – prakticky nemožný úspěch. Uložené hry lze exportovat jako úplný soubor HTML s vloženou uloženou hrou – otevření takového souboru vytvoří uloženou hru jako nový záznam – a resetovat jednotlivě nebo kompletně.</li>\n' +
 '      <li>Stavový řádek leží jako úzký pruh na horním okraji uvnitř hracího pole: ukazuje stranu na tahu, herní režim, aktuální půltah a počáteční číslo partie.</li>\n' +
 '    </ul>\n' +
 '    <h3>Deska a figurky</h3>\n' +
@@ -899,7 +909,7 @@ var RULES_PL =
 '      <li>Powtórka: Po zakończeniu partii z komputerem przycisk „Obejrzyj powtórkę” otwiera przebieg partii. Suwak na dole pola gry kartkuje pozycje półruch po półruchu, widok można obracać jak zwykle, ruchy pozostają do końca powtórki zablokowane. Powtórka nie jest zapisywana i kończy się, gdy tylko zaczyna się nowa partia.</li>\n' +
 '      <li>Tetromino-podpowiedź (dymek) poleca zawsze optymalny ruch niezależnie od poziomu trudności; poziomy dotyczą tylko wyboru ruchów komputera.</li>\n' +
 '      <li>Samouczek: pięć lekcji – po jednej na figurę (T, L, S, królewski kamień, dama) – z kilkoma zadaniami częściowymi od kliknięcia aż do bicia; każdą lekcję można wybrać pojedynczo, ukończone lekcje są oznaczane na zielono. Treść zadania stoi w rozkładanej skrzynce zadania w dymku, wskazówki pokazują się krótko jako wyskakujące okno i pozostają na żółto w skrzynce; po każdej rozwiązanej lekcji ekran końcowy oferuje Dalej, Restart i Menu główne. Przycisk „Zresetuj zadanie” buduje planszę bieżącego zadania na nowo – na przykład gdy przypadkowy ruch uczynił zadanie nierozwiązywalnym.</li>\n' +
-'      <li>Zapis gry, statystyka i osiągnięcia: kilka nazwanych zapisów gier jest przechowywanych w przeglądarce; każdy prowadzi statystykę partii trybu jednego gracza (zwycięstwa, porażki i remisy przeciwko komputerowi), szesnaście osiągnięć i postęp samouczka. Osiągnięcia „Uczeń”, „Czeladnik” i „Wielki mistrz” nagradzają zwycięstwa nad komputerem na poziomach Łatwy, Średni i Trudny. Każda zakończona przeciwko komputerowi partia liczy swoją wartość startową; osiągnięcie „Wszystkie światy” zostaje odblokowane dopiero, gdy każda z 1 000 000 możliwych wartości startowych została zagrana co najmniej raz – praktycznie nieosiągalne osiągnięcie. Zapisy gier można eksportować jako kompletny plik HTML z wbudowanym zapisem gry – otwarcie takiego pliku tworzy zapis jako nowy wpis – oraz resetować pojedynczo albo całkowicie.</li>\n' +
+'      <li>Zapis gry, statystyka i osiągnięcia: kilka nazwanych zapisów gier jest przechowywanych w przeglądarce; każdy prowadzi statystykę partii trybu jednego gracza (zwycięstwa, porażki i remisy przeciwko komputerowi), siedemnaście osiągnięć i postęp samouczka. Osiągnięcia „Uczeń”, „Czeladnik” i „Wielki mistrz” nagradzają zwycięstwa nad komputerem na poziomach Łatwy, Średni i Trudny. Każda zakończona przeciwko komputerowi partia liczy swoją wartość startową; osiągnięcie „Wszystkie światy” zostaje odblokowane dopiero, gdy każda z 1 000 000 możliwych wartości startowych została zagrana co najmniej raz – praktycznie nieosiągalne osiągnięcie. Zapisy gier można eksportować jako kompletny plik HTML z wbudowanym zapisem gry – otwarcie takiego pliku tworzy zapis jako nowy wpis – oraz resetować pojedynczo albo całkowicie.</li>\n' +
 '      <li>Pasek stanu leży jako wąski pas na górnej krawędzi wewnątrz pola gry: pokazuje stronę na posunięciu, tryb gry, bieżący półruch i wartość startową partii.</li>\n' +
 '    </ul>\n' +
 '    <h3>Plansza i figury</h3>\n' +
@@ -997,7 +1007,7 @@ var RULES_ES =
 '      <li>Repetición: Al terminar una partida de duelo, el botón «Ver repetición» abre el curso de la partida. El control deslizante situado abajo en el campo de juego recorre las posiciones media jugada a media jugada, la vista puede girarse como de costumbre y las jugadas permanecen bloqueadas hasta el final de la repetición. La repetición no se guarda y termina en cuanto empieza una partida nueva.</li>\n' +
 '      <li>La ayuda de Tetromino (burbuja) recomienda siempre la jugada óptima, con independencia del nivel de dificultad; los niveles afectan únicamente a la elección de jugadas del ordenador.</li>\n' +
 '      <li>Tutorial: cinco lecciones – una por pieza (T, L, S, piedra rey, dama) – con varias tareas parciales, desde hacer clic hasta capturar; cada lección puede elegirse por separado y las lecciones completadas se marcan en verde. El texto de la tarea está en el recuadro plegable de tareas de la burbuja; los consejos aparecen brevemente como ventana emergente y permanecen en amarillo en el recuadro; tras cada lección resuelta, una pantalla final ofrece Continuar, Reiniciar y Menú principal. El botón «Restablecer tarea» reconstruye el tablero de la tarea parcial actual – por ejemplo, cuando una jugada involuntaria ha vuelto irresoluble la tarea.</li>\n' +
-'      <li>Partida guardada, estadísticas y logros: varias partidas guardadas con nombre se almacenan en el navegador; cada una lleva la estadística de partidas del modo un jugador (victorias, derrotas y tablas contra el ordenador), dieciséis logros y el progreso del tutorial. Los logros «Aprendiz», «Oficial» y «Gran maestro» premian victorias contra el ordenador en los niveles Fácil, Medio y Difícil. Cada partida terminada contra el ordenador anota su valor inicial; el logro «Todos los mundos» solo se desbloquea cuando cada uno de los 1.000.000 valores iniciales posibles se ha jugado al menos una vez – un logro prácticamente imposible. Las partidas guardadas pueden exportarse como archivo HTML completo con la partida incrustada – abrir dicho archivo crea la partida guardada como nueva entrada – y restablecerse individualmente o por completo.</li>\n' +
+'      <li>Partida guardada, estadísticas y logros: varias partidas guardadas con nombre se almacenan en el navegador; cada una lleva la estadística de partidas del modo un jugador (victorias, derrotas y tablas contra el ordenador), diecisiete logros y el progreso del tutorial. Los logros «Aprendiz», «Oficial» y «Gran maestro» premian victorias contra el ordenador en los niveles Fácil, Medio y Difícil. Cada partida terminada contra el ordenador anota su valor inicial; el logro «Todos los mundos» solo se desbloquea cuando cada uno de los 1.000.000 valores iniciales posibles se ha jugado al menos una vez – un logro prácticamente imposible. Las partidas guardadas pueden exportarse como archivo HTML completo con la partida incrustada – abrir dicho archivo crea la partida guardada como nueva entrada – y restablecerse individualmente o por completo.</li>\n' +
 '      <li>La barra de estado es una franja estrecha en el borde superior dentro del campo de juego: muestra el bando al que corresponde jugar, el modo de juego, la media jugada actual y el valor inicial de la partida.</li>\n' +
 '    </ul>\n' +
 '    <h3>Tablero y piezas</h3>\n' +
@@ -1275,6 +1285,10 @@ var TXT = {
     lblDur: 'Drehgeschwindigkeit', lblLang: 'Sprache',
     muteOnLbl: 'Ton: an', muteOffLbl: 'Ton: aus',
     musOnLbl: 'Musik: an', musOffLbl: 'Musik: aus',
+    lblMusTrack: 'Musiktitel', trkOrig: 'Original', trkKlassik: 'Klassik', trkMetal: 'Metal',
+    trkTechno: 'Techno', trkEntspannung: 'Entspannung', trkHardbass: 'Russian Hardbass',
+    achRusRootsName: 'Russische Wurzeln',
+    achRusRootsDesc: 'Die Spielmusik in den Einstellungen auf Russian Hardbass umgestellt – eine Hommage an den russischen Erfinder des fallenden-Stein-Klassikers.',
     durSlowLbl: 'Langsam', durNormLbl: 'Normal', durFastLbl: 'Schnell',
     setCloseLbl: 'Schließen',
     seedH2: 'Partie mit Startwert',
@@ -1487,6 +1501,10 @@ var TXT = {
     lblDur: 'Rotation speed', lblLang: 'Language',
     muteOnLbl: 'Sound: on', muteOffLbl: 'Sound: off',
     musOnLbl: 'Music: on', musOffLbl: 'Music: off',
+    lblMusTrack: 'Music track', trkOrig: 'Original', trkKlassik: 'Classical', trkMetal: 'Metal',
+    trkTechno: 'Techno', trkEntspannung: 'Relaxing', trkHardbass: 'Russian Hardbass',
+    achRusRootsName: 'Russian Roots',
+    achRusRootsDesc: 'Switched the game music to Russian Hardbass in the settings – a homage to the Russian inventor of the falling-block classic.',
     durSlowLbl: 'Slow', durNormLbl: 'Normal', durFastLbl: 'Fast',
     setCloseLbl: 'Close',
     seedH2: 'Game with seed',
@@ -1529,7 +1547,7 @@ var TXT = {
 '      <li>Replay: After a duel game ends, the button “Watch replay” opens the course of the game. The slider below the board steps through the positions half-move by half-move, the view can be rotated as usual, and moves stay locked until the end of the replay. The replay is not saved and ends as soon as a new game begins.</li>\n' +
 '      <li>The Tetromino help (speech bubble) always recommends the optimal move, regardless of the difficulty level; the levels only affect the computer’s move choice.</li>\n' +
 '      <li>Tutorial: five lessons – one per piece (T, L, S, king piece, queen) – each with several subtasks from clicking to capturing; each lesson can be selected individually, completed lessons are marked green. The task text is in the collapsible task box of the speech bubble, hints appear briefly as a popup and remain in yellow in the box; after each solved lesson, an end screen offers continue, restart and main menu. The button “Reset task” rebuilds the board of the current subtask – for example when an accidental move made the task unsolvable.</li>\n' +
-'      <li>Save game, statistics and achievements: several named save games are stored in the browser; each keeps the single-player game statistics (wins, losses and draws against the computer), sixteen achievements and the tutorial progress. The achievements “Apprentice”, “Journeyman” and “Grandmaster” reward victories against the computer on the levels Easy, Medium and Hard. Every game finished against the computer counts its seed; the achievement “All Worlds” is only unlocked when every one of the 1,000,000 possible seeds has been played at least once – a practically impossible achievement. Save games can be exported as complete HTML files with the save game embedded – opening such a file adds the save game as a new entry – and can be reset individually or entirely.</li>\n' +
+'      <li>Save game, statistics and achievements: several named save games are stored in the browser; each keeps the single-player game statistics (wins, losses and draws against the computer), seventeen achievements and the tutorial progress. The achievements “Apprentice”, “Journeyman” and “Grandmaster” reward victories against the computer on the levels Easy, Medium and Hard. Every game finished against the computer counts its seed; the achievement “All Worlds” is only unlocked when every one of the 1,000,000 possible seeds has been played at least once – a practically impossible achievement. Save games can be exported as complete HTML files with the save game embedded – opening such a file adds the save game as a new entry – and can be reset individually or entirely.</li>\n' +
 '      <li>The status bar is a narrow band at the top edge inside the board: it shows the side to move, the game mode, the current half-move and the seed of the game.</li>\n' +
 '    </ul>\n' +
 '    <h3>Board and pieces</h3>\n' +
@@ -1792,6 +1810,10 @@ var TXT = {
     lblDur: 'Vitesse de rotation', lblLang: 'Langue',
     muteOnLbl: 'Son : activé', muteOffLbl: 'Son : coupé',
     musOnLbl: 'Musique : activée', musOffLbl: 'Musique : coupée',
+    lblMusTrack: 'Titre musical', trkOrig: 'Original', trkKlassik: 'Classique', trkMetal: 'Metal',
+    trkTechno: 'Techno', trkEntspannung: 'Détente', trkHardbass: 'Russian Hardbass',
+    achRusRootsName: 'Racines russes',
+    achRusRootsDesc: 'Musique du jeu réglée sur Russian Hardbass dans les paramètres – hommage à l’inventeur russe du classique des blocs qui tombent.',
     durSlowLbl: 'Lente', durNormLbl: 'Normale', durFastLbl: 'Rapide',
     setCloseLbl: 'Fermer',
     seedH2: 'Partie avec valeur de départ',
@@ -1834,7 +1856,7 @@ var TXT = {
 '      <li>Replay : à la fin d’une partie en duel, le bouton « Voir le replay » ouvre le déroulé de la partie. Le curseur sous le plateau parcourt les positions demi-coup par demi-coup, la vue pivote comme d’habitude, et les coups restent verrouillés jusqu’à la fin du replay. Le replay n’est pas sauvegardé et disparaît dès qu’une nouvelle partie commence.</li>\n' +
 '      <li>L’aide de Tetromino (bulle) recommande toujours le coup optimal, quel que soit le niveau de difficulté ; les niveaux n’influencent que le choix des coups de l’ordinateur.</li>\n' +
 '      <li>Tutoriel : cinq leçons – une par pièce (T, L, S, pièce roi, dame) – avec chacune plusieurs sous-tâches, du clic à la capture ; chaque leçon se choisit séparément, les leçons terminées sont marquées en vert. Le texte de la tâche figure dans la zone de tâche repliable de la bulle, les indices apparaissent brièvement en popup puis restent en jaune dans la zone ; après chaque leçon résolue, un écran de fin propose continuer, recommencer et menu principal. Le bouton « Réinitialiser la tâche » reconstruit le plateau de la sous-tâche en cours – par exemple si un coup maladroit l’a rendue insoluble.</li>\n' +
-'      <li>Sauvegarde, statistiques et succès : plusieurs sauvegardes nommées sont conservées dans le navigateur ; chacune tient les statistiques du mode solo (victoires, défaites et nulles contre l’ordinateur), seize succès et la progression du tutoriel. Les succès « Apprenti », « Compagnon » et « Grand maître » récompensent des victoires contre l’ordinateur aux niveaux Facile, Moyen et Difficile. Chaque partie terminée contre l’ordinateur comptabilise sa valeur de départ ; le succès « Tous les mondes » ne se débloque que lorsque chacune des 1 000 000 valeurs possibles a été jouée au moins une fois – un succès pratiquement impossible. Les sauvegardes s’exportent en fichiers HTML complets avec la sauvegarde intégrée – ouvrir un tel fichier crée la sauvegarde comme nouvelle entrée – et se réinitialisent individuellement ou entièrement.</li>\n' +
+'      <li>Sauvegarde, statistiques et succès : plusieurs sauvegardes nommées sont conservées dans le navigateur ; chacune tient les statistiques du mode solo (victoires, défaites et nulles contre l’ordinateur), dix-sept succès et la progression du tutoriel. Les succès « Apprenti », « Compagnon » et « Grand maître » récompensent des victoires contre l’ordinateur aux niveaux Facile, Moyen et Difficile. Chaque partie terminée contre l’ordinateur comptabilise sa valeur de départ ; le succès « Tous les mondes » ne se débloque que lorsque chacune des 1 000 000 valeurs possibles a été jouée au moins une fois – un succès pratiquement impossible. Les sauvegardes s’exportent en fichiers HTML complets avec la sauvegarde intégrée – ouvrir un tel fichier crée la sauvegarde comme nouvelle entrée – et se réinitialisent individuellement ou entièrement.</li>\n' +
 '      <li>La barre d’état est une bande étroite en haut, à l’intérieur du plateau : elle indique le camp au trait, le mode de jeu, le demi-coup en cours et la valeur de départ de la partie.</li>\n' +
 '    </ul>\n' +
 '    <h3>Plateau et pièces</h3>\n' +
@@ -2098,6 +2120,10 @@ var TXT = {
     lblDur: 'Rychlost otáčení', lblLang: 'Jazyk',
     muteOnLbl: 'Zvuk: zapnuto', muteOffLbl: 'Zvuk: vypnuto',
     musOnLbl: 'Hudba: zapnuta', musOffLbl: 'Hudba: vypnuta',
+    lblMusTrack: 'Hudební skladba', trkOrig: 'Originál', trkKlassik: 'Klasika', trkMetal: 'Metal',
+    trkTechno: 'Techno', trkEntspannung: 'Relaxace', trkHardbass: 'Russian Hardbass',
+    achRusRootsName: 'Ruské kořeny',
+    achRusRootsDesc: 'Herní hudba přepnuta na Russian Hardbass v nastavení – pocta ruskému vynálezci klasiky padajících kamenů.',
     durSlowLbl: 'Pomalu', durNormLbl: 'Normálně', durFastLbl: 'Rychle',
     setCloseLbl: 'Zavřít',
     seedH2: 'Partie s počátečním číslem',
@@ -2310,6 +2336,10 @@ var TXT = {
     lblDur: 'Prędkość obrotu', lblLang: 'Język',
     muteOnLbl: 'Dźwięk: włączony', muteOffLbl: 'Dźwięk: wyłączony',
     musOnLbl: 'Muzyka: włączona', musOffLbl: 'Muzyka: wyłączona',
+    lblMusTrack: 'Utwór muzyczny', trkOrig: 'Oryginał', trkKlassik: 'Klasyka', trkMetal: 'Metal',
+    trkTechno: 'Techno', trkEntspannung: 'Relaks', trkHardbass: 'Russian Hardbass',
+    achRusRootsName: 'Rosyjskie korzenie',
+    achRusRootsDesc: 'Muzyka gry przełączona na Russian Hardbass w ustawieniach – ukłon w stronę rosyjskiego wynalazcy klasycznej układanki ze spadającymi klockami.',
     durSlowLbl: 'Wolno', durNormLbl: 'Normalnie', durFastLbl: 'Szybko',
     setCloseLbl: 'Zamknij',
     seedH2: 'Partia z wartością startową',
@@ -2523,6 +2553,10 @@ var TXT = {
     lblDur: 'Velocidad de giro', lblLang: 'Idioma',
     muteOnLbl: 'Sonido: activado', muteOffLbl: 'Sonido: desactivado',
     musOnLbl: 'Música: activada', musOffLbl: 'Música: desactivada',
+    lblMusTrack: 'Tema musical', trkOrig: 'Original', trkKlassik: 'Clásica', trkMetal: 'Metal',
+    trkTechno: 'Techno', trkEntspannung: 'Relajación', trkHardbass: 'Russian Hardbass',
+    achRusRootsName: 'Raíces rusas',
+    achRusRootsDesc: 'Música del juego cambiada a Russian Hardbass en los ajustes – homenaje al inventor ruso del clásico de las piezas que caen.',
     durSlowLbl: 'Lento', durNormLbl: 'Normal', durFastLbl: 'Rápido',
     setCloseLbl: 'Cerrar',
     seedH2: 'Partida con valor inicial',
@@ -2592,7 +2626,7 @@ function applyLang(){
     hSlots: 'hSlots', slotNew: 'slotNewLbl', hStats: 'hStats', hAch: 'hAch',
     saveBack: 'saveBackLbl', setH2: 'setH2', setHSound: 'setHSound', setHGame: 'setHGame',
     setLblSound: 'lblSound', setLblMus: 'lblMus', setLblVol: 'lblVol',
-    setLblMusVol: 'lblMusVol', setLblDur: 'lblDur', setLblLang: 'lblLang',
+    setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblDur: 'lblDur', setLblLang: 'lblLang',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
     seedStart: 'seedStartLbl', seedClose: 'seedCloseLbl',
@@ -2632,6 +2666,7 @@ function applyLang(){
   qsa('.setLang').forEach(function(b){
     b.classList.toggle('selOpt', b.getAttribute('data-lang') === lang);
   });
+  refreshMusTrackBtns();
   $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
   $('setMute').classList.toggle('selOpt', muted);
   $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
@@ -4743,29 +4778,131 @@ document.addEventListener('click', function(e){
   }
 });
 
-// ---------- Hintergrundmusik (8-Bit-Schleife, zur Laufzeit erzeugt) ----------
-// Eigene kurze Chiptune-Schleife: Melodie in A-Moll über einem durchgehenden
-// Bass-Puls, rein mit dem vorhandenen Square-Oszillator erzeugt. Jeder Eintrag
-// ist [Frequenz, Länge in Achteln]; 0 = Pause. Ein Schritt entspricht einem
-// Achtel bei ca. 136 bpm (0,22 s).
-var musOn = false, musTimer = null, musStep = 0, MUS_STEP_MS = 220;
-var MUS_LEAD = [
-  [440,1],[523,1],[659,2],[587,1],[659,1],[523,2],
-  [440,1],[494,1],[523,2],[587,2],[523,1],[494,1],[440,2],[0,2],
-  [659,1],[587,1],[523,2],[494,1],[523,1],[587,2],
-  [440,1],[392,1],[330,2],[392,2],[0,2]
-];
-var MUS_BASS = [ // ein Eintrag pro Melodie-Schritt-Start: [Frequenz, Länge]
-  [220,2],[247,2],[262,2],[220,2],[196,2],[220,2],[165,2],[175,2]
-];
+// ---------- Hintergrundmusik (8-Bit-Schleifen, zur Laufzeit erzeugt) ----------
+// Sechs kurze Chiptune-Schleifen im Gameboy-Klang, rein mit dem vorhandenen
+// Square-Oszillator erzeugt: „Original“ (die bisherige Schleife in A-Moll),
+// Klassik (Kanon in D von
+// Johann Pachelbel, um 1700), Metal (Galopp-Riff in E-Moll), Techno (Akkord-
+// Arpeggien über Puls-Bass), Entspannung (langsame Pentatonik) und Russian
+// Hardbass (schneller Folk-Riff in A-Moll über pumpendem Oktav-Bass).
+// Jeder Ton ist [Frequenz, Länge in Achteln]; 0 = Pause. Jede Schleife bringt
+// ihr eigenes Achtel-Tempo (stepMs), ihre Lautstärken, ihren Bass-Takt
+// (bassEvery = Bass-Anschlag alle wie viele Achtel) und ihre Bass-TonDauer
+// (bassDur, in Achteln) mit. Die Titelwahl persistiert unter dem
+// localStorage-Schlüssel tetraTrack.
+var musOn = false, musTimer = null, musStep = 0;
+var MUS_TRACK_KEY = 'tetraTrack', musTrackId = 'orig';
+var MUS_TRACKS = {
+  orig: { stepMs: 220, bassEvery: 2, bassDur: 1.7, leadVol: 0.045, bassVol: 0.035,
+    lead: [
+      [440,1],[523,1],[659,2],[587,1],[659,1],[523,2],
+      [440,1],[494,1],[523,2],[587,2],[523,1],[494,1],[440,2],[0,2],
+      [659,1],[587,1],[523,2],[494,1],[523,1],[587,2],
+      [440,1],[392,1],[330,2],[392,2],[0,2]
+    ],
+    bass: [ // ein Eintrag pro Melodie-Schritt-Start: [Frequenz, Länge]
+      [220,2],[247,2],[262,2],[220,2],[196,2],[220,2],[165,2],[175,2]
+    ]
+  },
+  klassik: { stepMs: 260, bassEvery: 4, bassDur: 3.6, leadVol: 0.038, bassVol: 0.028,
+    lead: [ // Kanon in D (Johann Pachelbel, um 1700): getragene Oberstimme
+      [740,4],[659,4],[587,4],[554,4],
+      [494,4],[440,4],[494,4],[554,4],
+      [587,4],[554,4],[494,4],[440,4],
+      [392,4],[370,4],[392,4],[330,4]
+    ],
+    bass: [ // Basso-continuo-Bassmodell D–A–H–Fis–G–D–G–A (Halbe Noten)
+      [147,1],[110,1],[123,1],[92,1],[98,1],[73,1],[98,1],[110,1]
+    ]
+  },
+  metal: { stepMs: 140, bassEvery: 1, bassDur: 0.85, leadVol: 0.050, bassVol: 0.045,
+    lead: [ // Galopp-Riff in E-Moll mit Halbton-Reibung (B)
+      [330,1],[330,1],[330,1],[330,1],[330,1],[330,1],[294,2],
+      [330,1],[330,1],[330,1],[330,1],[330,1],[330,1],[262,2],
+      [392,1],[440,1],[466,1],[440,1],[392,1],[330,1],[294,1],[247,1],
+      [330,2],[330,1],[330,1],[330,2],[0,2]
+    ],
+    bass: [
+      [82,1],[82,1],[82,1],[82,1],[82,1],[82,1],[73,1],[73,1],
+      [82,1],[82,1],[82,1],[82,1],[82,1],[82,1],[65,1],[65,1],
+      [82,1],[82,1],[82,1],[82,1],[98,1],[98,1],[73,1],[73,1],
+      [82,1],[82,1],[82,1],[82,1],[82,1],[82,1],[65,1],[65,1]
+    ]
+  },
+  techno: { stepMs: 150, bassEvery: 1, bassDur: 0.80, leadVol: 0.040, bassVol: 0.050,
+    lead: [ // Arpeggien über a-moll / F / G / e-moll im 4/4-Puls
+      [440,1],[523,1],[659,1],[880,1],[440,1],[523,1],[659,1],[880,1],
+      [349,1],[440,1],[523,1],[698,1],[349,1],[440,1],[523,1],[698,1],
+      [392,1],[494,1],[587,1],[784,1],[392,1],[494,1],[587,1],[784,1],
+      [330,1],[392,1],[494,1],[659,1],[330,1],[392,1],[494,1],[659,1]
+    ],
+    bass: [
+      [110,1],[110,1],[110,1],[110,1],[110,1],[110,1],[110,1],[110,1],
+      [87,1],[87,1],[87,1],[87,1],[87,1],[87,1],[87,1],[87,1],
+      [98,1],[98,1],[98,1],[98,1],[98,1],[98,1],[98,1],[98,1],
+      [82,1],[82,1],[82,1],[82,1],[82,1],[82,1],[82,1],[82,1]
+    ]
+  },
+  entspannung: { stepMs: 400, bassEvery: 2, bassDur: 2.5, leadVol: 0.028, bassVol: 0.022,
+    lead: [ // langsame Pentatonik in C über ruhigem Viertel-Bass
+      [523,2],[587,2],[659,4],[784,2],[659,2],
+      [587,2],[523,2],[440,4],[392,2],[440,2],
+      [349,2],[392,2],[523,4],[587,2],[523,2],
+      [440,2],[392,2],[523,4],[0,4]
+    ],
+    bass: [ [131,2],[110,2],[87,2],[98,2] ]
+  },
+  hardbass: { stepMs: 150, bassEvery: 1, bassDur: 0.80, leadVol: 0.045, bassVol: 0.050,
+    lead: [ // schneller Folk-Riff in a-moll (Kalinka-Anklang)
+      [440,1],[440,1],[440,2],[523,1],[440,1],[392,2],
+      [440,1],[440,1],[440,2],[349,1],[392,1],[440,2],
+      [659,1],[659,1],[659,2],[587,1],[523,1],[494,2],
+      [523,1],[494,1],[523,1],[659,1],[440,4]
+    ],
+    bass: [ // pumpender Oktav-Bass über a-moll / F / G / a-moll
+      [110,1],[110,1],[220,1],[110,1],[110,1],[110,1],[220,1],[110,1],
+      [87,1],[87,1],[175,1],[87,1],[87,1],[87,1],[175,1],[87,1],
+      [98,1],[98,1],[196,1],[98,1],[98,1],[98,1],[196,1],[98,1],
+      [110,1],[110,1],[220,1],[110,1],[110,1],[220,1],[110,1],[110,1]
+    ]
+  }
+};
+try {
+  var prefTrack = window.localStorage.getItem(MUS_TRACK_KEY);
+  if (MUS_TRACKS[prefTrack]) musTrackId = prefTrack;
+} catch (e) {}
+var TRK_KEY = { orig: 'trkOrig', klassik: 'trkKlassik', metal: 'trkMetal',
+  techno: 'trkTechno', entspannung: 'trkEntspannung', hardbass: 'trkHardbass' };
+function musTrack(){ return MUS_TRACKS[musTrackId] || MUS_TRACKS.orig; }
 function musTick(){
   if (!musOn) return;
-  var lead = MUS_LEAD[musStep % MUS_LEAD.length];
-  if (lead[0]) tone(lead[0], lead[1] * MUS_STEP_MS / 1000 * 0.9, 0.045, 0, null, 'mus');
-  var bass = MUS_BASS[Math.floor(musStep / 2) % MUS_BASS.length];
-  if (musStep % 2 === 0 && bass[0]) tone(bass[0], MUS_STEP_MS / 1000 * 1.7, 0.035, 0, null, 'mus');
+  var trk = musTrack();
+  var lead = trk.lead[musStep % trk.lead.length];
+  if (lead[0]) tone(lead[0], lead[1] * trk.stepMs / 1000 * 0.9, trk.leadVol, 0, null, 'mus');
+  var bass = trk.bass[Math.floor(musStep / trk.bassEvery) % trk.bass.length];
+  if (musStep % trk.bassEvery === 0 && bass[0]) tone(bass[0], trk.stepMs / 1000 * trk.bassDur, trk.bassVol, 0, null, 'mus');
   musStep++;
-  musTimer = setTimeout(musTick, lead[1] * MUS_STEP_MS);
+  musTimer = setTimeout(musTick, lead[1] * trk.stepMs);
+}
+function refreshMusTrackBtns(){
+  qsa('.setMusTrack').forEach(function(b){
+    b.textContent = tr(TRK_KEY[b.getAttribute('data-mus')] || 'trkOrig');
+    b.classList.toggle('selOpt', b.getAttribute('data-mus') === musTrackId);
+  });
+}
+// Titel wechseln: Auswahl persistieren und die laufende Schleife nahtlos mit
+// dem neuen Titel neu beginnen lassen. Russian Hardbass schaltet den Erfolg
+// „Russische Wurzeln“ frei – das Augenzwinkern zum russischen Tetris-Erfinder.
+function setMusTrack(id){
+  if (!MUS_TRACKS[id]) return;
+  musTrackId = id;
+  try { window.localStorage.setItem(MUS_TRACK_KEY, id); } catch (e) {}
+  if (musOn){
+    if (musTimer){ clearTimeout(musTimer); musTimer = null; }
+    musStep = 0;
+    musTick();
+  }
+  if (id === 'hardbass') unlockAch('rusRoots');
 }
 function toggleMusic(){
   musOn = !musOn;
@@ -4838,6 +4975,7 @@ function openSettings(){
   $('setMute').classList.toggle('selOpt', muted);
   $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
   $('setMus').classList.toggle('selOpt', musOn);
+  refreshMusTrackBtns();
   $('setModal').classList.remove('hidden');
 }
 function openInfo(){ $('infoModal').classList.remove('hidden'); }
@@ -5134,6 +5272,12 @@ $('endMenu').addEventListener('click', function(){
 
 $('setMute').addEventListener('click', function(){ toggleMute(); openSettings(); });
 $('setMus').addEventListener('click', function(){ toggleMusic(); openSettings(); });
+qsa('.setMusTrack').forEach(function(b){
+  b.addEventListener('click', function(){
+    setMusTrack(b.getAttribute('data-mus'));
+    openSettings(); // Knopftexte und Auswahlmarkierung frisch halten
+  });
+});
 $('setVol').addEventListener('input', function(){ masterVol = parseInt($('setVol').value, 10) / 100; });
 $('setMusVol').addEventListener('input', function(){
   // Gekrümmte Skala (Exponent 1,6): 100% bleibt 100%, aber 50% wirkt wie ein
@@ -5461,7 +5605,9 @@ var ACH = [
   { id: 'dameFremd', sig: 'Q', name: 'Die Dame geht dem König fremd',
     desc: 'Ein S-Stein stürzte in das Phantom der Dame, nachdem sie ihm den Halt entzog.' },
   { id: 'easter', sig: 'E', name: 'Tetromino gefunden',
-    desc: 'Das versteckte Maskottchen auf dem Startbildschirm aufgestöbert.' }
+    desc: 'Das versteckte Maskottchen auf dem Startbildschirm aufgestöbert.' },
+  { id: 'rusRoots', sig: 'R', name: 'Russische Wurzeln',
+    desc: 'Die Spielmusik in den Einstellungen auf Russian Hardbass umgestellt – eine Hommage an den russischen Erfinder des fallenden-Stein-Klassikers.' }
 ];
 // Erfolgs-IDs auf i18n-Schlüssel abbilden (ach<Key>Name / ach<Key>Desc).
 var ACH_KEY = { firstWin: 'FirstWin', firstDraw: 'FirstDraw', blitz: 'Blitz',
@@ -5469,6 +5615,7 @@ var ACH_KEY = { firstWin: 'FirstWin', firstDraw: 'FirstDraw', blitz: 'Blitz',
   perpetual: 'Perpetual', lSac: 'LSac', phantomHit: 'PhantomHit',
   phantomSac: 'PhantomSac', firstFall: 'FirstFall', phantomFall: 'PhantomFall',
   tronFall: 'TronFall', dameFremd: 'DameFremd',
+  rusRoots: 'RusRoots',
   easter: 'Easter' };
 function achName(a){ return tr('ach' + (ACH_KEY[a.id] || a.id) + 'Name'); }
 function achDesc(a){ return tr('ach' + (ACH_KEY[a.id] || a.id) + 'Desc'); }
