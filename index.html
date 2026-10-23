@@ -212,6 +212,10 @@
     box-shadow:0 1px 0 #000, inset 3px 3px 0 rgba(255,255,255,.14), inset -3px -3px 0 rgba(0,0,0,.32)}
   .btn:disabled{opacity:.32;cursor:default}
   .btn.small{padding:4px 8px;font-size:11px}
+  /* Sprachknöpfe: Pixel-Flagge neben der Sprachbezeichnung */
+  .setLang{display:inline-flex;align-items:center;gap:6px}
+  .flag{width:18px;height:12px;flex:0 0 18px;shape-rendering:crispEdges;
+    background:#fff;border:1px solid rgba(10,10,26,.55);box-sizing:content-box}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .bubBlock{border-top:1px solid #3d3d7a;margin-top:6px;padding-top:5px}
   .bubBlock h2{margin:0;font-size:10px;color:#9a9ac8;text-transform:uppercase;letter-spacing:1px;cursor:pointer;user-select:none}
@@ -285,7 +289,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.42</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.46</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -395,8 +399,8 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.42</span></div>
-    <h3>Spielmodus</h3>
+    <div class="sub"><span class="verTag">Alpha 0.46</span></div>
+    <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
     <div id="diffRow" class="hidden">
@@ -416,9 +420,9 @@
         <button class="btn sideBtn" data-side="b">Schwarz spielen</button>
       </div>
     </div>
-    <h3>Lernen</h3>
+    <h3 id="hLearn">Lernen</h3>
     <button id="tutBtn" class="btn menuBtn">Tutorials</button>
-    <h3>Sonstiges</h3>
+    <h3 id="hOther">Sonstiges</h3>
     <button id="mSaveBtn" class="btn menuBtn">Spielstand, Statistik &amp; Erfolge</button>
     <button id="mRulesBtn" class="btn menuBtn">Regeln anzeigen</button>
     <button id="mSetBtn" class="btn menuBtn">Einstellungen</button>
@@ -430,8 +434,8 @@
 <div id="tutOverlay" class="menuOverlay hidden">
   <div class="menuBox">
     <h1 id="tutLogoH">Tutorial</h1>
-    <div class="sub">F&uuml;nf Lektionen &ndash; jede Figur mit ihren Sonderwegen; absolvierte Lektionen sind gr&uuml;n markiert</div>
-    <h3>Lektion w&auml;hlen</h3>
+    <div class="sub" id="tutSub">F&uuml;nf Lektionen &ndash; jede Figur mit ihren Sonderwegen; absolvierte Lektionen sind gr&uuml;n markiert</div>
+    <h3 id="hTutPick">Lektion w&auml;hlen</h3>
     <div id="tutList"></div>
     <div class="btnRow"><button id="tutBack" class="btn small">Zur&uuml;ck</button></div>
   </div>
@@ -451,16 +455,16 @@
 <div id="saveOverlay" class="menuOverlay hidden">
   <div class="menuBox">
     <h1 id="saveLogoH">Spielstand</h1>
-    <div class="sub">Fortschritt, Statistik und Erfolge &ndash; im Browser gespeichert, als HTML-Datei exportierbar</div>
-    <h3>Spielst&auml;nde</h3>
+    <div class="sub" id="saveSub">Fortschritt, Statistik und Erfolge &ndash; im Browser gespeichert, als HTML-Datei exportierbar</div>
+    <h3 id="hSlots">Spielst&auml;nde</h3>
     <div id="slotList"></div>
     <div class="btnRow">
       <button id="slotNew" class="btn small">Neuer Spielstand</button>
       <button id="slotResetAll" class="btn small">Alle zur&uuml;cksetzen</button>
     </div>
-    <h3>Statistik (aktiver Spielstand)</h3>
+    <h3 id="hStats">Statistik (aktiver Spielstand)</h3>
     <div id="statList"></div>
-    <h3>Erfolge (aktiver Spielstand)</h3>
+    <h3 id="hAch">Erfolge (aktiver Spielstand)</h3>
     <div id="achList"></div>
     <div id="saveNote" class="hidden"></div>
     <div class="btnRow"><button id="saveBack" class="btn small">Zur&uuml;ck</button></div>
@@ -469,25 +473,29 @@
 
 <div id="setModal" class="modal hidden">
   <div class="modalBox">
-    <h2>Einstellungen</h2>
-    <h3>Ton</h3>
-    <div class="setRow"><span class="setLbl">Sound</span><button id="setMute" class="btn small">Ton: an</button></div>
-    <div class="setRow"><span class="setLbl">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
-    <div class="setRow"><span class="setLbl">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
-    <div class="setRow"><span class="setLbl">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
-    <h3>Spiel</h3>
-    <div class="setRow"><span class="setLbl">Drehgeschwindigkeit</span>
+    <h2 id="setH2">Einstellungen</h2>
+    <h3 id="setHSound">Ton</h3>
+    <div class="setRow"><span class="setLbl" id="setLblSound">Sound</span><button id="setMute" class="btn small">Ton: an</button></div>
+    <div class="setRow"><span class="setLbl" id="setLblMus">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
+    <div class="setRow"><span class="setLbl" id="setLblVol">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
+    <div class="setRow"><span class="setLbl" id="setLblMusVol">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
+    <h3 id="setHGame">Spiel</h3>
+    <div class="setRow"><span class="setLbl" id="setLblDur">Drehgeschwindigkeit</span>
       <button class="btn small setDur" data-dur="760">Langsam</button>
       <button class="btn small setDur selOpt" data-dur="480">Normal</button>
       <button class="btn small setDur" data-dur="280">Schnell</button></div>
+    <div class="setRow"><span class="setLbl" id="setLblLang">Sprache</span>
+      <button class="btn small setLang" data-lang="de"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#000"/><rect y="4" width="18" height="4" fill="#DD0000"/><rect y="8" width="18" height="4" fill="#FFCC00"/></svg>Deutsch</button>
+      <button class="btn small setLang" data-lang="en"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#012169"/><path d="M0 0 18 12M18 0 0 12" stroke="#fff" stroke-width="3" fill="none"/><path d="M0 0 18 12M18 0 0 12" stroke="#C8102E" stroke-width="1" fill="none"/><rect x="7" width="4" height="12" fill="#fff"/><rect y="4" width="18" height="4" fill="#fff"/><rect x="8" width="2" height="12" fill="#C8102E"/><rect y="5" width="18" height="2" fill="#C8102E"/></svg>English</button>
+      <button class="btn small setLang" data-lang="fr"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="6" height="12" fill="#0055A4"/><rect x="6" width="6" height="12" fill="#fff"/><rect x="12" width="6" height="12" fill="#EF4135"/></svg>Fran&ccedil;ais</button></div>
     <div class="btnRow"><button id="setClose" class="btn">Schlie&szlig;en</button></div>
   </div>
 </div>
 
 <div id="seedModal" class="modal hidden">
   <div class="modalBox">
-    <h2>Partie mit Startwert</h2>
-    <p style="font-size:12px;color:#9a9ac8;line-height:1.5;margin:6px 0">Mit demselben Startwert (Seed) entsteht dieselbe Aufstellung &ndash; so lassen sich Partien exakt wiederholen und nachspielen. Der Startwert wird in der Statusleiste hinter dem Spielmodus angezeigt.</p>
+    <h2 id="seedH2">Partie mit Startwert</h2>
+    <p id="seedIntro" style="font-size:12px;color:#9a9ac8;line-height:1.5;margin:6px 0">Mit demselben Startwert (Seed) entsteht dieselbe Aufstellung &ndash; so lassen sich Partien exakt wiederholen und nachspielen. Der Startwert wird in der Statusleiste hinter dem Spielmodus angezeigt.</p>
     <h3 id="seedDiffHead">Schwierigkeit</h3>
     <div class="btnRow" id="seedDiffRow">
       <button class="btn small seedDiff" data-diff="1">Leicht</button>
@@ -499,7 +507,7 @@
       <button class="btn small seedSide" data-side="w">Wei&szlig; spielen</button>
       <button class="btn small seedSide" data-side="b">Schwarz spielen</button>
     </div>
-    <h3>Startwert</h3>
+    <h3 id="hSeed">Startwert</h3>
     <input type="text" id="seedInput" inputmode="numeric" placeholder="Zahl zwischen 0 und 999999" autocomplete="off"/>
     <div class="btnRow">
       <button id="seedRandom" class="btn small">Zufallswert</button>
@@ -511,6 +519,7 @@
 
 <div id="infoModal" class="modal hidden">
   <div class="modalBox">
+    <div id="infoBody">
     <h2>Open Source und Urheberschaft</h2>
     <h3>Urheberschaft</h3>
     <ul>
@@ -531,8 +540,9 @@
     <ul>
       <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>
     </ul>
+    </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.42</li></ul>
+    <ul><li>Alpha 0.46</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -540,8 +550,8 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2>Quellcode <span class="verTag">Alpha 0.42</span></h2>
-    <p style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.46</span></h2>
+    <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
       <button id="srcSelAll" class="btn small">Alles markieren</button>
@@ -552,6 +562,7 @@
 
 <div id="rulesModal" class="modal hidden">
   <div class="modalBox">
+    <div id="rulesBody">
     <h2>Regeln von Tetromino</h2>
     <h3>Spielmodi</h3>
     <ul>
@@ -625,6 +636,7 @@
       <li>W&uuml;rfel mit gelbem Marker k&ouml;nnen als Drehpunkt dienen.</li>
       <li>Am Desktop zeigt das &Uuml;berfahren einer Achsen- oder Schiebe-Schaltfl&auml;che die Zielposition als Geisterfigur; am Handy zeigt der erste Tipp die Vorschau und der zweite f&uuml;hrt den Zug aus. Unterlegte Zielfelder kennzeichnen m&ouml;gliche Versetzungen; geschlagene Figuren werden rot markiert.</li>
     </ul>
+    </div>
     <div class="btnRow"><button id="rulesClose" class="btn">Schließen</button></div>
   </div>
 </div>
@@ -664,6 +676,1054 @@ var FILES = 'abcdefghij';
 var DRAW_RULE = 60;                     // Halbzüge ohne Schlagzug → Remis
 var CRUMBLE_FROM = 15;                  // ab diesem Halbzug bröckelt nach jedem Zug eine Bodenplatte
 
+// Extrahierte deutsche Originaltexte (fallen auf Deutsch zurueck und dienen als Basis)
+var RULES_DE =
+'    <h2>Regeln von Tetromino</h2>\n' +
+'    <h3>Spielmodi</h3>\n' +
+'    <ul>\n' +
+'      <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>\n' +
+'      <li>Einzelspieler: der Computer steuert die jeweils andere Farbe; vor dem Start wird Weiß oder Schwarz gewählt (Standard: Weiß). Drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>\n' +
+'      <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>\n' +
+'      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>\n' +
+'      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>\n' +
+'      <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>\n' +
+'      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat.</li>\n' +
+'      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), vierzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>\n' +
+'      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>\n' +
+'    </ul>\n' +
+'    <h3>Brett und Figuren</h3>\n' +
+'    <ul>\n' +
+'      <li>10&times;10-Brett, zwei Parteien: Wei&szlig; (unten) und Schwarz (oben).</li>\n' +
+'      <li>Jede Partei besitzt f&uuml;nf Tetromino-Figuren &ndash; I, O, T, L, S &ndash; aus je vier W&uuml;rfeln (H&ouml;he zun&auml;chst 1 Feld). Der I-Stein wird als K&ouml;nigstein, der O-Stein als Dame bezeichnet.</li>\n' +
+'      <li>K&ouml;nigstein (I) und Dame (O) starten stets auf den Grundlinien (Wei&szlig;: Reihe 1, Schwarz: Reihe 10). Die &uuml;brigen Figuren werden zu Beginn jeder Partei zufällig, aber spiegelsymmetrisch in der eigenen Bretthälfte verteilt; die Reihen 5 und 6 bleiben als Niemandsland frei. Im ersten Zug kann daher niemand geschlagen werden.</li>\n' +
+'    </ul>\n' +
+'    <h3>Ein Zug</h3>\n' +
+'    <ul>\n' +
+'      <li>Ein Zug besteht aus einer 90&deg;-Drehung einer eigenen Figur &ndash; die T-Figur darf stattdessen auch 180&deg; drehen; die Dame (O), die L-Figur (erster Zug) und der aufrechte K&ouml;nigstein d&uuml;rfen sich zus&auml;tzlich versetzen (siehe unten).</li>\n' +
+'      <li>Die Drehachse verl&auml;uft parallel zur X-Achse (West&ndash;Ost), zur Y-Achse (S&uuml;d&ndash;Nord) oder zur Z-Achse (senkrecht) und durch das Zentrum eines W&uuml;rfels der Figur (Drehpunkt).</li>\n' +
+'      <li>Ablauf: Figur anklicken &rarr; Drehpunkt-W&uuml;rfel anklicken &rarr; Drehachse antippen (zeigt die Vorschau) und erneut antippen (f&uuml;hrt den Zug aus).</li>\n' +
+'      <li>Zwei-Tipp-Regel: Der erste Tipp auf die Drehachse stellt die Vorschau scharf, der zweite Tipp auf denselben Knopf f&uuml;hrt den Zug aus. Am Desktop zeigt bereits das &Uuml;berfahren mit der Maus die Vorschau.</li>\n' +
+'      <li>Versetzung: Erreichbare Zielfelder werden auf dem Brett unterlegt (Gelb = ohne Schlag, Rot = mit Schlag). Ein Klick darauf versetzt die Figur dorthin; alternativ stehen Schiebe-Pfeile bereit.</li>\n' +
+'    </ul>\n' +
+'    <h3>Figuren-Besonderheiten</h3>\n' +
+'    <ul>\n' +
+'      <li><b>T-Figur:</b> darf 90&deg;- und 180&deg;-Drehungen ausf&uuml;hren (die drei Halbkreis-Kn&ouml;pfe; die Achsenfarbe X/Y/Z zeigt die Drehachse an).</li>\n' +
+'      <li><b>S-Figur:</b> darf auf anderen Figuren stapeln; selbst darf sie jedoch nicht als Unterlage benutzt werden &ndash; keine Figur darf auf der S-Figur stehen, auch keine andere S-Figur nicht.</li>\n' +
+'      <li><b>L-Figur:</b> darf in ihrem ersten Zug zus&auml;tztlich versetzt werden (geradlinig beliebig weit). Dabei darf sie am Ziel gegnerische Figuren &uuml;berlappen und schlagen; der Weg dorthin muss frei sein.</li>\n' +
+'      <li><b>K&ouml;nigstein (I):</b> darf sich, solange er aufrecht steht (senkrechte S&auml;ule), um genau ein Feld versetzen und dabei gegnerische Figuren schlagen. Der K&ouml;nigstein darf nicht mehr schweben.</li>\n' +
+'      <li><b>Dame (O):</b> versetzt sich wie ein Turm, ohne zu schlagen. Sie hinterl&auml;sst bei jeder Versetzung ein Phantom auf der Startposition: Dreht sich die Dame, dreht sich das Phantom mit und kann dabei Gegner schlagen. Wird das Phantom geschlagen, stirbt nur das Phantom; f&auml;llt die Dame, verschwindet auch das Phantom. Das Phantom darf das Brett verlassen &ndash; verliert es den Kontakt zum Brett, f&auml;llt es herab. Bei der n&auml;chsten Versetzung verschwindet das Phantom und erscheint an der letzten Zugstelle neu. Ein drohendes Phantom z&auml;hlt wie eine Figur f&uuml;r Schach, und die K&ouml;nigs-Schlagbeschr&auml;nkung gilt auch f&uuml;r Schl&auml;ge des Phantoms: Der K&ouml;nigstein kann niemals vor den &uuml;brigen Figuren fallen.</li>\n' +
+'    </ul>\n' +
+'    <h3>Schlagen</h3>\n' +
+'    <ul>\n' +
+'      <li>Geschlagen wird, indem sich eine Figur mit ihrer Drehung oder Versetzung auf Zellen einer gegnerischen Figur bewegt (&Uuml;berlappung). Die &uuml;berlappte Figur f&auml;llt vollst&auml;ndig vom Brett; mehrere betroffene Figuren werden alle geschlagen.</li>\n' +
+'      <li>Eine Kollision mit einer eigenen Figur ist unzul&auml;ssig. Verschiebungen der Dame schlagen nie und d&uuml;rfen nicht auf besetzte Felder f&uuml;hren.</li>\n' +
+'      <li>Ein getroffenes Phantom der Gegnerin verschwindet nur als Phantom; die dazugeh&ouml;rige Dame bleibt.</li>\n' +
+'    </ul>\n' +
+'    <h3>Halt und Boden</h3>\n' +
+'    <ul>\n' +
+'      <li>Eine Figur hat Halt, sobald mindestens einer ihrer W&uuml;rfel auf einer intakten Bodenplatte oder auf einer anderen Figur ruht. Sie darf deshalb auch &uuml;ber eingebrochenen Feldern ragen oder mit nur einem W&uuml;rfel auf einem Feld liegen, solange dieser eine W&uuml;rfel Halt beh&auml;lt.</li>\n' +
+'      <li>Nur die S-Figur darf auf anderen Figuren stapeln; auf der S-Figur ruht keine Figur. Drehungen, die eine Figur vollst&auml;ndig ohne Halt enden lassen, sind unzul&auml;ssig.</li>\n' +
+'    </ul>\n' +
+'    <h3>Br&ouml;ckelnde Felder</h3>\n' +
+'    <ul>\n' +
+'      <li>Ab dem 15. Halbzug br&ouml;ckelt nach jedem Zug eine weitere Bodenplatte: Das jeweils n&auml;chste Feld wird zun&auml;chst rot umrandet, rissig und wackelnd auf dem Brett markiert; erst im darauffolgenden Halbzug st&uuml;rzt es in sich zusammen und wird zum Loch im Brett. Tetromino weist in der Sprechblase darauf hin.</li>\n' +
+'      <li>Figuren ohne jeden Halt fallen herab; finden sie auf dem Weg kein Feld und keine Figur mehr, st&uuml;rzen sie vom Brett und gelten als verloren.</li>\n' +
+'    </ul>\n' +
+'    <h3>Kamera und Pfeile</h3>\n' +
+'    <ul>\n' +
+'      <li>Die Ansicht l&auml;sst sich mit den Pfeiltasten links/rechts oder den Kamerakn&ouml;pfen in 90&deg;-Schritten um das Brett drehen.</li>\n' +
+'      <li>Die Kreis-Pfeile der Achsenkn&ouml;pfe zeigen die Drehrichtung: gegen den Uhrzeigersinn = +90&deg;, im Uhrzeigersinn = &minus;90&deg; (jeweils gesehen entlang der Achse: Z von oben, X von Osten, Y von Norden).</li>\n' +
+'      <li>Achsen, Koordinaten und Zugliste beziehen sich stets auf das Brett, unabh&auml;ngig von der Kamerastellung.</li>\n' +
+'      <li>Der braune Brettrand tr&auml;gt zur Orientierung die Dateibuchstaben (a&ndash;j) und die Rangnummern (1&ndash;10); bei jeder Kameradrehung wandern die Beschriftungen korrekt mit.</li>\n' +
+'    </ul>\n' +
+'    <h3>K&ouml;nigstein, Schach und Partieende</h3>\n' +
+'    <ul>\n' +
+'      <li>Der K&ouml;nigstein (I-Stein) ist der K&ouml;nig: Er darf nur geschlagen werden, wenn er die letzte verbliebene Figur des Gegners ist.</li>\n' +
+'      <li>Schach: Steht der eigene K&ouml;nigstein so, dass ihn eine gegnerische Drehung treffen k&ouml;nnte, ist er im Schach. Ein Schach muss mit dem n&auml;chsten Zug beseitigt werden &ndash; Z&uuml;ge, die es bestehen lassen, sind unzul&auml;ssig.</li>\n' +
+'      <li>Sieg: alle gegnerischen Figuren schlagen (der K&ouml;nigstein f&auml;llt zuletzt), den Gegner schachmatt setzen (Schach, dem keine legale Antwort mehr entgegensteht &ndash; der K&ouml;nigstein kann sich nicht mehr entziehen) oder ihn ohne legalen Zug lassen (Zugzwang).</li>\n' +
+'      <li>Remis: Nur die beiden K&ouml;nigsteine sind &uuml;brig oder 60 Halbz&uuml;ge ohne Schlagzug.</li>\n' +
+'    </ul>\n' +
+'    <h3>Hilfen</h3>\n' +
+'    <ul>\n' +
+'      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Mask&ouml;ttchen klappt die Sprechblase ein und wieder aus; im Duell zeigt der erneute Klick die letzte Meldung wieder an.</li>\n' +
+'      <li>Figuren und Zugliste liegen als einklappbare Abschnitte innerhalb der Sprechblase: Die Blase w&auml;chst dynamisch mit, und das Brett bleibt die einzige gro&szlig;e Fl&auml;che. Beide Abschnitte lassen sich &uuml;ber ihre &Uuml;berschriften ein- und ausklappen.</li>\n' +
+'      <li>In Duell-Partien liegt in der Sprechblase unter Figuren und Zugliste ein zus&auml;tzlicher Abschnitt Hilfe: Beim Aufklappen empfiehlt Tetromino der Partei am Zug konkret einen Zug (Figur, Drehachse und Drehpunkt beziehungsweise Versetzungsziel). Die Empfehlung folgt der jeweiligen Stellung, wird nicht automatisch ausgef&uuml;hrt und ist unverbindlich.</li>\n' +
+'      <li>W&uuml;rfel mit gelbem Marker k&ouml;nnen als Drehpunkt dienen.</li>\n' +
+'      <li>Am Desktop zeigt das &Uuml;berfahren einer Achsen- oder Schiebe-Schaltfl&auml;che die Zielposition als Geisterfigur; am Handy zeigt der erste Tipp die Vorschau und der zweite f&uuml;hrt den Zug aus. Unterlegte Zielfelder kennzeichnen m&ouml;gliche Versetzungen; geschlagene Figuren werden rot markiert.</li>\n' +
+'    </ul>\n' +
+'';
+var INFO_DE =
+'    <h2>Open Source und Urheberschaft</h2>\n' +
+'    <h3>Urheberschaft</h3>\n' +
+'    <ul>\n' +
+'      <li>Diese Anwendung (Tetromino) wurde von Vibe (KI-Assistent von Mistral AI, basierend auf dem Modell GLM) gemeinsam mit BaCnGaplays im Jahr 2026 entwickelt.</li>\n' +
+'      <li>Die Europaflagge oben rechts im Hauptmen&uuml; (Pixelgrafik) kennzeichnet Tetromino als ein in der Europ&auml;ischen Union entwickeltes Spiel; das Flaggen-Emblem der EU dient hier ausschlie&szlig;lich dieser Herkunftsangabe.</li>\n' +
+'      <li>Der Quellcode liegt vollst&auml;ndig und offen in dieser HTML-Datei vor und kann frei eingesehen und angepasst werden.</li>\n' +
+'    </ul>\n' +
+'    <h3>Verwendete Software Dritter</h3>\n' +
+'    <ul>\n' +
+'      <li>Es wurden keine externen Bibliotheken, Pakete oder Fremdcode eingebunden. Alle Funktionen sind in gew&ouml;hnlichem HTML, CSS und JavaScript ohne Abh&auml;ngigkeiten geschrieben.</li>\n' +
+'      <li>Die Kl&auml;nge werden ausschlie&szlig;lich mit der im Browser integrierten Web-Audio-Schnittstelle erzeugt. Es gibt keine Netzwerkzugriffe und keine Datenspeicherung.</li>\n' +
+'    </ul>\n' +
+'    <h3>Grafiken</h3>\n' +
+'    <ul>\n' +
+'      <li>Alle Symbole (Kreis-Pfeile, Kamera-Pfeile, Figuren-Embleme) sind als eingebettete SVG-Daten direkt in der Datei enthalten und eigens f&uuml;r diese Anwendung gezeichnet.</li>\n' +
+'    </ul>\n' +
+'    <h3>Quellcode</h3>\n' +
+'    <ul>\n' +
+'      <li>Sie k&ouml;nnen den vollst&auml;ndigen Quellcode dieser Anwendung &uuml;ber die Quellcode-Ansicht einsehen, vollst&auml;ndig markieren und kopieren.</li>\n' +
+'    </ul>\n' +
+'';
+var SEEDINTRO_DE =
+'Mit demselben Startwert (Seed) entsteht dieselbe Aufstellung &ndash; so lassen sich Partien exakt wiederholen und nachspielen. Der Startwert wird in der Statusleiste hinter dem Spielmodus angezeigt.';
+// ---------- Sprache: Deutsch, Englisch, Französisch ----------
+// Alle Nutzer-Texte liegen in dem Wörterbuch TXT. tr(key) liefert den Text
+// der gewählten Sprache und fällt auf Deutsch zurück; trf(key, args) füllt
+// {Platzhalter} in Schablonen aus. Die Sprachwahl wird unter dem eigenen
+// localStorage-Schlüssel tetraLang gespeichert. applyLang() übersetzt die
+// statischen Bedienelemente und Dialoge, die dynamischen Meldungen greifen
+// überall unmittelbar auf tr()/trf() zu.
+var LANG_KEY = 'tetraLang';
+var lang = 'de';
+try {
+  var prefLang = window.localStorage.getItem(LANG_KEY);
+  if (prefLang === 'en' || prefLang === 'fr') lang = prefLang;
+} catch (e) {}
+var TXT = {
+  de: {
+    // Seiten, Richtungen, Schwierigkeitsstufen
+    sideW: 'Weiß', sideB: 'Schwarz', adjW: 'weißen', adjB: 'schwarzen',
+    dirN: 'Nord', dirS: 'Süd', dirE: 'Ost', dirW: 'West',
+    lvl1: 'Leicht', lvl2: 'Mittel', lvl3: 'Schwer',
+    // Statusleiste und Bedienhinweise
+    halfMove: 'Halbzug {n}',
+    replayCount: 'Replay: {i} / {n} Halbzüge',
+    stReplay: 'Replay: Halbzug {i} von {n} – Ansicht drehbar, Züge bleiben gesperrt.',
+    stOver: 'Die Partie ist beendet. Bitte neues Spiel starten.',
+    stAnim: 'Drehung läuft …',
+    stAi: 'Der Computer ist am Zug …',
+    stIdle: '{side} am Zug – bitte eine eigene Figur anklicken.',
+    stPiece: 'Figur {type} gewählt.',
+    stAxis: 'Drehpunkt gewählt – bitte Drehachse antippen.',
+    stCheck: 'Schach! ',
+    chipAi: 'Einzelspieler · {lvl} · #{seed} · {side}',
+    chipTut: 'Tutorial',
+    chip2p: 'Mehrspieler · #{seed}',
+    dameLblL: 'L-Figur versetzen (nur im ersten Zug) – am Ziel darf geschlagen werden',
+    dameLblI: 'Königstein (I) versetzen – nur aufrecht, genau ein Feld, Schlag erlaubt',
+    dameLblO: 'Dame (O-Stein) verschieben – ohne Schlagen',
+    slideInfo: 'Versetzen: {k}× nach {dir} → Ziel {cell}.',
+    // Partieende und Ansagen
+    winTitleW: 'Weiß gewinnt!', winTitleB: 'Schwarz gewinnt!', drawTitle: 'Remis!',
+    annWinW: 'Weiß gewinnt die Partie!', annWinB: 'Schwarz gewinnt die Partie!',
+    annDraw: 'Die Partie endet Remis!',
+    rsKing: 'Der Königstein wurde als letzte Figur geschlagen – die Partie ist entschieden.',
+    rsMaterial: 'Alle Figuren des Gegners wurden geschlagen.',
+    rsKings: 'Remis: Nur die beiden Königsteine sind übrig.',
+    rsMate: 'Schachmatt: Der Gegner steht im Schach und hat keinen legalen Zug mehr.',
+    rsZugzwang: 'Der Gegner hat keinen legalen Zug mehr (Zugzwang).',
+    rsZugzwangAi: 'Der Computer hat keinen legalen Zug mehr (Zugzwang).',
+    rsRule: 'Remis: {n} Halbzüge ohne Schlagzug.',
+    annCheck: '{side} steht im Schach!',
+    annWarn: 'Vorsicht: Ein Feld beginnt zu bröckeln!',
+    annFall: 'Ein Feld stürzt in sich zusammen!',
+    // Zugliste
+    logNew: 'Neue Partie – Weiß beginnt.',
+    logSlide: '{n}. {side} {type}: versetzt {k}× nach {dir} ({from} → {to}){cap}',
+    logRot: '{n}. {side} {type}: {axis}{sgn} um {piv}{cap}',
+    logPhantomCap: 'Das Phantom der {adj} Dame schlägt {types}.',
+    logPhantomFall: 'Das Phantom der Dame verliert den Halt und fällt herab.',
+    logCrumble: 'Feld {key} stürzt in sich zusammen.',
+    logFall: '{side} {type} verliert den Halt und stürzt vom Brett.',
+    logUndo: '{side} nimmt den letzten vollen Zug zurück.',
+    logTut: 'Tutorial – Lektion {n}: {title}',
+    annReplay: 'Replay: Die eigene Partie mit dem Schieberegeler noch einmal durchgehen.',
+    // Eingabemeldungen
+    msgNoMove: 'Diese Figur hat derzeit keinen legalen Zug – bitte eine andere Figur wählen.',
+    msgAiWait: 'Der Computer ist am Zug – bitte warten.',
+    msgEnemy: 'Dies ist eine gegnerische Figur.',
+    msgNoPivot: 'Dieser Würfel erlaubt keine Drehung – bitte einen Würfel mit gelbem Marker wählen.',
+    msgArmed: 'Vorschau scharf gestellt – bitte denselben Knopf erneut antippen, um die Drehung auszuführen.',
+    msgNoAxis: 'Kein legaler Zug mit dieser Achse',
+    pivotInfo: 'Drehpunkt {type}: Würfel {cell}',
+    msgBlocked: 'Versetzen blockiert: Weg oder Ziel sind in dieser Richtung nicht frei. {extra}',
+    extraI: 'Der Königstein kann nur auf ein freies oder gegnerisches Feld versetzt werden.',
+    extraL: 'Der Weg muss frei sein; nur am Ziel darf geschlagen werden.',
+    extraO: 'Die Dame kann nur auf freie Felder geschoben werden.',
+    // Figurennamen und Hilfe
+    pnI: 'Königstein (I-Stein)', pnO: 'Dame (O-Stein)', pnX: 'Tetromino {type}',
+    helpRec: 'Tetromino empfiehlt: {move} Figur und Drehpunkt wie beschrieben wählen – oder frei entscheiden.',
+    helpNone: 'Kein legaler Zug mehr verfügbar.',
+    dmSlide: '{side} {type}: Versetzung {k}× nach {dir} ({from} → {to}){cap}.',
+    dmRot: '{side} {type}: {axis}{sgn}°-Drehung um den Drehpunkt {piv}{cap}.',
+    dmCap: ' – schlägt {types}',
+    // Tutorial
+    tutHeadFmt: 'Tutorial · Lektion {i}/{n} · Aufgabe {a}/{m}',
+    tutListFmt: 'Lektion {n}: {title}',
+    tutDoneLbl: 'absolviert',
+    praise0: 'Gut gemacht!', praise1: 'Sehr schön!', praise2: 'Genau richtig!',
+    praise3: 'Sauber gelöst!', praise4: 'Stark!',
+    praiseNext: '{praise} Weiter mit Aufgabe {a} von {m}.',
+    tutEndTitle: 'Lektion geschafft!',
+    tutEndMeta: 'Lektion {i}/{n} · {title}',
+    tutEndSubNext: 'Geschafft! Fahren Sie mit der nächsten Lektion fort – oder kehren Sie zum Hauptmenü zurück.',
+    tutEndSubAll: 'Alle fünf Lektionen geschafft! Sie kennen jetzt jede Figur und jeden Zugtyp – viel Erfolg im Duell, gegen den Computer oder zu zweit.',
+    endNextLbl: 'Weiter zur nächsten Lektion',
+    msgTutReset: 'Aufgabe zurückgesetzt – das Brett steht wieder im Ausgangszustand.',
+    les1: 'Die T-Figur: Grundlagen und Drehen',
+    les2: 'Die L-Figur: Versetzen im ersten Zug',
+    les3: 'Die S-Figur: Stapeln und Schlagen',
+    les4: 'Der Königstein (I): Aufrichten, Versetzen, Schach',
+    les5: 'Die Dame (O): Versetzen und Phantom',
+    les1t0: 'Willkommen bei Tetromino! Jede Partei führt fünf Figuren: den Königstein (I), die Dame (O) sowie die Figuren T, L und S. Jeder Zug besteht aus einer Drehung einer eigenen Figur. Klicken Sie bitte eine eigene, weiße Figur an – Würfel mit gelbem Marker können später als Drehpunkt dienen.',
+    les1t1: 'Klicken Sie nun einen Würfel mit gelbem Marker der gewählten T-Figur an. Er wird zum Drehpunkt: Die Drehachse verläuft durch sein Zentrum.',
+    les1t2: 'Klicken Sie eine Drehachse an. Der erste Tipp zeigt die Zielposition als Geisterfigur, der zweite Tipp führt den Zug aus. Am Desktop zeigt bereits das Überfahren des Knopfes mit der Maus die Vorschau.',
+    les1t3: 'Alle Figuren drehen um 90°. Nur die T-Figur darf zusätzlich um 180° drehen (die Halbkreis-Knöpfe) – das spart einen Zug, wenn die Figur anders herum stehen soll. Führen Sie bitte eine 180°-Drehung aus.',
+    les1t4: 'Geschlagen wird durch Überlappen: Drehen Sie die weiße T-Figur so, dass sie Zellen der schwarzen S-Figur überlappt. Die überlappte Figur wird vollständig vom Brett entfernt.',
+    les2t0: 'Die L-Figur darf sich in ihrem allerersten Zug geradlinig versetzen: Der Weg muss frei sein, am Ziel darf sie Gegner überlappen und schlagen. Die erreichbaren Zielfelder sind unterlegt – klicken Sie eines an, um die L-Figur dorthin zu versetzen. Schlagen Sie die schwarze T-Figur.',
+    les2t1: 'Die Versetzung gilt nur im allerersten Zug der L-Figur – hier ist sie bereits verbraucht. Drehen Sie die L-Figur bitte beliebig; wie jede Figur schlägt sie durch Überlappen mit der Drehung.',
+    les3t0: 'Die S-Figur ist die einzige Figur, die auf anderen Figuren stapeln darf – hier ruht sie bereits auf der Dame. Auf der S-Figur selbst ruht dagegen niemand. Bewegen Sie die S-Figur; sie behält dabei ihren Halt auf der Dame.',
+    les3t1: 'Auch schlagend bleibt die S-Figur beweglich: Drehen Sie die S-Figur so, dass sie eine schwarze Figur überlappt und schlägt. Tipp: Wählen Sie den Würfel e5 als Drehpunkt und drehen Sie um die senkrechte Achse (Z).',
+    les4t0: 'Der Königstein ist der König des Spiels. Richten Sie ihn bitte senkrecht auf: Drehen Sie ihn um die blaue Y-Achse (Drehpunkt ein Endwürfel), sodass eine senkrechte Säule entsteht. Nur aufrecht darf er sich später versetzen.',
+    les4t1: 'Der aufrechte Königstein darf sich um genau ein Feld versetzen und dabei schlagen. Versetzen Sie ihn nach Norden auf die S-Figur und schlagen Sie sie.',
+    les4t2: 'Schach: Steht eine Figur so, dass sie den Königstein in einer Drehung schlagen könnte, steht der Königstein im Schach. Die schwarze T-Figur könnte den weißen Königstein hier erfassen. Befreien Sie ihn: Versetzen Sie ihn um ein Feld oder schlagen Sie die T-Figur.',
+    les5t0: 'Die Dame versetzt sich wie ein Turm, ohne zu schlagen – die Zielfelder sind unterlegt. Dabei hinterlässt sie ein Phantom auf ihrer Startposition: eine durchscheinende Kopie. Versetzen Sie die Dame ein Feld.',
+    les5t1: 'Die Dame dreht wie jede Figur. Drehen Sie sie bitte so, dass mindestens einer ihrer Würfel über Höhe 0 liegt – die Dame steht dann auf der Kante.',
+    les5t2: 'Das Phantom ist das besondere Schlagmittel der Dame: Bei jeder ihrer Drehungen schwingt es um denselben Drehpunkt mit und erfasst Gegner auf seinen Zielwürfeln. Drehen Sie die Dame so, dass das Phantom eine schwarze Figur schlägt – ein Drehpunkt auf einem der Würfel, in denen Dame und Phantom zusammenfallen, bietet sich an.',
+    hint180: 'Für diese Aufgabe bitte eine der 180°-Drehungen (einen Halbkreis-Knopf) nutzen.',
+    hintCapture: 'Noch nicht geschlagen – überlappen Sie mit der Drehung Zellen der schwarzen S-Figur.',
+    hintSmove: 'Für diese Aufgabe bitte die S-Figur bewegen – sie ruht derzeit auf der Dame.',
+    hintScapPiece: 'Für diese Aufgabe bitte die S-Figur drehen.',
+    hintScap: 'Noch niemand geschlagen – wählen Sie den Würfel e5 als Drehpunkt und drehen Sie um die senkrechte Achse (Z).',
+    hintLslideTarget: 'Am Ziel darf geschlagen werden – versetzen Sie die L-Figur bis zur schwarzen T-Figur.',
+    hintLslide: 'Für diese Aufgabe bitte die L-Figur versetzen (unterlegtes Zielfeld oder Schiebe-Pfeile).',
+    hintLmove: 'Die Versetzung ist verbraucht – bitte die L-Figur drehen.',
+    hintUprightPiece: 'Für diese Aufgabe bitte den Königstein (I) drehen.',
+    hintUpright: 'Noch flach – bitte den Königstein um die blaue Y-Achse (Drehpunkt ein Endwürfel) aufrichten.',
+    hintIslideTarget: 'Der Königstein versetzt sich um genau ein Feld – hier nach Norden auf die S-Figur.',
+    hintIslide: 'Für diese Aufgabe bitte den aufrechten Königstein versetzen (unterlegtes Zielfeld oder Pfeile).',
+    hintEscape: 'Der Königstein steht weiter im Schach – bitte ihn mit einer Versetzung oder einem Schlag befreien.',
+    hintSlide: 'Für diese Aufgabe bitte die Schiebe-Pfeile der Dame nutzen – keine Drehung.',
+    hintOstandPiece: 'Für diese Aufgabe bitte die Dame (O) drehen.',
+    hintOstand: 'Noch flach – bitte die Dame mit einer X- oder Y-Drehung auf die Kante stellen.',
+    hintPcap: 'Das Phantom hat noch niemanden erfasst – drehen Sie die Dame so, dass das Phantom eine schwarze Figur überlappt.',
+    // Erfolge
+    toastLbl: 'Erfolg freigeschaltet',
+    achPendingFmt: 'Erfolg freigeschaltet: „{name}“!',
+    achUnlockedAt: 'Freigeschaltet: ',
+    achFirstWinName: 'Erster Sieg', achFirstWinDesc: 'Die erste Duell-Partie siegreich beendet.',
+    achFirstDrawName: 'Erstes Remis', achFirstDrawDesc: 'Die erste Partie remis beendet.',
+    achBlitzName: 'Blitzpartie', achBlitzDesc: 'Eine Partie in weniger als 15 Halbzügen gewonnen.',
+    achLehrlingName: 'Lehrling', achLehrlingDesc: 'Den Computer auf der Stufe Leicht besiegt.',
+    achGeselleName: 'Geselle', achGeselleDesc: 'Den Computer auf der Stufe Mittel besiegt.',
+    achGmName: 'Großmeister', achGmDesc: 'Den Computer auf der Stufe Schwer besiegt.',
+    achSeedAllName: 'Alle Welten', achSeedAllDesc: 'Jeden der 1.000.000 möglichen Startwerte mindestens einmal gegen den Computer gespielt – ein praktisch unmöglicher Erfolg.',
+    achPerpetualName: 'Dauerschach', achPerpetualDesc: 'Fünf Züge in Folge mit Schach gesetzt.',
+    achLSacName: 'Erstzug-Opfer', achLSacDesc: 'Die L-Figur schlägt mit ihrem ersten eigenen Zug (ihrer einzigen Versetzung) und fällt umgehend dem Gegenzug.',
+    achPhantomHitName: 'Phantomschlag', achPhantomHitDesc: 'Erstmals mit dem eigenen Phantom der Dame geschlagen.',
+    achPhantomSacName: 'Phantom geopfert', achPhantomSacDesc: 'Das eigene Phantom der Dame wurde vom Gegner geschlagen – das gegnerische Phantom zu schlagen zählt nicht.',
+    achFirstFallName: 'Vom Brett gestürzt', achFirstFallDesc: 'Eine Figur verlor den Halt und stürzte vom Brett.',
+    achPhantomFallName: 'Phantom gestürzt', achPhantomFallDesc: 'Ein Phantom der Dame verlor den Bodenkontakt und fiel herab.',
+    achEasterName: 'Tetromino gefunden', achEasterDesc: 'Das versteckte Masköttchen auf dem Startbildschirm aufgestöbert.',
+    // Spielstand-Overlay
+    slotActive: ' (aktiv)',
+    slotMetaFmt: '{date} · {games} Partien · {tuts}/5 Lektionen · {achs}/{n} Erfolge',
+    slotAct: 'Aktivieren', slotDel: 'Löschen',
+    statAi: 'Einzelspieler: {w} Siege · {l} Niederlagen · {d} Remis',
+    statSeeds: 'Startwerte gegen den Computer: {n} von 1000000 gespielt',
+    statTut: 'Tutorials: {n} von 5 Lektionen absolviert',
+    resetAll: 'Alle zurücksetzen',
+    resetConfirm: 'Wirklich alle Spielstände löschen?',
+    noteReset: 'Alle Spielstände wurden zurückgesetzt.',
+    noteExport: 'Spielstand als HTML-Datei exportiert: {file}',
+    saveDefault: 'Spielstand',
+    // Statische Bedienelemente
+    menuBtnLbl: 'Menü', menuBtnTt: 'Zum Hauptmenü (Neues Spiel, Einstellungen, Regeln)',
+    figHeadLbl: 'Figuren', logHeadLbl: 'Zugliste', helpHeadLbl: 'Hilfe', taskHeadLbl: 'Aufgabe',
+    cancelBtnLbl: 'Abbrechen (Esc)', slideGoLbl: 'Zug ausführen', slideGoTt: 'Verschiebung als Zug ausführen',
+    replayEndLbl: 'Ende', replayEndTt: 'Replay beenden und zum Endscreen zurückkehren',
+    menuMp: 'Mehrspieler (2 Spieler lokal)', menuSp: 'Einzelspieler gegen Computer',
+    diffCapAi: 'Schwierigkeit wählen', diffCap2p: 'Partie starten',
+    quickStart: 'Schnellstart', seedOpenLbl: 'Mit Startwert …',
+    sideCap: 'Farbe wählen (Einzelspieler)', sideWBtn: 'Weiß spielen', sideBBtn: 'Schwarz spielen',
+    tutBtnLbl: 'Tutorials',
+    mSaveBtn: 'Spielstand, Statistik & Erfolge', mRulesBtn: 'Regeln anzeigen',
+    mSetBtn: 'Einstellungen', mInfoBtn: 'Open Source & Urheberschaft',
+    menuBackLbl: 'Zurück zum Spiel (Esc)',
+    tutLogoH: 'Tutorial',
+    tutSub: 'Fünf Lektionen – jede Figur mit ihren Sonderwegen; absolvierte Lektionen sind grün markiert',
+    hTutPick: 'Lektion wählen', tutBackLbl: 'Zurück',
+    endRetryLbl: 'Neustart', endMenuLbl: 'Hauptmenü',
+    overBtnLbl: 'Neues Spiel (gleicher Modus)', overReplayLbl: 'Replay ansehen',
+    saveLogoH: 'Spielstand',
+    saveSub: 'Fortschritt, Statistik und Erfolge – im Browser gespeichert, als HTML-Datei exportierbar',
+    hSlots: 'Spielstände', slotNewLbl: 'Neuer Spielstand',
+    hStats: 'Statistik (aktiver Spielstand)', hAch: 'Erfolge (aktiver Spielstand)',
+    saveBackLbl: 'Zurück',
+    hMode: 'Spielmodus', hLearn: 'Lernen', hOther: 'Sonstiges',
+    setH2: 'Einstellungen', setHSound: 'Ton', setHGame: 'Spiel',
+    lblSound: 'Sound', lblMus: 'Musik', lblVol: 'Effekte', lblMusVol: 'Musik-Lautstärke',
+    lblDur: 'Drehgeschwindigkeit', lblLang: 'Sprache',
+    muteOnLbl: 'Ton: an', muteOffLbl: 'Ton: aus',
+    musOnLbl: 'Musik: an', musOffLbl: 'Musik: aus',
+    durSlowLbl: 'Langsam', durNormLbl: 'Normal', durFastLbl: 'Schnell',
+    setCloseLbl: 'Schließen',
+    seedH2: 'Partie mit Startwert',
+    seedIntroHtml: SEEDINTRO_DE,
+    seedDiffHeadLbl: 'Schwierigkeit', seedSideHeadLbl: 'Farbe wählen', hSeed: 'Startwert',
+    seedInputPh: 'Zahl zwischen 0 und 999999',
+    seedRandomLbl: 'Zufallswert', seedStartLbl: 'Partie starten', seedCloseLbl: 'Abbrechen',
+    infoSrcLbl: 'Quellcode anzeigen', infoCloseLbl: 'Schließen',
+    srcTitleHtml: 'Quellcode <span class="verTag">{v}</span>',
+    srcHint: 'Vollständiger Quellcode dieser Datei. Nach dem Markieren können Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.',
+    srcSelAllLbl: 'Alles markieren', srcCloseLbl: 'Schließen',
+    undoTt: 'Zug zurücknehmen: der eigene und der Computerzug werden zurückgesetzt (nur auf Leicht und Mittel)',
+    camLTt: 'Ansicht um 90° nach links drehen (Pfeiltaste links)',
+    camRTt: 'Ansicht um 90° nach rechts drehen (Pfeiltaste rechts)',
+    tutResetLbl: 'Aufgabe zurücksetzen',
+    tutResetTt: 'Aktuelle Aufgabe zurücksetzen: Das Brett wird neu aufgebaut, falls ein versehentlicher Zug die Aufgabe unlösbar gemacht hat.',
+    euFlagTt: 'In der Europäischen Union entwickelt – einmal anklicken!',
+    axLegendHtml: '<span style="color:#ef7c1a">X&nbsp;West&ndash;Ost</span> &middot; <span style="color:#31c7ef">Y&nbsp;Süd&ndash;Nord</span> &middot; <span style="color:#3fbf3f">Z&nbsp;Höhe</span>',
+    axXp: 'Drehung +90° um die West–Ost-Achse: gegen den Uhrzeigersinn, gesehen von Osten.',
+    axXm: 'Drehung −90° um die West–Ost-Achse: im Uhrzeigersinn, gesehen von Osten.',
+    axYp: 'Drehung +90° um die Süd–Nord-Achse: gegen den Uhrzeigersinn, gesehen von Norden.',
+    axYm: 'Drehung −90° um die Süd–Nord-Achse: im Uhrzeigersinn, gesehen von Norden.',
+    axZp: 'Drehung +90° um die senkrechte Achse: gegen den Uhrzeigersinn, gesehen von oben.',
+    axZm: 'Drehung −90° um die senkrechte Achse: im Uhrzeigersinn, gesehen von oben.',
+    axXd: 'Drehung 180° um die West–Ost-Achse (nur T-Figur).',
+    axYd: 'Drehung 180° um die Süd–Nord-Achse (nur T-Figur).',
+    axZd: 'Drehung 180° um die senkrechte Achse (nur T-Figur).',
+    dW: 'Versetzung ein Feld nach Westen (jeder Klick ein Feld weiter)',
+    dE: 'Versetzung ein Feld nach Osten (jeder Klick ein Feld weiter)',
+    dN: 'Versetzung ein Feld nach Norden (jeder Klick ein Feld weiter)',
+    dS: 'Versetzung ein Feld nach Süden (jeder Klick ein Feld weiter)',
+    rulesHtml: RULES_DE,
+    infoHtml: INFO_DE
+  },
+  en: {
+    // Sides, directions, difficulty levels
+    sideW: 'White', sideB: 'Black', adjW: 'white', adjB: 'black',
+    dirN: 'north', dirS: 'south', dirE: 'east', dirW: 'west',
+    lvl1: 'Easy', lvl2: 'Medium', lvl3: 'Hard',
+    // Status bar and control hints
+    halfMove: 'Half-move {n}',
+    replayCount: 'Replay: {i} / {n} half-moves',
+    stReplay: 'Replay: half-move {i} of {n} – the view can be rotated, moves stay locked.',
+    stOver: 'The game is over. Please start a new game.',
+    stAnim: 'Rotation in progress …',
+    stAi: 'The computer is thinking …',
+    stIdle: '{side} to move – please click one of your own pieces.',
+    stPiece: 'Piece {type} selected.',
+    stAxis: 'Pivot chosen – please tap a rotation axis.',
+    stCheck: 'Check! ',
+    chipAi: 'Single player · {lvl} · #{seed} · {side}',
+    chipTut: 'Tutorial',
+    chip2p: 'Two players · #{seed}',
+    dameLblL: 'Shift the L piece (first move only) – captures are allowed at the destination',
+    dameLblI: 'Shift the king piece (I) – upright only, exactly one square, captures allowed',
+    dameLblO: 'Slide the queen (O piece) – without capturing',
+    slideInfo: 'Shift: {k}× towards {dir} → destination {cell}.',
+    // Game end and announcements
+    winTitleW: 'White wins!', winTitleB: 'Black wins!', drawTitle: 'Draw!',
+    annWinW: 'White wins the game!', annWinB: 'Black wins the game!',
+    annDraw: 'The game ends in a draw!',
+    rsKing: 'The king piece was captured as the last piece – the game is decided.',
+    rsMaterial: 'All opposing pieces have been captured.',
+    rsKings: 'Draw: only the two king pieces remain.',
+    rsMate: 'Checkmate: the opponent is in check and has no legal move left.',
+    rsZugzwang: 'The opponent has no legal move left (zugzwang).',
+    rsZugzwangAi: 'The computer has no legal move left (zugzwang).',
+    rsRule: 'Draw: {n} half-moves without a capture.',
+    annCheck: '{side} is in check!',
+    annWarn: 'Careful: a square starts to crumble!',
+    annFall: 'A square collapses!',
+    // Move list
+    logNew: 'New game – White moves first.',
+    logSlide: '{n}. {side} {type}: shifted {k}× {dir} ({from} → {to}){cap}',
+    logRot: '{n}. {side} {type}: {axis}{sgn} around {piv}{cap}',
+    logPhantomCap: 'The phantom of the {adj} queen captures {types}.',
+    logPhantomFall: 'The queen’s phantom loses its footing and falls.',
+    logCrumble: 'Square {key} collapses.',
+    logFall: '{side} {type} loses its footing and falls off the board.',
+    logUndo: '{side} takes back the last full move.',
+    logTut: 'Tutorial – Lesson {n}: {title}',
+    annReplay: 'Replay: go through your own game once more with the slider.',
+    // Input messages
+    msgNoMove: 'This piece currently has no legal move – please choose another piece.',
+    msgAiWait: 'The computer is moving – please wait.',
+    msgEnemy: 'This is an opposing piece.',
+    msgNoPivot: 'This cube allows no rotation – please choose a cube with a yellow marker.',
+    msgArmed: 'Preview armed – please tap the same button again to perform the rotation.',
+    msgNoAxis: 'No legal move with this axis',
+    pivotInfo: 'Pivot {type}: cube {cell}',
+    msgBlocked: 'Shift blocked: the path or destination is not free in this direction. {extra}',
+    extraI: 'The king piece can only be shifted onto a free or opposing square.',
+    extraL: 'The path must be free; captures are only allowed at the destination.',
+    extraO: 'The queen can only slide onto free squares.',
+    // Piece names and help
+    pnI: 'King piece (I piece)', pnO: 'Queen (O piece)', pnX: 'Tetromino {type}',
+    helpRec: 'Tetromino recommends: {move} Choose the piece and pivot as described – or decide freely.',
+    helpNone: 'No legal move available.',
+    dmSlide: '{side} {type}: shift {k}× {dir} ({from} → {to}){cap}.',
+    dmRot: '{side} {type}: {axis}{sgn}° rotation around pivot {piv}{cap}.',
+    dmCap: ' – captures {types}',
+    // Tutorial
+    tutHeadFmt: 'Tutorial · Lesson {i}/{n} · Task {a}/{m}',
+    tutListFmt: 'Lesson {n}: {title}',
+    tutDoneLbl: 'completed',
+    praise0: 'Well done!', praise1: 'Very nice!', praise2: 'Exactly right!',
+    praise3: 'Cleanly solved!', praise4: 'Strong!',
+    praiseNext: '{praise} Continue with task {a} of {m}.',
+    tutEndTitle: 'Lesson complete!',
+    tutEndMeta: 'Lesson {i}/{n} · {title}',
+    tutEndSubNext: 'Done! Continue with the next lesson – or return to the main menu.',
+    tutEndSubAll: 'All five lessons complete! You now know every piece and every move type – good luck in duels, against the computer or with two players.',
+    endNextLbl: 'Continue to the next lesson',
+    msgTutReset: 'Task reset – the board is back in its initial state.',
+    les1: 'The T piece: basics and rotation',
+    les2: 'The L piece: shifting on the first move',
+    les3: 'The S piece: stacking and capturing',
+    les4: 'The king piece (I): raising, shifting, check',
+    les5: 'The queen (O): shifting and the phantom',
+    les1t0: 'Welcome to Tetromino! Each side commands five pieces: the king piece (I), the queen (O) and the pieces T, L and S. Every move consists of rotating one of your own pieces. Please click one of your own white pieces – cubes with a yellow marker can later serve as pivots.',
+    les1t1: 'Now please click one of the yellow-marked cubes of the selected T piece. It becomes the pivot: the rotation axis runs through its center.',
+    les1t2: 'Please tap a rotation axis. The first tap shows the destination as a ghost piece, the second tap performs the move. On desktop, simply hovering over the button with the mouse already shows the preview.',
+    les1t3: 'All pieces rotate by 90°. Only the T piece may additionally rotate by 180° (the half-circle buttons) – this saves a move when the piece should end up the other way around. Please perform a 180° rotation.',
+    les1t4: 'Capturing works by overlapping: rotate the white T piece so that it overlaps cells of the black S piece. The overlapped piece is removed from the board entirely.',
+    les2t0: 'The L piece may shift in a straight line on its very first move: the path must be free, and at the destination it may overlap and capture opponents. The reachable destination squares are highlighted – click one to shift the L piece there. Capture the black T piece.',
+    les2t1: 'The shift is only available on the L piece’s very first move – here it is already spent. Please rotate the L piece freely; like every piece it captures by overlapping with its rotation.',
+    les3t0: 'The S piece is the only piece allowed to stack on other pieces – here it already rests on the queen. Nothing rests on the S piece itself, however. Move the S piece; it keeps its footing on the queen.',
+    les3t1: 'The S piece stays mobile even while capturing: rotate the S piece so that it overlaps and captures a black piece. Tip: choose the cube e5 as pivot and rotate around the vertical axis (Z).',
+    les4t0: 'The king piece is the king of the game. Please raise it upright: rotate it around the blue Y axis (pivot on an end cube) so that a vertical column forms. Only when upright may it shift later.',
+    les4t1: 'The upright king piece may shift by exactly one square, capturing on the way. Shift it north onto the S piece and capture it.',
+    les4t2: 'Check: if a piece could capture the king piece with one rotation, the king piece is in check. The black T piece could take the white king piece here. Free it: shift it by one square or capture the T piece.',
+    les5t0: 'The queen shifts like a rook, without capturing – the destination squares are highlighted. It leaves behind a phantom on its starting square: a translucent copy. Shift the queen by one square.',
+    les5t1: 'The queen rotates like every piece. Please rotate it so that at least one of its cubes lies above height 0 – the queen then rests on its edge.',
+    les5t2: 'The phantom is the queen’s special capturing tool: on each of its rotations it swings around the same pivot and sweeps up opponents on its destination cubes. Rotate the queen so that the phantom captures a black piece – a pivot on one of the cubes where queen and phantom coincide is a good choice.',
+    hint180: 'For this task please use one of the 180° rotations (a half-circle button).',
+    hintCapture: 'Not captured yet – use the rotation to overlap cells of the black S piece.',
+    hintSmove: 'For this task please move the S piece – it currently rests on the queen.',
+    hintScapPiece: 'For this task please rotate the S piece.',
+    hintScap: 'Nobody captured yet – choose the cube e5 as pivot and rotate around the vertical axis (Z).',
+    hintLslideTarget: 'Captures are allowed at the destination – shift the L piece all the way to the black T piece.',
+    hintLslide: 'For this task please shift the L piece (highlighted destination square or slide arrows).',
+    hintLmove: 'The shift is spent – please rotate the L piece.',
+    hintUprightPiece: 'For this task please rotate the king piece (I).',
+    hintUpright: 'Still flat – please raise the king piece around the blue Y axis (pivot on an end cube).',
+    hintIslideTarget: 'The king piece shifts by exactly one square – here north onto the S piece.',
+    hintIslide: 'For this task please shift the upright king piece (highlighted destination square or arrows).',
+    hintEscape: 'The king piece is still in check – please free it with a shift or a capture.',
+    hintSlide: 'For this task please use the queen’s slide arrows – no rotation.',
+    hintOstandPiece: 'For this task please rotate the queen (O).',
+    hintOstand: 'Still flat – please put the queen on its edge with an X or Y rotation.',
+    hintPcap: 'The phantom has not swept anyone up yet – rotate the queen so that the phantom overlaps a black piece.',
+    // Achievements
+    toastLbl: 'Achievement unlocked',
+    achPendingFmt: 'Achievement unlocked: “{name}”!',
+    achUnlockedAt: 'Unlocked: ',
+    achFirstWinName: 'First Victory', achFirstWinDesc: 'Won your first duel game.',
+    achFirstDrawName: 'First Draw', achFirstDrawDesc: 'Finished your first game in a draw.',
+    achBlitzName: 'Blitz Game', achBlitzDesc: 'Won a game in fewer than 15 half-moves.',
+    achLehrlingName: 'Apprentice', achLehrlingDesc: 'Defeated the computer on the Easy level.',
+    achGeselleName: 'Journeyman', achGeselleDesc: 'Defeated the computer on the Medium level.',
+    achGmName: 'Grandmaster', achGmDesc: 'Defeated the computer on the Hard level.',
+    achSeedAllName: 'All Worlds', achSeedAllDesc: 'Played every one of the 1,000,000 possible seed values against the computer at least once – a practically impossible achievement.',
+    achPerpetualName: 'Perpetual Check', achPerpetualDesc: 'Delivered check five moves in a row.',
+    achLSacName: 'First-Move Sacrifice', achLSacDesc: 'The L piece captures in its own first move (its only possible shift) and falls to the immediate reply.',
+    achPhantomHitName: 'Phantom Strike', achPhantomHitDesc: 'Captured for the first time with your own queen’s phantom.',
+    achPhantomSacName: 'Phantom Sacrifice', achPhantomSacDesc: 'Your own queen’s phantom was captured by the opponent – capturing the opposing phantom does not count.',
+    achFirstFallName: 'Off the Board', achFirstFallDesc: 'A piece lost its footing and fell off the board.',
+    achPhantomFallName: 'Phantom Down', achPhantomFallDesc: 'A queen’s phantom lost ground contact and fell.',
+    achEasterName: 'Found Tetromino', achEasterDesc: 'Discovered the hidden mascot on the start screen.',
+    // Save game overlay
+    slotActive: ' (active)',
+    slotMetaFmt: '{date} · {games} games · {tuts}/5 lessons · {achs}/{n} achievements',
+    slotAct: 'Activate', slotDel: 'Delete',
+    statAi: 'Single player: {w} wins · {l} losses · {d} draws',
+    statSeeds: 'Seeds played against the computer: {n} of 1000000',
+    statTut: 'Tutorials: {n} of 5 lessons completed',
+    resetAll: 'Reset all',
+    resetConfirm: 'Really delete all save games?',
+    noteReset: 'All save games have been reset.',
+    noteExport: 'Save game exported as an HTML file: {file}',
+    saveDefault: 'Save game',
+    // Static controls
+    menuBtnLbl: 'Menu', menuBtnTt: 'To the main menu (new game, settings, rules)',
+    figHeadLbl: 'Pieces', logHeadLbl: 'Move list', helpHeadLbl: 'Help', taskHeadLbl: 'Task',
+    cancelBtnLbl: 'Cancel (Esc)', slideGoLbl: 'Perform move', slideGoTt: 'Perform the shift as a move',
+    replayEndLbl: 'End', replayEndTt: 'End the replay and return to the end screen',
+    menuMp: 'Multiplayer (2 players local)', menuSp: 'Single player against computer',
+    diffCapAi: 'Choose the difficulty', diffCap2p: 'Start the game',
+    quickStart: 'Quick start', seedOpenLbl: 'With seed …',
+    sideCap: 'Choose a color (single player)', sideWBtn: 'Play White', sideBBtn: 'Play Black',
+    tutBtnLbl: 'Tutorials',
+    mSaveBtn: 'Save game, statistics & achievements', mRulesBtn: 'Show rules',
+    mSetBtn: 'Settings', mInfoBtn: 'Open Source & authorship',
+    menuBackLbl: 'Back to the game (Esc)',
+    tutLogoH: 'Tutorial',
+    tutSub: 'Five lessons – every piece with its special moves; completed lessons are marked green',
+    hTutPick: 'Choose a lesson', tutBackLbl: 'Back',
+    endRetryLbl: 'Restart', endMenuLbl: 'Main menu',
+    overBtnLbl: 'New game (same mode)', overReplayLbl: 'Watch replay',
+    saveLogoH: 'Save game',
+    saveSub: 'Progress, statistics and achievements – stored in the browser, exportable as an HTML file',
+    hSlots: 'Save games', slotNewLbl: 'New save game',
+    hStats: 'Statistics (active save game)', hAch: 'Achievements (active save game)',
+    saveBackLbl: 'Back',
+    hMode: 'Game mode', hLearn: 'Learn', hOther: 'Other',
+    setH2: 'Settings', setHSound: 'Sound', setHGame: 'Game',
+    lblSound: 'Sound', lblMus: 'Music', lblVol: 'Effects', lblMusVol: 'Music volume',
+    lblDur: 'Rotation speed', lblLang: 'Language',
+    muteOnLbl: 'Sound: on', muteOffLbl: 'Sound: off',
+    musOnLbl: 'Music: on', musOffLbl: 'Music: off',
+    durSlowLbl: 'Slow', durNormLbl: 'Normal', durFastLbl: 'Fast',
+    setCloseLbl: 'Close',
+    seedH2: 'Game with seed',
+    seedIntroHtml: 'The same seed produces the same starting position – games can thus be repeated and replayed exactly. The seed of the running game is shown in the status bar behind the game mode.',
+    seedDiffHeadLbl: 'Difficulty', seedSideHeadLbl: 'Choose a color', hSeed: 'Seed',
+    seedInputPh: 'Number between 0 and 999999',
+    seedRandomLbl: 'Random value', seedStartLbl: 'Start game', seedCloseLbl: 'Cancel',
+    infoSrcLbl: 'Show source code', infoCloseLbl: 'Close',
+    srcTitleHtml: 'Source code <span class="verTag">{v}</span>',
+    srcHint: 'Complete source code of this file. After selecting it, you can copy it with Ctrl+C (or Cmd+C).',
+    srcSelAllLbl: 'Select all', srcCloseLbl: 'Close',
+    undoTt: 'Take back the move: your own move and the computer’s move are reverted (Easy and Medium only)',
+    camLTt: 'Rotate the view 90° to the left (left arrow key)',
+    camRTt: 'Rotate the view 90° to the right (right arrow key)',
+    tutResetLbl: 'Reset task',
+    tutResetTt: 'Reset the current task: the board is rebuilt in case an accidental move made the task unsolvable.',
+    euFlagTt: 'Developed in the European Union – click it once!',
+    axLegendHtml: '<span style="color:#ef7c1a">X&nbsp;West&ndash;East</span> &middot; <span style="color:#31c7ef">Y&nbsp;South&ndash;North</span> &middot; <span style="color:#3fbf3f">Z&nbsp;Height</span>',
+    axXp: '+90° rotation around the west–east axis: counter-clockwise, seen from the east.',
+    axXm: '−90° rotation around the west–east axis: clockwise, seen from the east.',
+    axYp: '+90° rotation around the south–north axis: counter-clockwise, seen from the north.',
+    axYm: '−90° rotation around the south–north axis: clockwise, seen from the north.',
+    axZp: '+90° rotation around the vertical axis: counter-clockwise, seen from above.',
+    axZm: '−90° rotation around the vertical axis: clockwise, seen from above.',
+    axXd: '180° rotation around the west–east axis (T piece only).',
+    axYd: '180° rotation around the south–north axis (T piece only).',
+    axZd: '180° rotation around the vertical axis (T piece only).',
+    dW: 'Shift one square west (each click moves one square further)',
+    dE: 'Shift one square east (each click moves one square further)',
+    dN: 'Shift one square north (each click moves one square further)',
+    dS: 'Shift one square south (each click moves one square further)',
+    rulesHtml:
+'    <h2>The rules of Tetromino</h2>\n' +
+'    <h3>Game modes</h3>\n' +
+'    <ul>\n' +
+'      <li>Multiplayer: two players take turns on the same screen (White versus Black) – either via quick start with a random setup or with your own seed for exactly repeatable games.</li>\n' +
+'      <li>Single player: the computer controls the other color; before the start, White or Black is chosen (default: White). Three difficulty levels. Easy: a high share of randomness, sometimes weak moves, the computer occasionally sacrifices its own pieces. Medium: good moves with some spread, but without sacrifices. Hard: optimal, forward-looking selection across two half-moves.</li>\n' +
+'      <li>Seed: the same number generates the same starting position; the seed of the running game is shown in the status bar, so games can be repeated exactly.</li>\n' +
+'      <li>Take back a move: In single player on the levels Easy and Medium, the button with the U-turn arrow next to the view arrows reverts the last full move – your own half-move and the computer’s move. The game continues from the earlier position; unlocked achievements and the statistics remain untouched.</li>\n' +
+'      <li>Replay: After a duel game ends, the button “Watch replay” opens the course of the game. The slider below the board steps through the positions half-move by half-move, the view can be rotated as usual, and moves stay locked until the end of the replay. The replay is not saved and ends as soon as a new game begins.</li>\n' +
+'      <li>The Tetromino help (speech bubble) always recommends the optimal move, regardless of the difficulty level; the levels only affect the computer’s move choice.</li>\n' +
+'      <li>Tutorial: five lessons – one per piece (T, L, S, king piece, queen) – each with several subtasks from clicking to capturing; each lesson can be selected individually, completed lessons are marked green. The task text is in the collapsible task box of the speech bubble, hints appear briefly as a popup and remain in yellow in the box; after each solved lesson, an end screen offers continue, restart and main menu. The button “Reset task” rebuilds the board of the current subtask – for example when an accidental move made the task unsolvable.</li>\n' +
+'      <li>Save game, statistics and achievements: several named save games are stored in the browser; each keeps the single-player game statistics (wins, losses and draws against the computer), fourteen achievements and the tutorial progress. The achievements “Apprentice”, “Journeyman” and “Grandmaster” reward victories against the computer on the levels Easy, Medium and Hard. Every game finished against the computer counts its seed; the achievement “All Worlds” is only unlocked when every one of the 1,000,000 possible seeds has been played at least once – a practically impossible achievement. Save games can be exported as complete HTML files with the save game embedded – opening such a file adds the save game as a new entry – and can be reset individually or entirely.</li>\n' +
+'      <li>The status bar is a narrow band at the top edge inside the board: it shows the side to move, the game mode, the current half-move and the seed of the game.</li>\n' +
+'    </ul>\n' +
+'    <h3>Board and pieces</h3>\n' +
+'    <ul>\n' +
+'      <li>10×10 board, two sides: White (bottom) and Black (top).</li>\n' +
+'      <li>Each side commands five tetromino pieces – I, O, T, L, S – of four cubes each (height initially 1 square). The I piece is called the king piece, the O piece the queen.</li>\n' +
+'      <li>King piece (I) and queen (O) always start on the baselines (White: rank 1, Black: rank 10). The other pieces are distributed randomly but mirror-symmetrically in each side’s own half at the start; ranks 5 and 6 remain free as no man’s land. In the first move nobody can capture anything.</li>\n' +
+'    </ul>\n' +
+'    <h3>A move</h3>\n' +
+'    <ul>\n' +
+'      <li>A move consists of a 90° rotation of one of your own pieces – the T piece may instead also rotate 180°; the queen (O), the L piece (first move) and the upright king piece may additionally shift (see below).</li>\n' +
+'      <li>The rotation axis runs parallel to the X axis (west–east), the Y axis (south–north) or the Z axis (vertical) and through the center of one cube of the piece (the pivot).</li>\n' +
+'      <li>Sequence: click a piece → click the pivot cube → tap a rotation axis (shows the preview) and tap again (performs the move).</li>\n' +
+'      <li>Two-tap rule: the first tap on the rotation axis arms the preview; the second tap on the same button performs the move. On desktop, hovering with the mouse already shows the preview.</li>\n' +
+'      <li>Shift: reachable destination squares are highlighted on the board (yellow = without capture, red = with capture). Clicking one shifts the piece there; slide arrows are available as an alternative.</li>\n' +
+'    </ul>\n' +
+'    <h3>Piece specifics</h3>\n' +
+'    <ul>\n' +
+'      <li><b>T piece:</b> may perform 90° and 180° rotations (the three half-circle buttons; the axis color X/Y/Z shows the rotation axis).</li>\n' +
+'      <li><b>S piece:</b> may stack on other pieces; it may not itself be used as a base – no piece may stand on the S piece, not even another S piece.</li>\n' +
+'      <li><b>L piece:</b> may additionally shift on its first move (straight, any distance). It may overlap and capture opposing pieces at the destination; the path there must be free.</li>\n' +
+'      <li><b>King piece (I):</b> as long as it stands upright (vertical column), it may shift by exactly one square, capturing opposing pieces on the way. The king piece may no longer hover.</li>\n' +
+'      <li><b>Queen (O):</b> shifts like a rook, without capturing. It leaves a phantom behind on the starting square of every shift: when the queen rotates, the phantom rotates with it and can capture opponents in the process. If the phantom is captured, only the phantom dies; if the queen falls, the phantom disappears with it. The phantom may leave the board – if it loses contact with the board, it falls. On the next shift the phantom vanishes and reappears at the last position. A threatening phantom counts as a piece for check, and the king capture restriction also applies to the phantom’s captures: the king piece can never fall before the other pieces.</li>\n' +
+'    </ul>\n' +
+'    <h3>Capturing</h3>\n' +
+'    <ul>\n' +
+'      <li>Capture happens by moving a piece with its rotation or shift onto cells of an opposing piece (overlap). The overlapped piece falls off the board entirely; several affected pieces are all captured.</li>\n' +
+'      <li>A collision with one of your own pieces is illegal. The queen’s shifts never capture and must not lead onto occupied squares.</li>\n' +
+'      <li>A phantom that is hit disappears only as a phantom; the queen it belongs to remains.</li>\n' +
+'    </ul>\n' +
+'    <h3>Support and ground</h3>\n' +
+'    <ul>\n' +
+'      <li>A piece is supported as soon as at least one of its cubes rests on an intact floor tile or on another piece. It may therefore also extend over collapsed squares or rest with only one cube on a square, as long as that one cube keeps its support.</li>\n' +
+'      <li>Only the S piece may stack on other pieces; nothing rests on the S piece. Rotations that leave a piece entirely without support are illegal.</li>\n' +
+'    </ul>\n' +
+'    <h3>Crumbling squares</h3>\n' +
+'    <ul>\n' +
+'      <li>From half-move 15, another floor tile crumbles after every move: the next square is first marked on the board with a red outline, cracked and wobbling; only in the following half-move does it collapse and become a hole in the board. Tetromino points this out in the speech bubble.</li>\n' +
+'      <li>Pieces without any support fall; if they find no square and no piece on the way, they plunge off the board and count as lost.</li>\n' +
+'    </ul>\n' +
+'    <h3>Camera and arrows</h3>\n' +
+'    <ul>\n' +
+'      <li>The view can be rotated around the board in 90° steps with the left/right arrow keys or the camera buttons.</li>\n' +
+'      <li>The circle arrows of the axis buttons show the direction of rotation: counter-clockwise = +90°, clockwise = −90° (each seen along the axis: Z from above, X from the east, Y from the north).</li>\n' +
+'      <li>Axes, coordinates and move list always refer to the board, regardless of the camera position.</li>\n' +
+'      <li>The brown board rim carries the file letters (a–j) and rank numbers (1–10) for orientation; the labels travel correctly with every camera rotation.</li>\n' +
+'    </ul>\n' +
+'    <h3>King piece, check and game end</h3>\n' +
+'    <ul>\n' +
+'      <li>The king piece (I piece) is the king: it may only be captured when it is the opponent’s last remaining piece.</li>\n' +
+'      <li>Check: if your own king piece stands where an opposing rotation could hit it, it is in check. A check must be resolved with the next move – moves that leave it standing are illegal.</li>\n' +
+'      <li>Victory: capture all opposing pieces (the king piece falls last), checkmate the opponent (a check to which no legal reply remains – the king piece cannot escape) or leave them without a legal move (zugzwang).</li>\n' +
+'      <li>Draw: only the two king pieces remain, or 60 half-moves without a capture.</li>\n' +
+'    </ul>\n' +
+'    <h3>Aids</h3>\n' +
+'    <ul>\n' +
+'      <li>Tetromino reports important events (turn change, check, mate, draw, crumbling squares) in a speech bubble on the board that fades away by itself after a short time. A click on the mascot collapses the bubble and expands it again; in a duel, the renewed click shows the last message once more.</li>\n' +
+'      <li>Pieces and the move list are collapsible sections inside the speech bubble: the bubble grows dynamically and the board remains the only large area. Both sections can be folded in and out via their headings.</li>\n' +
+'      <li>In duel games, an additional Help section lies in the speech bubble below pieces and move list: when expanded, Tetromino recommends a concrete move to the side to move (piece, rotation axis and pivot, or shift destination). The recommendation follows the current position, is not executed automatically and is non-binding.</li>\n' +
+'      <li>Cubes with a yellow marker can serve as pivots.</li>\n' +
+'      <li>On desktop, hovering over an axis or slide button shows the destination as a ghost piece; on mobile, the first tap shows the preview and the second performs the move. Highlighted destination squares mark possible shifts; captured pieces are marked red.</li>\n' +
+'    </ul>',
+    infoHtml:
+'    <h2>Open Source and authorship</h2>\n' +
+'    <h3>Authorship</h3>\n' +
+'    <ul>\n' +
+'      <li>This application (Tetromino) was developed by Vibe (AI assistant by Mistral AI, based on the GLM model) together with BaCnGaplays in 2026.</li>\n' +
+'      <li>The European flag at the top right of the main menu (pixel art) marks Tetromino as a game developed in the European Union; the EU flag emblem serves exclusively as this indication of origin.</li>\n' +
+'      <li>The source code is contained completely and openly in this HTML file and can be viewed and adapted freely.</li>\n' +
+'    </ul>\n' +
+'    <h3>Third-party software</h3>\n' +
+'    <ul>\n' +
+'      <li>No external libraries, packages or third-party code are included. All functions are written in plain HTML, CSS and JavaScript without dependencies.</li>\n' +
+'      <li>The sounds are generated exclusively with the browser’s built-in Web Audio interface. There are no network accesses and no data storage.</li>\n' +
+'    </ul>\n' +
+'    <h3>Graphics</h3>\n' +
+'    <ul>\n' +
+'      <li>All icons (circle arrows, camera arrows, piece emblems) are contained in the file directly as embedded SVG data and were drawn specifically for this application.</li>\n' +
+'    </ul>\n' +
+'    <h3>Source code</h3>\n' +
+'    <ul>\n' +
+'      <li>You can view the complete source code of this application via the source code view, select it entirely and copy it.</li>\n' +
+'    </ul>'
+  },
+  fr: {
+    // Camps, directions, niveaux de difficulté
+    sideW: 'Blanc', sideB: 'Noir', adjW: 'blanche', adjB: 'noire',
+    dirN: 'nord', dirS: 'sud', dirE: 'est', dirW: 'ouest',
+    lvl1: 'Facile', lvl2: 'Moyen', lvl3: 'Difficile',
+    // Barre d’état et messages de commande
+    halfMove: 'Demi-coup {n}',
+    replayCount: 'Replay : {i} / {n} demi-coups',
+    stReplay: 'Replay : demi-coup {i} sur {n} – la vue reste pivotable, les coups restent verrouillés.',
+    stOver: 'La partie est terminée. Veuillez commencer une nouvelle partie.',
+    stAnim: 'Rotation en cours …',
+    stAi: 'L’ordinateur est en train de jouer …',
+    stIdle: '{side} joue – veuillez d’abord cliquer sur l’une de vos pièces.',
+    stPiece: 'Pièce {type} sélectionnée.',
+    stAxis: 'Pivot choisi – veuillez appuyer sur un axe de rotation.',
+    stCheck: 'Échec ! ',
+    chipAi: 'Solo · {lvl} · #{seed} · {side}',
+    chipTut: 'Tutoriel',
+    chip2p: 'Deux joueurs · #{seed}',
+    dameLblL: 'Décaler la pièce L (premier coup uniquement) – capture permise à l’arrivée',
+    dameLblI: 'Décaler la pièce roi (I) – dressée uniquement, exactement une case, capture permise',
+    dameLblO: 'Glisser la dame (pièce O) – sans capture',
+    slideInfo: 'Décalage : {k}× vers {dir} → destination {cell}.',
+    // Fin de partie et annonces
+    winTitleW: 'Blanc gagne !', winTitleB: 'Noir gagne !', drawTitle: 'Partie nulle !',
+    annWinW: 'Blanc gagne la partie !', annWinB: 'Noir gagne la partie !',
+    annDraw: 'La partie se termine par une nulle !',
+    rsKing: 'La pièce roi a été capturée en dernière pièce – la partie est décidée.',
+    rsMaterial: 'Toutes les pièces adverses ont été capturées.',
+    rsKings: 'Nulle : il ne reste que les deux pièces roi.',
+    rsMate: 'Échec et mat : l’adversaire est en échec et n’a plus de coup légal.',
+    rsZugzwang: 'L’adversaire n’a plus de coup légal (zugzwang).',
+    rsZugzwangAi: 'L’ordinateur n’a plus de coup légal (zugzwang).',
+    rsRule: 'Nulle : {n} demi-coups sans capture.',
+    annCheck: '{side} est en échec !',
+    annWarn: 'Attention : une case commence à s’effriter !',
+    annFall: 'Une case s’effondre !',
+    // Liste des coups
+    logNew: 'Nouvelle partie – Blanc commence.',
+    logSlide: '{n}. {side} {type} : décalée {k}× vers {dir} ({from} → {to}){cap}',
+    logRot: '{n}. {side} {type} : {axis}{sgn} autour de {piv}{cap}',
+    logPhantomCap: 'Le fantôme de la dame {adj} capture {types}.',
+    logPhantomFall: 'Le fantôme de la dame perd son appui et tombe.',
+    logCrumble: 'La case {key} s’effondre.',
+    logFall: '{side} {type} perd son appui et chute hors du plateau.',
+    logUndo: '{side} annule le dernier coup complet.',
+    logTut: 'Tutoriel – Leçon {n} : {title}',
+    annReplay: 'Replay : revoyez votre partie une nouvelle fois avec le curseur.',
+    // Messages de saisie
+    msgNoMove: 'Cette pièce n’a actuellement aucun coup légal – veuillez choisir une autre pièce.',
+    msgAiWait: 'L’ordinateur joue – veuillez patienter.',
+    msgEnemy: 'Ceci est une pièce adverse.',
+    msgNoPivot: 'Ce cube ne permet aucune rotation – veuillez choisir un cube avec un marqueur jaune.',
+    msgArmed: 'Aperçu armé – appuyez à nouveau sur le même bouton pour exécuter la rotation.',
+    msgNoAxis: 'Aucun coup légal avec cet axe',
+    pivotInfo: 'Pivot {type} : cube {cell}',
+    msgBlocked: 'Décalage bloqué : le chemin ou la destination n’est pas libre dans cette direction. {extra}',
+    extraI: 'La pièce roi ne peut être décalée que sur une case libre ou adverse.',
+    extraL: 'Le chemin doit être libre ; seule la destination autorise une capture.',
+    extraO: 'La dame ne peut glisser que sur des cases libres.',
+    // Noms des pièces et aide
+    pnI: 'Pièce roi (pièce I)', pnO: 'Dame (pièce O)', pnX: 'Tetromino {type}',
+    helpRec: 'Tetromino recommande : {move} Choisissez la pièce et le pivot comme décrits – ou décidez librement.',
+    helpNone: 'Aucun coup légal disponible.',
+    dmSlide: '{side} {type} : décalage {k}× vers {dir} ({from} → {to}){cap}.',
+    dmRot: '{side} {type} : rotation {axis}{sgn}° autour du pivot {piv}{cap}.',
+    dmCap: ' – capture {types}',
+    // Tutoriel
+    tutHeadFmt: 'Tutoriel · Leçon {i}/{n} · Tâche {a}/{m}',
+    tutListFmt: 'Leçon {n} : {title}',
+    tutDoneLbl: 'terminée',
+    praise0: 'Bien joué !', praise1: 'Très joli !', praise2: 'Exactement ça !',
+    praise3: 'Résolu proprement !', praise4: 'Fort !',
+    praiseNext: '{praise} Suite avec la tâche {a} sur {m}.',
+    tutEndTitle: 'Leçon terminée !',
+    tutEndMeta: 'Leçon {i}/{n} · {title}',
+    tutEndSubNext: 'Terminé ! Poursuivez avec la leçon suivante – ou revenez au menu principal.',
+    tutEndSubAll: 'Les cinq leçons sont terminées ! Vous connaissez désormais chaque pièce et chaque type de coup – bon courage en duel, contre l’ordinateur ou à deux.',
+    endNextLbl: 'Continuer vers la leçon suivante',
+    msgTutReset: 'Tâche réinitialisée – le plateau est de retour dans son état de départ.',
+    les1: 'La pièce T : bases et rotation',
+    les2: 'La pièce L : le décalage au premier coup',
+    les3: 'La pièce S : empilement et capture',
+    les4: 'La pièce roi (I) : redressement, décalage, échec',
+    les5: 'La dame (O) : décalage et fantôme',
+    les1t0: 'Bienvenue dans Tetromino ! Chaque camp dirige cinq pièces : la pièce roi (I), la dame (O) ainsi que les pièces T, L et S. Chaque coup consiste en une rotation de l’une de vos pièces. Veuillez cliquer sur l’une de vos pièces blanches – les cubes portant un marqueur jaune peuvent ensuite servir de pivot.',
+    les1t1: 'Cliquez maintenant sur l’un des cubes à marqueur jaune de la pièce T sélectionnée. Il devient le pivot : l’axe de rotation passe par son centre.',
+    les1t2: 'Appuyez sur un axe de rotation. Le premier appui montre la position d’arrivée en pièce fantôme, le second appui exécute le coup. Sur ordinateur, le simple survol du bouton avec la souris affiche déjà l’aperçu.',
+    les1t3: 'Toutes les pièces tournent de 90°. Seule la pièce T peut en plus tourner de 180° (les boutons en demi-cercle) – cela économise un coup quand la pièce doit se retrouver retournée. Veuillez effectuer une rotation de 180°.',
+    les1t4: 'On capture par chevauchement : tournez la pièce T blanche de sorte qu’elle recouvre des cellules de la pièce S noire. La pièce recouverte disparaît entièrement du plateau.',
+    les2t0: 'La pièce L peut se décaler en ligne droite lors de son tout premier coup : le chemin doit être libre et, à l’arrivée, elle peut recouvrir et capturer des adversaires. Les destinations atteignables sont surlignées – cliquez sur l’une d’elles pour y décaler la pièce L. Capturez la pièce T noire.',
+    les2t1: 'Le décalage n’existe que lors du tout premier coup de la pièce L – ici il est déjà consommé. Tournez librement la pièce L ; comme toutes les pièces, elle capture en chevauchant lors de la rotation.',
+    les3t0: 'La pièce S est la seule autorisée à s’empiler sur d’autres pièces – ici elle repose déjà sur la dame. En revanche, rien ne repose sur la pièce S elle-même. Déplacez la pièce S ; elle conserve son appui sur la dame.',
+    les3t1: 'Même en capturant, la pièce S reste mobile : tournez la pièce S de sorte qu’elle recouvre et capture une pièce noire. Astuce : choisissez le cube e5 comme pivot et tournez autour de l’axe vertical (Z).',
+    les4t0: 'La pièce roi est le roi du jeu. Redressez-la verticalement : tournez-la autour de l’axe Y bleu (pivot sur un cube d’extrémité) pour former une colonne verticale. Ce n’est que dressée qu’elle pourra ensuite se décaler.',
+    les4t1: 'La pièce roi dressée peut se décaler d’exactement une case, en capturant au passage. Décalez-la vers le nord sur la pièce S et capturez-la.',
+    les4t2: 'Échec : si une pièce pouvait capturer la pièce roi en une rotation, la pièce roi est en échec. La pièce T noire pourrait saisir ici la pièce roi blanche. Libérez-la : décalez-la d’une case ou capturez la pièce T.',
+    les5t0: 'La dame se décale comme une tour, sans capturer – les cases de destination sont surlignées. Elle laisse derrière elle un fantôme sur sa case de départ : une copie translucide. Décalez la dame d’une case.',
+    les5t1: 'La dame tourne comme toutes les pièces. Tournez-la de sorte qu’au moins l’un de ses cubes soit au-dessus de la hauteur 0 – la dame se tient alors sur son arête.',
+    les5t2: 'Le fantôme est l’arme de capture particulière de la dame : à chacune de ses rotations, il pivote autour du même point et fauche les adversaires sur ses cubes d’arrivée. Tournez la dame pour que le fantôme capture une pièce noire – un pivot sur l’un des cubes où dame et fantôme coïncident est un bon choix.',
+    hint180: 'Pour cette tâche, veuillez utiliser l’une des rotations de 180° (un bouton en demi-cercle).',
+    hintCapture: 'Pas encore de capture – recouvrez par la rotation des cellules de la pièce S noire.',
+    hintSmove: 'Pour cette tâche, veuillez déplacer la pièce S – elle repose actuellement sur la dame.',
+    hintScapPiece: 'Pour cette tâche, veuillez faire tourner la pièce S.',
+    hintScap: 'Personne n’est capturé – choisissez le cube e5 comme pivot et tournez autour de l’axe vertical (Z).',
+    hintLslideTarget: 'La capture est permise à l’arrivée – décalez la pièce L jusqu’à la pièce T noire.',
+    hintLslide: 'Pour cette tâche, veuillez décaler la pièce L (case de destination surlignée ou flèches de glissement).',
+    hintLmove: 'Le décalage est consommé – veuillez faire tourner la pièce L.',
+    hintUprightPiece: 'Pour cette tâche, veuillez faire tourner la pièce roi (I).',
+    hintUpright: 'Encore à plat – veuillez redresser la pièce roi autour de l’axe Y bleu (pivot sur un cube d’extrémité).',
+    hintIslideTarget: 'La pièce roi se décale d’exactement une case – ici vers le nord sur la pièce S.',
+    hintIslide: 'Pour cette tâche, veuillez décaler la pièce roi dressée (case surlignée ou flèches).',
+    hintEscape: 'La pièce roi est toujours en échec – libérez-la par un décalage ou une capture.',
+    hintSlide: 'Pour cette tâche, veuillez utiliser les flèches de glissement de la dame – pas de rotation.',
+    hintOstandPiece: 'Pour cette tâche, veuillez faire tourner la dame (O).',
+    hintOstand: 'Encore à plat – veuillez mettre la dame sur son arête par une rotation X ou Y.',
+    hintPcap: 'Le fantôme n’a encore fauché personne – tournez la dame pour que le fantôme recouvre une pièce noire.',
+    // Succès
+    toastLbl: 'Succès débloqué',
+    achPendingFmt: 'Succès débloqué : « {name} » !',
+    achUnlockedAt: 'Débloqué : ',
+    achFirstWinName: 'Première victoire', achFirstWinDesc: 'Première partie en duel remportée.',
+    achFirstDrawName: 'Première nulle', achFirstDrawDesc: 'Première partie terminée en nulle.',
+    achBlitzName: 'Partie éclair', achBlitzDesc: 'Une partie gagnée en moins de 15 demi-coups.',
+    achLehrlingName: 'Apprenti', achLehrlingDesc: 'L’ordinateur battu au niveau Facile.',
+    achGeselleName: 'Compagnon', achGeselleDesc: 'L’ordinateur battu au niveau Moyen.',
+    achGmName: 'Grand maître', achGmDesc: 'L’ordinateur battu au niveau Difficile.',
+    achSeedAllName: 'Tous les mondes', achSeedAllDesc: 'Chacune des 1 000 000 valeurs de départ possibles jouée au moins une fois contre l’ordinateur – un succès pratiquement impossible.',
+    achPerpetualName: 'Échec perpétuel', achPerpetualDesc: 'Échec donné cinq coups de suite.',
+    achLSacName: 'Sacrifice du premier coup', achLSacDesc: 'La pièce L capture lors de son tout premier coup (son seul décalage possible) et tombe aussitôt dans la riposte.',
+    achPhantomHitName: 'Frappe du fantôme', achPhantomHitDesc: 'Première capture avec votre propre fantôme de la dame.',
+    achPhantomSacName: 'Fantôme sacrifié', achPhantomSacDesc: 'Votre propre fantôme de la dame a été capturé par l’adversaire – capturer le fantôme adverse ne compte pas.',
+    achFirstFallName: 'Hors du plateau', achFirstFallDesc: 'Une pièce a perdu son appui et est tombée du plateau.',
+    achPhantomFallName: 'Fantôme tombé', achPhantomFallDesc: 'Un fantôme de la dame a perdu le contact avec le sol et est tombé.',
+    achEasterName: 'Tetromino trouvé', achEasterDesc: 'La mascotte cachée de l’écran de titre débusquée.',
+    // Sauvegardes
+    slotActive: ' (actif)',
+    slotMetaFmt: '{date} · {games} parties · {tuts}/5 leçons · {achs}/{n} succès',
+    slotAct: 'Activer', slotDel: 'Supprimer',
+    statAi: 'Solo : {w} victoires · {l} défaites · {d} nulles',
+    statSeeds: 'Valeurs de départ jouées contre l’ordinateur : {n} sur 1000000',
+    statTut: 'Tutoriels : {n} leçons sur 5 terminées',
+    resetAll: 'Tout réinitialiser',
+    resetConfirm: 'Vraiment supprimer toutes les sauvegardes ?',
+    noteReset: 'Toutes les sauvegardes ont été réinitialisées.',
+    noteExport: 'Sauvegarde exportée en fichier HTML : {file}',
+    saveDefault: 'Sauvegarde',
+    // Commandes statiques
+    menuBtnLbl: 'Menu', menuBtnTt: 'Vers le menu principal (nouvelle partie, paramètres, règles)',
+    figHeadLbl: 'Pièces', logHeadLbl: 'Liste des coups', helpHeadLbl: 'Aide', taskHeadLbl: 'Tâche',
+    cancelBtnLbl: 'Annuler (Échap)', slideGoLbl: 'Exécuter le coup', slideGoTt: 'Exécuter le décalage comme coup',
+    replayEndLbl: 'Fin', replayEndTt: 'Terminer le replay et revenir à l’écran de fin',
+    menuMp: 'Multijoueur (2 joueurs en local)', menuSp: 'Solo contre l’ordinateur',
+    diffCapAi: 'Choisir la difficulté', diffCap2p: 'Démarrer la partie',
+    quickStart: 'Démarrage rapide', seedOpenLbl: 'Avec valeur de départ …',
+    sideCap: 'Choisir une couleur (solo)', sideWBtn: 'Jouer avec les Blancs', sideBBtn: 'Jouer avec les Noirs',
+    tutBtnLbl: 'Tutoriels',
+    mSaveBtn: 'Sauvegarde, statistiques et succès', mRulesBtn: 'Afficher les règles',
+    mSetBtn: 'Paramètres', mInfoBtn: 'Open Source et paternité',
+    menuBackLbl: 'Retour au jeu (Échap)',
+    tutLogoH: 'Tutoriel',
+    tutSub: 'Cinq leçons – chaque pièce avec ses chemins particuliers ; les leçons terminées sont marquées en vert',
+    hTutPick: 'Choisir une leçon', tutBackLbl: 'Retour',
+    endRetryLbl: 'Recommencer', endMenuLbl: 'Menu principal',
+    overBtnLbl: 'Nouvelle partie (même mode)', overReplayLbl: 'Voir le replay',
+    saveLogoH: 'Sauvegarde',
+    saveSub: 'Progression, statistiques et succès – enregistrés dans le navigateur, exportables en fichier HTML',
+    hSlots: 'Sauvegardes', slotNewLbl: 'Nouvelle sauvegarde',
+    hStats: 'Statistiques (sauvegarde active)', hAch: 'Succès (sauvegarde active)',
+    saveBackLbl: 'Retour',
+    hMode: 'Mode de jeu', hLearn: 'Apprendre', hOther: 'Autres',
+    setH2: 'Paramètres', setHSound: 'Son', setHGame: 'Jeu',
+    lblSound: 'Son', lblMus: 'Musique', lblVol: 'Effets', lblMusVol: 'Volume de la musique',
+    lblDur: 'Vitesse de rotation', lblLang: 'Langue',
+    muteOnLbl: 'Son : activé', muteOffLbl: 'Son : coupé',
+    musOnLbl: 'Musique : activée', musOffLbl: 'Musique : coupée',
+    durSlowLbl: 'Lente', durNormLbl: 'Normale', durFastLbl: 'Rapide',
+    setCloseLbl: 'Fermer',
+    seedH2: 'Partie avec valeur de départ',
+    seedIntroHtml: 'Une même valeur de départ (seed) produit la même disposition initiale – les parties peuvent ainsi être répétées et rejouées à l’identique. La valeur de la partie en cours s’affiche dans la barre d’état derrière le mode de jeu.',
+    seedDiffHeadLbl: 'Difficulté', seedSideHeadLbl: 'Choisir une couleur', hSeed: 'Valeur de départ',
+    seedInputPh: 'Nombre entre 0 et 999999',
+    seedRandomLbl: 'Valeur aléatoire', seedStartLbl: 'Démarrer la partie', seedCloseLbl: 'Annuler',
+    infoSrcLbl: 'Afficher le code source', infoCloseLbl: 'Fermer',
+    srcTitleHtml: 'Code source <span class="verTag">{v}</span>',
+    srcHint: 'Code source complet de ce fichier. Après l’avoir sélectionné, vous pouvez le copier avec Ctrl+C (ou Cmd+C).',
+    srcSelAllLbl: 'Tout sélectionner', srcCloseLbl: 'Fermer',
+    undoTt: 'Annuler le coup : votre coup et celui de l’ordinateur sont annulés (uniquement en Facile et Moyen)',
+    camLTt: 'Pivotez la vue de 90° vers la gauche (touche flèche gauche)',
+    camRTt: 'Pivotez la vue de 90° vers la droite (touche flèche droite)',
+    tutResetLbl: 'Réinitialiser la tâche',
+    tutResetTt: 'Réinitialiser la tâche en cours : le plateau est reconstruit si un coup maladroit a rendu la tâche insoluble.',
+    euFlagTt: 'Développé dans l’Union européenne – cliquez une fois !',
+    axLegendHtml: '<span style="color:#ef7c1a">X&nbsp;Ouest&ndash;Est</span> &middot; <span style="color:#31c7ef">Y&nbsp;Sud&ndash;Nord</span> &middot; <span style="color:#3fbf3f">Z&nbsp;Hauteur</span>',
+    axXp: 'Rotation de +90° autour de l’axe ouest–est : sens antihoraire, vue de l’est.',
+    axXm: 'Rotation de −90° autour de l’axe ouest–est : sens horaire, vue de l’est.',
+    axYp: 'Rotation de +90° autour de l’axe sud–nord : sens antihoraire, vue du nord.',
+    axYm: 'Rotation de −90° autour de l’axe sud–nord : sens horaire, vue du nord.',
+    axZp: 'Rotation de +90° autour de l’axe vertical : sens antihoraire, vue de dessus.',
+    axZm: 'Rotation de −90° autour de l’axe vertical : sens horaire, vue de dessus.',
+    axXd: 'Rotation de 180° autour de l’axe ouest–est (pièce T uniquement).',
+    axYd: 'Rotation de 180° autour de l’axe sud–nord (pièce T uniquement).',
+    axZd: 'Rotation de 180° autour de l’axe vertical (pièce T uniquement).',
+    dW: 'Décalage d’une case vers l’ouest (chaque clic avance d’une case)',
+    dE: 'Décalage d’une case vers l’est (chaque clic avance d’une case)',
+    dN: 'Décalage d’une case vers le nord (chaque clic avance d’une case)',
+    dS: 'Décalage d’une case vers le sud (chaque clic avance d’une case)',
+    rulesHtml:
+'    <h2>Les règles de Tetromino</h2>\n' +
+'    <h3>Modes de jeu</h3>\n' +
+'    <ul>\n' +
+'      <li>Multijoueur : deux joueurs alternent sur le même écran (Blanc contre Noir) – soit par démarrage rapide avec une disposition aléatoire, soit avec votre propre valeur de départ pour des parties exactement reproductibles.</li>\n' +
+'      <li>Solo : l’ordinateur dirige l’autre couleur ; avant le début, l’on choisit Blanc ou Noir (par défaut : Blanc). Trois niveaux de difficulté. Facile : forte part de hasard, parfois des coups faibles, l’ordinateur sacrifie parfois ses propres pièces. Moyen : bons coups avec de la dispersion, mais sans sacrifice. Difficile : choix optimal et prévoyant sur deux demi-coups.</li>\n' +
+'      <li>Valeur de départ (seed) : le même nombre produit la même disposition initiale ; la valeur de la partie en cours s’affiche dans la barre d’état, de sorte que les parties se répètent exactement.</li>\n' +
+'      <li>Annuler un coup : en solo aux niveaux Facile et Moyen, le bouton à la flèche en demi-tour près des flèches de vue annule le dernier coup complet – votre demi-coup et celui de l’ordinateur. La partie reprend depuis la position antérieure ; les succès déjà débloqués et les statistiques restent intacts.</li>\n' +
+'      <li>Replay : à la fin d’une partie en duel, le bouton « Voir le replay » ouvre le déroulé de la partie. Le curseur sous le plateau parcourt les positions demi-coup par demi-coup, la vue pivote comme d’habitude, et les coups restent verrouillés jusqu’à la fin du replay. Le replay n’est pas sauvegardé et disparaît dès qu’une nouvelle partie commence.</li>\n' +
+'      <li>L’aide de Tetromino (bulle) recommande toujours le coup optimal, quel que soit le niveau de difficulté ; les niveaux n’influencent que le choix des coups de l’ordinateur.</li>\n' +
+'      <li>Tutoriel : cinq leçons – une par pièce (T, L, S, pièce roi, dame) – avec chacune plusieurs sous-tâches, du clic à la capture ; chaque leçon se choisit séparément, les leçons terminées sont marquées en vert. Le texte de la tâche figure dans la zone de tâche repliable de la bulle, les indices apparaissent brièvement en popup puis restent en jaune dans la zone ; après chaque leçon résolue, un écran de fin propose continuer, recommencer et menu principal. Le bouton « Réinitialiser la tâche » reconstruit le plateau de la sous-tâche en cours – par exemple si un coup maladroit l’a rendue insoluble.</li>\n' +
+'      <li>Sauvegarde, statistiques et succès : plusieurs sauvegardes nommées sont conservées dans le navigateur ; chacune tient les statistiques du mode solo (victoires, défaites et nulles contre l’ordinateur), quatorze succès et la progression du tutoriel. Les succès « Apprenti », « Compagnon » et « Grand maître » récompensent des victoires contre l’ordinateur aux niveaux Facile, Moyen et Difficile. Chaque partie terminée contre l’ordinateur comptabilise sa valeur de départ ; le succès « Tous les mondes » ne se débloque que lorsque chacune des 1 000 000 valeurs possibles a été jouée au moins une fois – un succès pratiquement impossible. Les sauvegardes s’exportent en fichiers HTML complets avec la sauvegarde intégrée – ouvrir un tel fichier crée la sauvegarde comme nouvelle entrée – et se réinitialisent individuellement ou entièrement.</li>\n' +
+'      <li>La barre d’état est une bande étroite en haut, à l’intérieur du plateau : elle indique le camp au trait, le mode de jeu, le demi-coup en cours et la valeur de départ de la partie.</li>\n' +
+'    </ul>\n' +
+'    <h3>Plateau et pièces</h3>\n' +
+'    <ul>\n' +
+'      <li>Plateau 10×10, deux camps : Blanc (en bas) et Noir (en haut).</li>\n' +
+'      <li>Chaque camp dirige cinq pièces-tétréominos – I, O, T, L, S – de quatre cubes chacune (hauteur initiale : 1 case). La pièce I est appelée pièce roi, la pièce O la dame.</li>\n' +
+'      <li>La pièce roi (I) et la dame (O) commencent toujours sur les lignes de base (Blanc : rangée 1, Noir : rangée 10). Les autres pièces sont réparties au début aléatoirement mais en symétrie miroir dans la moitié propre de chaque camp ; les rangées 5 et 6 restent libres comme terre de personne. Au premier coup, personne ne peut donc capturer.</li>\n' +
+'    </ul>\n' +
+'    <h3>Un coup</h3>\n' +
+'    <ul>\n' +
+'      <li>Un coup consiste en une rotation de 90° d’une de ses propres pièces – la pièce T peut aussi tourner de 180° ; la dame (O), la pièce L (premier coup) et la pièce roi dressée peuvent en plus se décaler (voir plus bas).</li>\n' +
+'      <li>L’axe de rotation est parallèle à l’axe X (ouest–est), à l’axe Y (sud–nord) ou à l’axe Z (vertical) et passe par le centre d’un cube de la pièce (le pivot).</li>\n' +
+'      <li>Déroulé : cliquer sur une pièce → cliquer sur le cube pivot → appuyer sur un axe de rotation (affiche l’aperçu) puis appuyer à nouveau (exécute le coup).</li>\n' +
+'      <li>Règle des deux appuis : le premier appui sur l’axe arme l’aperçu, le second appui sur le même bouton exécute le coup. Sur ordinateur, le simple survol affiche déjà l’aperçu.</li>\n' +
+'      <li>Décalage : les cases de destination atteignables sont surlignées sur le plateau (jaune = sans capture, rouge = avec capture). Un clic y décale la pièce ; des flèches de glissement sont disponibles en alternative.</li>\n' +
+'    </ul>\n' +
+'    <h3>Particularités des pièces</h3>\n' +
+'    <ul>\n' +
+'      <li><b>Pièce T :</b> peut effectuer des rotations de 90° et de 180° (les trois boutons en demi-cercle ; la couleur d’axe X/Y/Z indique l’axe de rotation).</li>\n' +
+'      <li><b>Pièce S :</b> peut s’empiler sur d’autres pièces ; elle ne peut en revanche pas servir de support – aucune pièce ne peut reposer sur la pièce S, pas même une autre pièce S.</li>\n' +
+'      <li><b>Pièce L :</b> peut en plus se décaler lors de son premier coup (en ligne droite, à distance libre). Elle peut alors recouvrir et capturer des pièces adverses à l’arrivée ; le chemin doit être libre.</li>\n' +
+'      <li><b>Pièce roi (I) :</b> tant qu’elle est dressée (colonne verticale), elle peut se décaler d’exactement une case et capturer des pièces adverses au passage. La pièce roi ne peut plus flotter.</li>\n' +
+'      <li><b>Dame (O) :</b> se décale comme une tour, sans capturer. Elle laisse à chaque décalage un fantôme sur sa case de départ : quand la dame tourne, le fantôme tourne avec elle et peut capturer des adversaires. Si le fantôme est capturé, seul le fantôme disparaît ; si la dame tombe, le fantôme disparaît aussi. Le fantôme peut quitter le plateau – s’il perd le contact avec le plateau, il tombe. Au prochain décalage, le fantôme s’efface et réapparaît à la dernière position. Un fantôme menaçant compte comme une pièce pour l’échec, et la restriction de prise du roi vaut aussi pour les captures du fantôme : la pièce roi ne peut jamais tomber avant les autres pièces.</li>\n' +
+'    </ul>\n' +
+'    <h3>Capture</h3>\n' +
+'    <ul>\n' +
+'      <li>On capture en déplaçant une pièce par sa rotation ou son décalage sur des cellules d’une pièce adverse (chevauchement). La pièce recouverte chute entièrement du plateau ; plusieurs pièces touchées sont toutes capturées.</li>\n' +
+'      <li>Une collision avec une de ses propres pièces est interdite. Les décalages de la dame ne capturent jamais et ne peuvent pas mener sur des cases occupées.</li>\n' +
+'      <li>Un fantôme touché disparaît seulement en tant que fantôme ; la dame correspondante reste.</li>\n' +
+'    </ul>\n' +
+'    <h3>Appui et sol</h3>\n' +
+'    <ul>\n' +
+'      <li>Une pièce est en appui dès qu’au moins un de ses cubes repose sur une plaque de sol intacte ou sur une autre pièce. Elle peut donc aussi surplomber des cases effondrées ou ne reposer que d’un seul cube, tant que ce cube garde son appui.</li>\n' +
+'      <li>Seule la pièce S peut s’empiler sur d’autres pièces ; rien ne repose sur la pièce S. Les rotations qui laissent une pièce entièrement sans appui sont interdites.</li>\n' +
+'    </ul>\n' +
+'    <h3>Cases qui s’effritent</h3>\n' +
+'    <ul>\n' +
+'      <li>À partir du 15e demi-coup, une autre plaque de sol s’effrite après chaque coup : la prochaine case est d’abord marquée sur le plateau d’un contour rouge, fissurée et vacillante ; ce n’est qu’au demi-coup suivant qu’elle s’effondre et devient un trou dans le plateau. Tetromino le signale dans la bulle.</li>\n' +
+'      <li>Les pièces sans aucun appui tombent ; si elles ne trouvent en chemin ni case ni pièce, elles chutent du plateau et sont perdues.</li>\n' +
+'    </ul>\n' +
+'    <h3>Caméra et flèches</h3>\n' +
+'    <ul>\n' +
+'      <li>La vue pivote autour du plateau par pas de 90° avec les touches flèche gauche/droite ou les boutons caméra.</li>\n' +
+'      <li>Les flèches circulaires des boutons d’axe indiquent le sens de rotation : sens antihoraire = +90°, sens horaire = −90° (vus le long de l’axe : Z de dessus, X de l’est, Y du nord).</li>\n' +
+'      <li>Les axes, les coordonnées et la liste des coups se réfèrent toujours au plateau, indépendamment de la position de la caméra.</li>\n' +
+'      <li>Le rebord marron du plateau porte les lettres de colonne (a–j) et les numéros de rangée (1–10) pour s’orienter ; les mentions suivent correctement chaque rotation de caméra.</li>\n' +
+'    </ul>\n' +
+'    <h3>Pièce roi, échec et fin de partie</h3>\n' +
+'    <ul>\n' +
+'      <li>La pièce roi (pièce I) est le roi : elle ne peut être capturée que lorsqu’elle est la dernière pièce restante de l’adversaire.</li>\n' +
+'      <li>Échec : si votre pièce roi se trouve à portée d’une rotation adverse, elle est en échec. Un échec doit être levé au coup suivant – les coups qui le laissent en place sont interdits.</li>\n' +
+'      <li>Victoire : capturer toutes les pièces adverses (la pièce roi tombe en dernier), mater l’adversaire (un échec sans réponse légale possible – la pièce roi ne peut plus s’échapper) ou le laisser sans coup légal (zugzwang).</li>\n' +
+'      <li>Nulle : il ne reste que les deux pièces roi, ou 60 demi-coups sans capture.</li>\n' +
+'    </ul>\n' +
+'    <h3>Aides</h3>\n' +
+'    <ul>\n' +
+'      <li>Tetromino annonce les événements importants (changement de trait, échec, mat, nulle, cases qui s’effritent) dans une bulle sur le plateau qui s’efface d’elle-même après un moment. Un clic sur la mascotte replie la bulle et la redéploie ; en duel, le nouveau clic réaffiche la dernière annonce.</li>\n' +
+'      <li>Les pièces et la liste des coups sont des zones repliables dans la bulle : la bulle grandit dynamiquement et le plateau reste la seule grande surface. Les deux zones se replient et se déplient par leurs titres.</li>\n' +
+'      <li>En duel, une zone Aide supplémentaire se trouve dans la bulle sous les pièces et la liste des coups : une fois ouverte, Tetromino recommande au camp au trait un coup concret (pièce, axe et pivot de rotation, ou destination de décalage). La recommandation suit la position, ne s’exécute pas automatiquement et n’engage à rien.</li>\n' +
+'      <li>Les cubes portant un marqueur jaune peuvent servir de pivot.</li>\n' +
+'      <li>Sur ordinateur, le survol d’un bouton d’axe ou de glissement montre la position d’arrivée en pièce fantôme ; sur mobile, le premier appui affiche l’aperçu et le second exécute le coup. Les cases surlignées signalent les décalages possibles ; les pièces capturées sont marquées en rouge.</li>\n' +
+'    </ul>',
+    infoHtml:
+'    <h2>Open Source et paternité</h2>\n' +
+'    <h3>Paternité</h3>\n' +
+'    <ul>\n' +
+'      <li>Cette application (Tetromino) a été développée par Vibe (assistant IA de Mistral AI, fondé sur le modèle GLM) avec BaCnGaplays en 2026.</li>\n' +
+'      <li>Le drapeau européen en haut à droite du menu principal (pixel art) marque Tetromino comme un jeu développé dans l’Union européenne ; l’emblème du drapeau de l’UE sert exclusivement à cette indication d’origine.</li>\n' +
+'      <li>Le code source figure intégralement et ouvertement dans ce fichier HTML et peut être consulté et adapté librement.</li>\n' +
+'    </ul>\n' +
+'    <h3>Logiciels tiers</h3>\n' +
+'    <ul>\n' +
+'      <li>Aucune bibliothèque, aucun paquet ni aucun code tiers n’est intégré. Toutes les fonctions sont écrites en HTML, CSS et JavaScript ordinaires, sans dépendances.</li>\n' +
+'      <li>Les sons sont produits exclusivement par l’interface Web Audio intégrée au navigateur. Il n’y a aucun accès réseau ni aucun stockage de données.</li>\n' +
+'    </ul>\n' +
+'    <h3>Graphismes</h3>\n' +
+'    <ul>\n' +
+'      <li>Tous les symboles (flèches circulaires, flèches caméra, emblèmes de pièces) sont contenus dans le fichier sous forme de données SVG embarquées et ont été dessinés spécialement pour cette application.</li>\n' +
+'    </ul>\n' +
+'    <h3>Code source</h3>\n' +
+'    <ul>\n' +
+'      <li>Vous pouvez consulter le code source complet de cette application via la vue code source, le sélectionner intégralement et le copier.</li>\n' +
+'    </ul>'
+  }
+};
+function tr(k){
+  var d = TXT[lang];
+  if (d && Object.prototype.hasOwnProperty.call(d, k)) return d[k];
+  return (TXT.de && Object.prototype.hasOwnProperty.call(TXT.de, k)) ? TXT.de[k] : k;
+}
+function trf(k, args){
+  var s = String(tr(k));
+  args = args || {};
+  return s.replace(/\{(\w+)\}/g, function(m, n){
+    return Object.prototype.hasOwnProperty.call(args, n) ? String(args[n]) : m;
+  });
+}
+function sideName(c){ return tr(c === 'w' ? 'sideW' : 'sideB'); }
+// Statische Texte der Oberfläche in die gewählte Sprache übersetzen. Die
+// deutschen Texte bleiben im HTML als Rückfall; applyLang() ist die eine
+// Quelle der Übersetzung und läuft beim Start sowie nach jedem Sprachwechsel.
+// Knöpfe mit Pixel-Icon (Ansicht drehen, Zurücknehmen) erhalten nur ihren
+// Tooltip, damit das Icon-Span unangetastet bleibt.
+function applyLang(){
+  var k, i, el;
+  document.documentElement.setAttribute('lang', lang);
+  // Textinhalte nach Element-ID
+  var M = {
+    menuBtn: 'menuBtnLbl', mpBtn: 'menuMp', spBtn: 'menuSp', mpQuick: 'quickStart',
+    seedOpen: 'seedOpenLbl', sideCap: 'sideCap', tutBtn: 'tutBtnLbl',
+    mSaveBtn: 'mSaveBtn', mRulesBtn: 'mRulesBtn', mSetBtn: 'mSetBtn', mInfoBtn: 'mInfoBtn',
+    menuBack: 'menuBackLbl', tutLogoH: 'tutLogoH', tutSub: 'tutSub', hTutPick: 'hTutPick',
+    tutBack: 'tutBackLbl', endRetry: 'endRetryLbl', endMenu: 'endMenuLbl',
+    overBtn: 'overBtnLbl', overReplayBtn: 'overReplayLbl', overMenuBtn: 'endMenuLbl',
+    replayEnd: 'replayEndLbl', tutReset: 'tutResetLbl', cancelBtn: 'cancelBtnLbl',
+    slideGo: 'slideGoLbl', saveLogoH: 'saveLogoH', saveSub: 'saveSub',
+    hSlots: 'hSlots', slotNew: 'slotNewLbl', hStats: 'hStats', hAch: 'hAch',
+    saveBack: 'saveBackLbl', setH2: 'setH2', setHSound: 'setHSound', setHGame: 'setHGame',
+    setLblSound: 'lblSound', setLblMus: 'lblMus', setLblVol: 'lblVol',
+    setLblMusVol: 'lblMusVol', setLblDur: 'lblDur', setLblLang: 'lblLang',
+    setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
+    seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
+    seedStart: 'seedStartLbl', seedClose: 'seedCloseLbl',
+    infoSrc: 'infoSrcLbl', infoClose: 'infoCloseLbl', srcSelAll: 'srcSelAllLbl',
+    srcClose: 'srcCloseLbl', hMode: 'hMode', hLearn: 'hLearn', hOther: 'hOther',
+    diffCap: null // dynamisch über showDiffRow; hier nur Platzhalter
+  };
+  for (k in M){
+    if (!M[k]) continue;
+    el = $(k);
+    if (el) el.textContent = tr(M[k]);
+  }
+  // Überschriften mit ein-/ausklappbarem +/--Span: nur den Textknoten tauschen
+  function setHead(id, key){
+    el = $(id);
+    if (el && el.firstChild && el.firstChild.nodeType === 3) el.firstChild.nodeValue = tr(key) + ' ';
+  }
+  setHead('figHead', 'figHeadLbl');
+  setHead('logHead', 'logHeadLbl');
+  setHead('helpHead', 'helpHeadLbl');
+  setHead('taskHead', 'taskHeadLbl');
+  // Seiten-Beschriftungen der Figurenliste
+  var sideLbls = qsa('.sideLbl');
+  if (sideLbls.length >= 2){ sideLbls[0].textContent = tr('sideW'); sideLbls[1].textContent = tr('sideB'); }
+  // Schwierigkeit und Farbwahl (Hauptmenü und Startwert-Fenster, synchron)
+  qsa('#diffRow .diffBtn, #seedDiffRow .seedDiff').forEach(function(b){
+    b.textContent = tr('lvl' + parseInt(b.getAttribute('data-diff'), 10));
+  });
+  qsa('#sideRow .sideBtn, #seedSideRow .seedSide').forEach(function(b){
+    b.textContent = b.getAttribute('data-side') === 'b' ? tr('sideBBtn') : tr('sideWBtn');
+  });
+  // Einstellungen: Drehgeschwindigkeit und Sprachwahl
+  qsa('.setDur').forEach(function(b){
+    var d = b.getAttribute('data-dur');
+    b.textContent = d === '760' ? tr('durSlowLbl') : d === '280' ? tr('durFastLbl') : tr('durNormLbl');
+  });
+  qsa('.setLang').forEach(function(b){
+    b.classList.toggle('selOpt', b.getAttribute('data-lang') === lang);
+  });
+  $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
+  $('setMute').classList.toggle('selOpt', muted);
+  $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
+  $('setMus').classList.toggle('selOpt', musOn);
+  // Tooltips und Platzhalter
+  var T = { undoBtn: 'undoTt', camL: 'camLTt', camR: 'camRTt', replayEnd: 'replayEndTt',
+    menuBtn: 'menuBtnTt', tutReset: 'tutResetTt', slideGo: 'slideGoTt', euFlag: 'euFlagTt' };
+  for (k in T){
+    el = $(k);
+    if (el) el.title = tr(T[k]);
+  }
+  $('seedInput').placeholder = tr('seedInputPh');
+  qsa('.dbtn').forEach(function(b){ b.title = tr('d' + b.getAttribute('data-sdir')); });
+  var AXT = { x1: 'axXp', 'x-1': 'axXm', y1: 'axYp', 'y-1': 'axYm', z1: 'axZp', 'z-1': 'axZm',
+    x2: 'axXd', y2: 'axYd', z2: 'axZd' };
+  qsa('.axbtn').forEach(function(b){
+    var key = AXT[b.getAttribute('data-axis') + b.getAttribute('data-dir')];
+    if (key){ b.title = tr(key); b._baseTitle = tr(key); } // _baseTitle: Zwei-Tipp-Mechanik
+  });
+  // Kompakte HTML-Blöcke je Sprache
+  $('axLegend').innerHTML = tr('axLegendHtml');
+  $('seedIntro').innerHTML = tr('seedIntroHtml');
+  $('srcHint').textContent = tr('srcHint');
+  var verEl = document.querySelector('#wrap .verTag');
+  $('srcH2').innerHTML = trf('srcTitleHtml', { v: verEl ? verEl.textContent.trim() : '' });
+  $('rulesBody').innerHTML = tr('rulesHtml');
+  $('infoBody').innerHTML = tr('infoHtml');
+  // Aktive Menübeschriftung (Schwierigkeitsüberschrift des Hauptmenüs)
+  $('diffCap').textContent = tr(diffCtx === 'ai' ? 'diffCapAi' : 'diffCap2p');
+}
+// Sprachwechsel: Auswahl speichern, Oberfläche und sichtbare dynamische
+// Bereiche sofort neu rendern. Die Sprache des Spielstands bleibt unberührt.
+function setLang(l){
+  if (l !== 'de' && l !== 'en' && l !== 'fr') return;
+  lang = l;
+  try { window.localStorage.setItem(LANG_KEY, l); } catch (e) {}
+  applyLang();
+  updateHUD();
+  if (mode === 'tutorial' && tut.step >= 0 && tut.task >= 0) tutRender();
+  if (!$('saveOverlay').classList.contains('hidden')) renderSaveMenu();
+  if (!$('tutOverlay').classList.contains('hidden')) openTutMenu();
+  if (!$('setModal').classList.contains('hidden')) openSettings();
+}
 // ---------- Kamera ----------
 var view = 0; // Drehung der Ansicht um die senkrechte Achse (0..3, je 90°)
 function vw(x, y, z){ // Brett- → Sichtkoordinaten (kontinuierlich, auch für die Animation)
@@ -804,6 +1864,7 @@ PAGE_SRC = '<!doctype html>\n' + document.documentElement.outerHTML;
 var pieces, occ, turn, phase, sel, pivotIdx, selMoves, preview, anim,
     gameOver, moveNo, sinceCap, logEntries, shakeUntil, hover, OY, OYt;
 var slide = null; // akkumulierte Verschiebung: { ux, uy, steps, res }
+var fallers = [];  // Sturz-Animationen: rein optische Fall- und Taumelbewegung
 var crumbled = {};   // eingebrochene Bodenplatten: 'x,y' → true
 var crumbleWarn = null; // angekündigtes, noch intaktes Feld
 var crumbleWarnMove = -1; // Halbzug, in dem die Ankündigung erfolgte
@@ -1128,9 +2189,9 @@ function slidesFor(p, fast){
   return out;
 }
 function dirName(ux, uy){
-  if (ux > 0) return 'Ost';
-  if (ux < 0) return 'West';
-  return uy > 0 ? 'Nord' : 'Süd';
+  if (ux > 0) return tr('dirE');
+  if (ux < 0) return tr('dirW');
+  return uy > 0 ? tr('dirN') : tr('dirS');
 }
 
 function anyMoves(color){
@@ -1150,7 +2211,7 @@ function selectPiece(p){
     ? slidesFor(p) : [];
   sfxSelect();
   updateHUD(selMoves.length === 0 && slideTargets.length === 0
-    ? 'Diese Figur hat derzeit keinen legalen Zug – bitte eine andere Figur wählen.'
+    ? tr('msgNoMove')
     : null);
   if (mode === 'tutorial') tutEvent('select', { piece: p });
 }
@@ -1246,8 +2307,8 @@ function finalizeMove(){
           sfxCap();
         }
         if (sw.captured.length){
-          logEntries.push('Das Phantom der ' + (p.color === 'w' ? 'weißen' : 'schwarzen') +
-            ' Dame schlägt ' + sw.captured.map(function(q){ return q.type; }).join('') + '.');
+          logEntries.push(trf('logPhantomCap', { adj: (p.color === 'w' ? tr('adjW') : tr('adjB')),
+            types: sw.captured.map(function(q){ return q.type; }).join('') }));
           if (!cap.length){ shakeUntil = performance.now() + 220; sfxCap(); }
           // „Phantomschlag“ zählt nur, wenn das eigene Phantom zuschlägt –
           // der Zuschlag des gegnerischen Phantoms bleibt ohne Erfolg.
@@ -1260,8 +2321,9 @@ function finalizeMove(){
         // innerhalb des Bretts: Neben das Brett geschwungene Würfel schweben,
         // auch wenn sie auf Höhe null liegen.
         if (!phantomGrounded(sw.cubes)){
+          spawnFaller(ph);
           pieces = pieces.filter(function(q){ return q !== ph; });
-          logEntries.push('Das Phantom der Dame verliert den Halt und fällt herab.');
+          logEntries.push(tr('logPhantomFall'));
           shakeUntil = performance.now() + 220;
           sfxCap();
           if (chessRulesOn()) unlockAch('phantomFall'); // Phantom gestürzt
@@ -1273,14 +2335,15 @@ function finalizeMove(){
   moveNo++;
   sinceCap = cap.length ? 0 : sinceCap + 1;
   if (a.axis === 't'){
-    logEntries.push(moveNo + '. ' + (p.color === 'w' ? 'Weiß' : 'Schwarz') + ' ' + p.type +
-      ': versetzt ' + a.steps + '× nach ' + dirName(a.targets[0].x - a.cubes0[0].x, a.targets[0].y - a.cubes0[0].y) +
-      ' (' + coordName(a.cubes0[0]) + ' \u2192 ' + coordName(a.res.newCubes[0]) + ')' +
-      (cap.length ? ' ×' + cap.map(function(q){ return q.type; }).join('') : ''));
+    logEntries.push(trf('logSlide', { n: moveNo, side: sideName(p.color), type: p.type,
+      k: a.steps, dir: dirName(a.targets[0].x - a.cubes0[0].x, a.targets[0].y - a.cubes0[0].y),
+      from: coordName(a.cubes0[0]), to: coordName(a.res.newCubes[0]),
+      cap: cap.length ? ' ×' + cap.map(function(q){ return q.type; }).join('') : '' }));
   } else {
-    logEntries.push(moveNo + '. ' + (p.color === 'w' ? 'Weiß' : 'Schwarz') + ' ' + p.type +
-      ': ' + a.axis.toUpperCase() + (a.dir === 2 ? '180' : (a.dir > 0 ? '+' : '−')) + ' um ' + coordName(a.pivot) +
-      (cap.length ? ' ×' + cap.map(function(q){ return q.type; }).join('') : ''));
+    logEntries.push(trf('logRot', { n: moveNo, side: sideName(p.color), type: p.type,
+      axis: a.axis.toUpperCase(), sgn: (a.dir === 2 ? '180' : (a.dir > 0 ? '+' : '−')),
+      piv: coordName(a.pivot),
+      cap: cap.length ? ' ×' + cap.map(function(q){ return q.type; }).join('') : '' }));
   }
   sel = null; pivotIdx = -1; selMoves = []; phase = 'idle'; anim = null; slide = null;
   if (mode === 'tutorial'){
@@ -1298,14 +2361,14 @@ function finalizeMove(){
   var realPieces = pieces.filter(function(q){ return !q.phantom; });
   var enemyCount = realPieces.filter(function(q){ return q.color === turn; }).length;
   if (enemyCount === 0) endGame(p.color, cap.some(function(q){ return q.type === 'I'; })
-    ? 'Der Königstein wurde als letzte Figur geschlagen – die Partie ist entschieden.'
-    : 'Alle Figuren des Gegners wurden geschlagen.', 'material');
+    ? tr('rsKing')
+    : tr('rsMaterial'), 'material');
   else if (realPieces.length === 2 && realPieces.every(function(q){ return q.type === 'I'; }))
-    endGame(null, 'Remis: Nur die beiden Königsteine sind übrig.', 'kings');
+    endGame(null, tr('rsKings'), 'kings');
   else if (!anyMoves(turn)) endGame(p.color, inCheck(turn)
-    ? 'Schachmatt: Der Gegner steht im Schach und hat keinen legalen Zug mehr.'
-    : 'Der Gegner hat keinen legalen Zug mehr (Zugzwang).', inCheck(turn) ? 'mate' : 'zugzwang');
-  else if (sinceCap >= DRAW_RULE) endGame(null, 'Remis: ' + DRAW_RULE + ' Halbzüge ohne Schlagzug.', 'rule');
+    ? tr('rsMate')
+    : tr('rsZugzwang'), inCheck(turn) ? 'mate' : 'zugzwang');
+  else if (sinceCap >= DRAW_RULE) endGame(null, trf('rsRule', { n: DRAW_RULE }), 'rule');
   else if (mode === 'ai' || mode === '2p'){
     // Dauerschach zählen: Jeder Zug, der den Gegner in Schach stellt,
     // verlängert die Serie; ein schachfreier Zug setzt sie auf null.
@@ -1313,9 +2376,9 @@ function finalizeMove(){
       checkStreak++;
       if (checkStreak >= 5) unlockAch('perpetual');
     } else checkStreak = 0;
-    if (inCheck(turn)) ann = (turn === 'w' ? 'Weiß' : 'Schwarz') + ' steht im Schach!';
-    else if (crumbleEvt === 'warn') ann = 'Vorsicht: Ein Feld beginnt zu bröckeln!';
-    else if (crumbleEvt === 'fall') ann = 'Ein Feld stürzt in sich zusammen!';
+    if (inCheck(turn)) ann = trf('annCheck', { side: sideName(turn) });
+    else if (crumbleEvt === 'warn') ann = tr('annWarn');
+    else if (crumbleEvt === 'fall') ann = tr('annFall');
     else ann = '';
     // Erfolgs-Ansagen (falls in diesem Zug freigeschaltet) anhängen
     if (achPending){ ann = (ann ? ann + ' ' : '') + achPending; achPending = ''; }
@@ -1328,6 +2391,30 @@ function finalizeMove(){
 // ---------- Bröckelnde Felder und Gravitation (Duell) ----------
 // Jedes Feld wird einen Halbzug vorher angekündigt (crumbleWarn) und stürzt
 // erst im darauffolgenden Halbzug tatsächlich ein (crumbled).
+// Sturz-Animation: Eine Figur oder ein Phantom verliert den Halt und fällt
+// optisch in die Tiefe. Das Spielgeschehen ist zu diesem Zeitpunkt bereits
+// abgeschlossen (die Figur ist aus der Belegungsliste entfernt); spawnFaller
+// startet nur den visuellen Nachhall. Gezeichnet wird ein freier Fall mit
+// Beschleunigung um den jeweiligen Schwerpunkt, dazu ein langsames
+// Verblassen, sobald die Figur unter das Brettniveau sinkt. Zufallsanteile
+// (Taumelachse und -drehzahl) sind rein optisch und beeinflussen keine
+// Spielentscheidung.
+var FALL_G = 22;   // Fallbeschleunigung in Würfelhöhen pro Quadratsekunde
+var FALL_CULL = 9; // Fallweg, ab dem die Figur endgültig verschwindet
+var FALL_FADE = 4; // Fallweg, ab dem die Figur langsam verbliest
+function spawnFaller(q){
+  var i, px = 0, py = 0, pz = 0;
+  var cubes = q.cubes.map(function(c){ return { x: c.x, y: c.y, z: c.z }; });
+  for (i = 0; i < cubes.length; i++){ px += cubes[i].x; py += cubes[i].y; pz += cubes[i].z; }
+  fallers.push({
+    color: q.color, type: q.type, phantom: !!q.phantom, cubes: cubes,
+    piv: { x: px / cubes.length, y: py / cubes.length, z: pz / cubes.length },
+    t0: performance.now(),
+    axis: (Math.random() < 0.5 ? 'x' : 'y'),
+    spin: (1.4 + Math.random() * 1.4) * (Math.random() < 0.5 ? -1 : 1)
+  });
+}
+
 function applyCrumbleAndGravity(){
   crumbleEvt = '';
   if (!chessRulesOn()) return;
@@ -1336,7 +2423,7 @@ function applyCrumbleAndGravity(){
     // Zuerst das angekündigte Feld einstürzen lassen (falls einen Halbzug vorher gewarnt)
     if (crumbleWarn && moveNo >= CRUMBLE_FROM && moveNo > crumbleWarnMove){
       crumbled[crumbleWarn] = true;
-      logEntries.push('Feld ' + crumbleWarn + ' stürzt in sich zusammen.');
+      logEntries.push(trf('logCrumble', { key: crumbleWarn }));
       crumbleEvt = 'fall';
       crumbleWarn = null;
     }
@@ -1385,18 +2472,24 @@ function applyCrumbleAndGravity(){
     fallen.forEach(function(q){ fIds[q.id] = true; });
     pieces = pieces.filter(function(q){
       if (fIds[q.id]) return false;
-      if (q.phantom && q.master && fIds[q.master.id]) return false;
+      // Das Phantom endet mit seiner Dame: Auch sein Ende wird als Sturz
+      // animiert, selbst wenn es noch Bodenkontakt hatte.
+      if (q.phantom && q.master && fIds[q.master.id]){ spawnFaller(q); return false; }
       return true;
     });
     fallen.forEach(function(q){
+      spawnFaller(q);
       logEntries.push(q.phantom
-        ? 'Das Phantom der Dame verliert den Halt und fällt herab.'
-        : (q.color === 'w' ? 'Weiß' : 'Schwarz') + ' ' + q.type + ' verliert den Halt und stürzt vom Brett.');
+        ? tr('logPhantomFall')
+        : trf('logFall', { side: sideName(q.color), type: q.type }));
     });
     capturedByB = capturedByB.concat(fallen.filter(function(q){ return !q.phantom && q.color === 'w'; }));
     capturedByW = capturedByW.concat(fallen.filter(function(q){ return !q.phantom && q.color === 'b'; }));
     if (!crumbleEvt) crumbleEvt = 'fall';
     sfxCap();
+    // Der Aufprall in der Tiefe erschüttert die Kamera kurz, wenn eine echte
+    // Figur (nicht nur das Phantom) vom Brett stürzt.
+    if (fallen.some(function(q){ return !q.phantom; })) shakeUntil = Math.max(shakeUntil, performance.now() + 200);
     // Typische Pannen als Erfolge: Figuren oder Phantom stürzen vom Brett
     if (fallen.some(function(q){ return !q.phantom; })) unlockAch('firstFall');
     if (fallen.some(function(q){ return !!q.phantom; })) unlockAch('phantomFall');
@@ -1407,10 +2500,10 @@ function endGame(winner, reason, kind){
   if (gameOver) return; // Partieende nur einmal werten (Statistik, Erfolge)
   gameOver = true; phase = 'over';
   var t = $('overTitle'), r = $('overReason');
-  t.textContent = winner === 'w' ? 'Weiß gewinnt!' : winner === 'b' ? 'Schwarz gewinnt!' : 'Remis!';
+  t.textContent = winner === 'w' ? tr('winTitleW') : winner === 'b' ? tr('winTitleB') : tr('drawTitle');
   r.textContent = reason;
   // Tetromino verkündet das Ergebnis in jedem Duell-Modus
-  ann = winner ? (winner === 'w' ? 'Weiß gewinnt die Partie!' : 'Schwarz gewinnt die Partie!') : 'Die Partie endet Remis!';
+  ann = winner ? (winner === 'w' ? tr('annWinW') : tr('annWinB')) : tr('annDraw');
   $('overOverlay').classList.remove('hidden');
   if (winner) sfxWin();
   trackGameEnd(winner, kind || ''); // Statistik und Erfolge im Spielstand
@@ -1459,6 +2552,7 @@ function takeSnap(){
 }
 function restoreSnap(s){
   pieces = snapPieces(s.pieces);
+  fallers = []; // zurückgenommene Stürze enden mit der früheren Stellung
   occ = rebuildOcc(pieces);
   turn = s.turn; moveNo = s.moveNo; sinceCap = s.sinceCap;
   checkStreak = s.checkStreak; lastLSacId = s.lastLSacId;
@@ -1482,8 +2576,7 @@ function takeBackMove(){
   var snap = hist[idx];
   hist.length = idx + 1; // beide letzten Halbzüge verwerfen
   restoreSnap(snap);
-  logEntries.push((humanSide === 'w' ? 'Weiß' : 'Schwarz') +
-    ' nimmt den letzten vollen Zug zurück.');
+  logEntries.push(trf('logUndo', { side: sideName(humanSide) }));
   tone(392, .07, .09); tone(330, .09, .09, .09); // absteigender Rückblendeton
   updateHUD();
 }
@@ -1496,7 +2589,7 @@ function startReplay(){
   s.max = String(hist.length - 1);
   s.value = String(replayIdx);
   $('replayBar').classList.remove('hidden');
-  ann = 'Replay: Die eigene Partie mit dem Schieberegeler noch einmal durchgehen.';
+  ann = tr('annReplay');
   updateHUD();
 }
 function stopReplay(){
@@ -1515,8 +2608,9 @@ function newGame(seed){
   occ = rebuildOcc(pieces);
   turn = 'w'; resetSelection();
   gameOver = false; moveNo = 0; sinceCap = 0;
-  capturedByW = []; capturedByB = []; logEntries = ['Neue Partie – Weiß beginnt.'];
+  capturedByW = []; capturedByB = []; logEntries = [tr('logNew')];
   shakeUntil = 0; hover = null; OY = 96; OYt = 96;
+  fallers = []; // laufende Sturz-Animationen gehören zur vorherigen Partie
   resetFieldEvents();
   checkStreak = 0; lastLSacId = null; // Erfolgs-Zähler je Partie zurücksetzen
   // Partieverlauf (Zurücknehmen, Replay) je Partie neu: Ein Replay endet mit
@@ -1611,7 +2705,7 @@ function aiComputeMove(level, color){
 function aiPlay(){
   if (gameOver || mode !== 'ai' || turn !== aiColor) return;
   var m = aiComputeMove(aiLevel, aiColor);
-  if (!m){ endGame(humanSide, 'Der Computer hat keinen legalen Zug mehr (Zugzwang).', 'zugzwang'); return; }
+  if (!m){ endGame(humanSide, tr('rsZugzwangAi'), 'zugzwang'); return; }
   sel = m.p; pivotIdx = m.axis === 't' ? -1 : m.ci;
   commitMove({ axis: m.axis, dir: m.dir, slide: { steps: m.steps || 1 }, res: m.res });
 }
@@ -1644,50 +2738,50 @@ function mkPiece(id, color, type, cells, moved){
 // Fünf Lektionen mit je mehreren Teilaufgaben. Jede Aufgabe definiert ihr
 // Brett (board) und ihr Erfolgsziel (goal); der Text erklärt die Aufgabe.
 var TUT_LESSONS = [
-  { title: 'Die T-Figur: Grundlagen und Drehen',
+  { title: 'les1',
     tasks: [
       { board: 'start', goal: 'select',
-        text: 'Willkommen bei Tetromino! Jede Partei führt fünf Figuren: den Königstein (I), die Dame (O) sowie die Figuren T, L und S. Jeder Zug besteht aus einer Drehung einer eigenen Figur. Klicken Sie bitte eine eigene, weiße Figur an – Würfel mit gelbem Marker können später als Drehpunkt dienen.' },
+        text: 'les1t0' },
       { board: 'soloT', goal: 'pivot',
-        text: 'Klicken Sie nun einen Würfel mit gelbem Marker der gewählten T-Figur an. Er wird zum Drehpunkt: Die Drehachse verläuft durch sein Zentrum.' },
+        text: 'les1t1' },
       { board: 'soloT', goal: 'move',
-        text: 'Klicken Sie eine Drehachse an. Der erste Tipp zeigt die Zielposition als Geisterfigur, der zweite Tipp führt den Zug aus. Am Desktop zeigt bereits das Überfahren des Knopfes mit der Maus die Vorschau.' },
+        text: 'les1t2' },
       { board: 'soloT', goal: 'move180',
-        text: 'Alle Figuren drehen um 90°. Nur die T-Figur darf zusätzlich um 180° drehen (die Halbkreis-Knöpfe) – das spart einen Zug, wenn die Figur anders herum stehen soll. Führen Sie bitte eine 180°-Drehung aus.' },
+        text: 'les1t3' },
       { board: 'capture', goal: 'capture',
-        text: 'Geschlagen wird durch Überlappen: Drehen Sie die weiße T-Figur so, dass sie Zellen der schwarzen S-Figur überlappt. Die überlappte Figur wird vollständig vom Brett entfernt.' }
+        text: 'les1t4' }
     ] },
-  { title: 'Die L-Figur: Versetzen im ersten Zug',
+  { title: 'les2',
     tasks: [
       { board: 'lslide', goal: 'lslide',
-        text: 'Die L-Figur darf sich in ihrem allerersten Zug geradlinig versetzen: Der Weg muss frei sein, am Ziel darf sie Gegner überlappen und schlagen. Die erreichbaren Zielfelder sind unterlegt – klicken Sie eines an, um die L-Figur dorthin zu versetzen. Schlagen Sie die schwarze T-Figur.' },
+        text: 'les2t0' },
       { board: 'lspin', goal: 'lmove',
-        text: 'Die Versetzung gilt nur im allerersten Zug der L-Figur – hier ist sie bereits verbraucht. Drehen Sie die L-Figur bitte beliebig; wie jede Figur schlägt sie durch Überlappen mit der Drehung.' }
+        text: 'les2t1' }
     ] },
-  { title: 'Die S-Figur: Stapeln und Schlagen',
+  { title: 'les3',
     tasks: [
       { board: 'stack', goal: 'smove',
-        text: 'Die S-Figur ist die einzige Figur, die auf anderen Figuren stapeln darf – hier ruht sie bereits auf der Dame. Auf der S-Figur selbst ruht dagegen niemand. Bewegen Sie die S-Figur; sie behält dabei ihren Halt auf der Dame.' },
+        text: 'les3t0' },
       { board: 'scap', goal: 'scap',
-        text: 'Auch schlagend bleibt die S-Figur beweglich: Drehen Sie die S-Figur so, dass sie eine schwarze Figur überlappt und schlägt. Tipp: Wählen Sie den Würfel e5 als Drehpunkt und drehen Sie um die senkrechte Achse (Z).' }
+        text: 'les3t1' }
     ] },
-  { title: 'Der Königstein (I): Aufrichten, Versetzen, Schach',
+  { title: 'les4',
     tasks: [
       { board: 'iraise', goal: 'upright',
-        text: 'Der Königstein ist der König des Spiels. Richten Sie ihn bitte senkrecht auf: Drehen Sie ihn um die blaue Y-Achse (Drehpunkt ein Endwürfel), sodass eine senkrechte Säule entsteht. Nur aufrecht darf er sich später versetzen.' },
+        text: 'les4t0' },
       { board: 'ishift', goal: 'islide',
-        text: 'Der aufrechte Königstein darf sich um genau ein Feld versetzen und dabei schlagen. Versetzen Sie ihn nach Norden auf die S-Figur und schlagen Sie sie.' },
+        text: 'les4t1' },
       { board: 'check', goal: 'escape',
-        text: 'Schach: Steht eine Figur so, dass sie den Königstein in einer Drehung schlagen könnte, steht der Königstein im Schach. Die schwarze T-Figur könnte den weißen Königstein hier erfassen. Befreien Sie ihn: Versetzen Sie ihn um ein Feld oder schlagen Sie die T-Figur.' }
+        text: 'les4t2' }
     ] },
-  { title: 'Die Dame (O): Versetzen und Phantom',
+  { title: 'les5',
     tasks: [
       { board: 'dame', goal: 'slide',
-        text: 'Die Dame versetzt sich wie ein Turm, ohne zu schlagen – die Zielfelder sind unterlegt. Dabei hinterlässt sie ein Phantom auf ihrer Startposition: eine durchscheinende Kopie. Versetzen Sie die Dame ein Feld.' },
+        text: 'les5t0' },
       { board: 'dame', goal: 'ostand',
-        text: 'Die Dame dreht wie jede Figur. Drehen Sie sie bitte so, dass mindestens einer ihrer Würfel über Höhe 0 liegt – die Dame steht dann auf der Kante.' },
+        text: 'les5t1' },
       { board: 'pcap', goal: 'pcap',
-        text: 'Das Phantom ist das besondere Schlagmittel der Dame: Bei jeder ihrer Drehungen schwingt es um denselben Drehpunkt mit und erfasst Gegner auf seinen Zielwürfeln. Drehen Sie die Dame so, dass das Phantom eine schwarze Figur schlägt – ein Drehpunkt auf einem der Würfel, in denen Dame und Phantom zusammenfallen, bietet sich an.' }
+        text: 'les5t2' }
     ] }
 ];
 // Jede Aufgabe bringt ihr eigenes Brett mit: deterministisch aufgebaut,
@@ -1774,15 +2868,16 @@ function tutBoardSetup(which){
     ];
   }
   pieces = list; occ = rebuildOcc(list);
+  fallers = []; // Tutorial-Bretter starten ohne nachlaufende Sturz-Animationen
   resetSelection();
   gameOver = false; turn = 'w'; resetFieldEvents();
 }
 function tutRender(){
   var L = TUT_LESSONS[tut.step];
-  $('tutHead').textContent = 'Tutorial · Lektion ' + (tut.step + 1) + '/' + TUT_LESSONS.length +
-    ' · Aufgabe ' + (tut.task + 1) + '/' + L.tasks.length;
-  $('tutTitle').textContent = L.title;
-  $('taskBody').textContent = L.tasks[tut.task].text;
+  $('tutHead').textContent = trf('tutHeadFmt', { i: tut.step + 1, n: TUT_LESSONS.length,
+    a: tut.task + 1, m: L.tasks.length });
+  $('tutTitle').textContent = tr(L.title);
+  $('taskBody').textContent = tr(L.tasks[tut.task].text);
   $('tutHint').textContent = '';
 }
 // Wechsel zu einer Teilaufgabe: Brett der Aufgabe aufbauen, Aufgaben-Box
@@ -1798,7 +2893,7 @@ function tutGoTask(i){
 // Wechsel zu einer Lektion: Aufgaben-Box öffnen, Zugliste-Eintrag ergänzen.
 function tutGo(step){
   tut.step = step; tut.task = 0;
-  logEntries.push('Tutorial – Lektion ' + (step + 1) + ': ' + TUT_LESSONS[step].title);
+  logEntries.push(trf('logTut', { n: step + 1, title: tr(TUT_LESSONS[step].title) }));
   tutGoTask(0);
 }
 function tutStart(idx){
@@ -1814,14 +2909,14 @@ function tutStart(idx){
   tutGo(i);
 }
 // Lob-Kürzel für das Popup beim Aufgabenwechsel (kurz, dann Fade-out).
-var TUT_PRAISE = ['Gut gemacht!', 'Sehr schön!', 'Genau richtig!', 'Sauber gelöst!', 'Stark!'];
+var TUT_PRAISE = ['praise0', 'praise1', 'praise2', 'praise3', 'praise4'];
 function tutAdvance(){
   var L = TUT_LESSONS[tut.step];
   if (tut.task + 1 < L.tasks.length){
     var nxt = tut.task + 1;
     tutGoTask(nxt);
-    fbSay(TUT_PRAISE[Math.floor(Math.random() * TUT_PRAISE.length)] +
-      ' Weiter mit Aufgabe ' + (nxt + 1) + ' von ' + L.tasks.length + '.');
+    fbSay(trf('praiseNext', { praise: tr(TUT_PRAISE[Math.floor(Math.random() * TUT_PRAISE.length)]),
+      a: nxt + 1, m: L.tasks.length }));
     updateHUD();
   } else tutComplete();
 }
@@ -1831,12 +2926,12 @@ function tutComplete(){
   saveTutDone(tut.step);     // und im aktiven Spielstand dauerhaft gespeichert
   // Gelöste Lektionen zeigen den Endscreen: Weiter zur nächsten Lektion
   // (falls eine folgt), Neustart der Lektion oder zurück ins Hauptmenü.
-  endShow('Lektion geschafft!',
-    'Lektion ' + (tut.step + 1) + '/' + TUT_LESSONS.length + ' · ' + TUT_LESSONS[tut.step].title,
+  endShow(tr('tutEndTitle'),
+    trf('tutEndMeta', { i: tut.step + 1, n: TUT_LESSONS.length, title: tr(TUT_LESSONS[tut.step].title) }),
     tut.step + 1 < TUT_LESSONS.length
-      ? 'Geschafft! Fahren Sie mit der nächsten Lektion fort – oder kehren Sie zum Hauptmenü zurück.'
-      : 'Alle fünf Lektionen geschafft! Sie kennen jetzt jede Figur und jeden Zugtyp – viel Erfolg im Duell, gegen den Computer oder zu zweit.',
-    tut.step + 1 < TUT_LESSONS.length, 'Weiter zur nächsten Lektion');
+      ? tr('tutEndSubNext')
+      : tr('tutEndSubAll'),
+    tut.step + 1 < TUT_LESSONS.length, tr('endNextLbl'));
   updateHUD();
 }
 function tutNext(){
@@ -1857,62 +2952,62 @@ function tutEvent(kind, data){
   if (goal === 'move') return tutAdvance();
   if (goal === 'move180'){
     if (data.dir === 2) return tutAdvance();
-    return tutHint('Für diese Aufgabe bitte eine der 180°-Drehungen (einen Halbkreis-Knopf) nutzen.');
+    return tutHint(tr('hint180'));
   }
   if (goal === 'capture'){
     if (data.capCount > 0) return tutAdvance();
-    return tutHint('Noch nicht geschlagen – überlappen Sie mit der Drehung Zellen der schwarzen S-Figur.');
+    return tutHint(tr('hintCapture'));
   }
   if (goal === 'smove'){
     if (data.piece.type === 'S') return tutAdvance();
-    return tutHint('Für diese Aufgabe bitte die S-Figur bewegen – sie ruht derzeit auf der Dame.');
+    return tutHint(tr('hintSmove'));
   }
   if (goal === 'scap'){
-    if (data.piece.type !== 'S') return tutHint('Für diese Aufgabe bitte die S-Figur drehen.');
+    if (data.piece.type !== 'S') return tutHint(tr('hintScapPiece'));
     if (data.capCount > 0) return tutAdvance();
-    return tutHint('Noch niemand geschlagen – wählen Sie den Würfel e5 als Drehpunkt und drehen Sie um die senkrechte Achse (Z).');
+    return tutHint(tr('hintScap'));
   }
   if (goal === 'lslide'){
     if (data.piece.type === 'L' && data.axis === 't' && data.capCount > 0) return tutAdvance();
     if (data.piece.type === 'L' && data.axis === 't')
-      return tutHint('Am Ziel darf geschlagen werden – versetzen Sie die L-Figur bis zur schwarzen T-Figur.');
-    return tutHint('Für diese Aufgabe bitte die L-Figur versetzen (unterlegtes Zielfeld oder Schiebe-Pfeile).');
+      return tutHint(tr('hintLslideTarget'));
+    return tutHint(tr('hintLslide'));
   }
   if (goal === 'lmove'){
     if (data.piece.type === 'L' && data.axis !== 't') return tutAdvance();
-    return tutHint('Die Versetzung ist verbraucht – bitte die L-Figur drehen.');
+    return tutHint(tr('hintLmove'));
   }
   if (goal === 'upright'){
-    if (data.piece.type !== 'I') return tutHint('Für diese Aufgabe bitte den Königstein (I) drehen.');
+    if (data.piece.type !== 'I') return tutHint(tr('hintUprightPiece'));
     var up = data.res.newCubes.every(function(c){
       return c.x === data.res.newCubes[0].x && c.y === data.res.newCubes[0].y;
     });
     if (up) return tutAdvance();
-    return tutHint('Noch flach – bitte den Königstein um die blaue Y-Achse (Drehpunkt ein Endwürfel) aufrichten.');
+    return tutHint(tr('hintUpright'));
   }
   if (goal === 'islide'){
     if (data.piece.type === 'I' && data.axis === 't' && data.capCount > 0) return tutAdvance();
     if (data.piece.type === 'I' && data.axis === 't')
-      return tutHint('Der Königstein versetzt sich um genau ein Feld – hier nach Norden auf die S-Figur.');
-    return tutHint('Für diese Aufgabe bitte den aufrechten Königstein versetzen (unterlegtes Zielfeld oder Pfeile).');
+      return tutHint(tr('hintIslideTarget'));
+    return tutHint(tr('hintIslide'));
   }
   if (goal === 'escape'){
     if (!kingAttacked('w')) return tutAdvance();
-    return tutHint('Der Königstein steht weiter im Schach – bitte ihn mit einer Versetzung oder einem Schlag befreien.');
+    return tutHint(tr('hintEscape'));
   }
   if (goal === 'slide'){
     if (data.piece.type === 'O' && data.axis === 't') return tutAdvance();
-    return tutHint('Für diese Aufgabe bitte die Schiebe-Pfeile der Dame nutzen – keine Drehung.');
+    return tutHint(tr('hintSlide'));
   }
   if (goal === 'ostand'){
-    if (data.piece.type !== 'O') return tutHint('Für diese Aufgabe bitte die Dame (O) drehen.');
+    if (data.piece.type !== 'O') return tutHint(tr('hintOstandPiece'));
     if (data.res.newCubes.some(function(c){ return c.z > 0; })) return tutAdvance();
-    return tutHint('Noch flach – bitte die Dame mit einer X- oder Y-Drehung auf die Kante stellen.');
+    return tutHint(tr('hintOstand'));
   }
   if (goal === 'pcap'){
-    if (data.piece.type !== 'O') return tutHint('Für diese Aufgabe bitte die Dame (O) drehen.');
+    if (data.piece.type !== 'O') return tutHint(tr('hintOstandPiece'));
     if (data.axis !== 't' && data.phCap > 0) return tutAdvance();
-    return tutHint('Das Phantom hat noch niemanden erfasst – drehen Sie die Dame so, dass das Phantom eine schwarze Figur überlappt.');
+    return tutHint(tr('hintPcap'));
   }
 }
 // ---------- Endscreen des Tutorials ----------
@@ -1924,7 +3019,7 @@ function endShow(title, meta, sub, hasNext, nextLbl){
   $('endTitle').textContent = title;
   $('endMeta').textContent = meta || '';
   $('endSub').textContent = sub || '';
-  $('endNext').textContent = nextLbl || 'Weiter zur n\u00e4chsten Lektion';
+  $('endNext').textContent = nextLbl || tr('endNextLbl');
   $('endNext').classList.toggle('hidden', !hasNext);
   $('endOverlay').classList.remove('hidden');
 }
@@ -1984,7 +3079,7 @@ function pickSlideTap(pos){
 
 function onCanvasClick(e){
   if (replayOn || gameOver || phase === 'anim') return;
-  if (mode === 'ai' && turn === aiColor){ updateHUD('Der Computer ist am Zug – bitte warten.'); return; }
+  if (mode === 'ai' && turn === aiColor){ updateHUD(tr('msgAiWait')); return; }
   var pos = canvasPos(e);
   // Klick-Priorität: erst die exakte Figur (Würfel), dann die tolerante
   // Würfel-Prüfung (Tipp-Toleranz), erst danach die Versetzungsziele.
@@ -2003,7 +3098,7 @@ function onCanvasClick(e){
   }
   if (!h){ deselect(); return; }
   var p = h.piece;
-  if (p.color !== turn){ updateHUD('Dies ist eine gegnerische Figur.'); return; }
+  if (p.color !== turn){ updateHUD(tr('msgEnemy')); return; }
   if (phase === 'idle'){
     selectPiece(p);
   } else if (phase === 'piece'){
@@ -2012,7 +3107,7 @@ function onCanvasClick(e){
         pivotIdx = h.ci; phase = 'axis'; buildAxisPanel(); sfxPivot(); updateHUD();
         if (mode === 'tutorial') tutEvent('pivot', { piece: sel, ci: h.ci });
       } else {
-        updateHUD('Dieser Würfel erlaubt keine Drehung – bitte einen Würfel mit gelbem Marker wählen.');
+        updateHUD(tr('msgNoPivot'));
       }
     } else selectPiece(p);
   } else if (phase === 'axis'){
@@ -2094,7 +3189,7 @@ function initAxisButtons(){
         btn.classList.add('armed');
         if (ghostOn) preview = { res: btn._res, axis: axis, dir: dir };
         sfxPivot();
-        updateHUD('Vorschau scharf gestellt – bitte denselben Knopf erneut antippen, um die Drehung auszuführen.');
+        updateHUD(tr('msgArmed'));
       }
     });
     btn._baseTitle = baseTitle;
@@ -2110,9 +3205,9 @@ function buildAxisPanel(){
     })[0];
     btn._res = m ? m.res : null;
     btn.disabled = !m;
-    btn.title = m ? btn._baseTitle : 'Kein legaler Zug mit dieser Achse';
+    btn.title = m ? btn._baseTitle : tr('msgNoAxis');
   });
-  $('pivotInfo').textContent = 'Drehpunkt ' + sel.type + ': Würfel ' + coordName(pivot);
+  $('pivotInfo').textContent = trf('pivotInfo', { type: sel.type, cell: coordName(pivot) });
 }
 
 // ---------- Schiebe-Pfeile der Dame ----------
@@ -2135,10 +3230,9 @@ function slideAccum(sdir){
     res = trySlide(sel, ux * (slide.steps + 1), uy * (slide.steps + 1));
   }
   if (!res){
-    updateHUD('Versetzen blockiert: Weg oder Ziel sind in dieser Richtung nicht frei. ' +
-      (sel.type === 'I' ? 'Der Königstein kann nur auf ein freies oder gegnerisches Feld versetzt werden.'
-      : sel.type === 'L' ? 'Der Weg muss frei sein; nur am Ziel darf geschlagen werden.'
-      : 'Die Dame kann nur auf freie Felder geschoben werden.'));
+    updateHUD(trf('msgBlocked', { extra: sel.type === 'I' ? tr('extraI')
+      : sel.type === 'L' ? tr('extraL')
+      : tr('extraO') }));
     return;
   }
   slide.steps++;
@@ -2181,28 +3275,26 @@ function updateHUD(statusOverride){
   // Stein geschlagen wurde und die Partie damit endet, steht hier der
   // Schlagzug selbst.
   var halfDone = gameOver;
-  $('halfNo').textContent = 'Halbzug ' + (halfDone ? moveNo : moveNo + 1);
+  $('halfNo').textContent = trf('halfMove', { n: halfDone ? moveNo : moveNo + 1 });
   // Knopf „Zug zurücknehmen“ nur im Einzelspieler auf Leicht oder Mittel,
   // solange ein voller Zug zurückgenommen werden kann; im Replay läuft
   // die Positionsangabe der Leiste mit dem Schieberegeler mit.
   $('undoBtn').classList.toggle('hidden', !undoAvailable());
-  if (replayOn) $('replayLbl').textContent = 'Replay: ' + replayIdx + ' / ' + (hist.length - 1) + ' Halbzüge';
+  if (replayOn) $('replayLbl').textContent = trf('replayCount', { i: replayIdx, n: hist.length - 1 });
   var st;
   if (statusOverride) st = statusOverride;
-  else if (replayOn) st = 'Replay: Halbzug ' + replayIdx + ' von ' + (hist.length - 1) +
-    ' – Ansicht drehbar, Züge bleiben gesperrt.';
-  else if (gameOver) st = 'Die Partie ist beendet. Bitte neues Spiel starten.';
-  else if (phase === 'anim') st = 'Drehung läuft …';
-  else if (mode === 'ai' && turn === aiColor) st = 'Der Computer ist am Zug …';
-  else if (phase === 'idle') st = (turn === 'w' ? 'Weiß' : 'Schwarz') + ' am Zug – bitte eine eigene Figur anklicken.';
-  else if (phase === 'piece') st = 'Figur ' + sel.type + ' gewählt.';
-  else if (phase === 'axis') st = 'Drehpunkt gewählt – bitte Drehachse antippen.';
-  if (!gameOver && !statusOverride && inCheck(turn)) st = 'Schach! ' + st;
+  else if (replayOn) st = trf('stReplay', { i: replayIdx, n: hist.length - 1 });
+  else if (gameOver) st = tr('stOver');
+  else if (phase === 'anim') st = tr('stAnim');
+  else if (mode === 'ai' && turn === aiColor) st = tr('stAi');
+  else if (phase === 'idle') st = trf('stIdle', { side: sideName(turn) });
+  else if (phase === 'piece') st = trf('stPiece', { type: sel.type });
+  else if (phase === 'axis') st = tr('stAxis');
+  if (!gameOver && !statusOverride && inCheck(turn)) st = tr('stCheck') + st;
   speech = st;
   $('modeChip').textContent = mode === 'ai'
-    ? ('Einzelspieler \u00b7 ' + ['Leicht', 'Mittel', 'Schwer'][aiLevel - 1] + ' \u00b7 #' + gameSeed +
-       ' \u00b7 ' + (humanSide === 'w' ? 'Wei\u00df' : 'Schwarz'))
-    : (mode === 'tutorial' ? 'Tutorial' : 'Mehrspieler \u00b7 #' + gameSeed);
+    ? trf('chipAi', { lvl: tr('lvl' + aiLevel), seed: gameSeed, side: sideName(humanSide) })
+    : (mode === 'tutorial' ? tr('chipTut') : trf('chip2p', { seed: gameSeed }));
   var tutVis = (mode === 'tutorial' && tut.step >= 0);
   var duelVis = (mode === '2p' || mode === 'ai');
   var bubbleVis = tutVis || duelVis;
@@ -2251,16 +3343,14 @@ function updateHUD(statusOverride){
     (sel.type === 'O' || (sel.type === 'L' && !sel.moved) || (sel.type === 'I' && isUpright(sel)));
   $('damePanel').classList.toggle('hidden', !canShift);
   $('dameLbl').textContent = sel && sel.type === 'L'
-    ? 'L-Figur versetzen (nur im ersten Zug) – am Ziel darf geschlagen werden'
+    ? tr('dameLblL')
     : sel && sel.type === 'I'
-    ? 'Königstein (I) versetzen – nur aufrecht, genau ein Feld, Schlag erlaubt'
-    : 'Dame (O-Stein) verschieben – ohne Schlagen';
+    ? tr('dameLblI')
+    : tr('dameLblO');
   $('slideGo').disabled = !(slide && slide.res);
   // Nur eine knappe Zustandsanzeige; die Erklärung der Versetzungsregeln
-  // steht im Regel-Dialog, nicht als Dauertext auf dem Brett.
   $('slideInfo').textContent = slide && slide.res
-    ? 'Versetzen: ' + slide.steps + '× nach ' + dirName(slide.ux, slide.uy) +
-      ' \u2192 Ziel ' + coordName(slide.res.newCubes[0]) + '.'
+    ? trf('slideInfo', { k: slide.steps, dir: dirName(slide.ux, slide.uy), cell: coordName(slide.res.newCubes[0]) })
     : '';
   renderPieceLists();
   renderLog();
@@ -2280,7 +3370,7 @@ function renderPieceLists(){
     var html = '';
     ['I','O','T','L','S'].forEach(function(type){
       var alive = pieces.some(function(p){ return p.color === color && p.type === type; });
-      var name = type === 'I' ? 'Königstein (I-Stein)' : type === 'O' ? 'Dame (O-Stein)' : 'Tetromino ' + type;
+      var name = type === 'I' ? tr('pnI') : type === 'O' ? tr('pnO') : trf('pnX', { type: type });
       html += '<span class="badge' + (alive ? '' : ' dead') + '" title="' + name + '">' +
               pieceSVG(type) + '<i>' + type + '</i></span>';
     });
@@ -2489,6 +3579,27 @@ function draw(now){
       }
     }
   }
+  // Sturz-Animationen: freier Fall mit Beschleunigung, Taumeln um den
+  // Schwerpunkt und langsames Verblassen unter dem Brettniveau. Die Figur
+  // ist bereits aus dem Spielgeschehen entfernt; hier läuft nur noch der
+  // optische Nachhall, bis der Fallweg das Endmaß überschreitet.
+  fallers = fallers.filter(function(f){
+    var ft = (now - f.t0) / 1000;
+    var fall = 0.5 * FALL_G * ft * ft;
+    if (fall > FALL_CULL) return false;
+    var ang = f.spin * ft;
+    var base = f.phantom ? 0.45 : 1;
+    var fade = fall < FALL_FADE ? 1 : Math.max(0, 1 - (fall - FALL_FADE) / (FALL_CULL - FALL_FADE));
+    for (var fi = 0; fi < f.cubes.length; fi++){
+      var fc = f.cubes[fi];
+      var fd = rotAng(f.axis, ang, fc.x - f.piv.x, fc.y - f.piv.y, fc.z - f.piv.z);
+      var fx = f.piv.x + fd[0], fy = f.piv.y + fd[1], fz = f.piv.z + fd[2] - fall;
+      var fvw = vw(fx, fy, fz);
+      items.push({ k: 'fcube', x: fx, y: fy, z: fz, faller: f,
+                   alpha: base * fade, key: (fvw[0] + fvw[1] + fvw[2]) * 4 + 1 });
+    }
+    return true;
+  });
   items.sort(function(a, b){ return a.key - b.key; });
 
   for (i = 0; i < items.length; i++){
@@ -2559,6 +3670,10 @@ function draw(now){
       });
     } else if (it.k === 'ghost'){
       drawCube(it.x, it.y, it.z, PAL[it.piece.color], oy, { alpha: 0.55, ghost: true });
+    } else if (it.k === 'fcube'){
+      // Sturzende Figur: nicht anklickbar (kein record), nur optisch
+      drawCube(it.x, it.y, it.z, PAL[it.faller.color], oy, {
+        alpha: it.alpha, gem: TYPE_COLOR[it.faller.type] });
     } else if (it.k === 'tspot'){
       var hsx = rr(OX + (it.vx - it.vy) * TW), hsy = rr(oy + (it.vx + it.vy) * TH);
       var htop = [[hsx, hsy], [hsx+TW, hsy+TH], [hsx, hsy+2*TH], [hsx-TW, hsy+TH]];
@@ -2683,7 +3798,7 @@ function toggleMusic(){
   musOn = !musOn;
   if (musOn){ musStep = 0; musTick(); }
   else if (musTimer){ clearTimeout(musTimer); musTimer = null; }
-  $('setMus').textContent = musOn ? 'Musik: an' : 'Musik: aus';
+  $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
 }
 
 // ---------- Menü, Einstellungen, Quellcode ----------
@@ -2726,8 +3841,8 @@ function openTutMenu(){
   for (i = 0; i < TUT_LESSONS.length; i++){
     html += '<button class="btn tutBtn" data-tut="' + i + '">' +
       '<span class="tutNum' + (tut.done[i] ? ' done' : '') + '">' + (i + 1) + '</span>' +
-      '<span class="catBody"><b>Lektion ' + (i + 1) + ': ' + TUT_LESSONS[i].title + '</b>' +
-      (tut.done[i] ? '<span class="catCount">absolviert</span>' : '') + '</span></button>';
+      '<span class="catBody"><b>' + trf('tutListFmt', { n: i + 1, title: tr(TUT_LESSONS[i].title) }) + '</b>' +
+      (tut.done[i] ? '<span class="catCount">' + tr('tutDoneLbl') + '</span>' : '') + '</span></button>';
   }
   $('tutList').innerHTML = html;
   $('tutOverlay').classList.remove('hidden');
@@ -2746,9 +3861,9 @@ function pickTut(i){
   closeMenu(); // Hauptmenü schließen: Die gewählte Lektion steht im Vordergrund
 }
 function openSettings(){
-  $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
+  $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
   $('setMute').classList.toggle('selOpt', muted);
-  $('setMus').textContent = musOn ? 'Musik: an' : 'Musik: aus';
+  $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
   $('setMus').classList.toggle('selOpt', musOn);
   $('setModal').classList.remove('hidden');
 }
@@ -2759,7 +3874,7 @@ function openSource(){
 }
 function toggleMute(){
   muted = !muted;
-  $('setMute').textContent = muted ? 'Ton: aus' : 'Ton: an';
+  $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
 }
 function restartMode(){
   if (mode === 'tutorial') tutStart(tut.step >= 0 ? tut.step : 0); // aktuelle Lektion erneut beginnen
@@ -2779,7 +3894,7 @@ qsa('#sideRow .sideBtn').forEach(function(btn){
 });
 function showDiffRow(ctx){
   diffCtx = ctx;
-  $('diffCap').textContent = (ctx === 'ai') ? 'Schwierigkeit w\u00e4hlen' : 'Partie starten';
+  $('diffCap').textContent = tr(ctx === 'ai' ? 'diffCapAi' : 'diffCap2p');
   $('diffRow').classList.remove('hidden');
   var isAi = (ctx === 'ai');
   qsa('#diffRow .diffBtn').forEach(function(b){
@@ -2857,7 +3972,7 @@ $('tutBack').addEventListener('click', closeTutMenu);
 $('tutReset').addEventListener('click', function(){
   if (mode !== 'tutorial' || tut.step < 0 || tut.task < 0) return;
   tutGoTask(tut.task);
-  fbSay('Aufgabe zur\u00fcckgesetzt – das Brett steht wieder im Ausgangszustand.');
+  fbSay(tr('msgTutReset'));
   updateHUD();
 });
 $('mRulesBtn').addEventListener('click', function(){ $('rulesModal').classList.remove('hidden'); });
@@ -2873,7 +3988,7 @@ $('slotResetAll').addEventListener('click', function(){
   // erst das zweite Antippen löscht wirklich alle Spielstände.
   if (!resetArmed){
     resetArmed = true;
-    $('slotResetAll').textContent = 'Wirklich alle Spielst\u00e4nde l\u00f6schen?';
+    $('slotResetAll').textContent = tr('resetConfirm');
     return;
   }
   saves = { active: 0, slots: [] };
@@ -2881,7 +3996,7 @@ $('slotResetAll').addEventListener('click', function(){
   applySlotToGame();
   persistSaves();
   renderSaveMenu();
-  saveNoteMsg('Alle Spielst\u00e4nde wurden zur\u00fcckgesetzt.');
+  saveNoteMsg(tr('noteReset'));
 });
 $('slotList').addEventListener('click', function(e){
   var el = e.target, act = null, id = NaN;
@@ -3004,18 +4119,16 @@ function recommendMove(color){
   return best;
 }
 function describeMove(m){
-  var who = m.p.color === 'w' ? 'Wei\u00df' : 'Schwarz';
   var cap = m.res.captured.length
-    ? ' \u2013 schl\u00e4gt ' + m.res.captured.map(function(q){ return q.type; }).join('') : '';
+    ? trf('dmCap', { types: m.res.captured.map(function(q){ return q.type; }).join('') }) : '';
   if (m.axis === 't'){
     var o = m.p.cubes[0], z = m.res.newCubes[0];
-    return who + ' ' + m.p.type + ': Versetzung ' + m.steps + '\u00d7 nach ' +
-      dirName(z.x - o.x, z.y - o.y) + ' (' + coordName(o) + ' \u2192 ' + coordName(z) + ')' + cap + '.';
+    return trf('dmSlide', { side: sideName(m.p.color), type: m.p.type, k: m.steps,
+      dir: dirName(z.x - o.x, z.y - o.y), from: coordName(o), to: coordName(z), cap: cap }) + '.';
   }
   var piv = m.p.cubes[m.ci];
-  return who + ' ' + m.p.type + ': ' + m.axis.toUpperCase() +
-    (m.dir === 2 ? '180' : (m.dir > 0 ? '+90' : '\u221290')) + '\u00b0-Drehung um den Drehpunkt ' +
-    coordName(piv) + cap + '.';
+  return trf('dmRot', { side: sideName(m.p.color), type: m.p.type, axis: m.axis.toUpperCase(),
+    sgn: (m.dir === 2 ? '180' : (m.dir > 0 ? '+90' : '−90')), piv: coordName(piv), cap: cap }) + '.';
 }
 function renderHelp(){
   var duel = (mode === '2p' || mode === 'ai') && !gameOver && !(mode === 'ai' && turn === aiColor);
@@ -3025,9 +4138,7 @@ function renderHelp(){
   if (key !== helpKey){ // Empfehlung je Stellung einmal berechnen und dann halten
     helpKey = key;
     var rec = recommendMove(turn);
-    helpTxt = rec ? 'Tetromino empfiehlt: ' + describeMove(rec) +
-      ' Figur und Drehpunkt wie beschrieben waehlen \u2013 oder frei entscheiden.' :
-      'Kein legaler Zug mehr verf\u00fcgbar.';
+    helpTxt = rec ? trf('helpRec', { move: describeMove(rec) }) : tr('helpNone');
   }
   $('helpBody').innerHTML = helpTxt;
 }
@@ -3063,6 +4174,11 @@ qsa('.setDur').forEach(function(btn){
     qsa('.setDur').forEach(function(b){
       b.classList.toggle('selOpt', b === btn);
     });
+  });
+});
+qsa('.setLang').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    setLang(btn.getAttribute('data-lang'));
   });
 });
 // Easter-Eggs lösen ausschließlich den Klick aus: Nach dem Ende der jeweiligen
@@ -3370,6 +4486,14 @@ var ACH = [
   { id: 'easter', sig: 'E', name: 'Tetromino gefunden',
     desc: 'Das versteckte Maskottchen auf dem Startbildschirm aufgestöbert.' }
 ];
+// Erfolgs-IDs auf i18n-Schlüssel abbilden (ach<Key>Name / ach<Key>Desc).
+var ACH_KEY = { firstWin: 'FirstWin', firstDraw: 'FirstDraw', blitz: 'Blitz',
+  lehrling: 'Lehrling', geselle: 'Geselle', gm: 'Gm', seedAll: 'SeedAll',
+  perpetual: 'Perpetual', lSac: 'LSac', phantomHit: 'PhantomHit',
+  phantomSac: 'PhantomSac', firstFall: 'FirstFall', phantomFall: 'PhantomFall',
+  easter: 'Easter' };
+function achName(a){ return tr('ach' + (ACH_KEY[a.id] || a.id) + 'Name'); }
+function achDesc(a){ return tr('ach' + (ACH_KEY[a.id] || a.id) + 'Desc'); }
 // Text für innerHTML abgesichert (Slot-Namen sind frei wählbar)
 function esc(s){
   return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;')
@@ -3392,7 +4516,7 @@ function blankStats(){ return { ai: { w: 0, l: 0, d: 0 } }; }
 function normSlot(s){
   var out = {
     id: (s && typeof s.id === 'number') ? s.id : 0,
-    name: (s && s.name) ? String(s.name).replace(/[<>&"]/g, '').slice(0, 24) : 'Spielstand',
+    name: (s && s.name) ? String(s.name).replace(/[<>&"]/g, '').slice(0, 24) : tr('saveDefault'),
     updated: (s && s.updated) || nowIso(),
     origin: (s && s.origin) || '',
     games: blankStats(), ach: {}, tut: {}, seeds: {}
@@ -3439,7 +4563,7 @@ function activeSlot(){
 }
 function ensureSlot(){
   if (!saves.slots.length){
-    var s = freshSlot(1, 'Spielstand 1');
+    var s = freshSlot(1, tr('saveDefault') + ' 1');
     saves.slots.push(s); saves.active = s.id;
     persistSaves();
   } else if (!activeSlot()){
@@ -3468,8 +4592,8 @@ function addSlot(origin){
   var id = 1;
   while (saves.slots.some(function(q){ return q.id === id; })) id++;
   var n = 1;
-  while (saves.slots.some(function(q){ return q.name === 'Spielstand ' + n; })) n++;
-  var s = freshSlot(id, 'Spielstand ' + n);
+  while (saves.slots.some(function(q){ return q.name === tr('saveDefault') + ' ' + n; })) n++;
+  var s = freshSlot(id, tr('saveDefault') + ' ' + n);
   if (origin) s.origin = origin;
   saves.slots.push(s);
   saves.active = s.id;
@@ -3506,8 +4630,8 @@ function achToastShow(){
   var a = achQueue.shift(), t = $('achToast');
   if (!a) return;
   t.innerHTML = '<div class="toastRow"><span class="toastSig">' + esc(a.sig) + '</span>' +
-    '<div><div class="toastLbl">Erfolg freigeschaltet</div>' +
-    '<div class="toastName">' + esc(a.name) + '</div></div></div>';
+    '<div><div class="toastLbl">' + tr('toastLbl') + '</div>' +
+    '<div class="toastName">' + esc(achName(a)) + '</div></div></div>';
   t.classList.remove('show', 'hide');
   void t.offsetWidth; // Reflow erzwingen, damit die Übergänge erneut laufen
   t.classList.add('show');
@@ -3530,7 +4654,7 @@ function unlockAch(id){
   var a = ACH.filter(function(x){ return x.id === id; })[0];
   if (a){
     achPending = (achPending ? achPending + ' ' : '') +
-      'Erfolg freigeschaltet: \u201e' + a.name + '\u201c!';
+      trf('achPendingFmt', { name: achName(a) });
     achToast(a); // unmittelbare Einblendung unten rechts
   }
 }
@@ -3577,13 +4701,13 @@ function renderSlots(){
     var tuts = Object.keys(s.tut).length;
     var achs = Object.keys(s.ach).length;
     html += '<div class="slotRow' + (s.id === saves.active ? ' act' : '') + '">' +
-      '<span class="slotBody"><b>' + esc(s.name) + (s.id === saves.active ? ' (aktiv)' : '') + '</b>' +
-      '<span class="slotMeta">' + fmtDate(s.updated) + ' \u00b7 ' + games + ' Partien \u00b7 ' +
-      tuts + '/5 Lektionen \u00b7 ' + achs + '/' + ACH.length + ' Erfolge</span></span>' +
+      '<span class="slotBody"><b>' + esc(s.name) + (s.id === saves.active ? tr('slotActive') : '') + '</b>' +
+      '<span class="slotMeta">' + trf('slotMetaFmt', { date: fmtDate(s.updated), games: games,
+        tuts: tuts, achs: achs, n: ACH.length }) + '</span></span>' +
       '<span class="slotActs">' +
-      '<button class="btn small" data-slot="' + s.id + '" data-act="act">Aktivieren</button>' +
+      '<button class="btn small" data-slot="' + s.id + '" data-act="act">' + tr('slotAct') + '</button>' +
       '<button class="btn small" data-slot="' + s.id + '" data-act="dl">HTML</button>' +
-      '<button class="btn small" data-slot="' + s.id + '" data-act="del">L\u00f6schen</button>' +
+      '<button class="btn small" data-slot="' + s.id + '" data-act="del">' + tr('slotDel') + '</button>' +
       '</span></div>';
   });
   $('slotList').innerHTML = html;
@@ -3591,11 +4715,9 @@ function renderSlots(){
 function renderStats(){
   var s = activeSlot(), html = '';
   if (s){
-    html += '<div class="statRow">Einzelspieler: ' + s.games.ai.w + ' Siege \u00b7 ' +
-      s.games.ai.l + ' Niederlagen \u00b7 ' + s.games.ai.d + ' Remis</div>';
-    html += '<div class="statRow">Startwerte gegen den Computer: ' +
-      Object.keys(s.seeds).length + ' von 1000000 gespielt</div>';
-    html += '<div class="statRow">Tutorials: ' + Object.keys(s.tut).length + ' von 5 Lektionen absolviert</div>';
+    html += '<div class="statRow">' + trf('statAi', { w: s.games.ai.w, l: s.games.ai.l, d: s.games.ai.d }) + '</div>';
+    html += '<div class="statRow">' + trf('statSeeds', { n: Object.keys(s.seeds).length }) + '</div>';
+    html += '<div class="statRow">' + trf('statTut', { n: Object.keys(s.tut).length }) + '</div>';
   }
   $('statList').innerHTML = html;
 }
@@ -3605,9 +4727,9 @@ function renderAch(){
     var ts = s && s.ach[a.id];
     html += '<div class="achRow' + (ts ? '' : ' locked') + '">' +
       '<span class="achSig">' + (ts ? '\u2713' : a.sig) + '</span>' +
-      '<span class="achBody"><span class="achName">' + a.name + '</span>' +
-      '<span class="achDesc">' + a.desc + '</span>' +
-      (ts ? '<span class="achDate">Freigeschaltet: ' + fmtDate(ts) + '</span>' : '') +
+      '<span class="achBody"><span class="achName">' + achName(a) + '</span>' +
+      '<span class="achDesc">' + achDesc(a) + '</span>' +
+      (ts ? '<span class="achDate">' + tr('achUnlockedAt') + fmtDate(ts) + '</span>' : '') +
       '</span></div>';
   });
   $('achList').innerHTML = html;
@@ -3615,7 +4737,7 @@ function renderAch(){
 function renderSaveMenu(){
   renderSlots(); renderStats(); renderAch();
   resetArmed = false;
-  $('slotResetAll').textContent = 'Alle zur\u00fccksetzen';
+  $('slotResetAll').textContent = tr('resetAll');
   saveNoteMsg('');
 }
 function openSaveMenu(){
@@ -3624,7 +4746,7 @@ function openSaveMenu(){
 }
 function closeSaveMenu(){
   resetArmed = false;
-  $('slotResetAll').textContent = 'Alle zur\u00fccksetzen';
+  $('slotResetAll').textContent = tr('resetAll');
   $('saveOverlay').classList.add('hidden');
 }
 function activateSlot(id){
@@ -3660,7 +4782,7 @@ function downloadSave(slotId){
   a.click();
   document.body.removeChild(a);
   if (window.URL.revokeObjectURL) window.URL.revokeObjectURL(url);
-  saveNoteMsg('Spielstand als HTML-Datei exportiert: ' + a.download);
+  saveNoteMsg(trf('noteExport', { file: a.download }));
 }
 // ---------- Start ----------
 initAxisButtons();
@@ -3673,6 +4795,7 @@ loadSaves();
 importEmbeddedSave();
 ensureSlot();
 applySlotToGame();
+applyLang();
 newGame();
 openMenu();
 requestAnimationFrame(loop);
