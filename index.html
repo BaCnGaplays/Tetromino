@@ -85,6 +85,10 @@
     border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:auto;cursor:pointer;
     font-size:12px;color:#ffd23f;font-weight:bold;line-height:1.5;opacity:1;transition:opacity .45s}
   #fbPop.fade{opacity:0}
+  #ckPop{position:absolute;top:112px;right:56px;width:78%;max-width:400px;z-index:8;background:rgba(13,13,32,.97);
+    border:2px solid #ff5b5b;box-shadow:0 3px 0 #000;padding:6px 10px;margin:0;pointer-events:auto;cursor:pointer;
+    font-size:12px;color:#ff9b9b;font-weight:bold;line-height:1.5;opacity:1;transition:opacity .45s}
+  #ckPop.fade{opacity:0}
   .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,1);display:flex;align-items:center;
     justify-content:center;padding:16px;z-index:100;overflow:hidden}
   /* Overlay-Boxen (Haupt-, Tutorial-, End- und Spielstands-Menü) füllen den
@@ -260,6 +264,8 @@
   #annPanel:not(.hidden) ~ #annTail{display:block}
   #fbTail{border-left-color:var(--accent)}
   #fbPop:not(.hidden) ~ #fbTail{display:block}
+  #ckTail{border-left-color:#ff5b5b}
+  #ckPop:not(.hidden) ~ #ckTail{display:block}
   #helpBody{font-size:11px;color:#c8c8e8;line-height:1.5}
   #overOverlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
     background:rgba(8,8,26,.82);text-align:center;padding:16px;z-index:10}
@@ -299,7 +305,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.59</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.62</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -341,6 +347,8 @@
         </div>
         <div id="fbPop" class="hidden"><div id="fbText"></div></div>
         <div id="fbTail" class="bubTail"></div>
+        <div id="ckPop" class="hidden"><div id="ckText"></div></div>
+        <div id="ckTail" class="bubTail"></div>
         <div id="annPanel" class="hidden">
           <div id="annText"></div>
         </div>
@@ -409,7 +417,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.59</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.62</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -489,6 +497,7 @@
     <div class="setRow"><span class="setLbl" id="setLblMus">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
     <div class="setRow"><span class="setLbl" id="setLblVol">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
     <div class="setRow"><span class="setLbl" id="setLblMusVol">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
+    <div class="setRow"><span class="setLbl" id="setLblFs">Vollbild</span><button id="setFs" class="btn small">Vollbildmodus: aus</button></div>
     <div class="setRow"><span class="setLbl" id="setLblMusTrack">Musiktitel</span>
       <div class="setOpts wide">
         <button class="btn small setMusTrack" data-mus="orig">Original</button>
@@ -570,7 +579,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.59</li></ul>
+    <ul><li>Alpha 0.62</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -578,7 +587,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.59</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.62</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -600,7 +609,7 @@
       <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>
       <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>
       <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>
-      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat.</li>
+      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt ein kurzer roboterhafter Sprech-Piepser des Mask&ouml;ttchens.</li>
       <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), siebzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>
       <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>
     </ul>
@@ -658,7 +667,7 @@
     </ul>
     <h3>Hilfen</h3>
     <ul>
-      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Mask&ouml;ttchen klappt die Sprechblase ein und wieder aus; im Duell zeigt der erneute Klick die letzte Meldung wieder an.</li>
+      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Mask&ouml;ttchen klappt die Sprechblase ein und wieder aus; im Duell zeigt der erneute Klick die letzte Meldung wieder an. Steht eine Partei im Schach, k&uuml;ndigt Tetromino dies stets mit einem kurzen roboterhaften Piepsen an; ist die Sprechblase eingeklappt, erscheint die Schachmeldung zus&auml;tzlich f&uuml;r drei Sekunden als kleines Popup und blendet anschlie&szlig;end aus.</li>
       <li>Figuren und Zugliste liegen als einklappbare Abschnitte innerhalb der Sprechblase: Die Blase w&auml;chst dynamisch mit, und das Brett bleibt die einzige gro&szlig;e Fl&auml;che. Beide Abschnitte lassen sich &uuml;ber ihre &Uuml;berschriften ein- und ausklappen.</li>
       <li>In Duell-Partien liegt in der Sprechblase unter Figuren und Zugliste ein zus&auml;tzlicher Abschnitt Hilfe: Beim Aufklappen empfiehlt Tetromino der Partei am Zug konkret einen Zug (Figur, Drehachse und Drehpunkt beziehungsweise Versetzungsziel). Die Empfehlung folgt der jeweiligen Stellung, wird nicht automatisch ausgef&uuml;hrt und ist unverbindlich.</li>
       <li>W&uuml;rfel mit gelbem Marker k&ouml;nnen als Drehpunkt dienen.</li>
@@ -715,7 +724,7 @@ var RULES_DE =
 '      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>\n' +
 '      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>\n' +
 '      <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>\n' +
-'      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat.</li>\n' +
+'      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt ein kurzer roboterhafter Sprech-Piepser des Mask&ouml;ttchens.</li>\n' +
 '      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), siebzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>\n' +
 '      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>\n' +
 '    </ul>\n' +
@@ -773,7 +782,7 @@ var RULES_DE =
 '    </ul>\n' +
 '    <h3>Hilfen</h3>\n' +
 '    <ul>\n' +
-'      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Mask&ouml;ttchen klappt die Sprechblase ein und wieder aus; im Duell zeigt der erneute Klick die letzte Meldung wieder an.</li>\n' +
+'      <li>Tetromino meldet wichtige Ereignisse (Zugwechsel, Schach, Matt, Remis, br&ouml;ckelnde Felder) in einer Sprechblase auf dem Brett, die nach kurzer Zeit von selbst verschwindet. Ein Klick auf das Mask&ouml;ttchen klappt die Sprechblase ein und wieder aus; im Duell zeigt der erneute Klick die letzte Meldung wieder an. Steht eine Partei im Schach, k&uuml;ndigt Tetromino dies stets mit einem kurzen roboterhaften Piepsen an; ist die Sprechblase eingeklappt, erscheint die Schachmeldung zus&auml;tzlich f&uuml;r drei Sekunden als kleines Popup und blendet anschlie&szlig;end aus.</li>\n' +
 '      <li>Figuren und Zugliste liegen als einklappbare Abschnitte innerhalb der Sprechblase: Die Blase w&auml;chst dynamisch mit, und das Brett bleibt die einzige gro&szlig;e Fl&auml;che. Beide Abschnitte lassen sich &uuml;ber ihre &Uuml;berschriften ein- und ausklappen.</li>\n' +
 '      <li>In Duell-Partien liegt in der Sprechblase unter Figuren und Zugliste ein zus&auml;tzlicher Abschnitt Hilfe: Beim Aufklappen empfiehlt Tetromino der Partei am Zug konkret einen Zug (Figur, Drehachse und Drehpunkt beziehungsweise Versetzungsziel). Die Empfehlung folgt der jeweiligen Stellung, wird nicht automatisch ausgef&uuml;hrt und ist unverbindlich.</li>\n' +
 '      <li>W&uuml;rfel mit gelbem Marker k&ouml;nnen als Drehpunkt dienen.</li>\n' +
@@ -815,7 +824,7 @@ var RULES_CS =
 '      <li>Vzít tah zpět: V režimu jednoho hráče na stupních Lehká a Střední vrátí tlačítko se šipkou U-Turn vedle šipek pohledu poslední celý tah – vlastní půltah i tah počítače. Partie pokračuje od dřívější pozice; už odemčené úspěchy a statistika zůstávají nedotčeny.</li>\n' +
 '      <li>Replay: Po konci partie proti počítači otevře tlačítko „Sledovat replay“ průběh partie. Posuvník dole ve hracím poli listuje pozicemi půltah za půltahem, pohled lze otáčet jako obvykle, tahy zůstávají až do konce replaye uzamčeny. Replay se neukládá a končí, jakmile začne nová partie.</li>\n' +
 '      <li>Tetromino-nápověda (bublina) doporučuje vždy optimální tah nezávisle na stupni obtížnosti; stupně se týkají jen volby tahů počítače.</li>\n' +
-'      <li>Tutoriál: pět lekcí – po jedné na figurku (T, L, S, královský kámen, dáma) – s několika dílčími úkoly od kliknutí až po braní; každou lekci lze vybrat jednotlivě, absolvované lekce se označují zeleně. Text úkolu stojí ve sklopitelné schránce úkolu v bublině, tipy se krátce ukazují jako vyskakovací okno a zůstávají žlutě ve schránce; po každé vyřešené lekci nabízí závěrečná obrazovka Pokračovat, Restart a Hlavní menu. Tlačítko „Resetovat úkol“ postaví desku aktuálního dílčího úkolu znovu – například když nechtěný tah úkol zneschopnil.</li>\n' +
+'      <li>Tutoriál: pět lekcí – po jedné na figurku (T, L, S, královský kámen, dáma) – s několika dílčími úkoly od kliknutí až po braní; každou lekci lze vybrat jednotlivě, absolvované lekce se označují zeleně. Text úkolu stojí ve sklopitelné schránce úkolu v bublině, tipy se krátce ukazují jako vyskakovací okno a zůstávají žlutě ve schránce; po každé vyřešené lekci nabízí závěrečná obrazovka Pokračovat, Restart a Hlavní menu. Tlačítko „Resetovat úkol“ postaví desku aktuálního dílčího úkolu znovu – například když nechtěný tah úkol zneschopnil. Při každém novém pokynu, tipu i pochvale maskota krátce zapípá robotickým hlasem.</li>\n' +
 '      <li>Uložená hra, statistika a úspěchy: několik pojmenovaných uložených her se ukládá v prohlížeči; každá vede statistiku partie režimu jednoho hráče (vítězství, prohry a remízy proti počítači), sedmnáct úspěchů a postup tutoriálu. Úspěchy „Učeň“, „Tovaryš“ a „Velmistr“ odměňují vítězství proti počítači na stupních Lehká, Střední a Těžká. Každá proti počítači ukončená partie započítá své počáteční číslo; úspěch „Všechny světy“ se odemkne teprve, když bylo odehráno každé z 1 000 000 možných počátečních čísel aspoň jednou – prakticky nemožný úspěch. Uložené hry lze exportovat jako úplný soubor HTML s vloženou uloženou hrou – otevření takového souboru vytvoří uloženou hru jako nový záznam – a resetovat jednotlivě nebo kompletně.</li>\n' +
 '      <li>Stavový řádek leží jako úzký pruh na horním okraji uvnitř hracího pole: ukazuje stranu na tahu, herní režim, aktuální půltah a počáteční číslo partie.</li>\n' +
 '    </ul>\n' +
@@ -873,7 +882,7 @@ var RULES_CS =
 '    </ul>\n' +
 '    <h3>Nápovědy</h3>\n' +
 '    <ul>\n' +
-'      <li>Tetromino oznamuje důležité události (střídání tahu, šach, mat, remíza, rozpadající se pole) v bublině na desce, která po chvíli sama zmizí. Klik na maskota bublinu zabalí a znovu rozbalí; v duelu ukáže opakovaný klik poslední hlášku.</li>\n' +
+'      <li>Tetromino oznamuje důležité události (střídání tahu, šach, mat, remíza, rozpadající se pole) v bublině na desce, která po chvíli sama zmizí. Klik na maskota bublinu zabalí a znovu rozbalí; v duelu ukáže opakovaný klik poslední hlášku. Je-li strana v šachu, Tetromino to vždy ohlásí krátkým robotickým pípáním; je-li bublina zabalená, zpráva o šachu se navíc tři sekundy zobrazí jako malé vyskakovací okénko a pak zmizí.</li>\n' +
 '      <li>Figurky a seznam tahů leží jako sklopitelné oddíly uvnitř bubliny: Bublina s nimi dynamicky roste a deska zůstává jedinou velkou plochou. Oba oddíly lze přes jejich nadpisy balit a rozbalovat.</li>\n' +
 '      <li>V duelových partiích leží v bublině pod figurkami a seznamem tahů dodatečný oddíl Nápověda: Po rozbalení doporučí Tetromino straně na tahu konkrétní tah (figurka, osa otáčení a střed otáčení resp. cíl přesunu). Doporučení sleduje aktuální pozici, neprovede se automaticky a je nezávazné.</li>\n' +
 '      <li>Kostky se žlutou značkou mohou sloužit jako střed otáčení.</li>\n' +
@@ -913,7 +922,7 @@ var RULES_PL =
 '      <li>Cofanie ruchu: W trybie jednego gracza na poziomach Łatwy i Średni przycisk ze strzałką U-Turn obok strzałek widoku cofa ostatni pełny ruch – własny półruch i ruch komputera. Partia biegnie dalej od wcześniejszej pozycji; odblokowane osiągnięcia i statystyka pozostają nietknięte.</li>\n' +
 '      <li>Powtórka: Po zakończeniu partii z komputerem przycisk „Obejrzyj powtórkę” otwiera przebieg partii. Suwak na dole pola gry kartkuje pozycje półruch po półruchu, widok można obracać jak zwykle, ruchy pozostają do końca powtórki zablokowane. Powtórka nie jest zapisywana i kończy się, gdy tylko zaczyna się nowa partia.</li>\n' +
 '      <li>Tetromino-podpowiedź (dymek) poleca zawsze optymalny ruch niezależnie od poziomu trudności; poziomy dotyczą tylko wyboru ruchów komputera.</li>\n' +
-'      <li>Samouczek: pięć lekcji – po jednej na figurę (T, L, S, królewski kamień, dama) – z kilkoma zadaniami częściowymi od kliknięcia aż do bicia; każdą lekcję można wybrać pojedynczo, ukończone lekcje są oznaczane na zielono. Treść zadania stoi w rozkładanej skrzynce zadania w dymku, wskazówki pokazują się krótko jako wyskakujące okno i pozostają na żółto w skrzynce; po każdej rozwiązanej lekcji ekran końcowy oferuje Dalej, Restart i Menu główne. Przycisk „Zresetuj zadanie” buduje planszę bieżącego zadania na nowo – na przykład gdy przypadkowy ruch uczynił zadanie nierozwiązywalnym.</li>\n' +
+'      <li>Samouczek: pięć lekcji – po jednej na figurę (T, L, S, królewski kamień, dama) – z kilkoma zadaniami częściowymi od kliknięcia aż do bicia; każdą lekcję można wybrać pojedynczo, ukończone lekcje są oznaczane na zielono. Treść zadania stoi w rozkładanej skrzynce zadania w dymku, wskazówki pokazują się krótko jako wyskakujące okno i pozostają na żółto w skrzynce; po każdej rozwiązanej lekcji ekran końcowy oferuje Dalej, Restart i Menu główne. Przycisk „Zresetuj zadanie” buduje planszę bieżącego zadania na nowo – na przykład gdy przypadkowy ruch uczynił zadanie nierozwiązywalnym. Przy każdym nowym poleceniu, wskazówce i pochwała maskotka wydaje krótki robotyczny pisk.</li>\n' +
 '      <li>Zapis gry, statystyka i osiągnięcia: kilka nazwanych zapisów gier jest przechowywanych w przeglądarce; każdy prowadzi statystykę partii trybu jednego gracza (zwycięstwa, porażki i remisy przeciwko komputerowi), siedemnaście osiągnięć i postęp samouczka. Osiągnięcia „Uczeń”, „Czeladnik” i „Wielki mistrz” nagradzają zwycięstwa nad komputerem na poziomach Łatwy, Średni i Trudny. Każda zakończona przeciwko komputerowi partia liczy swoją wartość startową; osiągnięcie „Wszystkie światy” zostaje odblokowane dopiero, gdy każda z 1 000 000 możliwych wartości startowych została zagrana co najmniej raz – praktycznie nieosiągalne osiągnięcie. Zapisy gier można eksportować jako kompletny plik HTML z wbudowanym zapisem gry – otwarcie takiego pliku tworzy zapis jako nowy wpis – oraz resetować pojedynczo albo całkowicie.</li>\n' +
 '      <li>Pasek stanu leży jako wąski pas na górnej krawędzi wewnątrz pola gry: pokazuje stronę na posunięciu, tryb gry, bieżący półruch i wartość startową partii.</li>\n' +
 '    </ul>\n' +
@@ -971,7 +980,7 @@ var RULES_PL =
 '    </ul>\n' +
 '    <h3>Pomoc</h3>\n' +
 '    <ul>\n' +
-'      <li>Tetromino zgłasza ważne zdarzenia (zmiana posunięcia, szach, mat, remis, kruszące się pola) w dymku na planszy, który po chwili znika sam z siebie. Klik na maskotkę składa dymek i rozkłada go ponownie; w pojedynku powtórny klik pokazuje raz jeszcze ostatni komunikat.</li>\n' +
+'      <li>Tetromino zgłasza ważne zdarzenia (zmiana posunięcia, szach, mat, remis, kruszące się pola) w dymku na planszy, który po chwili znika sam z siebie. Klik na maskotkę składa dymek i rozkłada go ponownie; w pojedynku powtórny klik pokazuje raz jeszcze ostatni komunikat. Gdy strona jest w szachu, Tetromino zawsze ogłasza to krótkim robotycznym popiskaniem; jeśli dymek jest złożony, komunikat o szachu pojawia się dodatkowo na trzy sekundy jako małe okienko i wygasa.</li>\n' +
 '      <li>Figury i lista ruchów leżą jako rozkładane sekcje wewnątrz dymka: Dymek rośnie z nimi dynamicznie, a plansza pozostaje jedyną dużą powierzchnią. Obie sekcje można rozkładać i składać przez ich nagłówki.</li>\n' +
 '      <li>W partiach pojedynkowych leży w dymku pod figurami i listą ruchów dodatkowa sekcja Pomoc: Po rozłożeniu poleca Tetromino stronie na posunięciu konkretny ruch (figura, oś obrotu i punkt obrotu odpowiednio pole docelowe przesunięcia). Rekomendacja podąża za bieżącą pozycją, nie wykonuje się automatycznie i jest niewiążąca.</li>\n' +
 '      <li>Kostki z żółtym znacznikiem mogą służyć jako punkt obrotu.</li>\n' +
@@ -1011,7 +1020,7 @@ var RULES_ES =
 '      <li>Deshacer jugada: En el modo un jugador, en los niveles Fácil y Medio, el botón con la flecha en forma de U junto a las flechas de vista deshace la última jugada completa – la propia media jugada y la jugada del ordenador. La partida continúa desde la posición anterior; los logros ya desbloqueados y las estadísticas quedan intactos.</li>\n' +
 '      <li>Repetición: Al terminar una partida de duelo, el botón «Ver repetición» abre el curso de la partida. El control deslizante situado abajo en el campo de juego recorre las posiciones media jugada a media jugada, la vista puede girarse como de costumbre y las jugadas permanecen bloqueadas hasta el final de la repetición. La repetición no se guarda y termina en cuanto empieza una partida nueva.</li>\n' +
 '      <li>La ayuda de Tetromino (burbuja) recomienda siempre la jugada óptima, con independencia del nivel de dificultad; los niveles afectan únicamente a la elección de jugadas del ordenador.</li>\n' +
-'      <li>Tutorial: cinco lecciones – una por pieza (T, L, S, piedra rey, dama) – con varias tareas parciales, desde hacer clic hasta capturar; cada lección puede elegirse por separado y las lecciones completadas se marcan en verde. El texto de la tarea está en el recuadro plegable de tareas de la burbuja; los consejos aparecen brevemente como ventana emergente y permanecen en amarillo en el recuadro; tras cada lección resuelta, una pantalla final ofrece Continuar, Reiniciar y Menú principal. El botón «Restablecer tarea» reconstruye el tablero de la tarea parcial actual – por ejemplo, cuando una jugada involuntaria ha vuelto irresoluble la tarea.</li>\n' +
+'      <li>Tutorial: cinco lecciones – una por pieza (T, L, S, piedra rey, dama) – con varias tareas parciales, desde hacer clic hasta capturar; cada lección puede elegirse por separado y las lecciones completadas se marcan en verde. El texto de la tarea está en el recuadro plegable de tareas de la burbuja; los consejos aparecen brevemente como ventana emergente y permanecen en amarillo en el recuadro; tras cada lección resuelta, una pantalla final ofrece Continuar, Reiniciar y Menú principal. El botón «Restablecer tarea» reconstruye el tablero de la tarea parcial actual – por ejemplo, cuando una jugada involuntaria ha vuelto irresoluble la tarea. Con cada nueva instrucción, consejo o elogio, la mascota emite un breve pitido robótico.</li>\n' +
 '      <li>Partida guardada, estadísticas y logros: varias partidas guardadas con nombre se almacenan en el navegador; cada una lleva la estadística de partidas del modo un jugador (victorias, derrotas y tablas contra el ordenador), diecisiete logros y el progreso del tutorial. Los logros «Aprendiz», «Oficial» y «Gran maestro» premian victorias contra el ordenador en los niveles Fácil, Medio y Difícil. Cada partida terminada contra el ordenador anota su valor inicial; el logro «Todos los mundos» solo se desbloquea cuando cada uno de los 1.000.000 valores iniciales posibles se ha jugado al menos una vez – un logro prácticamente imposible. Las partidas guardadas pueden exportarse como archivo HTML completo con la partida incrustada – abrir dicho archivo crea la partida guardada como nueva entrada – y restablecerse individualmente o por completo.</li>\n' +
 '      <li>La barra de estado es una franja estrecha en el borde superior dentro del campo de juego: muestra el bando al que corresponde jugar, el modo de juego, la media jugada actual y el valor inicial de la partida.</li>\n' +
 '    </ul>\n' +
@@ -1069,7 +1078,7 @@ var RULES_ES =
 '    </ul>\n' +
 '    <h3>Ayudas</h3>\n' +
 '    <ul>\n' +
-'      <li>Tetromino anuncia los acontecimientos importantes (cambio de turno, jaque, mate, tablas, casillas que se desmoronan) en una burbuja sobre el tablero que desaparece sola al cabo de un momento. Un clic en la mascota pliega la burbuja y la vuelve a desplegar; en el duelo, el clic repetido vuelve a mostrar el último aviso.</li>\n' +
+'      <li>Tetromino anuncia los acontecimientos importantes (cambio de turno, jaque, mate, tablas, casillas que se desmoronan) en una burbuja sobre el tablero que desaparece sola al cabo de un momento. Un clic en la mascota pliega la burbuja y la vuelve a desplegar; en el duelo, el clic repetido vuelve a mostrar el último aviso. Siempre que una parte está en jaque, Tetromino lo anuncia con un breve gorjeo robótico; si la burbuja está plegada, el aviso de jaque aparece además durante tres segundos como pequeña ventana y luego se desvanece.</li>\n' +
 '      <li>Piezas y lista de jugadas están como secciones plegables dentro de la burbuja: la burbuja crece dinámicamente con ellas y el tablero sigue siendo la única superficie grande. Ambas secciones pueden plegarse y desplegarse por sus encabezados.</li>\n' +
 '      <li>En las partidas de duelo hay, en la burbuja, debajo de piezas y lista de jugadas, una sección adicional de ayuda: al desplegarla, Tetromino recomienda al bando en juego una jugada concreta (pieza, eje de giro y punto de giro, respectivamente casilla de destino del desplazamiento). La recomendación sigue la posición actual, no se ejecuta automáticamente y no es vinculante.</li>\n' +
 '      <li>Los cubos con marcador amarillo pueden servir como punto de giro.</li>\n' +
@@ -1290,6 +1299,7 @@ var TXT = {
     lblDur: 'Drehgeschwindigkeit', lblLang: 'Sprache',
     kbdH: 'Tastatur', kbdPress: 'Taste drücken…',
     lblPiv: 'Drehpunkt', lblUndo: 'Zug zurücknehmen',
+    lblFs: 'Vollbild', fsOnLbl: 'Vollbildmodus: an', fsOffLbl: 'Vollbildmodus: aus',
     muteOnLbl: 'Ton: an', muteOffLbl: 'Ton: aus',
     musOnLbl: 'Musik: an', musOffLbl: 'Musik: aus',
     lblMusTrack: 'Musiktitel', trkOrig: 'Original', trkKlassik: 'Klassik', trkMetal: 'Metal',
@@ -1508,6 +1518,7 @@ var TXT = {
     lblDur: 'Rotation speed', lblLang: 'Language',
     kbdH: 'Keyboard', kbdPress: 'Press a key…',
     lblPiv: 'Pivot', lblUndo: 'Take back move',
+    lblFs: 'Fullscreen', fsOnLbl: 'Fullscreen: on', fsOffLbl: 'Fullscreen: off',
     muteOnLbl: 'Sound: on', muteOffLbl: 'Sound: off',
     musOnLbl: 'Music: on', musOffLbl: 'Music: off',
     lblMusTrack: 'Music track', trkOrig: 'Original', trkKlassik: 'Classical', trkMetal: 'Metal',
@@ -1555,7 +1566,7 @@ var TXT = {
 '      <li>Take back a move: In single player on the levels Easy and Medium, the button with the U-turn arrow next to the view arrows reverts the last full move – your own half-move and the computer’s move. The game continues from the earlier position; unlocked achievements and the statistics remain untouched.</li>\n' +
 '      <li>Replay: After a duel game ends, the button “Watch replay” opens the course of the game. The slider below the board steps through the positions half-move by half-move, the view can be rotated as usual, and moves stay locked until the end of the replay. The replay is not saved and ends as soon as a new game begins.</li>\n' +
 '      <li>The Tetromino help (speech bubble) always recommends the optimal move, regardless of the difficulty level; the levels only affect the computer’s move choice.</li>\n' +
-'      <li>Tutorial: five lessons – one per piece (T, L, S, king piece, queen) – each with several subtasks from clicking to capturing; each lesson can be selected individually, completed lessons are marked green. The task text is in the collapsible task box of the speech bubble, hints appear briefly as a popup and remain in yellow in the box; after each solved lesson, an end screen offers continue, restart and main menu. The button “Reset task” rebuilds the board of the current subtask – for example when an accidental move made the task unsolvable.</li>\n' +
+'      <li>Tutorial: five lessons – one per piece (T, L, S, king piece, queen) – each with several subtasks from clicking to capturing; each lesson can be selected individually, completed lessons are marked green. The task text is in the collapsible task box of the speech bubble, hints appear briefly as a popup and remain in yellow in the box; after each solved lesson, an end screen offers continue, restart and main menu. The button “Reset task” rebuilds the board of the current subtask – for example when an accidental move made the task unsolvable. Whenever a new instruction, hint or praise appears, the mascot gives a short robotic speaking beep.</li>\n' +
 '      <li>Save game, statistics and achievements: several named save games are stored in the browser; each keeps the single-player game statistics (wins, losses and draws against the computer), seventeen achievements and the tutorial progress. The achievements “Apprentice”, “Journeyman” and “Grandmaster” reward victories against the computer on the levels Easy, Medium and Hard. Every game finished against the computer counts its seed; the achievement “All Worlds” is only unlocked when every one of the 1,000,000 possible seeds has been played at least once – a practically impossible achievement. Save games can be exported as complete HTML files with the save game embedded – opening such a file adds the save game as a new entry – and can be reset individually or entirely.</li>\n' +
 '      <li>The status bar is a narrow band at the top edge inside the board: it shows the side to move, the game mode, the current half-move and the seed of the game.</li>\n' +
 '    </ul>\n' +
@@ -1613,7 +1624,7 @@ var TXT = {
 '    </ul>\n' +
 '    <h3>Aids</h3>\n' +
 '    <ul>\n' +
-'      <li>Tetromino reports important events (turn change, check, mate, draw, crumbling squares) in a speech bubble on the board that fades away by itself after a short time. A click on the mascot collapses the bubble and expands it again; in a duel, the renewed click shows the last message once more.</li>\n' +
+'      <li>Tetromino reports important events (turn change, check, mate, draw, crumbling squares) in a speech bubble on the board that fades away by itself after a short time. A click on the mascot collapses the bubble and expands it again; in a duel, the renewed click shows the last message once more. Whenever a side is in check, Tetromino announces this with a short robotic beeping; if the speech bubble is collapsed, the check message additionally appears as a small popup for three seconds and then fades away.</li>\n' +
 '      <li>Pieces and the move list are collapsible sections inside the speech bubble: the bubble grows dynamically and the board remains the only large area. Both sections can be folded in and out via their headings.</li>\n' +
 '      <li>In duel games, an additional Help section lies in the speech bubble below pieces and move list: when expanded, Tetromino recommends a concrete move to the side to move (piece, rotation axis and pivot, or shift destination). The recommendation follows the current position, is not executed automatically and is non-binding.</li>\n' +
 '      <li>Cubes with a yellow marker can serve as pivots.</li>\n' +
@@ -1819,6 +1830,7 @@ var TXT = {
     lblDur: 'Vitesse de rotation', lblLang: 'Langue',
     kbdH: 'Clavier', kbdPress: 'Appuyez sur une touche…',
     lblPiv: 'Pivot', lblUndo: 'Annuler le coup',
+    lblFs: 'Plein écran', fsOnLbl: 'Mode plein écran : activé', fsOffLbl: 'Mode plein écran : désactivé',
     muteOnLbl: 'Son : activé', muteOffLbl: 'Son : coupé',
     musOnLbl: 'Musique : activée', musOffLbl: 'Musique : coupée',
     lblMusTrack: 'Titre musical', trkOrig: 'Original', trkKlassik: 'Classique', trkMetal: 'Metal',
@@ -1866,7 +1878,7 @@ var TXT = {
 '      <li>Annuler un coup : en solo aux niveaux Facile et Moyen, le bouton à la flèche en demi-tour près des flèches de vue annule le dernier coup complet – votre demi-coup et celui de l’ordinateur. La partie reprend depuis la position antérieure ; les succès déjà débloqués et les statistiques restent intacts.</li>\n' +
 '      <li>Replay : à la fin d’une partie en duel, le bouton « Voir le replay » ouvre le déroulé de la partie. Le curseur sous le plateau parcourt les positions demi-coup par demi-coup, la vue pivote comme d’habitude, et les coups restent verrouillés jusqu’à la fin du replay. Le replay n’est pas sauvegardé et disparaît dès qu’une nouvelle partie commence.</li>\n' +
 '      <li>L’aide de Tetromino (bulle) recommande toujours le coup optimal, quel que soit le niveau de difficulté ; les niveaux n’influencent que le choix des coups de l’ordinateur.</li>\n' +
-'      <li>Tutoriel : cinq leçons – une par pièce (T, L, S, pièce roi, dame) – avec chacune plusieurs sous-tâches, du clic à la capture ; chaque leçon se choisit séparément, les leçons terminées sont marquées en vert. Le texte de la tâche figure dans la zone de tâche repliable de la bulle, les indices apparaissent brièvement en popup puis restent en jaune dans la zone ; après chaque leçon résolue, un écran de fin propose continuer, recommencer et menu principal. Le bouton « Réinitialiser la tâche » reconstruit le plateau de la sous-tâche en cours – par exemple si un coup maladroit l’a rendue insoluble.</li>\n' +
+'      <li>Tutoriel : cinq leçons – une par pièce (T, L, S, pièce roi, dame) – avec chacune plusieurs sous-tâches, du clic à la capture ; chaque leçon se choisit séparément, les leçons terminées sont marquées en vert. Le texte de la tâche figure dans la zone de tâche repliable de la bulle, les indices apparaissent brièvement en popup puis restent en jaune dans la zone ; après chaque leçon résolue, un écran de fin propose continuer, recommencer et menu principal. Le bouton « Réinitialiser la tâche » reconstruit le plateau de la sous-tâche en cours – par exemple si un coup maladroit l’a rendue insoluble. À chaque nouvelle consigne, indice ou éloge, la mascotte émet un bref pépiement robotique.</li>\n' +
 '      <li>Sauvegarde, statistiques et succès : plusieurs sauvegardes nommées sont conservées dans le navigateur ; chacune tient les statistiques du mode solo (victoires, défaites et nulles contre l’ordinateur), dix-sept succès et la progression du tutoriel. Les succès « Apprenti », « Compagnon » et « Grand maître » récompensent des victoires contre l’ordinateur aux niveaux Facile, Moyen et Difficile. Chaque partie terminée contre l’ordinateur comptabilise sa valeur de départ ; le succès « Tous les mondes » ne se débloque que lorsque chacune des 1 000 000 valeurs possibles a été jouée au moins une fois – un succès pratiquement impossible. Les sauvegardes s’exportent en fichiers HTML complets avec la sauvegarde intégrée – ouvrir un tel fichier crée la sauvegarde comme nouvelle entrée – et se réinitialisent individuellement ou entièrement.</li>\n' +
 '      <li>La barre d’état est une bande étroite en haut, à l’intérieur du plateau : elle indique le camp au trait, le mode de jeu, le demi-coup en cours et la valeur de départ de la partie.</li>\n' +
 '    </ul>\n' +
@@ -1924,7 +1936,7 @@ var TXT = {
 '    </ul>\n' +
 '    <h3>Aides</h3>\n' +
 '    <ul>\n' +
-'      <li>Tetromino annonce les événements importants (changement de trait, échec, mat, nulle, cases qui s’effritent) dans une bulle sur le plateau qui s’efface d’elle-même après un moment. Un clic sur la mascotte replie la bulle et la redéploie ; en duel, le nouveau clic réaffiche la dernière annonce.</li>\n' +
+'      <li>Tetromino annonce les événements importants (changement de trait, échec, mat, nulle, cases qui s’effritent) dans une bulle sur le plateau qui s’efface d’elle-même après un moment. Un clic sur la mascotte replie la bulle et la redéploie ; en duel, le nouveau clic réaffiche la dernière annonce. Chaque fois qu’une partie est en échec, Tetromino l’annonce par un bref babillage robotique ; si la bulle est repliée, le message d’échec apparaît en plus trois secondes en petite fenêtre avant de s’effacer.</li>\n' +
 '      <li>Les pièces et la liste des coups sont des zones repliables dans la bulle : la bulle grandit dynamiquement et le plateau reste la seule grande surface. Les deux zones se replient et se déplient par leurs titres.</li>\n' +
 '      <li>En duel, une zone Aide supplémentaire se trouve dans la bulle sous les pièces et la liste des coups : une fois ouverte, Tetromino recommande au camp au trait un coup concret (pièce, axe et pivot de rotation, ou destination de décalage). La recommandation suit la position, ne s’exécute pas automatiquement et n’engage à rien.</li>\n' +
 '      <li>Les cubes portant un marqueur jaune peuvent servir de pivot.</li>\n' +
@@ -2131,6 +2143,7 @@ var TXT = {
     lblDur: 'Rychlost otáčení', lblLang: 'Jazyk',
     kbdH: 'Klávesnice', kbdPress: 'Stiskněte klávesu…',
     lblPiv: 'Střed otáčení', lblUndo: 'Vzít tah zpět',
+    lblFs: 'Celá obrazovka', fsOnLbl: 'Režim celé obrazovky: zapnut', fsOffLbl: 'Režim celé obrazovky: vypnut',
     muteOnLbl: 'Zvuk: zapnuto', muteOffLbl: 'Zvuk: vypnuto',
     musOnLbl: 'Hudba: zapnuta', musOffLbl: 'Hudba: vypnuta',
     lblMusTrack: 'Hudební skladba', trkOrig: 'Originál', trkKlassik: 'Klasika', trkMetal: 'Metal',
@@ -2349,6 +2362,7 @@ var TXT = {
     lblDur: 'Prędkość obrotu', lblLang: 'Język',
     kbdH: 'Klawiatura', kbdPress: 'Naciśnij klawisz…',
     lblPiv: 'Punkt obrotu', lblUndo: 'Cofnij ruch',
+    lblFs: 'Pełny ekran', fsOnLbl: 'Tryb pełnoekranowy: włączony', fsOffLbl: 'Tryb pełnoekranowy: wyłączony',
     muteOnLbl: 'Dźwięk: włączony', muteOffLbl: 'Dźwięk: wyłączony',
     musOnLbl: 'Muzyka: włączona', musOffLbl: 'Muzyka: wyłączona',
     lblMusTrack: 'Utwór muzyczny', trkOrig: 'Oryginał', trkKlassik: 'Klasyka', trkMetal: 'Metal',
@@ -2568,6 +2582,7 @@ var TXT = {
     lblDur: 'Velocidad de giro', lblLang: 'Idioma',
     kbdH: 'Teclado', kbdPress: 'Pulsa una tecla…',
     lblPiv: 'Punto de giro', lblUndo: 'Deshacer jugada',
+    lblFs: 'Pantalla completa', fsOnLbl: 'Modo de pantalla completa: activado', fsOffLbl: 'Modo de pantalla completa: desactivado',
     muteOnLbl: 'Sonido: activado', muteOffLbl: 'Sonido: desactivado',
     musOnLbl: 'Música: activada', musOffLbl: 'Música: desactivada',
     lblMusTrack: 'Tema musical', trkOrig: 'Original', trkKlassik: 'Clásica', trkMetal: 'Metal',
@@ -2643,7 +2658,7 @@ function applyLang(){
     hSlots: 'hSlots', slotNew: 'slotNewLbl', hStats: 'hStats', hAch: 'hAch',
     saveBack: 'saveBackLbl', setH2: 'setH2', setHSound: 'setHSound', setHGame: 'setHGame',
     setLblSound: 'lblSound', setLblMus: 'lblMus', setLblVol: 'lblVol',
-    setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblDur: 'lblDur', setLblLang: 'lblLang',
+    setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblFs: 'lblFs', setLblDur: 'lblDur', setLblLang: 'lblLang',
     setHKbd: 'kbdH',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
@@ -2690,6 +2705,7 @@ function applyLang(){
   $('setMute').classList.toggle('selOpt', muted);
   $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
   $('setMus').classList.toggle('selOpt', musOn);
+  refreshFsBtn();
   // Tooltips und Platzhalter
   var T = { undoBtn: 'undoTt', camL: 'camLTt', camR: 'camRTt', replayEnd: 'replayEndTt',
     menuBtn: 'menuBtnTt', tutReset: 'tutResetTt', slideGo: 'slideGoTt', euFlag: 'euFlagTt' };
@@ -2880,9 +2896,12 @@ var annUntil = 0;    // Zeitstempel, bis zu dem die Sprechblase sichtbar bleibt
 var ANN_MS = 6000;   // Anzeigedauer der Sprechblase in Millisekunden
 var FB_MS = 3000;    // Erscheinungsdauer des Feedback-Popups (Tutorial-Hinweis)
 var FB_FADE = 450;   // Dauer des Ausblendens nach der Erscheinungsdauer
+var CK_MS = 3000;    // Erscheinungsdauer des Schach-Popups (eingeklappte Blase)
+var CK_FADE = 450;   // Dauer des Ausblendens des Schach-Popups
+var ckUntil = 0;     // Zeitstempel, bis zu dem das Schach-Popup sichtbar bleibt
 var fbMsg = '';      // Text des Feedback-Popups
 var fbUntil = 0;     // Zeitstempel, bis zu dem das Feedback-Popup sichtbar bleibt
-function fbSay(txt){ fbMsg = txt || ''; fbUntil = txt ? performance.now() + FB_MS : 0; }
+function fbSay(txt){ fbMsg = txt || ''; fbUntil = txt ? performance.now() + FB_MS : 0; if (txt) sfxTalk(); }
 function fbClear(){ fbMsg = ''; fbUntil = 0; }
 // Popup-Zustand zentral setzen: erscheint unabhängig vom Ein-/Ausklappen der
 // Sprechblase, blendet nach FB_MS sanft aus und verschwindet nach FB_FADE.
@@ -3387,7 +3406,7 @@ function finalizeMove(){
       checkStreak++;
       if (checkStreak >= 5) unlockAch('perpetual');
     } else checkStreak = 0;
-    if (inCheck(turn)) ann = trf('annCheck', { side: sideName(turn) });
+    if (inCheck(turn)){ ann = trf('annCheck', { side: sideName(turn) }); announceCheck(); }
     else if (crumbleEvt === 'warn') ann = tr('annWarn');
     else if (crumbleEvt === 'fall') ann = tr('annFall');
     else ann = '';
@@ -3544,7 +3563,7 @@ function resetSelection(){
   preview = null; anim = null; slide = null;
 }
 function resetFieldEvents(){
-  crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = '';
+  crumbled = {}; crumbleWarn = null; crumbleWarnMove = -1; crumbleEvt = ''; ann = ''; ckHide();
 }
 // ---------- Partieverlauf: Züge zurücknehmen und Replay ----------
 // Nach jedem Halbzug wird eine vollständige Kopie der Stellung abgelegt
@@ -3587,7 +3606,7 @@ function restoreSnap(s){
   crumbleWarn = s.crumbleWarn; crumbleWarnMove = s.crumbleWarnMove;
   capturedByW = s.capturedByW.slice(); capturedByB = s.capturedByB.slice();
   logEntries = s.log.slice();
-  resetSelection(); shakeUntil = 0; hover = null; ann = '';
+  resetSelection(); shakeUntil = 0; hover = null; ann = ''; ckHide();
 }
 // Zurücknehmen: verfügbar im Einzelspieler auf Leicht oder Mittel, sobald
 // ein voller Zug (eigener plus Computer-Halbzug) vorliegt und der Spieler
@@ -3906,6 +3925,7 @@ function tutRender(){
   $('tutTitle').textContent = tr(L.title);
   $('taskBody').textContent = tr(L.tasks[tut.task].text);
   $('tutHint').textContent = '';
+  sfxTalk(); // neue Anweisung: das Masköttchen meldet sich mit Sprech-Piepser
 }
 // Wechsel zu einer Teilaufgabe: Brett der Aufgabe aufbauen, Aufgaben-Box
 // öffnen, altes Popup und alten Endscreen verwerfen.
@@ -4917,6 +4937,12 @@ function draw(now){
     if (now > fbUntil + FB_FADE){ $('fbPop').classList.add('hidden'); $('fbPop').classList.remove('fade'); }
     else $('fbPop').classList.add('fade');
   }
+  // Schach-Popup bei eingeklappter Sprechblase ebenso im Bildtakt steuern:
+  // Nach CK_MS setzt es die Ausblend-Klasse, nach CK_FADE verschwindet es.
+  if ((mode === '2p' || mode === 'ai') && ckUntil && now > ckUntil){
+    if (now > ckUntil + CK_FADE) ckHide();
+    else $('ckPop').classList.add('fade');
+  }
 
   if (anim && now - anim.t0 >= anim.dur) finalizeMove();
 }
@@ -4951,6 +4977,47 @@ function sfxMove(){ tone(220, 0.10, 0.12, 0, 440); }
 function sfxCap(){ tone(200, 0.10, 0.16); tone(140, 0.16, 0.14, 0.09); }
 function sfxWin(){ [523, 659, 784, 1047].forEach(function(f, i){ tone(f, 0.12, 0.12, i * 0.11); }); }
 function sfxClick(){ tone(988, 0.03, 0.09); }
+// Schach-Ankündigung des Masköttchens: Bei jedem Schach plappert Tetromino
+// eine kurze roboterhafte Piepsequenz (R2D2-artig). Die Töne sind reine
+// Frequenzmuster ohne Sprache und funktionieren daher unabhängig von der
+// eingestellten Oberflächensprache; Zufallsanteile sorgen dafür, dass keine
+// zwei Ansagen exakt gleich klingen.
+function robotBabble(){
+  var t = 0;
+  for (var i = 0; i < 5; i++){
+    var f = 480 + Math.random() * 1320;
+    var to = 480 + Math.random() * 1320;
+    var d = 0.05 + Math.random() * 0.07;
+    tone(f, d, 0.13, t, to);
+    t += d + 0.02 + Math.random() * 0.05;
+  }
+}
+function sfxCheckRobot(){ robotBabble(); }
+// Sprech-Geräusch für neue Anweisungen im Tutorial: dasselbe roboterhafte
+// Geplapper wie beim Schach. Folgen mehrere Meldungen unmittelbar aufeinander
+// (etwa neue Aufgabe und zugleich Lob), ertönt nur ein einziger Ruf.
+var talkAt = -1e9;
+function sfxTalk(){
+  if (performance.now() - talkAt < 400) return;
+  talkAt = performance.now();
+  robotBabble();
+}
+// Schach immer hörbar machen – auch bei eingeklappter Sprechblase: Der
+// Piepser erklingt stets; ist die Blase eingeklappt, zeigt zusätzlich ein
+// kleines Popup die Schachmeldung, das nach CK_MS ausblendet (CK_FADE).
+function announceCheck(){
+  sfxCheckRobot();
+  if (!speakCollapsed) return; // ausgeklappte Blase zeigt die Meldung selbst
+  ckUntil = performance.now() + CK_MS;
+  $('ckText').textContent = trf('annCheck', { side: sideName(turn) });
+  $('ckPop').classList.remove('fade');
+  $('ckPop').classList.remove('hidden');
+}
+function ckHide(){
+  ckUntil = 0;
+  $('ckPop').classList.add('hidden');
+  $('ckPop').classList.remove('fade');
+}
 // Klick-Geräusch für jede Bedienfläche: Ein einziger delegierter Listener am
 // Dokument fängt Klicks auf alle Knöpfe der Klasse .btn ab – auch auf Knöpfe,
 // die erst zur Laufzeit erzeugt werden (etwa die Lektionsliste des Tutorials).
@@ -5163,6 +5230,7 @@ function openSettings(){
   $('setMute').classList.toggle('selOpt', muted);
   $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
   $('setMus').classList.toggle('selOpt', musOn);
+  refreshFsBtn();
   refreshMusTrackBtns();
   $('setModal').classList.remove('hidden');
 }
@@ -5174,6 +5242,29 @@ function openSource(){
 function toggleMute(){
   muted = !muted;
   $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
+}
+// Vollbildmodus (HTML5-Fullscreen-API): Wechsel auf Knopfdruck; der Browser
+// verlangt dafür eine Nutzerhandlung (der Klick selbst genügt). Verlässt der
+// Nutzer den Vollbildmodus (etwa mit Esc), hält das Ereignis den Knopfstand
+// automatisch frisch. In Umgebungen ohne Vollbild-Zugriff (eingebettete
+// Ansichten ohne Freigabe) bleibt der Knopf wirkungslos, ohne zu stören.
+function fsOn(){ return !!(document.fullscreenElement || document.webkitFullscreenElement); }
+function refreshFsBtn(){
+  var b = $('setFs');
+  b.textContent = fsOn() ? tr('fsOnLbl') : tr('fsOffLbl');
+  b.classList.toggle('selOpt', fsOn());
+}
+function toggleFullscreen(){
+  try {
+    if (!fsOn()){
+      var el = document.documentElement;
+      var rq = el.requestFullscreen || el.webkitRequestFullscreen || el.mozRequestFullScreen;
+      if (rq) rq.call(el);
+    } else {
+      var ex = document.exitFullscreen || document.webkitExitFullscreen || document.mozCancelFullScreen;
+      if (ex) ex.call(document);
+    }
+  } catch (e) {}
 }
 function restartMode(){
   if (mode === 'tutorial') tutStart(tut.step >= 0 ? tut.step : 0); // aktuelle Lektion erneut beginnen
@@ -5344,8 +5435,8 @@ $('tutMascot').addEventListener('click', function(){
   var active = mode === 'tutorial' ? $('tutPanel') : $('annPanel');
   var vis = !active.classList.contains('hidden');
   if (vis){ speakCollapsed = true; }                 // sichtbare Blase einklappen
-  else if (!speakCollapsed){ annUntil = performance.now() + 12000; } // Timeout-Ausblendung: erneut zeigen
-  else { speakCollapsed = false; annUntil = performance.now() + 12000; } // eingeklappt: ausklappen
+  else if (!speakCollapsed){ annUntil = performance.now() + 12000; ckHide(); } // Timeout-Ausblendung: erneut zeigen
+  else { speakCollapsed = false; annUntil = performance.now() + 12000; ckHide(); } // eingeklappt: ausklappen
   sfxClick();
   updateHUD();
 });
@@ -5366,6 +5457,10 @@ $('annPanel').addEventListener('click', function(e){
 // Klick auf das Feedback-Popup verwirft es vorzeitig; der Text bleibt
 // dauerhaft gelb in der einklappbaren Aufgaben-Box der Sprechblase erhalten.
 $('fbPop').addEventListener('click', function(){ fbUntil = 0; updateHUD(); });
+
+// Klick auf das Schach-Popup verwirft es vorzeitig; die ausgeklappte
+// Sprechblase zeigt die Meldung bei Bedarf weiterhin an.
+$('ckPop').addEventListener('click', ckHide);
 
 // ---------- Blasen-Abschnitte: Figuren und Zugliste einklappbar ----------
 // Die Figuren- und die Zugliste liegen innerhalb der Sprechblase; beide
@@ -5459,6 +5554,9 @@ $('endMenu').addEventListener('click', function(){
 });
 
 $('setMute').addEventListener('click', function(){ toggleMute(); openSettings(); });
+$('setFs').addEventListener('click', function(){ toggleFullscreen(); });
+document.addEventListener('fullscreenchange', function(){ refreshFsBtn(); });
+document.addEventListener('webkitfullscreenchange', function(){ refreshFsBtn(); });
 $('setMus').addEventListener('click', function(){ toggleMusic(); openSettings(); });
 qsa('.setMusTrack').forEach(function(b){
   b.addEventListener('click', function(){
