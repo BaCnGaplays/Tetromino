@@ -199,9 +199,12 @@
   .btn.selOpt{background-color:#4a3a10;border-color:var(--accent)}
   #srcArea{width:100%;height:46vh;background:#0d0d20;color:#b8e0b8;border:2px solid #3d3d7a;
     font-family:inherit;font-size:10px;padding:8px;white-space:pre;resize:vertical}
-  #setVol,#setMusVol{accent-color:#ffd23f;width:180px}
+  #setVol,#setMusVol,#setTalkVol{accent-color:#ffd23f;width:180px}
   .setLbl{font-size:11px;color:#b8b8e0;display:inline-block;width:140px;text-align:left}
   .setRow{display:flex;align-items:center;gap:8px;margin:6px 0;flex-wrap:wrap}
+  h3.setSecH{cursor:pointer;user-select:none}
+  h3.setSecH::after{content:'\2212';float:right;color:var(--accent);margin-left:8px;font-size:12px}
+  h3.setSecH.closed::after{content:'+'}
   #pivotInfo{font-size:10px;color:var(--accent);text-transform:uppercase;letter-spacing:1px;margin-bottom:4px}
   /* Knöpfe tragen dieselbe feine Scanlinien-Textur wie die Hintergrund-
     flächen (menuBox, modalBox, Spielbildschirm): Der alte Bildschirm-Look
@@ -227,6 +230,7 @@
     flex:1 1 150px;min-width:0}
   .setOpts.full{flex-basis:100%;flex-grow:1;margin-top:2px}
   .setOpts.wide{flex-basis:100%;flex-grow:1;margin-top:2px;grid-template-columns:repeat(2,minmax(0,1fr))}
+  .setOpts.quad{grid-template-columns:repeat(4,minmax(0,1fr))}
   .setOpts .btn{min-width:0;white-space:nowrap;overflow:hidden}
   .setKey{min-width:88px}
   .setKey.wait{border-color:#ff5a5a;color:#ff9a6a}
@@ -305,7 +309,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.62</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.66</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -417,7 +421,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.62</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.66</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -492,28 +496,6 @@
 <div id="setModal" class="modal hidden">
   <div class="modalBox">
     <h2 id="setH2">Einstellungen</h2>
-    <h3 id="setHSound">Ton</h3>
-    <div class="setRow"><span class="setLbl" id="setLblSound">Sound</span><button id="setMute" class="btn small">Ton: an</button></div>
-    <div class="setRow"><span class="setLbl" id="setLblMus">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
-    <div class="setRow"><span class="setLbl" id="setLblVol">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
-    <div class="setRow"><span class="setLbl" id="setLblMusVol">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
-    <div class="setRow"><span class="setLbl" id="setLblFs">Vollbild</span><button id="setFs" class="btn small">Vollbildmodus: aus</button></div>
-    <div class="setRow"><span class="setLbl" id="setLblMusTrack">Musiktitel</span>
-      <div class="setOpts wide">
-        <button class="btn small setMusTrack" data-mus="orig">Original</button>
-        <button class="btn small setMusTrack" data-mus="klassik">Klassik</button>
-        <button class="btn small setMusTrack" data-mus="metal">Metal</button>
-        <button class="btn small setMusTrack" data-mus="techno">Techno</button>
-        <button class="btn small setMusTrack" data-mus="entspannung">Entspannung</button>
-        <button class="btn small setMusTrack" data-mus="hardbass">Russian Hardbass</button>
-      </div></div>
-    <h3 id="setHGame">Spiel</h3>
-    <div class="setRow"><span class="setLbl" id="setLblDur">Drehgeschwindigkeit</span>
-      <div class="setOpts">
-        <button class="btn small setDur" data-dur="760">Langsam</button>
-        <button class="btn small setDur selOpt" data-dur="480">Normal</button>
-        <button class="btn small setDur" data-dur="280">Schnell</button>
-      </div></div>
     <div class="setRow"><span class="setLbl" id="setLblLang">Sprache</span>
       <div class="setOpts full">
         <button class="btn small setLang" data-lang="de"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#000"/><rect y="4" width="18" height="4" fill="#DD0000"/><rect y="8" width="18" height="4" fill="#FFCC00"/></svg>Deutsch</button>
@@ -523,8 +505,61 @@
         <button class="btn small setLang" data-lang="pl"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#fff"/><rect y="6" width="18" height="6" fill="#DC143C"/></svg>Polski</button>
         <button class="btn small setLang" data-lang="es"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#AA151B"/><rect y="3" width="18" height="6" fill="#F1BF00"/></svg>Español</button>
       </div></div>
-    <h3 id="setHKbd">Tastatur</h3>
-    <div id="kbdRows"></div>
+    <h3 id="setHGraphik" class="setSecH">Grafik</h3>
+    <div id="setSecGraphik">
+      <div class="setRow"><span class="setLbl" id="setLblFs">Vollbild</span><button id="setFs" class="btn small">Vollbildmodus: aus</button></div>
+      <div class="setRow"><span class="setLbl" id="setLblCam">Startansicht</span>
+        <div class="setOpts">
+          <button class="btn small setCam" data-cam="w">Wei&szlig; unten</button>
+          <button class="btn small setCam selOpt" data-cam="keep">Beibehalten</button>
+          <button class="btn small setCam" data-cam="b">Schwarz unten</button>
+        </div></div>
+    </div>
+    <h3 id="setHSound" class="setSecH">Ton</h3>
+    <div id="setSecSound">
+      <div class="setRow"><span class="setLbl" id="setLblSound">Sound</span><button id="setMute" class="btn small">Ton: an</button></div>
+      <div class="setRow"><span class="setLbl" id="setLblMus">Musik</span><button id="setMus" class="btn small">Musik: aus</button></div>
+      <div class="setRow"><span class="setLbl" id="setLblVol">Effekte</span><input type="range" id="setVol" min="0" max="100" value="100"></div>
+      <div class="setRow"><span class="setLbl" id="setLblMusVol">Musik-Lautst&auml;rke</span><input type="range" id="setMusVol" min="0" max="100" value="100"></div>
+      <div class="setRow"><span class="setLbl" id="setLblTalkVol">Tetromino-Stimme</span><input type="range" id="setTalkVol" min="0" max="100" value="100"></div>
+      <div class="setRow"><span class="setLbl" id="setLblMusTrack">Musiktitel</span>
+        <div class="setOpts wide">
+          <button class="btn small setMusTrack" data-mus="orig">Original</button>
+          <button class="btn small setMusTrack" data-mus="klassik">Klassik</button>
+          <button class="btn small setMusTrack" data-mus="metal">Metal</button>
+          <button class="btn small setMusTrack" data-mus="techno">Techno</button>
+          <button class="btn small setMusTrack" data-mus="entspannung">Entspannung</button>
+          <button class="btn small setMusTrack" data-mus="hardbass">Russian Hardbass</button>
+        </div></div>
+    </div>
+    <h3 id="setHGame" class="setSecH">Spiel</h3>
+    <div id="setSecGame">
+      <div class="setRow"><span class="setLbl" id="setLblDur">Drehgeschwindigkeit</span>
+        <div class="setOpts">
+          <button class="btn small setDur" data-dur="760">Langsam</button>
+          <button class="btn small setDur selOpt" data-dur="480">Normal</button>
+          <button class="btn small setDur" data-dur="280">Schnell</button>
+        </div></div>
+      <div class="setRow"><span class="setLbl" id="setLblSlideDur">Versetzungs-Animation</span>
+        <div class="setOpts">
+          <button class="btn small setSlideDur" data-dur="760">Langsam</button>
+          <button class="btn small setSlideDur selOpt" data-dur="480">Normal</button>
+          <button class="btn small setSlideDur" data-dur="280">Schnell</button>
+        </div></div>
+      <div class="setRow"><span class="setLbl" id="setLblAnnDur">Ansage-Dauer</span>
+        <div class="setOpts quad">
+          <button class="btn small setAnn" data-ann="3000">Kurz</button>
+          <button class="btn small setAnn selOpt" data-ann="6000">Normal</button>
+          <button class="btn small setAnn" data-ann="12000">Lang</button>
+          <button class="btn small setAnn" data-ann="0">Bis Klick</button>
+        </div></div>
+      <div class="setRow"><span class="setLbl" id="setLblTwoTap">Zugausf&uuml;hrung</span><button id="setTwoTap" class="btn small">Zwei-Tipp</button></div>
+    </div>
+    <h3 id="setHKbd" class="setSecH">Tastatur</h3>
+    <div id="setSecKbd">
+      <div id="kbdRows"></div>
+      <div class="btnRow"><button id="kbdReset" class="btn small">Alle Belegungen l&ouml;schen</button></div>
+    </div>
     <div class="btnRow"><button id="setClose" class="btn">Schlie&szlig;en</button></div>
   </div>
 </div>
@@ -579,7 +614,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.62</li></ul>
+    <ul><li>Alpha 0.66</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -587,7 +622,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.62</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.66</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -609,7 +644,7 @@
       <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>
       <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>
       <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>
-      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt ein kurzer roboterhafter Sprech-Piepser des Mask&ouml;ttchens.</li>
+      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt kurz die roboterhafte Tetromino-Stimme des Mask&ouml;ttchens.</li>
       <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), siebzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>
       <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>
     </ul>
@@ -724,7 +759,7 @@ var RULES_DE =
 '      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>\n' +
 '      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>\n' +
 '      <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>\n' +
-'      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt ein kurzer roboterhafter Sprech-Piepser des Mask&ouml;ttchens.</li>\n' +
+'      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt kurz die roboterhafte Tetromino-Stimme des Mask&ouml;ttchens.</li>\n' +
 '      <li>Spielstand, Statistik und Erfolge: mehrere benannte Spielst&auml;nde werden im Browser gespeichert; jeder f&uuml;hrt die Partiestatistik des Einzelspielermodus (Siege, Niederlagen und Remis gegen den Computer), siebzehn Erfolge und den Tutorial-Fortschritt. Die Erfolge „Lehrling“, „Geselle“ und „Gro&szlig;meister“ belohnen Siege gegen den Computer auf den Stufen Leicht, Mittel und Schwer. Jede gegen den Computer beendete Partie z&auml;hlt ihren Startwert; der Erfolg „Alle Welten“ wird erst freigeschaltet, wenn jeder der 1.000.000 m&ouml;glichen Startwerte mindestens einmal gespielt wurde &ndash; ein praktisch unm&ouml;glicher Erfolg. Spielst&auml;nde lassen sich als komplette HTML-Datei mit eingebettetem Spielstand exportieren &ndash; das &Ouml;ffnen einer solchen Datei legt den Spielstand als neuen Eintrag an &ndash; und sich einzeln oder komplett zur&uuml;cksetzen.</li>\n' +
 '      <li>Die Statusleiste liegt als schmales Band am oberen Rand innerhalb des Spielfelds: Sie zeigt die Partei am Zug, den Spielmodus, den aktuellen Halbzug und den Startwert der Partie.</li>\n' +
 '    </ul>\n' +
@@ -1294,7 +1329,7 @@ var TXT = {
     hStats: 'Statistik (aktiver Spielstand)', hAch: 'Erfolge (aktiver Spielstand)',
     saveBackLbl: 'Zurück',
     hMode: 'Spielmodus', hLearn: 'Lernen', hOther: 'Sonstiges',
-    setH2: 'Einstellungen', setHSound: 'Ton', setHGame: 'Spiel',
+    setH2: 'Einstellungen', setHGraphik: 'Grafik', setHSound: 'Ton', setHGame: 'Spiel',
     lblSound: 'Sound', lblMus: 'Musik', lblVol: 'Effekte', lblMusVol: 'Musik-Lautstärke',
     lblDur: 'Drehgeschwindigkeit', lblLang: 'Sprache',
     kbdH: 'Tastatur', kbdPress: 'Taste drücken…',
@@ -1307,6 +1342,11 @@ var TXT = {
     achRusRootsName: 'Russische Wurzeln',
     achRusRootsDesc: 'Die Spielmusik in den Einstellungen auf Russian Hardbass umgestellt – eine Hommage an den russischen Erfinder des fallenden-Stein-Klassikers.',
     durSlowLbl: 'Langsam', durNormLbl: 'Normal', durFastLbl: 'Schnell',
+    lblCam: 'Startansicht', camWLbl: 'Weiß unten', camBLbl: 'Schwarz unten', camKeepLbl: 'Beibehalten',
+    lblTalkVol: 'Tetromino-Stimme', lblSlideDur: 'Versetzungs-Animation',
+    lblAnnDur: 'Ansage-Dauer', annShortLbl: 'Kurz', annNormLbl: 'Normal', annLongLbl: 'Lang', annHoldLbl: 'Bis Klick',
+    lblTwoTap: 'Zugausführung', twoTapOnLbl: 'Zwei-Tipp', twoTapOffLbl: 'Direkt',
+    kbdResetLbl: 'Alle Belegungen löschen',
     setCloseLbl: 'Schließen',
     seedH2: 'Partie mit Startwert',
     seedIntroHtml: SEEDINTRO_DE,
@@ -1513,7 +1553,7 @@ var TXT = {
     hStats: 'Statistics (active save game)', hAch: 'Achievements (active save game)',
     saveBackLbl: 'Back',
     hMode: 'Game mode', hLearn: 'Learn', hOther: 'Other',
-    setH2: 'Settings', setHSound: 'Sound', setHGame: 'Game',
+    setH2: 'Settings', setHGraphik: 'Graphics', setHSound: 'Sound', setHGame: 'Game',
     lblSound: 'Sound', lblMus: 'Music', lblVol: 'Effects', lblMusVol: 'Music volume',
     lblDur: 'Rotation speed', lblLang: 'Language',
     kbdH: 'Keyboard', kbdPress: 'Press a key…',
@@ -1526,6 +1566,11 @@ var TXT = {
     achRusRootsName: 'Russian Roots',
     achRusRootsDesc: 'Switched the game music to Russian Hardbass in the settings – a homage to the Russian inventor of the falling-block classic.',
     durSlowLbl: 'Slow', durNormLbl: 'Normal', durFastLbl: 'Fast',
+    lblCam: 'Start view', camWLbl: 'White at bottom', camBLbl: 'Black at bottom', camKeepLbl: 'Keep current',
+    lblTalkVol: 'Tetromino voice', lblSlideDur: 'Shift animation',
+    lblAnnDur: 'Announcement duration', annShortLbl: 'Short', annNormLbl: 'Normal', annLongLbl: 'Long', annHoldLbl: 'Until click',
+    lblTwoTap: 'Move execution', twoTapOnLbl: 'Two taps', twoTapOffLbl: 'Immediate',
+    kbdResetLbl: 'Clear all bindings',
     setCloseLbl: 'Close',
     seedH2: 'Game with seed',
     seedIntroHtml: 'The same seed produces the same starting position – games can thus be repeated and replayed exactly. The seed of the running game is shown in the status bar behind the game mode.',
@@ -1825,7 +1870,7 @@ var TXT = {
     hStats: 'Statistiques (sauvegarde active)', hAch: 'Succès (sauvegarde active)',
     saveBackLbl: 'Retour',
     hMode: 'Mode de jeu', hLearn: 'Apprendre', hOther: 'Autres',
-    setH2: 'Paramètres', setHSound: 'Son', setHGame: 'Jeu',
+    setH2: 'Paramètres', setHGraphik: 'Graphismes', setHSound: 'Son', setHGame: 'Jeu',
     lblSound: 'Son', lblMus: 'Musique', lblVol: 'Effets', lblMusVol: 'Volume de la musique',
     lblDur: 'Vitesse de rotation', lblLang: 'Langue',
     kbdH: 'Clavier', kbdPress: 'Appuyez sur une touche…',
@@ -1838,6 +1883,11 @@ var TXT = {
     achRusRootsName: 'Racines russes',
     achRusRootsDesc: 'Musique du jeu réglée sur Russian Hardbass dans les paramètres – hommage à l’inventeur russe du classique des blocs qui tombent.',
     durSlowLbl: 'Lente', durNormLbl: 'Normale', durFastLbl: 'Rapide',
+    lblCam: 'Vue de départ', camWLbl: 'Blancs en bas', camBLbl: 'Noirs en bas', camKeepLbl: 'Conserver',
+    lblTalkVol: 'Voix de Tetromino', lblSlideDur: 'Animation de déplacement',
+    lblAnnDur: 'Durée de l’annonce', annShortLbl: 'Bref', annNormLbl: 'Normale', annLongLbl: 'Longue', annHoldLbl: 'Jusqu’au clic',
+    lblTwoTap: 'Exécution du coup', twoTapOnLbl: 'Deux clics', twoTapOffLbl: 'Immédiat',
+    kbdResetLbl: 'Effacer toutes les touches',
     setCloseLbl: 'Fermer',
     seedH2: 'Partie avec valeur de départ',
     seedIntroHtml: 'Une même valeur de départ (seed) produit la même disposition initiale – les parties peuvent ainsi être répétées et rejouées à l’identique. La valeur de la partie en cours s’affiche dans la barre d’état derrière le mode de jeu.',
@@ -2138,7 +2188,7 @@ var TXT = {
     hStats: 'Statistika (aktivní uložená hra)', hAch: 'Úspěchy (aktivní uložená hra)',
     saveBackLbl: 'Zpět',
     hMode: 'Herní režim', hLearn: 'Učení', hOther: 'Ostatní',
-    setH2: 'Nastavení', setHSound: 'Zvuk', setHGame: 'Hra',
+    setH2: 'Nastavení', setHGraphik: 'Grafika', setHSound: 'Zvuk', setHGame: 'Hra',
     lblSound: 'Zvuk', lblMus: 'Hudba', lblVol: 'Efekty', lblMusVol: 'Hlasitost hudby',
     lblDur: 'Rychlost otáčení', lblLang: 'Jazyk',
     kbdH: 'Klávesnice', kbdPress: 'Stiskněte klávesu…',
@@ -2151,6 +2201,11 @@ var TXT = {
     achRusRootsName: 'Ruské kořeny',
     achRusRootsDesc: 'Herní hudba přepnuta na Russian Hardbass v nastavení – pocta ruskému vynálezci klasiky padajících kamenů.',
     durSlowLbl: 'Pomalu', durNormLbl: 'Normálně', durFastLbl: 'Rychle',
+    lblCam: 'Pohled na začátku', camWLbl: 'Bílé dole', camBLbl: 'Černé dole', camKeepLbl: 'Ponechat',
+    lblTalkVol: 'Hlas Tetromina', lblSlideDur: 'Animace přesunu',
+    lblAnnDur: 'Doba oznámení', annShortLbl: 'Krátce', annNormLbl: 'Normálně', annLongLbl: 'Dlouze', annHoldLbl: 'Do kliknutí',
+    lblTwoTap: 'Provádění tahu', twoTapOnLbl: 'Dvě poklepání', twoTapOffLbl: 'Přímo',
+    kbdResetLbl: 'Smazat všechny klávesy',
     setCloseLbl: 'Zavřít',
     seedH2: 'Partie s počátečním číslem',
     seedIntroHtml: SEEDINTRO_CS,
@@ -2357,7 +2412,7 @@ var TXT = {
     hStats: 'Statystyka (aktywny zapis gry)', hAch: 'Osiągnięcia (aktywny zapis gry)',
     saveBackLbl: 'Wstecz',
     hMode: 'Tryb gry', hLearn: 'Nauka', hOther: 'Inne',
-    setH2: 'Ustawienia', setHSound: 'Dźwięk', setHGame: 'Gra',
+    setH2: 'Ustawienia', setHGraphik: 'Grafika', setHSound: 'Dźwięk', setHGame: 'Gra',
     lblSound: 'Dźwięk', lblMus: 'Muzyka', lblVol: 'Efekty', lblMusVol: 'Głośność muzyki',
     lblDur: 'Prędkość obrotu', lblLang: 'Język',
     kbdH: 'Klawiatura', kbdPress: 'Naciśnij klawisz…',
@@ -2370,6 +2425,11 @@ var TXT = {
     achRusRootsName: 'Rosyjskie korzenie',
     achRusRootsDesc: 'Muzyka gry przełączona na Russian Hardbass w ustawieniach – ukłon w stronę rosyjskiego wynalazcy klasycznej układanki ze spadającymi klockami.',
     durSlowLbl: 'Wolno', durNormLbl: 'Normalnie', durFastLbl: 'Szybko',
+    lblCam: 'Widok początkowy', camWLbl: 'Białe na dole', camBLbl: 'Czarne na dole', camKeepLbl: 'Zachowaj bieżący',
+    lblTalkVol: 'Głos Tetromino', lblSlideDur: 'Animacja przestawienia',
+    lblAnnDur: 'Czas trwania komunikatu', annShortLbl: 'Krótko', annNormLbl: 'Normalnie', annLongLbl: 'Długo', annHoldLbl: 'Do kliknięcia',
+    lblTwoTap: 'Wykonanie ruchu', twoTapOnLbl: 'Dwa stuknięcia', twoTapOffLbl: 'Bezpośrednio',
+    kbdResetLbl: 'Wyczyść wszystkie klawisze',
     setCloseLbl: 'Zamknij',
     seedH2: 'Partia z wartością startową',
     seedIntroHtml: SEEDINTRO_PL,
@@ -2577,7 +2637,7 @@ var TXT = {
     hStats: 'Estadísticas (partida guardada activa)', hAch: 'Logros (partida guardada activa)',
     saveBackLbl: 'Volver',
     hMode: 'Modo de juego', hLearn: 'Aprender', hOther: 'Otros',
-    setH2: 'Ajustes', setHSound: 'Sonido', setHGame: 'Juego',
+    setH2: 'Ajustes', setHGraphik: 'Gráficos', setHSound: 'Sonido', setHGame: 'Juego',
     lblSound: 'Sonido', lblMus: 'Música', lblVol: 'Efectos', lblMusVol: 'Volumen de la música',
     lblDur: 'Velocidad de giro', lblLang: 'Idioma',
     kbdH: 'Teclado', kbdPress: 'Pulsa una tecla…',
@@ -2590,6 +2650,11 @@ var TXT = {
     achRusRootsName: 'Raíces rusas',
     achRusRootsDesc: 'Música del juego cambiada a Russian Hardbass en los ajustes – homenaje al inventor ruso del clásico de las piezas que caen.',
     durSlowLbl: 'Lento', durNormLbl: 'Normal', durFastLbl: 'Rápido',
+    lblCam: 'Vista inicial', camWLbl: 'Blancas abajo', camBLbl: 'Negras abajo', camKeepLbl: 'Mantener actual',
+    lblTalkVol: 'Voz de Tetromino', lblSlideDur: 'Animación de desplazamiento',
+    lblAnnDur: 'Duración del aviso', annShortLbl: 'Breve', annNormLbl: 'Normal', annLongLbl: 'Largo', annHoldLbl: 'Hasta clic',
+    lblTwoTap: 'Ejecución de la jugada', twoTapOnLbl: 'Dos toques', twoTapOffLbl: 'Directo',
+    kbdResetLbl: 'Borrar todas las teclas',
     setCloseLbl: 'Cerrar',
     seedH2: 'Partida con valor inicial',
     seedIntroHtml: SEEDINTRO_ES,
@@ -2656,9 +2721,11 @@ function applyLang(){
     replayEnd: 'replayEndLbl', tutReset: 'tutResetLbl', cancelBtn: 'cancelBtnLbl',
     slideGo: 'slideGoLbl', saveLogoH: 'saveLogoH', saveSub: 'saveSub',
     hSlots: 'hSlots', slotNew: 'slotNewLbl', hStats: 'hStats', hAch: 'hAch',
-    saveBack: 'saveBackLbl', setH2: 'setH2', setHSound: 'setHSound', setHGame: 'setHGame',
+    saveBack: 'saveBackLbl', setH2: 'setH2', setHGraphik: 'setHGraphik', setHSound: 'setHSound', setHGame: 'setHGame',
     setLblSound: 'lblSound', setLblMus: 'lblMus', setLblVol: 'lblVol',
     setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblFs: 'lblFs', setLblDur: 'lblDur', setLblLang: 'lblLang',
+    setLblCam: 'lblCam', setLblTalkVol: 'lblTalkVol', setLblSlideDur: 'lblSlideDur',
+    setLblAnnDur: 'lblAnnDur', setLblTwoTap: 'lblTwoTap', kbdReset: 'kbdResetLbl',
     setHKbd: 'kbdH',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
@@ -2696,6 +2763,25 @@ function applyLang(){
     var d = b.getAttribute('data-dur');
     b.textContent = d === '760' ? tr('durSlowLbl') : d === '280' ? tr('durFastLbl') : tr('durNormLbl');
   });
+  // Neue Einstellungen: Startansicht, Versetzungs-Animation, Ansage-Dauer und
+  // Zugausführung werden ebenso synchron mitübersetzt; die Markierung der
+  // gewählten Option folgt dem gespeicherten Zustand.
+  qsa('.setCam').forEach(function(b){
+    var c = b.getAttribute('data-cam');
+    b.textContent = c === 'w' ? tr('camWLbl') : c === 'b' ? tr('camBLbl') : tr('camKeepLbl');
+    b.classList.toggle('selOpt', c === camPreset);
+  });
+  qsa('.setSlideDur').forEach(function(b){
+    var d = b.getAttribute('data-dur');
+    b.textContent = d === '760' ? tr('durSlowLbl') : d === '280' ? tr('durFastLbl') : tr('durNormLbl');
+  });
+  qsa('.setAnn').forEach(function(b){
+    var a = b.getAttribute('data-ann');
+    b.textContent = a === '3000' ? tr('annShortLbl') : a === '12000' ? tr('annLongLbl') : a === '0' ? tr('annHoldLbl') : tr('annNormLbl');
+    b.classList.toggle('selOpt', parseInt(a, 10) === ANN_MS);
+  });
+  $('setTwoTap').textContent = twoTapOn ? tr('twoTapOnLbl') : tr('twoTapOffLbl');
+  $('setTwoTap').classList.toggle('selOpt', twoTapOn);
   qsa('.setLang').forEach(function(b){
     b.classList.toggle('selOpt', b.getAttribute('data-lang') === lang);
   });
@@ -2942,6 +3028,10 @@ var musVol = 1;            // 0..1 (Musik-Lautstärke, eigener Regler)
 // damit der untere Bereich fein abgestuft bleibt.
 var MUS_GAIN = 0.5;
 var DUR = 480;            // Dauer der Drehanimation in ms
+var SLIDE_DUR = 480;      // Dauer der Versetzungs-Animation in ms (eigene Einstellung)
+var twoTapOn = true;      // Zugausführung: Zwei-Tipp-Mechanik (scharf stellen, dann bestätigen)
+var camPreset = 'keep';   // Startansicht bei Partiebeginn: 'w' | 'b' | 'keep' (Ansicht unverändert)
+var talkVol = 1;          // 0..1 (Lautstärke der Tetromino-Stimme, eigener Regler)
 var ghostOn = true;       // Geistervorschau ist dauerhaft aktiviert (der Einstellknopf ist entfallen)
 var PAGE_SRC;             // wird unmittelbar nach dem DOM-Aufbau eingefroren (s. u.)
 
@@ -3257,7 +3347,7 @@ function commitMove(m){
       type: 'slide', p: p, axis: 't',
       steps: (m.slide && m.slide.steps) || 1,
       cubes0: p.cubes.map(function(c){ return { x: c.x, y: c.y, z: c.z }; }),
-      targets: m.res.newCubes, res: m.res, t0: performance.now(), dur: DUR
+      targets: m.res.newCubes, res: m.res, t0: performance.now(), dur: SLIDE_DUR
     };
   } else {
     anim = {
@@ -3925,7 +4015,7 @@ function tutRender(){
   $('tutTitle').textContent = tr(L.title);
   $('taskBody').textContent = tr(L.tasks[tut.task].text);
   $('tutHint').textContent = '';
-  sfxTalk(); // neue Anweisung: das Masköttchen meldet sich mit Sprech-Piepser
+  sfxTalk(); // neue Anweisung: das Masköttchen meldet sich mit der Tetromino-Stimme
 }
 // Wechsel zu einer Teilaufgabe: Brett der Aufgabe aufbauen, Aufgaben-Box
 // öffnen, altes Popup und alten Endscreen verwerfen.
@@ -4298,7 +4388,8 @@ function doKbdAction(id){
         parseInt(axBtns[i2].getAttribute('data-dir'), 10) === dir){ btn = axBtns[i2]; break; }
   }
   if (!btn || btn.disabled || !btn._res){ updateHUD(tr('msgNoAxis')); return; }
-  if (armedBtn === btn) commitMove({ axis: axis, dir: dir, res: btn._res });
+  if (!twoTapOn) commitMove({ axis: axis, dir: dir, res: btn._res });
+  else if (armedBtn === btn) commitMove({ axis: axis, dir: dir, res: btn._res });
   else { // gleiche Zwei-Tipp-Mechanik wie die Knöpfe: scharf stellen, dann ausführen
     clearArmed(); armedBtn = btn; btn.classList.add('armed');
     if (ghostOn) preview = { res: btn._res, axis: axis, dir: dir };
@@ -4395,7 +4486,9 @@ function initAxisButtons(){
     });
     btn.addEventListener('click', function(){
       if (btn.disabled || !btn._res || phase !== 'axis') return;
-      if (armedBtn === btn){
+      if (!twoTapOn){
+        commitMove({ axis: axis, dir: dir, res: btn._res });
+      } else if (armedBtn === btn){
         commitMove({ axis: axis, dir: dir, res: btn._res });
       } else {
         clearArmed();
@@ -4533,7 +4626,7 @@ function updateHUD(statusOverride){
   // sich nach kurzer Zeit selbst aus; ein Klick auf das Maskottchen klappt sie
   // ein und wieder aus und zeigt die letzte Meldung erneut.
   var msg = ann || speech;
-  if (msg !== lastAnn){ lastAnn = msg; if (msg) annUntil = performance.now() + ANN_MS; }
+  if (msg !== lastAnn){ lastAnn = msg; if (msg) annUntil = performance.now() + (ANN_MS || Infinity); }
   var msgLive = !!(msg && performance.now() <= annUntil);
   // Figuren und Zugliste liegen als einklappbare Abschnitte innerhalb der
   // Sprechblase: Der Abschnittsblock wandert in die Blase des aktiven Modus,
@@ -4965,7 +5058,7 @@ function tone(f, dur, vol, when, slide, grp){
   o.type = 'square';
   o.frequency.setValueAtTime(f, t0);
   if (slide) o.frequency.linearRampToValueAtTime(slide, t0 + dur);
-  g.gain.setValueAtTime(Math.max(0.0001, (vol || 0.12) * (grp === 'mus' ? MUS_GAIN * musVol : masterVol)), t0);
+  g.gain.setValueAtTime(Math.max(0.0001, (vol || 0.12) * (grp === 'mus' ? MUS_GAIN * musVol : grp === 'talk' ? masterVol * talkVol : masterVol)), t0);
   g.gain.exponentialRampToValueAtTime(0.001, t0 + dur);
   o.connect(g); g.connect(c.destination);
   o.start(t0); o.stop(t0 + dur + 0.02);
@@ -4988,7 +5081,7 @@ function robotBabble(){
     var f = 480 + Math.random() * 1320;
     var to = 480 + Math.random() * 1320;
     var d = 0.05 + Math.random() * 0.07;
-    tone(f, d, 0.13, t, to);
+    tone(f, d, 0.13, t, to, 'talk');
     t += d + 0.02 + Math.random() * 0.05;
   }
 }
@@ -5176,6 +5269,10 @@ function startGame(m, lvl, seed, side){
     aiColor = (humanSide === 'w') ? 'b' : 'w';
   }
   tut.step = -1; tut.task = -1;
+  // Startansicht: Die Vorgabe aus den Einstellungen wirkt bei jeder neuen
+  // Partie – 'keep' lässt die zuletzt gedrehte Ansicht unverändert stehen.
+  if (camPreset === 'w') view = 0;
+  else if (camPreset === 'b') view = 2;
   newGame(seed);
   closeMenu();
 }
@@ -5232,6 +5329,7 @@ function openSettings(){
   $('setMus').classList.toggle('selOpt', musOn);
   refreshFsBtn();
   refreshMusTrackBtns();
+  applySetSecsDefault();
   $('setModal').classList.remove('hidden');
 }
 function openInfo(){ $('infoModal').classList.remove('hidden'); }
@@ -5579,6 +5677,49 @@ qsa('.setDur').forEach(function(btn){
     });
   });
 });
+// Startansicht: Vorgabe für den Kamerawinkel bei Partiebeginn.
+qsa('.setCam').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    camPreset = btn.getAttribute('data-cam');
+    qsa('.setCam').forEach(function(b){ b.classList.toggle('selOpt', b === btn); });
+    sfxClick();
+  });
+});
+// Versetzungs-Animation: eigene Dauer, unabhängig von der Drehgeschwindigkeit.
+qsa('.setSlideDur').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    SLIDE_DUR = parseInt(btn.getAttribute('data-dur'), 10);
+    qsa('.setSlideDur').forEach(function(b){ b.classList.toggle('selOpt', b === btn); });
+    sfxClick();
+  });
+});
+// Ansage-Dauer der Sprechblase: kurz, normal, lang oder bis zum Klick (0).
+qsa('.setAnn').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    ANN_MS = parseInt(btn.getAttribute('data-ann'), 10);
+    qsa('.setAnn').forEach(function(b){ b.classList.toggle('selOpt', b === btn); });
+    sfxClick();
+  });
+});
+// Zugausführung: Zwei-Tipp-Mechanik (Standard) oder unmittelbare Ausführung
+// beim ersten Tipp; eine scharf gestellte Vorschau wird beim Wechsel geräumt.
+$('setTwoTap').addEventListener('click', function(){
+  twoTapOn = !twoTapOn;
+  $('setTwoTap').textContent = twoTapOn ? tr('twoTapOnLbl') : tr('twoTapOffLbl');
+  $('setTwoTap').classList.toggle('selOpt', twoTapOn);
+  if (!twoTapOn) clearArmed();
+  sfxClick();
+});
+// Lautstärke der Tetromino-Stimme, unabhängig von Effekten und Musik.
+$('setTalkVol').addEventListener('input', function(){ talkVol = parseInt($('setTalkVol').value, 10) / 100; });
+// Tastatur: Alle Belegungen auf die leeren Standardwerte zurücksetzen.
+$('kbdReset').addEventListener('click', function(){
+  var k;
+  for (k in KBD_DEF) KBD[k] = KBD_DEF[k];
+  saveKbd();
+  refreshKbdRows();
+  sfxClick();
+});
 qsa('.setLang').forEach(function(btn){
   btn.addEventListener('click', function(){
     setLang(btn.getAttribute('data-lang'));
@@ -5621,6 +5762,29 @@ $('menuLogoH').addEventListener('click', function(){
   tone(392, .07, .09); tone(523, .07, .09, .09); tone(659, .12, .09, .18);
 });
 $('setClose').addEventListener('click', function(){ $('setModal').classList.add('hidden'); });
+
+// Einstellungs-Abschnitte: Grafik, Ton, Spiel und Tastatur klappen über
+// ihre Überschriften ein und wieder aus (Anzeige minus/plus in der Ecke);
+// die Sprachwahl steht ganz oben und bleibt stets offen. Der Zustand gilt
+// nur für die geöffnete Sitzung, alle Abschnitte beginnen aufgeklappt.
+var SET_SECS = [['setHGraphik','setSecGraphik'],['setHSound','setSecSound'],
+  ['setHGame','setSecGame'],['setHKbd','setSecKbd']];
+SET_SECS.forEach(function(p){
+  $(p[0]).addEventListener('click', function(){
+    $(p[0]).classList.toggle('closed');
+    $(p[1]).classList.toggle('hidden');
+    sfxClick();
+  });
+});
+// Vorgabe beim Öffnen der Einstellungen: Alle vier Abschnitte erscheinen
+// eingeklappt (Pluszeichen in der Überschrift); nur die Sprachwahl oben
+// bleibt stets offen. Der Zustand wird nicht sitzungsübergreifend gemerkt.
+function applySetSecsDefault(){
+  SET_SECS.forEach(function(p){
+    $(p[0]).classList.add('closed');
+    $(p[1]).classList.add('hidden');
+  });
+}
 // Quellcode ist ausschließlich über den Open-Source-Dialog erreichbar.
 $('infoSrc').addEventListener('click', function(){
   $('infoModal').classList.add('hidden');
