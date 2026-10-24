@@ -208,6 +208,7 @@
     box-shadow:0 4px 0 #000, inset 3px 3px 0 rgba(255,255,255,.14), inset -3px -3px 0 rgba(0,0,0,.32);
     padding:7px 9px;font-family:inherit;font-size:13px;text-transform:uppercase;letter-spacing:1px;cursor:pointer}
   .btn:hover:not(:disabled){background-color:#343472}
+  .btn:focus-visible{background-color:#343472;outline:none}
   .btn:active:not(:disabled){transform:translateY(3px);
     box-shadow:0 1px 0 #000, inset 3px 3px 0 rgba(255,255,255,.14), inset -3px -3px 0 rgba(0,0,0,.32)}
   .btn:disabled{opacity:.32;cursor:default}
@@ -223,6 +224,8 @@
   .setOpts.full{flex-basis:100%;flex-grow:1;margin-top:2px}
   .setOpts.wide{flex-basis:100%;flex-grow:1;margin-top:2px;grid-template-columns:repeat(2,minmax(0,1fr))}
   .setOpts .btn{min-width:0;white-space:nowrap;overflow:hidden}
+  .setKey{min-width:88px}
+  .setKey.wait{border-color:#ff5a5a;color:#ff9a6a}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
   .bubBlock{border-top:1px solid #3d3d7a;margin-top:6px;padding-top:5px}
   .bubBlock h2{margin:0;font-size:10px;color:#9a9ac8;text-transform:uppercase;letter-spacing:1px;cursor:pointer;user-select:none}
@@ -296,7 +299,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.57</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.59</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -406,7 +409,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.57</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.59</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -511,6 +514,8 @@
         <button class="btn small setLang" data-lang="pl"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#fff"/><rect y="6" width="18" height="6" fill="#DC143C"/></svg>Polski</button>
         <button class="btn small setLang" data-lang="es"><svg class="flag" viewBox="0 0 18 12" aria-hidden="true"><rect width="18" height="12" fill="#AA151B"/><rect y="3" width="18" height="6" fill="#F1BF00"/></svg>Español</button>
       </div></div>
+    <h3 id="setHKbd">Tastatur</h3>
+    <div id="kbdRows"></div>
     <div class="btnRow"><button id="setClose" class="btn">Schlie&szlig;en</button></div>
   </div>
 </div>
@@ -565,7 +570,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.57</li></ul>
+    <ul><li>Alpha 0.59</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -573,7 +578,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.57</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.59</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -1283,6 +1288,8 @@ var TXT = {
     setH2: 'Einstellungen', setHSound: 'Ton', setHGame: 'Spiel',
     lblSound: 'Sound', lblMus: 'Musik', lblVol: 'Effekte', lblMusVol: 'Musik-Lautstärke',
     lblDur: 'Drehgeschwindigkeit', lblLang: 'Sprache',
+    kbdH: 'Tastatur', kbdPress: 'Taste drücken…',
+    lblPiv: 'Drehpunkt', lblUndo: 'Zug zurücknehmen',
     muteOnLbl: 'Ton: an', muteOffLbl: 'Ton: aus',
     musOnLbl: 'Musik: an', musOffLbl: 'Musik: aus',
     lblMusTrack: 'Musiktitel', trkOrig: 'Original', trkKlassik: 'Klassik', trkMetal: 'Metal',
@@ -1499,6 +1506,8 @@ var TXT = {
     setH2: 'Settings', setHSound: 'Sound', setHGame: 'Game',
     lblSound: 'Sound', lblMus: 'Music', lblVol: 'Effects', lblMusVol: 'Music volume',
     lblDur: 'Rotation speed', lblLang: 'Language',
+    kbdH: 'Keyboard', kbdPress: 'Press a key…',
+    lblPiv: 'Pivot', lblUndo: 'Take back move',
     muteOnLbl: 'Sound: on', muteOffLbl: 'Sound: off',
     musOnLbl: 'Music: on', musOffLbl: 'Music: off',
     lblMusTrack: 'Music track', trkOrig: 'Original', trkKlassik: 'Classical', trkMetal: 'Metal',
@@ -1808,6 +1817,8 @@ var TXT = {
     setH2: 'Paramètres', setHSound: 'Son', setHGame: 'Jeu',
     lblSound: 'Son', lblMus: 'Musique', lblVol: 'Effets', lblMusVol: 'Volume de la musique',
     lblDur: 'Vitesse de rotation', lblLang: 'Langue',
+    kbdH: 'Clavier', kbdPress: 'Appuyez sur une touche…',
+    lblPiv: 'Pivot', lblUndo: 'Annuler le coup',
     muteOnLbl: 'Son : activé', muteOffLbl: 'Son : coupé',
     musOnLbl: 'Musique : activée', musOffLbl: 'Musique : coupée',
     lblMusTrack: 'Titre musical', trkOrig: 'Original', trkKlassik: 'Classique', trkMetal: 'Metal',
@@ -2118,6 +2129,8 @@ var TXT = {
     setH2: 'Nastavení', setHSound: 'Zvuk', setHGame: 'Hra',
     lblSound: 'Zvuk', lblMus: 'Hudba', lblVol: 'Efekty', lblMusVol: 'Hlasitost hudby',
     lblDur: 'Rychlost otáčení', lblLang: 'Jazyk',
+    kbdH: 'Klávesnice', kbdPress: 'Stiskněte klávesu…',
+    lblPiv: 'Střed otáčení', lblUndo: 'Vzít tah zpět',
     muteOnLbl: 'Zvuk: zapnuto', muteOffLbl: 'Zvuk: vypnuto',
     musOnLbl: 'Hudba: zapnuta', musOffLbl: 'Hudba: vypnuta',
     lblMusTrack: 'Hudební skladba', trkOrig: 'Originál', trkKlassik: 'Klasika', trkMetal: 'Metal',
@@ -2334,6 +2347,8 @@ var TXT = {
     setH2: 'Ustawienia', setHSound: 'Dźwięk', setHGame: 'Gra',
     lblSound: 'Dźwięk', lblMus: 'Muzyka', lblVol: 'Efekty', lblMusVol: 'Głośność muzyki',
     lblDur: 'Prędkość obrotu', lblLang: 'Język',
+    kbdH: 'Klawiatura', kbdPress: 'Naciśnij klawisz…',
+    lblPiv: 'Punkt obrotu', lblUndo: 'Cofnij ruch',
     muteOnLbl: 'Dźwięk: włączony', muteOffLbl: 'Dźwięk: wyłączony',
     musOnLbl: 'Muzyka: włączona', musOffLbl: 'Muzyka: wyłączona',
     lblMusTrack: 'Utwór muzyczny', trkOrig: 'Oryginał', trkKlassik: 'Klasyka', trkMetal: 'Metal',
@@ -2551,6 +2566,8 @@ var TXT = {
     setH2: 'Ajustes', setHSound: 'Sonido', setHGame: 'Juego',
     lblSound: 'Sonido', lblMus: 'Música', lblVol: 'Efectos', lblMusVol: 'Volumen de la música',
     lblDur: 'Velocidad de giro', lblLang: 'Idioma',
+    kbdH: 'Teclado', kbdPress: 'Pulsa una tecla…',
+    lblPiv: 'Punto de giro', lblUndo: 'Deshacer jugada',
     muteOnLbl: 'Sonido: activado', muteOffLbl: 'Sonido: desactivado',
     musOnLbl: 'Música: activada', musOffLbl: 'Música: desactivada',
     lblMusTrack: 'Tema musical', trkOrig: 'Original', trkKlassik: 'Clásica', trkMetal: 'Metal',
@@ -2627,6 +2644,7 @@ function applyLang(){
     saveBack: 'saveBackLbl', setH2: 'setH2', setHSound: 'setHSound', setHGame: 'setHGame',
     setLblSound: 'lblSound', setLblMus: 'lblMus', setLblVol: 'lblVol',
     setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblDur: 'lblDur', setLblLang: 'lblLang',
+    setHKbd: 'kbdH',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
     seedStart: 'seedStartLbl', seedClose: 'seedCloseLbl',
@@ -2667,6 +2685,7 @@ function applyLang(){
     b.classList.toggle('selOpt', b.getAttribute('data-lang') === lang);
   });
   refreshMusTrackBtns();
+  refreshKbdRows(); // Tastaturbelegung: Zeilen mit übersetzten Beschriftungen neu aufbauen
   $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
   $('setMute').classList.toggle('selOpt', muted);
   $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
@@ -4135,7 +4154,159 @@ cv.addEventListener('mousemove', function(e){
 cv.addEventListener('mouseleave', function(){ hover = null; updateCursor(); });
 cv.addEventListener('click', onCanvasClick);
 cv.addEventListener('contextmenu', function(e){ e.preventDefault(); deselect(); });
+// ---------- Tastatursteuerung (PC) ----------
+// Ansichtsdrehung: Pfeiltasten (bestehend). Menüsteuerung: In offenen Menüs
+// wandern die Pfeiltasten über die Knöpfe, Enter wählt (nativ). Alle Spiel-
+// aktionen – Rotationen, Verschiebungen, Zugausführung, Figurenwahl (I, O,
+// T, L, S), Drehpunktwechsel und Zugrücknahme – sind FREI belegbar über den
+// Einstellungs-Abschnitt „Tastatur“; sie starten UNBELEGT und werden nur
+// auf ausdrücklichen Wunsch zugewiesen. Die Belegung wird als JSON unter
+// dem localStorage-Schlüssel tetraKeys gespeichert; die Rücktaste löscht
+// eine Belegung wieder, Doppelbelegungen werden beim Zuordnen getauscht.
+// Rotationen folgen exakt der Zwei-Tipp-Mechanik der Knöpfe: erster Tipp
+// stellt die Vorschau scharf, zweiter Tipp führt aus.
+var KBD_DEF = { xP: '', xM: '', yP: '', yM: '', zP: '', zM: '',
+  x180: '', y180: '', z180: '', n: '', e: '', s: '', w: '', go: '',
+  pivNext: '', pivPrev: '', pickI: '', pickO: '', pickT: '', pickL: '', pickS: '',
+  undo: '' };
+var KBD_KEY = 'tetraKeys', KBD = {}, kbdCapture = null;
+(function(){
+  var k;
+  for (k in KBD_DEF) KBD[k] = KBD_DEF[k];
+  try {
+    var s = JSON.parse(window.localStorage.getItem(KBD_KEY));
+    if (s && typeof s === 'object') for (k in KBD_DEF) if (s[k]) KBD[k] = String(s[k]);
+  } catch (e2) {}
+})();
+var KBD_ORDER = ['xP','xM','yP','yM','zP','zM','x180','y180','z180','n','e','s','w','go',
+  'pivNext','pivPrev','pickI','pickO','pickT','pickL','pickS','undo'];
+var KBD_LABEL = { xP: 'X +90°', xM: 'X −90°', yP: 'Y +90°', yM: 'Y −90°',
+  zP: 'Z +90°', zM: 'Z −90°', x180: 'X 180°', y180: 'Y 180°', z180: 'Z 180°',
+  n: '↑', e: '→', s: '↓', w: '←',
+  pickI: 'I', pickO: 'O', pickT: 'T', pickL: 'L', pickS: 'S' };
+var KBD_AXIS = { xP: ['x',1], xM: ['x',-1], yP: ['y',1], yM: ['y',-1],
+  zP: ['z',1], zM: ['z',-1], x180: ['x',2], y180: ['y',2], z180: ['z',2] };
+var KBD_TYPES = ['I','O','T','L','S'];
+function keyName(k){ if (!k) return '—'; return k === ' ' ? '␣' : (k.length === 1 && k >= 'A' && k <= 'Z') ? '⇧' + k : k; }
+function kbdRowLabel(id){
+  if (id === 'go') return tr('slideGoLbl');
+  if (id === 'pivNext') return tr('lblPiv') + ' ▶';
+  if (id === 'pivPrev') return tr('lblPiv') + ' ◀';
+  if (id === 'undo') return tr('lblUndo');
+  return KBD_LABEL[id];
+}
+function saveKbd(){ try { window.localStorage.setItem(KBD_KEY, JSON.stringify(KBD)); } catch (e) {} }
+function kbdActionOf(key){ var k; for (k in KBD) if (KBD[k] === key) return k; return null; }
+function refreshKbdRows(){
+  kbdCapture = null;
+  var host = $('kbdRows'), html = '', i, id, lbl, tt;
+  for (i = 0; i < KBD_ORDER.length; i++){
+    id = KBD_ORDER[i];
+    lbl = kbdRowLabel(id);
+    tt = (id === 'n' || id === 'e' || id === 's' || id === 'w')
+      ? ' title="' + tr('d' + id.toUpperCase()) + '"' : '';
+    html += '<div class="setRow"><span class="setLbl"' + tt + '>' + lbl + '</span>' +
+      '<button class="btn small setKey" data-kbd="' + id + '">' + keyName(KBD[id]) + '</button></div>';
+  }
+  host.innerHTML = html;
+  qsa('.setKey').forEach(function(b){
+    b.addEventListener('click', function(){ startKeyCapture(b.getAttribute('data-kbd')); });
+  });
+}
+function startKeyCapture(id){
+  kbdCapture = id;
+  qsa('.setKey').forEach(function(b){
+    var mine = b.getAttribute('data-kbd') === id;
+    b.classList.toggle('wait', mine);
+    b.textContent = mine ? tr('kbdPress') : keyName(KBD[b.getAttribute('data-kbd')]);
+  });
+}
+function endKeyCapture(){ refreshKbdRows(); }
+function kbdOpenPanel(){ // Wurzel des offenen Menüs/Dialogs, sonst null
+  var ids = ['rulesModal','setModal','infoModal','srcModal','seedModal','endOverlay',
+    'tutOverlay','saveOverlay','menuOverlay'], i;
+  for (i = 0; i < ids.length; i++){
+    var el = $(ids[i]);
+    if (!el && typeof el !== 'undefined') continue;
+    if (el && !el.classList.contains('hidden')) return el;
+  }
+  return null;
+}
+function kbdBlocked(){ return kbdOpenPanel() !== null; } // Spielsteuerung nur ohne offene Dialoge
+function kbdNav(dir){ // Pfeiltasten wandern über die sichtbaren Knöpfe des offenen Menüs
+  var panel = kbdOpenPanel();
+  if (!panel) return;
+  var btns = qsa('.btn').filter(function(b){
+    return !b.disabled && b.offsetParent !== null && panel.contains(b);
+  });
+  if (!btns.length) return;
+  var cur = btns.indexOf(document.activeElement);
+  var nxt = (cur < 0) ? 0 : (cur + dir + btns.length) % btns.length;
+  btns[nxt].focus();
+}
+function doKbdAction(id){
+  if (gameOver || replayOn || phase === 'anim') return;
+  if (id === 'undo'){ if (undoAvailable()) takeBackMove(); return; }
+  if (id === 'pivNext' || id === 'pivPrev'){ // Drehpunkt durchwechseln
+    if (!sel || (phase !== 'piece' && phase !== 'axis')) return;
+    var list = [], i;
+    for (i = 0; i < sel.cubes.length; i++) if (cubeHasMove(i)) list.push(i);
+    if (!list.length){ updateHUD(tr('msgNoPivot')); return; }
+    var at = list.indexOf(pivotIdx);
+    var nx = (at < 0) ? 0 : (at + (id === 'pivNext' ? 1 : -1) + list.length) % list.length;
+    pivotIdx = list[nx]; phase = 'axis'; buildAxisPanel(); sfxPivot(); updateHUD();
+    if (mode === 'tutorial') tutEvent('pivot', { piece: sel, ci: pivotIdx });
+    return;
+  }
+  if (id.indexOf('pick') === 0){ kbdPickPiece(KBD_TYPES.indexOf(id.charAt(4))); return; }
+  if (id === 'go'){
+    if (phase === 'piece' && slide && slide.res) commitMove({ axis: 't', dir: 1, slide: slide, res: slide.res });
+    return;
+  }
+  if (id === 'n' || id === 'e' || id === 's' || id === 'w'){ slideAccum(id.toUpperCase()); return; }
+  if (!sel || (phase !== 'piece' && phase !== 'axis')) return;
+  if (phase === 'piece'){ // Drehpunkt noch offen: ersten drehfähigen Würfel wählen
+    var ci = -1, i;
+    for (i = 0; i < sel.cubes.length; i++){ if (cubeHasMove(i)){ ci = i; break; } }
+    if (ci < 0){ updateHUD(tr('msgNoPivot')); return; }
+    pivotIdx = ci; phase = 'axis'; buildAxisPanel(); sfxPivot(); updateHUD();
+    if (mode === 'tutorial') tutEvent('pivot', { piece: sel, ci: ci });
+  }
+  var ad = KBD_AXIS[id], axis = ad[0], dir = ad[1], btn = null, i2;
+  for (i2 = 0; i2 < axBtns.length; i2++){
+    if (axBtns[i2].getAttribute('data-axis') === axis &&
+        parseInt(axBtns[i2].getAttribute('data-dir'), 10) === dir){ btn = axBtns[i2]; break; }
+  }
+  if (!btn || btn.disabled || !btn._res){ updateHUD(tr('msgNoAxis')); return; }
+  if (armedBtn === btn) commitMove({ axis: axis, dir: dir, res: btn._res });
+  else { // gleiche Zwei-Tipp-Mechanik wie die Knöpfe: scharf stellen, dann ausführen
+    clearArmed(); armedBtn = btn; btn.classList.add('armed');
+    if (ghostOn) preview = { res: btn._res, axis: axis, dir: dir };
+    sfxPivot(); updateHUD(tr('msgArmed'));
+  }
+}
+function kbdPickPiece(idx){
+  if (gameOver || replayOn || phase === 'anim') return;
+  var i;
+  for (i = 0; i < pieces.length; i++){
+    var p = pieces[i];
+    if (p.color === turn && !p.phantom && p.type === KBD_TYPES[idx]){ selectPiece(p); return; }
+  }
+}
 window.addEventListener('keydown', function(e){
+  if (kbdCapture){ // Belegungsaufnahme: die nächste Taste wird zugewiesen
+    e.preventDefault();
+    if (e.key === 'Escape' || e.key === 'Tab'){ endKeyCapture(); return; }
+    if (e.key === 'Backspace' || e.key === 'Delete'){ // Belegung wieder löschen
+      KBD[kbdCapture] = ''; saveKbd(); endKeyCapture(); return;
+    }
+    var old = KBD[kbdCapture], k;
+    for (k in KBD) if (k !== kbdCapture && KBD[k] === e.key) KBD[k] = old; // Tausch
+    KBD[kbdCapture] = e.key;
+    saveKbd();
+    endKeyCapture();
+    return;
+  }
   if (e.key === 'Escape'){
     var modals = ['rulesModal', 'setModal', 'infoModal', 'srcModal', 'seedModal', 'endOverlay'], i;
     for (i = 0; i < modals.length; i++){
@@ -4147,8 +4318,23 @@ window.addEventListener('keydown', function(e){
     if (!$('menuOverlay').classList.contains('hidden')){ closeMenu(); return; }
     deselect();
   }
-  else if (e.key === 'ArrowLeft'){ e.preventDefault(); rotateView(-1); }
-  else if (e.key === 'ArrowRight'){ e.preventDefault(); rotateView(1); }
+  else if (e.key === 'ArrowUp' || e.key === 'ArrowDown' ||
+           e.key === 'ArrowLeft' || e.key === 'ArrowRight'){
+    // In Eingabefeldern (Slider, Textfelder) wirken Pfeile nativ
+    if (e.target && (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA')) return;
+    if (kbdOpenPanel()){ // Menüsteuerung: über Knöpfe wandern, Enter wählt (nativ)
+      e.preventDefault();
+      kbdNav((e.key === 'ArrowUp' || e.key === 'ArrowLeft') ? -1 : 1);
+      return;
+    }
+    if (e.key === 'ArrowLeft'){ e.preventDefault(); rotateView(-1); }
+    else if (e.key === 'ArrowRight'){ e.preventDefault(); rotateView(1); }
+  }
+  else {
+    if (kbdBlocked()) return;
+    var act = kbdActionOf(e.key);
+    if (act){ e.preventDefault(); doKbdAction(act); }
+  }
 });
 
 function updateCursor(){
