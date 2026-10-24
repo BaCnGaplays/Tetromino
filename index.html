@@ -232,6 +232,9 @@
   .setOpts.wide{flex-basis:100%;flex-grow:1;margin-top:2px;grid-template-columns:repeat(2,minmax(0,1fr))}
   .setOpts.quad{grid-template-columns:repeat(4,minmax(0,1fr))}
   .setOpts .btn{min-width:0;white-space:nowrap;overflow:hidden}
+  .setTheme{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px}
+  .thmPrev{width:40px;height:40px;image-rendering:pixelated;border:1px solid #000;background:#000}
+  .thmName{font-size:9px;letter-spacing:1px}
   .setKey{min-width:88px}
   .setKey.wait{border-color:#ff5a5a;color:#ff9a6a}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -309,7 +312,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.66</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.72</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -421,7 +424,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.66</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.72</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -513,6 +516,14 @@
           <button class="btn small setCam" data-cam="w">Wei&szlig; unten</button>
           <button class="btn small setCam selOpt" data-cam="keep">Beibehalten</button>
           <button class="btn small setCam" data-cam="b">Schwarz unten</button>
+        </div></div>
+      <div class="setRow"><span class="setLbl" id="setLblTheme">Brettthema</span>
+        <div class="setOpts">
+          <button class="btn small setTheme selOpt" data-theme="orig"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Original</span></button>
+          <button class="btn small setTheme" data-theme="mono"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Monochrom</span></button>
+          <button class="btn small setTheme" data-theme="blocks"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Blocks</span></button>
+          <button class="btn small setTheme" data-theme="edel"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Edel</span></button>
+          <button class="btn small setTheme" data-theme="winter"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Winter</span></button>
         </div></div>
     </div>
     <h3 id="setHSound" class="setSecH">Ton</h3>
@@ -614,7 +625,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.66</li></ul>
+    <ul><li>Alpha 0.72</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -622,7 +633,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.66</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.72</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -1347,6 +1358,8 @@ var TXT = {
     lblAnnDur: 'Ansage-Dauer', annShortLbl: 'Kurz', annNormLbl: 'Normal', annLongLbl: 'Lang', annHoldLbl: 'Bis Klick',
     lblTwoTap: 'Zugausführung', twoTapOnLbl: 'Zwei-Tipp', twoTapOffLbl: 'Direkt',
     kbdResetLbl: 'Alle Belegungen löschen',
+    lblTheme: 'Brettthema', themeOrig: 'Original', themeMono: 'Monochrom', themeBlocks: 'Blocks',
+    themeEdel: 'Edel', themeWinter: 'Winter',
     setCloseLbl: 'Schließen',
     seedH2: 'Partie mit Startwert',
     seedIntroHtml: SEEDINTRO_DE,
@@ -1571,6 +1584,8 @@ var TXT = {
     lblAnnDur: 'Announcement duration', annShortLbl: 'Short', annNormLbl: 'Normal', annLongLbl: 'Long', annHoldLbl: 'Until click',
     lblTwoTap: 'Move execution', twoTapOnLbl: 'Two taps', twoTapOffLbl: 'Immediate',
     kbdResetLbl: 'Clear all bindings',
+    lblTheme: 'Board theme', themeOrig: 'Original', themeMono: 'Monochrome', themeBlocks: 'Blocks',
+    themeEdel: 'Noble', themeWinter: 'Winter',
     setCloseLbl: 'Close',
     seedH2: 'Game with seed',
     seedIntroHtml: 'The same seed produces the same starting position – games can thus be repeated and replayed exactly. The seed of the running game is shown in the status bar behind the game mode.',
@@ -1888,6 +1903,8 @@ var TXT = {
     lblAnnDur: 'Durée de l’annonce', annShortLbl: 'Bref', annNormLbl: 'Normale', annLongLbl: 'Longue', annHoldLbl: 'Jusqu’au clic',
     lblTwoTap: 'Exécution du coup', twoTapOnLbl: 'Deux clics', twoTapOffLbl: 'Immédiat',
     kbdResetLbl: 'Effacer toutes les touches',
+    lblTheme: 'Thème du plateau', themeOrig: 'Original', themeMono: 'Monochrome', themeBlocks: 'Blocks',
+    themeEdel: 'Noblesse', themeWinter: 'Hiver',
     setCloseLbl: 'Fermer',
     seedH2: 'Partie avec valeur de départ',
     seedIntroHtml: 'Une même valeur de départ (seed) produit la même disposition initiale – les parties peuvent ainsi être répétées et rejouées à l’identique. La valeur de la partie en cours s’affiche dans la barre d’état derrière le mode de jeu.',
@@ -2206,6 +2223,8 @@ var TXT = {
     lblAnnDur: 'Doba oznámení', annShortLbl: 'Krátce', annNormLbl: 'Normálně', annLongLbl: 'Dlouze', annHoldLbl: 'Do kliknutí',
     lblTwoTap: 'Provádění tahu', twoTapOnLbl: 'Dvě poklepání', twoTapOffLbl: 'Přímo',
     kbdResetLbl: 'Smazat všechny klávesy',
+    lblTheme: 'Motiv desky', themeOrig: 'Originál', themeMono: 'Monochrom', themeBlocks: 'Blocks',
+    themeEdel: 'Elegantní', themeWinter: 'Zima',
     setCloseLbl: 'Zavřít',
     seedH2: 'Partie s počátečním číslem',
     seedIntroHtml: SEEDINTRO_CS,
@@ -2430,6 +2449,8 @@ var TXT = {
     lblAnnDur: 'Czas trwania komunikatu', annShortLbl: 'Krótko', annNormLbl: 'Normalnie', annLongLbl: 'Długo', annHoldLbl: 'Do kliknięcia',
     lblTwoTap: 'Wykonanie ruchu', twoTapOnLbl: 'Dwa stuknięcia', twoTapOffLbl: 'Bezpośrednio',
     kbdResetLbl: 'Wyczyść wszystkie klawisze',
+    lblTheme: 'Motyw planszy', themeOrig: 'Oryginał', themeMono: 'Monochrom', themeBlocks: 'Blocks',
+    themeEdel: 'Szlachetny', themeWinter: 'Zima',
     setCloseLbl: 'Zamknij',
     seedH2: 'Partia z wartością startową',
     seedIntroHtml: SEEDINTRO_PL,
@@ -2655,6 +2676,8 @@ var TXT = {
     lblAnnDur: 'Duración del aviso', annShortLbl: 'Breve', annNormLbl: 'Normal', annLongLbl: 'Largo', annHoldLbl: 'Hasta clic',
     lblTwoTap: 'Ejecución de la jugada', twoTapOnLbl: 'Dos toques', twoTapOffLbl: 'Directo',
     kbdResetLbl: 'Borrar todas las teclas',
+    lblTheme: 'Tema del tablero', themeOrig: 'Original', themeMono: 'Monocromo', themeBlocks: 'Blocks',
+    themeEdel: 'Noble', themeWinter: 'Invierno',
     setCloseLbl: 'Cerrar',
     seedH2: 'Partida con valor inicial',
     seedIntroHtml: SEEDINTRO_ES,
@@ -2726,6 +2749,7 @@ function applyLang(){
     setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblFs: 'lblFs', setLblDur: 'lblDur', setLblLang: 'lblLang',
     setLblCam: 'lblCam', setLblTalkVol: 'lblTalkVol', setLblSlideDur: 'lblSlideDur',
     setLblAnnDur: 'lblAnnDur', setLblTwoTap: 'lblTwoTap', kbdReset: 'kbdResetLbl',
+    setLblTheme: 'lblTheme',
     setHKbd: 'kbdH',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
@@ -2782,6 +2806,14 @@ function applyLang(){
   });
   $('setTwoTap').textContent = twoTapOn ? tr('twoTapOnLbl') : tr('twoTapOffLbl');
   $('setTwoTap').classList.toggle('selOpt', twoTapOn);
+  // Brettthema: Knopfbeschriftungen übersetzen und die gewählte Option markieren;
+  // die Mini-Vorschauen zeigen stets die Farben des jeweiligen Themas.
+  qsa('.setTheme').forEach(function(b){
+    var t = b.getAttribute('data-theme');
+    var tmap = { orig: 'themeOrig', mono: 'themeMono', blocks: 'themeBlocks', edel: 'themeEdel', winter: 'themeWinter' };
+    b.querySelector('.thmName').textContent = tr(tmap[t] || 'themeOrig');
+    b.classList.toggle('selOpt', t === theme);
+  });
   qsa('.setLang').forEach(function(b){
     b.classList.toggle('selOpt', b.getAttribute('data-lang') === lang);
   });
@@ -2870,6 +2902,93 @@ var PAL = {
   sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
 };
 var TYPE_COLOR = { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' };
+// ---------- Brettthemen ----------
+// Fünf Themen steuern die Farbgebung von Brett und Steinen: das Original,
+// ein monochromes Blau-Thema, das Blocks-Thema (Minecraft-Anmutung), bei
+// dem eingebrochene Bodenplatten zu glühender Lava werden, das edle
+// Gold-und-Silber-Thema mit Glanzlicht auf den Steinen sowie das Winter-
+// Thema mit schneebedecktem Brett, Eisloch statt Lava und fallenem Schnee. applyTheme()
+// überschreibt die Felder von PAL und TYPE_COLOR an Ort und Stelle, sodass
+// alle bestehenden Referenzen (Zeichnung, Masköttchen, Erfolgsseiten)
+// automatisch die neuen Farben übernehmen. Die Wahl wird dauerhaft unter
+// dem localStorage-Schlüssel tetraTheme gespeichert.
+var THEMES = {
+  orig: {
+    pal: {
+      bg: '#10102a', floorA: '#e8e8d0', floorB: '#6f9a52', edgeA: '#b8b894', edgeB: '#54763c',
+      rimInk: '#e8e8d0', slabL: '#8a5a34', slabR: '#5d3a22', slabLine: '#241608',
+      w: { top: '#f8f8f0', l: '#d4d4e8', r: '#9c9cd0', line: '#2a2a4a' },
+      b: { top: '#7c7cb0', l: '#52528a', r: '#32325e', line: '#101028' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  mono: {
+    pal: {
+      bg: '#08081c', floorA: '#b0bade', floorB: '#707cae', edgeA: '#8f9cc8', edgeB: '#525e94',
+      rimInk: '#b0bade', slabL: '#41497a', slabR: '#2c325a', slabLine: '#10132e',
+      w: { top: '#eef1ff', l: '#c6ccee', r: '#9aa6d8', line: '#262650' },
+      b: { top: '#5d6aae', l: '#45508a', r: '#2e3766', line: '#0a0a26' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    type: { I: '#6fb6ff', O: '#a9c9ff', T: '#4a7fd6', L: '#86aaf0', S: '#d4e4ff' }
+  },
+  blocks: {
+    pal: {
+      bg: '#0d0d1a', floorA: '#6fc247', floorB: '#53963a', edgeA: '#4f9132', edgeB: '#3d7429',
+      rimInk: '#e8e8d0', slabL: '#8a5a34', slabR: '#5d3a22', slabLine: '#241608',
+      w: { top: '#d4c391', l: '#bfb383', r: '#a89c6d', line: '#5a4d28' },
+      b: { top: '#1f152e', l: '#161020', r: '#100b18', line: '#050308' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Edelstein-Farben bleiben im Blocks-Thema unverändert: Sie wirken dort
+    // wie Diamant, Gold, Amethyst, Kupfer und Smaragd. Die weiße Partei
+    // stellt Birkenholzbretter dar, die schwarze Partei Obsidian.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  edel: {
+    pal: {
+      bg: '#0c0812', floorA: '#2e2444', floorB: '#221a36', edgeA: '#b99a4d', edgeB: '#8a713a',
+      rimInk: '#e8d48a', slabL: '#4a3a20', slabR: '#2f2414', slabLine: '#140e04',
+      w: { top: '#f5c542', l: '#d4a52a', r: '#a87d1c', line: '#4d3608' },
+      b: { top: '#d8dce4', l: '#aab0bd', r: '#7e8492', line: '#2a2d36' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Gold- und Silberpartei mit den edelsteinartigen Marken der Figurentypen.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  winter: {
+    pal: {
+      bg: '#0c1430', floorA: '#f2f6ff', floorB: '#d7e3f4', edgeA: '#b8c9e4', edgeB: '#94abd0',
+      rimInk: '#e8f0ff', slabL: '#7a5a3c', slabR: '#523824', slabLine: '#1e1206',
+      w: { top: '#fdf4d6', l: '#e6d9b4', r: '#c0b184', line: '#6b5d2e' },
+      b: { top: '#5e6c8e', l: '#42506e', r: '#2b3650', line: '#101828' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Schneebedecktes Brett in kühlen Weiß- und Blautönen; die Edelstein-
+    // Marken bleiben unverändert, die weiße Partei wirkt als warmes
+    // Elfenbein, damit sie sich vom kühlen Schnee abhebt.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  }
+};
+var THEME_KEY = 'tetraTheme', theme = 'orig';
+(function(){
+  try {
+    var t = window.localStorage.getItem(THEME_KEY);
+    if (t === 'mono' || t === 'blocks' || t === 'edel' || t === 'winter') theme = t;
+  } catch (e) {}
+})();
+function applyTheme(){
+  var T = THEMES[theme] || THEMES.orig, k;
+  for (k in T.pal){
+    if (k === 'w' || k === 'b'){
+      PAL[k].top = T.pal[k].top; PAL[k].l = T.pal[k].l;
+      PAL[k].r = T.pal[k].r; PAL[k].line = T.pal[k].line;
+    } else PAL[k] = T.pal[k];
+  }
+  for (k in T.type) TYPE_COLOR[k] = T.type[k];
+}
+applyTheme();
 var SHAPES = {
   I: [[0,1],[1,1],[2,1],[3,1]],
   O: [[0,0],[1,0],[0,1],[1,1]],
@@ -4711,6 +4830,58 @@ function strokePoly(pts, style, dash){
 }
 
 // Würfel zeichnen (x,y,z können während der Animation Fließkommawerte sein)
+// Blocks-Thema: Textur der Steine entsprechend der Minecraft-Vorbilder.
+// Weiße Steine (Birkenholzbretter) erhalten je Fläche zwei Brettfugen,
+// parallel zur Vorderkante gezeichnet, sodass die Textur in jeder Kamera-
+// perspektive plan auf der Fläche liegt. Schwarze Steine (Obsidian) tragen
+// ein gesprenkeltes Muster aus helleren Pixeln; deren Lage variiert
+// deterministisch mit den Würfelkoordinaten, damit keine zwei Steine
+// identisch wirken.
+function blockTexture(top, left, right, isW, x, y, z){
+  var faces, i, t, f, a, b, c, d, h;
+  if (isW){
+    faces = [top, left, right];
+    ctx.strokeStyle = 'rgba(90,77,40,0.55)';
+    ctx.lineWidth = 1;
+    for (i = 0; i < faces.length; i++){
+      a = faces[i][0]; b = faces[i][1]; c = faces[i][3]; d = faces[i][2];
+      for (t = 1; t <= 2; t++){
+        f = t / 3;
+        ctx.beginPath();
+        ctx.moveTo(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f);
+        ctx.lineTo(c[0] + (d[0] - c[0]) * f, c[1] + (d[1] - c[1]) * f);
+        ctx.stroke();
+      }
+    }
+  } else {
+    h = (x * 7 + y * 11 + z * 5) % 3;
+    var s = 0.1 * h;
+    function spot(face, u, v, col){
+      var P = face[0], Q = face[1], D = face[3];
+      var px = P[0] + (Q[0] - P[0]) * u + (D[0] - P[0]) * v;
+      var py = P[1] + (Q[1] - P[1]) * u + (D[1] - P[1]) * v;
+      poly([[px, py - 1], [px + 1, py], [px, py + 1], [px - 1, py]], col);
+    }
+    spot(top, 0.32 + s, 0.30, '#4a3550');
+    spot(top, 0.70, 0.62 + s, '#3a2a3a');
+    spot(left, 0.42, 0.38 + s, '#42304a');
+    spot(right, 0.60, 0.55 - s, '#362542');
+  }
+}
+// Edles Thema: Glanz-Effekt der Gold- und Silbersteine. Das Glanzlicht
+// (specular highlight) sitzt auf der Deckfläche leicht versetzt zur
+// hinteren Ecke und besteht aus zwei gestaffelten Rauten; die Seitenflächen
+// erhalten einen feinen hellen Saum entlang ihrer oberen Kante.
+function edelGlanz(top, left, right){
+  var cx = top[0][0] + (top[1][0] - top[0][0]) * 0.30 + (top[3][0] - top[0][0]) * 0.30;
+  var cy = top[0][1] + (top[1][1] - top[0][1]) * 0.30 + (top[3][1] - top[0][1]) * 0.30;
+  poly([[cx, cy-3], [cx+4, cy], [cx, cy+3], [cx-4, cy]], 'rgba(255,255,255,0.35)');
+  poly([[cx, cy-1], [cx+2, cy], [cx, cy+1], [cx-2, cy]], 'rgba(255,255,255,0.55)');
+  ctx.strokeStyle = 'rgba(255,255,255,0.22)';
+  ctx.lineWidth = 1;
+  ctx.beginPath(); ctx.moveTo(left[0][0], left[0][1]); ctx.lineTo(left[1][0], left[1][1]); ctx.stroke();
+  ctx.beginPath(); ctx.moveTo(right[0][0], right[0][1]); ctx.lineTo(right[1][0], right[1][1]); ctx.stroke();
+}
 function drawCube(x, y, z, pal, oy, st){
   st = st || {};
   var v = vw(x, y, z);
@@ -4725,6 +4896,13 @@ function drawCube(x, y, z, pal, oy, st){
   poly(left, st.tint || pal.l);
   poly(right, st.tint || pal.r);
   poly(top, st.tint || pal.top);
+  if (theme === 'blocks' && !st.tint && (pal === PAL.w || pal === PAL.b))
+    blockTexture(top, left, right, pal === PAL.w, x, y, z);
+  // Edles Thema: Glanzlicht auf den Gold- und Silbersteinen – ein helles,
+  // gestaffeltes Glanzflecken-Muster auf der Deckfläche und ein feiner
+  // Schimmer entlang der oberen Kanten der Seitenflächen.
+  if (theme === 'edel' && !st.tint && (pal === PAL.w || pal === PAL.b))
+    edelGlanz(top, left, right);
   strokePoly(hex, st.out || pal.line);
   if (st.ghost) strokePoly(top, '#ffffff', [3, 2]);
   if (st.gem){
@@ -4795,6 +4973,22 @@ function drawPivotMarker(c, oy){
   strokePoly(d, '#000');
 }
 
+// ---------- Winter-Thema: Schneefall ----------
+// Rund neunzig Flocken fallen gleichmäßig über die Szene; die Bewegung
+// wird über den Zeitschritt der Bildwiederholung gerechnet (gedeckelt bei
+// 50 ms), pendelt seitlich und startet oben neu, wenn eine Flocke unten
+// den Bildrand verlässt. Größere Flocken bleiben in der Minderheit.
+var SNOW_N = 90, snow = [], snowLast = 0;
+function snowInit(){
+  snow = [];
+  for (var si = 0; si < SNOW_N; si++){
+    snow.push({
+      x: Math.random() * CANW, y: Math.random() * CANH,
+      v: 16 + Math.random() * 30, s: Math.random() < 0.28 ? 2 : 1,
+      ph: Math.random() * Math.PI * 2, sw: 5 + Math.random() * 12
+    });
+  }
+}
 function draw(now){
   var t = now / 1000;
   // Weiche Kamera-Anpassung für hohe Türme
@@ -4918,13 +5112,36 @@ function draw(now){
       if (isWarn) fsx += Math.round(Math.sin(now * 0.02 + it.y) * 1);
       var ftop = [[fsx, fsy], [fsx+TW, fsy+TH], [fsx, fsy+2*TH], [fsx-TW, fsy+TH]];
       if (crumbled[it.x + ',' + it.y]){
-        // eingebrochene Bodenplatte: dunkles Loch
-        poly(ftop, '#05051a');
-        strokePoly(ftop, '#000000');
+        if (theme === 'blocks'){
+          // Blocks-Thema: Die eingebrochene Bodenplatte wird zur glühenden
+          // Lava; das Flimmern pulsiert mit der Spieluhr.
+          var lp = 0.5 + 0.5 * Math.sin(now * 0.004 + (it.x * 3 + it.y * 5));
+          poly(ftop, '#a82c06');
+          poly(ftop, 'rgba(255,150,40,' + (0.30 + 0.25 * lp).toFixed(3) + ')');
+          strokePoly(ftop, '#4a0d00');
+        } else if (theme === 'winter'){
+          // Winter-Thema: Die eingebrochene Bodenplatte wird zum gefrorenen
+          // Eisloch; das matte Eisblau pulsiert leicht mit der Spieluhr.
+          var ip = 0.5 + 0.5 * Math.sin(now * 0.002 + (it.x * 4 + it.y * 7));
+          poly(ftop, '#0d2038');
+          poly(ftop, 'rgba(110,180,235,' + (0.10 + 0.12 * ip).toFixed(3) + ')');
+          strokePoly(ftop, '#081426');
+        } else {
+          // eingebrochene Bodenplatte: dunkles Loch
+          poly(ftop, '#05051a');
+          strokePoly(ftop, '#000000');
+        }
       } else {
         var light = (it.x + it.y) % 2 === 0; // Originalfeldfarbe bleibt beim Kameraschwenken erhalten
         poly(ftop, light ? PAL.floorA : PAL.floorB);
         strokePoly(ftop, light ? PAL.edgeA : PAL.edgeB);
+        if (theme === 'winter'){
+          // Winter-Thema: Schneeglitzern, zwei helle Bildpunkte pulsieren je Feld
+          var gp = 0.5 + 0.5 * Math.sin(now * 0.003 + (it.x * 5 + it.y * 3));
+          ctx.fillStyle = 'rgba(255,255,255,' + (0.20 + 0.40 * gp).toFixed(3) + ')';
+          ctx.fillRect(fsx - 3, fsy + TH - 2, 1, 1);
+          ctx.fillRect(fsx + 4, fsy + TH + 3, 1, 1);
+        }
         if (isWarn){
           // Bröckel-Markierung: rötlicher Schimmer, roter Rand und Risse
           poly(ftop, 'rgba(255,90,90,0.14)');
@@ -5014,6 +5231,24 @@ function draw(now){
   if (phase === 'axis' && sel) drawPivotMarker(sel.cubes[pivotIdx], oy);
 
   ctx.setTransform(1, 0, 0, 1, 0, 0);
+
+  // Winter-Thema: Schneefall über der gesamten Szene, nach dem Brett und
+  // den Steinen gezeichnet, sodass die Flocken vor allem davor sichtbar sind.
+  if (theme === 'winter'){
+    if (!snow.length) snowInit();
+    var sdt = snowLast ? Math.min(0.05, (now - snowLast) / 1000) : 0.016;
+    snowLast = now;
+    ctx.fillStyle = 'rgba(255,255,255,0.85)';
+    for (i = 0; i < snow.length; i++){
+      var fl = snow[i];
+      fl.y += fl.v * sdt;
+      fl.ph += sdt * 1.7;
+      if (fl.y > CANH + 2){ fl.y = -3; fl.x = Math.random() * CANW; }
+      var fx2 = fl.x + Math.sin(fl.ph) * fl.sw;
+      if (fx2 < -2) fx2 += CANW + 4; else if (fx2 > CANW + 2) fx2 -= CANW + 4;
+      ctx.fillRect(rr(fx2), rr(fl.y), fl.s, fl.s);
+    }
+  } else if (snow.length){ snow = []; snowLast = 0; }
 
   // Ansage nach Ablauf der Anzeigedauer automatisch ausblenden; sind die
   // Figurenliste oder die Zugliste ausgeklappt, bleibt die Blase als
@@ -5712,6 +5947,58 @@ $('setTwoTap').addEventListener('click', function(){
 });
 // Lautstärke der Tetromino-Stimme, unabhängig von Effekten und Musik.
 $('setTalkVol').addEventListener('input', function(){ talkVol = parseInt($('setTalkVol').value, 10) / 100; });
+// Brettthema: Auswahl übernimmt die Farben sofort und wird dauerhaft gemerkt.
+qsa('.setTheme').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    theme = btn.getAttribute('data-theme');
+    try { window.localStorage.setItem(THEME_KEY, theme); } catch (e) {}
+    applyTheme();
+    qsa('.setTheme').forEach(function(b){ b.classList.toggle('selOpt', b === btn); });
+    sfxClick();
+  });
+});
+// Mini-Vorschauen der Brettthemen: Jeder Knopf trägt ein zehnmal zehn Pixel
+// großes Vorschaubild (auf 40 Bildpunkte skaliert, pixelig wie das Spiel).
+// Dargestellt ist ein kleiner Brettausschnitt im Schachbunktermuster mit
+// einem weißen I-Stein und einem schwarzen T-Stein samt Edelstein-Marken;
+// im Blocks-Thema steht zusätzlich ein Lava-Feld für die eingebrochenen
+// Bodenplatten, im Winter-Thema liegen zwei Schneeflocken auf dem
+// dunklen Stein.
+function drawThemePreviews(){
+  qsa('.setTheme').forEach(function(btn){
+    var c = btn.querySelector('.thmPrev'), g = c.getContext('2d');
+    var T = THEMES[btn.getAttribute('data-theme')] || THEMES.orig;
+    var x, y;
+    for (x = 0; x < 5; x++) for (y = 0; y < 5; y++){
+      g.fillStyle = (x + y) % 2 === 0 ? T.pal.floorA : T.pal.floorB;
+      g.fillRect(x * 2, y * 2, 2, 2);
+    }
+    if (btn.getAttribute('data-theme') === 'blocks'){
+      g.fillStyle = '#d64a12'; g.fillRect(8, 8, 2, 2);
+      g.fillStyle = '#ffb040'; g.fillRect(8, 8, 1, 1);
+    }
+    g.fillStyle = T.pal.w.top; g.fillRect(0, 0, 4, 2);
+    g.fillStyle = T.pal.w.l;   g.fillRect(0, 2, 4, 1);
+    g.fillStyle = T.type.I;    g.fillRect(1, 1, 1, 1);
+    g.fillStyle = T.pal.b.top; g.fillRect(6, 4, 2, 4);
+    g.fillStyle = T.pal.b.l;   g.fillRect(8, 4, 1, 4);
+    g.fillStyle = T.type.T;    g.fillRect(6, 5, 1, 1);
+    if (btn.getAttribute('data-theme') === 'blocks'){
+      // Birkenholz-Brettfuge und Obsidian-Sprenkel in der Mini-Vorschau
+      g.fillStyle = 'rgba(90,77,40,0.55)'; g.fillRect(0, 1, 4, 1);
+      g.fillStyle = '#4a3550'; g.fillRect(7, 6, 1, 1);
+    }
+    if (btn.getAttribute('data-theme') === 'edel'){
+      // Glanzlichter der Gold- und Silbersteine in der Mini-Vorschau
+      g.fillStyle = 'rgba(255,255,255,0.55)'; g.fillRect(1, 0, 1, 1); g.fillRect(7, 5, 1, 1);
+    }
+    if (btn.getAttribute('data-theme') === 'winter'){
+      // Abgelagerte Schneeflocken auf dem dunklen Stein in der Mini-Vorschau
+      g.fillStyle = '#ffffff'; g.fillRect(6, 4, 1, 1); g.fillRect(8, 6, 1, 1);
+    }
+  });
+}
+drawThemePreviews();
 // Tastatur: Alle Belegungen auf die leeren Standardwerte zurücksetzen.
 $('kbdReset').addEventListener('click', function(){
   var k;
