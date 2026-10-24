@@ -312,7 +312,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.72</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.73</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -424,7 +424,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.72</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.73</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -625,7 +625,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.72</li></ul>
+    <ul><li>Alpha 0.73</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -633,7 +633,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.72</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.73</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -2861,7 +2861,7 @@ function setLang(l){
   if (mode === 'tutorial' && tut.step >= 0 && tut.task >= 0) tutRender();
   if (!$('saveOverlay').classList.contains('hidden')) renderSaveMenu();
   if (!$('tutOverlay').classList.contains('hidden')) openTutMenu();
-  if (!$('setModal').classList.contains('hidden')) openSettings();
+  if (!$('setModal').classList.contains('hidden')) refreshSettings();
 }
 // ---------- Kamera ----------
 var view = 0; // Drehung der Ansicht um die senkrechte Achse (0..3, je 90°)
@@ -5557,13 +5557,18 @@ function pickTut(i){
   tutStart(idx);
   closeMenu(); // Hauptmenü schließen: Die gewählte Lektion steht im Vordergrund
 }
-function openSettings(){
+// Aktualisiert die dynamischen Knopfzustände im Einstellungsfenster (Texte
+// und Auswahlmarkierungen), ohne die Abschnitte ein- oder auszuklappen.
+function refreshSettings(){
   $('setMute').textContent = muted ? tr('muteOffLbl') : tr('muteOnLbl');
   $('setMute').classList.toggle('selOpt', muted);
   $('setMus').textContent = musOn ? tr('musOnLbl') : tr('musOffLbl');
   $('setMus').classList.toggle('selOpt', musOn);
   refreshFsBtn();
   refreshMusTrackBtns();
+}
+function openSettings(){
+  refreshSettings();
   applySetSecsDefault();
   $('setModal').classList.remove('hidden');
 }
@@ -5886,15 +5891,15 @@ $('endMenu').addEventListener('click', function(){
   mode = '2p'; newGame(); openMenu();
 });
 
-$('setMute').addEventListener('click', function(){ toggleMute(); openSettings(); });
+$('setMute').addEventListener('click', function(){ toggleMute(); refreshSettings(); });
 $('setFs').addEventListener('click', function(){ toggleFullscreen(); });
 document.addEventListener('fullscreenchange', function(){ refreshFsBtn(); });
 document.addEventListener('webkitfullscreenchange', function(){ refreshFsBtn(); });
-$('setMus').addEventListener('click', function(){ toggleMusic(); openSettings(); });
+$('setMus').addEventListener('click', function(){ toggleMusic(); refreshSettings(); });
 qsa('.setMusTrack').forEach(function(b){
   b.addEventListener('click', function(){
     setMusTrack(b.getAttribute('data-mus'));
-    openSettings(); // Knopftexte und Auswahlmarkierung frisch halten
+    refreshSettings(); // Knopftexte und Auswahlmarkierung frisch halten, ohne Abschnitte einzuklappen
   });
 });
 $('setVol').addEventListener('input', function(){ masterVol = parseInt($('setVol').value, 10) / 100; });
