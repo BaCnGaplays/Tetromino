@@ -235,6 +235,14 @@
   .setTheme{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px}
   .thmPrev{width:40px;height:40px;image-rendering:pixelated;border:1px solid #000;background:#000}
   .thmName{font-size:9px;letter-spacing:1px}
+  .setSkin{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 3px;position:relative}
+  .sknPrev svg{display:block;width:40px;height:auto;image-rendering:pixelated}
+  .sknName{font-size:8px;letter-spacing:0.5px;max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .setSkin.locked{cursor:not-allowed}
+  .setSkin.locked .sknPrev{filter:grayscale(1);opacity:.45}
+  .setSkin.locked .sknName{color:#7a7a92}
+  .sknLock{position:absolute;right:1px;bottom:1px}
+  #skinOpts{display:flex;flex-wrap:wrap;gap:4px}
   .setKey{min-width:88px}
   .setKey.wait{border-color:#ff5a5a;color:#ff9a6a}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -312,7 +320,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.73</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.74</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -424,7 +432,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.73</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.74</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -525,6 +533,8 @@
           <button class="btn small setTheme" data-theme="edel"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Edel</span></button>
           <button class="btn small setTheme" data-theme="winter"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Winter</span></button>
         </div></div>
+      <div class="setRow"><span class="setLbl" id="setLblSkin">Tetromino-Skin</span>
+        <div class="setOpts" id="skinOpts"></div></div>
     </div>
     <h3 id="setHSound" class="setSecH">Ton</h3>
     <div id="setSecSound">
@@ -625,7 +635,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.73</li></ul>
+    <ul><li>Alpha 0.74</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -633,7 +643,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.73</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.74</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -1360,6 +1370,8 @@ var TXT = {
     kbdResetLbl: 'Alle Belegungen löschen',
     lblTheme: 'Brettthema', themeOrig: 'Original', themeMono: 'Monochrom', themeBlocks: 'Blocks',
     themeEdel: 'Edel', themeWinter: 'Winter',
+    lblSkin: 'Tetromino-Skin', skinStd: 'Standard',
+    skinLockHint: 'Noch gesperrt – Erfolg „{name}“ erforderlich.',
     setCloseLbl: 'Schließen',
     seedH2: 'Partie mit Startwert',
     seedIntroHtml: SEEDINTRO_DE,
@@ -1586,6 +1598,8 @@ var TXT = {
     kbdResetLbl: 'Clear all bindings',
     lblTheme: 'Board theme', themeOrig: 'Original', themeMono: 'Monochrome', themeBlocks: 'Blocks',
     themeEdel: 'Noble', themeWinter: 'Winter',
+    lblSkin: 'Tetromino skin', skinStd: 'Default',
+    skinLockHint: 'Still locked – requires the achievement “{name}”.',
     setCloseLbl: 'Close',
     seedH2: 'Game with seed',
     seedIntroHtml: 'The same seed produces the same starting position – games can thus be repeated and replayed exactly. The seed of the running game is shown in the status bar behind the game mode.',
@@ -1905,6 +1919,8 @@ var TXT = {
     kbdResetLbl: 'Effacer toutes les touches',
     lblTheme: 'Thème du plateau', themeOrig: 'Original', themeMono: 'Monochrome', themeBlocks: 'Blocks',
     themeEdel: 'Noblesse', themeWinter: 'Hiver',
+    lblSkin: 'Skin de Tetromino', skinStd: 'Standard',
+    skinLockHint: 'Encore verrouillé – nécessite le succès « {name} ».',
     setCloseLbl: 'Fermer',
     seedH2: 'Partie avec valeur de départ',
     seedIntroHtml: 'Une même valeur de départ (seed) produit la même disposition initiale – les parties peuvent ainsi être répétées et rejouées à l’identique. La valeur de la partie en cours s’affiche dans la barre d’état derrière le mode de jeu.',
@@ -2225,6 +2241,8 @@ var TXT = {
     kbdResetLbl: 'Smazat všechny klávesy',
     lblTheme: 'Motiv desky', themeOrig: 'Originál', themeMono: 'Monochrom', themeBlocks: 'Blocks',
     themeEdel: 'Elegantní', themeWinter: 'Zima',
+    lblSkin: 'Skin Tetromina', skinStd: 'Standardní',
+    skinLockHint: 'Zatím zamčeno – vyžaduje úspěch „{name}“.',
     setCloseLbl: 'Zavřít',
     seedH2: 'Partie s počátečním číslem',
     seedIntroHtml: SEEDINTRO_CS,
@@ -2451,6 +2469,8 @@ var TXT = {
     kbdResetLbl: 'Wyczyść wszystkie klawisze',
     lblTheme: 'Motyw planszy', themeOrig: 'Oryginał', themeMono: 'Monochrom', themeBlocks: 'Blocks',
     themeEdel: 'Szlachetny', themeWinter: 'Zima',
+    lblSkin: 'Skórka Tetromino', skinStd: 'Standardowa',
+    skinLockHint: 'Nadal zablokowany – wymaga osiągnięcia „{name}”.',
     setCloseLbl: 'Zamknij',
     seedH2: 'Partia z wartością startową',
     seedIntroHtml: SEEDINTRO_PL,
@@ -2678,6 +2698,8 @@ var TXT = {
     kbdResetLbl: 'Borrar todas las teclas',
     lblTheme: 'Tema del tablero', themeOrig: 'Original', themeMono: 'Monocromo', themeBlocks: 'Blocks',
     themeEdel: 'Noble', themeWinter: 'Invierno',
+    lblSkin: 'Skin de Tetromino', skinStd: 'Estándar',
+    skinLockHint: 'Todavía bloqueado – requiere el logro «{name}».',
     setCloseLbl: 'Cerrar',
     seedH2: 'Partida con valor inicial',
     seedIntroHtml: SEEDINTRO_ES,
@@ -2749,7 +2771,7 @@ function applyLang(){
     setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblFs: 'lblFs', setLblDur: 'lblDur', setLblLang: 'lblLang',
     setLblCam: 'lblCam', setLblTalkVol: 'lblTalkVol', setLblSlideDur: 'lblSlideDur',
     setLblAnnDur: 'lblAnnDur', setLblTwoTap: 'lblTwoTap', kbdReset: 'kbdResetLbl',
-    setLblTheme: 'lblTheme',
+    setLblTheme: 'lblTheme', setLblSkin: 'lblSkin',
     setHKbd: 'kbdH',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
@@ -5566,6 +5588,7 @@ function refreshSettings(){
   $('setMus').classList.toggle('selOpt', musOn);
   refreshFsBtn();
   refreshMusTrackBtns();
+  refreshSkinBtns();
 }
 function openSettings(){
   refreshSettings();
@@ -6244,14 +6267,245 @@ function pixText(str, color, scale){
   return pixSVG(rows, color, scale);
 }
 // 8-Bit-Maskottchen „Tetromino“ (T-Figur mit Augen) für die Tutorial-Sprechblase
+// ---------- Tetromino-Skins ----------
+// Siebzehn Spezialskins schmücken das Masköttchen; jeder hängt an genau
+// einem Erfolg: Ist der Erfolg im aktiven Spielstand freigeschaltet, lässt
+// sich der Skin in den Einstellungen unter Grafik wählen; andernfalls
+// zeigt die Auswahl lediglich eine ausgegraute Vorschau mit Schloss, und
+// ein Klick quittiert mit einem tiefen Bleep. Die Wahl wird dauerhaft unter
+// dem localStorage-Schlüssel mascSkin gespeichert.
+var MASC_SKIN_KEY = 'mascSkin', mascSkin = 'std';
+var SKIN_IDS = ['firstWin', 'firstDraw', 'blitz', 'lehrling', 'geselle', 'gm', 'seedAll',
+  'perpetual', 'lSac', 'phantomHit', 'phantomSac', 'firstFall', 'phantomFall', 'tronFall',
+  'dameFremd', 'easter', 'rusRoots'];
+(function(){
+  try {
+    var sk = window.localStorage.getItem(MASC_SKIN_KEY);
+    if (sk === 'std' || SKIN_IDS.indexOf(sk) >= 0) mascSkin = sk;
+  } catch (e) {}
+})();
+function skinUnlocked(id){
+  if (id === 'std') return true;
+  var s = activeSlot();
+  return !!(s && s.ach && s.ach[id]);
+}
+// Schmuck je Skin als Pixel-SVG über dem Grundkörper. Die meisten Skins
+// nutzen den erweiterten Zeichenraum über dem Kopf und seitlich; der
+// Sturz-Skin kippt den Körper in mascotSVG() und ersetzt die Augen hier.
+function skinDecor(id){
+  switch (id){
+    case 'firstWin': // Siegerkrone, goldener Pokal
+      return '<rect x="4.5" y="-2.6" width="1.2" height="1.4" fill="#ffd23f"/>' +
+        '<rect x="7.4" y="-3.2" width="1.2" height="2" fill="#ffd23f"/>' +
+        '<rect x="10.3" y="-2.6" width="1.2" height="1.4" fill="#ffd23f"/>' +
+        '<rect x="4.5" y="-1.4" width="7" height="1" fill="#ffd23f" stroke="#7a5a00" stroke-width="0.25"/>' +
+        '<rect x="15" y="6.5" width="3" height="2.2" fill="#ffd23f" stroke="#7a5a00" stroke-width="0.25"/>' +
+        '<rect x="15.9" y="8.7" width="1.2" height="1.6" fill="#c8a018"/>' +
+        '<rect x="14.8" y="10.3" width="3.4" height="1" fill="#c8a018"/>';
+    case 'firstDraw': // Silber-goldener Körper mit Waagen-Symbol
+      return '<rect x="2.5" y="0.5" width="5.5" height="5" fill="#c8ccd8"/>' +
+        '<rect x="8" y="0.5" width="5.5" height="5" fill="#f5c542"/>' +
+        '<rect x="6.5" y="5.5" width="1.5" height="6" fill="#c8ccd8"/>' +
+        '<rect x="8" y="5.5" width="1.5" height="6" fill="#f5c542"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#ffffff"/><rect x="10" y="2" width="2" height="2" fill="#ffffff"/>' +
+        '<rect x="5" y="3" width="1" height="1" fill="#101024"/><rect x="10" y="3" width="1" height="1" fill="#101024"/>' +
+        '<rect x="4" y="-3.2" width="7" height="0.8" fill="#c8ccd8"/>' +
+        '<rect x="7" y="-2.6" width="1" height="1.6" fill="#e8e8f0"/>' +
+        '<rect x="3.2" y="-1.8" width="2.2" height="0.8" fill="#f5c542"/>' +
+        '<rect x="9.6" y="-1.8" width="2.2" height="0.8" fill="#c8ccd8"/>';
+    case 'blitz': // Flammen an den Füßen, Blitz, Tempo-Streifen
+      return '<rect x="4.8" y="12" width="1.2" height="1.8" fill="#ef7c1a"/>' +
+        '<rect x="6.4" y="12.6" width="1.4" height="2.2" fill="#ffb040"/>' +
+        '<rect x="8.2" y="12.2" width="1.2" height="1.6" fill="#ef7c1a"/>' +
+        '<rect x="7" y="12.6" width="0.9" height="1.2" fill="#ff5a2a"/>' +
+        '<rect x="15.5" y="0.8" width="1.4" height="2.4" fill="#ffd23f"/>' +
+        '<rect x="14.7" y="2.6" width="1.4" height="1.8" fill="#ffd23f"/>' +
+        '<rect x="16.3" y="4" width="1.4" height="2.6" fill="#ffd23f"/>' +
+        '<rect x="-2.5" y="2.5" width="3.4" height="0.7" fill="rgba(255,255,255,0.65)"/>' +
+        '<rect x="-1.5" y="5.5" width="2.6" height="0.7" fill="rgba(255,255,255,0.45)"/>' +
+        '<rect x="-2" y="8.5" width="3" height="0.7" fill="rgba(255,255,255,0.3)"/>';
+    case 'lehrling': // Holzhelm, Trainingsschwert, Anfängerabzeichen
+      return '<rect x="3.2" y="-1.6" width="9.6" height="2" fill="#8a5a34" stroke="#5d3a22" stroke-width="0.3"/>' +
+        '<rect x="14.2" y="4.2" width="4" height="0.9" fill="#c8a06a"/>' +
+        '<rect x="17.2" y="3.4" width="1" height="2.4" fill="#8a5a34"/>' +
+        '<rect x="7.2" y="6.8" width="1.6" height="1.6" fill="#3fbf3f" stroke="#1a5a1a" stroke-width="0.25"/>';
+    case 'geselle': // Schmiedeschürze, Hammer, silberner Rangorden
+      return '<rect x="5.8" y="6.2" width="4.4" height="4.4" fill="#5d3a22" stroke="#3a2414" stroke-width="0.25"/>' +
+        '<rect x="6.2" y="5.6" width="1" height="1" fill="#3a2414"/>' +
+        '<rect x="8.8" y="5.6" width="1" height="1" fill="#3a2414"/>' +
+        '<rect x="14.8" y="4.6" width="0.9" height="4.2" fill="#8a5a34"/>' +
+        '<rect x="14" y="3.6" width="2.5" height="1.4" fill="#9aa6b8"/>' +
+        '<rect x="7.4" y="7.4" width="1.2" height="1.2" fill="#c8ccd8" stroke="#6a7080" stroke-width="0.2"/>';
+    case 'gm': // Prächtige Krone, violette Aura, königliche Verzierungen
+      return '<rect x="1" y="-1" width="14" height="13.5" fill="rgba(160,80,255,0.16)"/>' +
+        '<rect x="4" y="-2.8" width="1.4" height="1.6" fill="#ffd23f"/>' +
+        '<rect x="7.3" y="-3.4" width="1.4" height="2.2" fill="#ffd23f"/>' +
+        '<rect x="10.6" y="-2.8" width="1.4" height="1.6" fill="#ffd23f"/>' +
+        '<rect x="4" y="-1.4" width="8" height="1.1" fill="#ffd23f" stroke="#7a5a00" stroke-width="0.25"/>' +
+        '<rect x="7.4" y="-1.1" width="0.9" height="0.8" fill="#d84a6a"/>' +
+        '<rect x="9.7" y="-1.1" width="0.9" height="0.8" fill="#4a7fd6"/>' +
+        '<rect x="6.5" y="11.5" width="3" height="0.9" fill="#ffd23f"/>';
+    case 'seedAll': // Galaxienmuster, Sterne, kosmische Leuchteffekte
+      return '<rect x="2.5" y="0.5" width="11" height="5" fill="#1a1a4a" opacity="0.6"/>' +
+        '<rect x="6.5" y="5.5" width="3" height="6" fill="#1a1a4a" opacity="0.6"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#ffffff"/><rect x="10" y="2" width="2" height="2" fill="#ffffff"/>' +
+        '<rect x="5" y="3" width="1" height="1" fill="#101024"/><rect x="10" y="3" width="1" height="1" fill="#101024"/>' +
+        '<rect x="4" y="1.4" width="0.6" height="0.6" fill="#ffffff"/>' +
+        '<rect x="9.6" y="3.8" width="0.6" height="0.6" fill="#ffd23f"/>' +
+        '<rect x="11.6" y="1.2" width="0.6" height="0.6" fill="#9fe8ff"/>' +
+        '<rect x="7.6" y="8" width="0.6" height="0.6" fill="#ffffff"/>' +
+        '<rect x="8.2" y="10.4" width="0.6" height="0.6" fill="#ffd23f"/>' +
+        '<rect x="-2" y="1" width="1.4" height="0.5" fill="#ffffff"/><rect x="-1.45" y="0.45" width="0.5" height="1.6" fill="#ffffff"/>' +
+        '<rect x="15" y="9" width="1.4" height="0.5" fill="#9fe8ff"/><rect x="15.55" y="8.45" width="0.5" height="1.6" fill="#9fe8ff"/>';
+    case 'perpetual': // Fünf leuchtende Schach-Symbole im Kreis
+      return '<rect x="-2.2" y="-2.8" width="1.3" height="1.8" fill="#ffd23f"/><rect x="-1.85" y="-3.1" width="0.6" height="0.6" fill="#ffd23f"/>' +
+        '<rect x="16.6" y="-2.8" width="1.3" height="1.8" fill="#ffd23f"/><rect x="16.95" y="-3.1" width="0.6" height="0.6" fill="#ffd23f"/>' +
+        '<rect x="-2.6" y="3" width="1.3" height="1.8" fill="#ffd23f"/><rect x="-2.25" y="2.7" width="0.6" height="0.6" fill="#ffd23f"/>' +
+        '<rect x="17" y="3" width="1.3" height="1.8" fill="#ffd23f"/><rect x="17.35" y="2.7" width="0.6" height="0.6" fill="#ffd23f"/>' +
+        '<rect x="7.3" y="-4.2" width="1.3" height="1.8" fill="#ffd23f"/><rect x="7.65" y="-4.5" width="0.6" height="0.6" fill="#ffd23f"/>';
+    case 'lSac': // Angeschlagener Helm, gefallene L-Figur
+      return '<rect x="3.2" y="-1.5" width="9.6" height="1.9" fill="#9aa6b8" stroke="#5a606e" stroke-width="0.3"/>' +
+        '<rect x="7.6" y="-1.5" width="0.9" height="1.9" fill="#101024"/>' +
+        '<rect x="14" y="11" width="3.2" height="1" fill="#ef7c1a" stroke="#101024" stroke-width="0.25"/>' +
+        '<rect x="16.2" y="12" width="1" height="1.2" fill="#ef7c1a" stroke="#101024" stroke-width="0.25"/>';
+    case 'phantomHit': // Geisterhände, blaues Leuchten, Phantom-Auge
+      return '<rect x="2.5" y="0.5" width="11" height="5" fill="rgba(90,180,255,0.22)"/>' +
+        '<rect x="6.5" y="5.5" width="3" height="6" fill="rgba(90,180,255,0.22)"/>' +
+        '<rect x="3.8" y="2" width="2" height="2" fill="#9fe8ff"/>' +
+        '<rect x="4.4" y="2.9" width="0.8" height="0.8" fill="#ffffff"/>' +
+        '<rect x="0.8" y="6" width="1.8" height="2.6" fill="rgba(220,240,255,0.8)" stroke="#7ac8ff" stroke-width="0.25"/>' +
+        '<rect x="13.4" y="6" width="1.8" height="2.6" fill="rgba(220,240,255,0.8)" stroke="#7ac8ff" stroke-width="0.25"/>';
+    case 'phantomSac': // Verblassendes Damenphantom, violette Seelenfunken
+      return '<rect x="5.5" y="-4.2" width="5" height="3" fill="rgba(200,180,255,0.55)" stroke="#8a6ad8" stroke-width="0.3"/>' +
+        '<rect x="6.5" y="-3.4" width="0.7" height="0.7" fill="#2a2050"/><rect x="8.8" y="-3.4" width="0.7" height="0.7" fill="#2a2050"/>' +
+        '<rect x="4" y="-1.6" width="0.7" height="0.7" fill="#b98aff"/>' +
+        '<rect x="11.4" y="-2.4" width="0.7" height="0.7" fill="#b98aff"/>' +
+        '<rect x="12.6" y="-0.4" width="0.7" height="0.7" fill="#d8c8ff"/>' +
+        '<rect x="2.8" y="-0.6" width="0.7" height="0.7" fill="#d8c8ff"/>';
+    case 'firstFall': // Erschrockenes Gesicht, Splitter (Körper gekippt)
+      return '<rect x="3.7" y="1.7" width="2.6" height="2.6" fill="#ffffff"/><rect x="4.6" y="2.6" width="0.9" height="0.9" fill="#101024"/>' +
+        '<rect x="9.7" y="1.7" width="2.6" height="2.6" fill="#ffffff"/><rect x="10.6" y="2.6" width="0.9" height="0.9" fill="#101024"/>' +
+        '<rect x="7" y="4.2" width="2" height="1.3" fill="#101024"/>' +
+        '<rect x="4.6" y="13.4" width="0.8" height="0.8" fill="#9aa6b8"/>' +
+        '<rect x="10.4" y="13.8" width="0.8" height="0.8" fill="#6a6a7a"/>' +
+        '<rect x="14.6" y="7.5" width="0.8" height="0.8" fill="#9aa6b8"/>' +
+        '<rect x="0.6" y="10" width="0.8" height="0.8" fill="#6a6a7a"/>';
+    case 'phantomFall': // Halbtransparentes Damenphantom, zerfallende Partikel
+      return '<rect x="14.5" y="3.5" width="4" height="4" fill="rgba(200,180,255,0.4)" stroke="#8a6ad8" stroke-width="0.3"/>' +
+        '<rect x="15.2" y="4.4" width="0.8" height="0.8" fill="#2a2050"/><rect x="17" y="4.4" width="0.8" height="0.8" fill="#2a2050"/>' +
+        '<rect x="15.4" y="8" width="0.7" height="0.7" fill="rgba(200,180,255,0.5)"/>' +
+        '<rect x="16.8" y="9.2" width="0.7" height="0.7" fill="rgba(200,180,255,0.35)"/>' +
+        '<rect x="15" y="10.6" width="0.7" height="0.7" fill="rgba(200,180,255,0.2)"/>';
+    case 'tronFall': // Zerbrochene Krone, Throntrümmer, königlicher Umhang
+      return '<rect x="3" y="5.5" width="10" height="6.5" fill="rgba(160,30,30,0.45)"/>' +
+        '<g transform="rotate(18 5.5 -1)"><rect x="3.8" y="-2.4" width="3.2" height="1.6" fill="#ffd23f" stroke="#7a5a00" stroke-width="0.25"/></g>' +
+        '<g transform="rotate(-16 11 -1)"><rect x="9" y="-2.6" width="3.2" height="1.6" fill="#ffd23f" stroke="#7a5a00" stroke-width="0.25"/></g>' +
+        '<rect x="5.6" y="-1.4" width="0.8" height="0.8" fill="#d84a6a"/>' +
+        '<rect x="14.4" y="10" width="1.6" height="1.4" fill="#8a8a9a"/><rect x="16" y="11" width="1.4" height="1.2" fill="#6a6a7a"/>' +
+        '<rect x="0.8" y="11.4" width="1.4" height="1.2" fill="#8a8a9a"/>';
+    case 'dameFremd': // S-Stein-Symbol, Phantomschimmer, magische Risse
+      return '<rect x="5.8" y="-3.6" width="1.2" height="1.2" fill="#3fbf3f" stroke="#1a5a1a" stroke-width="0.2"/>' +
+        '<rect x="7" y="-3.6" width="1.2" height="1.2" fill="#3fbf3f" stroke="#1a5a1a" stroke-width="0.2"/>' +
+        '<rect x="4.6" y="-2.4" width="1.2" height="1.2" fill="#3fbf3f" stroke="#1a5a1a" stroke-width="0.2"/>' +
+        '<rect x="5.8" y="-2.4" width="1.2" height="1.2" fill="#3fbf3f" stroke="#1a5a1a" stroke-width="0.2"/>' +
+        '<rect x="2.5" y="0.5" width="11" height="5" fill="rgba(255,255,255,0.14)"/>' +
+        '<rect x="8" y="0.7" width="0.6" height="0.6" fill="#b98aff"/>' +
+        '<rect x="9" y="1.5" width="0.6" height="0.6" fill="#d8c8ff"/>' +
+        '<rect x="9.8" y="2.3" width="0.6" height="0.6" fill="#b98aff"/>';
+    case 'easter': // Detektivhut, Lupe, Fragezeichen
+      return '<rect x="1.8" y="-0.9" width="12.4" height="1" fill="#3a3a4a"/>' +
+        '<rect x="3.8" y="-2.8" width="8.4" height="2" fill="#4a4a5e" stroke="#20202c" stroke-width="0.3"/>' +
+        '<rect x="14.6" y="4.8" width="2.4" height="2.4" fill="rgba(180,220,255,0.5)" stroke="#c8ccd8" stroke-width="0.5"/>' +
+        '<rect x="16.8" y="7.2" width="1" height="2.2" fill="#8a5a34"/>' +
+        '<rect x="0.4" y="1.6" width="1.2" height="0.8" fill="#ffd23f"/>' +
+        '<rect x="1.2" y="2.4" width="0.8" height="0.8" fill="#ffd23f"/>' +
+        '<rect x="0.8" y="3.2" width="0.8" height="0.8" fill="#ffd23f"/>' +
+        '<rect x="0.8" y="4.4" width="0.8" height="0.8" fill="#ffd23f"/>';
+    case 'rusRoots': // Trainingsanzug, Sonnenbrille, Uschanka, Neon-Akzente
+      return '<rect x="2.5" y="0.5" width="11" height="5" fill="#c8342a" opacity="0.9"/>' +
+        '<rect x="6.5" y="5.5" width="3" height="6" fill="#c8342a" opacity="0.9"/>' +
+        '<rect x="2.5" y="4" width="11" height="0.8" fill="#ffffff" opacity="0.9"/>' +
+        '<rect x="3.4" y="2" width="9.2" height="1.6" fill="#101018"/>' +
+        '<rect x="7.2" y="2.4" width="1.2" height="0.6" fill="rgba(255,255,255,0.6)"/>' +
+        '<rect x="2.8" y="-1.8" width="10.4" height="1.9" fill="#6a4a30" stroke="#3a2414" stroke-width="0.25"/>' +
+        '<rect x="1.6" y="-0.6" width="1.8" height="2.8" fill="#d8dce4"/>' +
+        '<rect x="12.6" y="-0.6" width="1.8" height="2.8" fill="#d8dce4"/>' +
+        '<rect x="7.4" y="-1.5" width="1.2" height="1.2" fill="#ffd23f"/>' +
+        '<rect x="-1.4" y="2" width="2.6" height="0.6" fill="rgba(255,60,40,0.6)"/>' +
+        '<rect x="15" y="5" width="2.6" height="0.6" fill="rgba(255,60,40,0.6)"/>';
+  }
+  return '';
+}
+function mascotSVGFor(sk){
+  var old = mascSkin; mascSkin = sk;
+  var s = mascotSVG(); mascSkin = old;
+  return s;
+}
 function mascotSVG(){
   var c = TYPE_COLOR.T;
-  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 13" width="44" height="36" shape-rendering="crispEdges">' +
-    '<rect x="2.5" y="0.5" width="11" height="5" fill="' + c + '" stroke="#101024" stroke-width="1"/>' +
-    '<rect x="6.5" y="5.5" width="3" height="6" fill="' + c + '" stroke="#101024" stroke-width="1"/>' +
-    '<rect x="4" y="2" width="2" height="2" fill="#ffffff"/><rect x="10" y="2" width="2" height="2" fill="#ffffff"/>' +
-    '<rect x="5" y="3" width="1" height="1" fill="#101024"/><rect x="10" y="3" width="1" height="1" fill="#101024"/>' +
-    '</svg>';
+  var body = '<rect x="2.5" y="0.5" width="11" height="5" fill="' + c + '" stroke="#101024" stroke-width="1"/>' +
+    '<rect x="6.5" y="5.5" width="3" height="6" fill="' + c + '" stroke="#101024" stroke-width="1"/>';
+  var eyes = '<rect x="4" y="2" width="2" height="2" fill="#ffffff"/><rect x="10" y="2" width="2" height="2" fill="#ffffff"/>' +
+    '<rect x="5" y="3" width="1" height="1" fill="#101024"/><rect x="10" y="3" width="1" height="1" fill="#101024"/>';
+  if (mascSkin === 'std')
+    return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 16 13" width="44" height="36" shape-rendering="crispEdges">' +
+      body + eyes + '</svg>';
+  var inner = (mascSkin === 'firstFall')
+    ? '<g transform="rotate(-8 8 6)">' + body + '</g>' + skinDecor(mascSkin)
+    : body + eyes + skinDecor(mascSkin);
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="-3 -5 22 20" width="55" height="50" shape-rendering="crispEdges">' +
+    inner + '</svg>';
+}
+// Auswahl der Skins in den Einstellungen: Standard plus je Erfolg ein
+// Spezialskin mit Vorschau des geschmückten Masköttchens; gesperrte Skins
+// tragen ein Schloss-Siegel und nehmen Klicks nicht an.
+function lockSVG(){
+  return '<svg class="sknLock" viewBox="0 0 7 8" width="10" height="11" shape-rendering="crispEdges">' +
+    '<rect x="1.6" y="0.6" width="3.8" height="3" fill="none" stroke="#ffd23f" stroke-width="1"/>' +
+    '<rect x="0.8" y="3" width="5.4" height="4.2" fill="#ffd23f" stroke="#101024" stroke-width="0.5"/>' +
+    '<rect x="3" y="4.6" width="1" height="1.6" fill="#101024"/></svg>';
+}
+function skinLabel(id){
+  if (id === 'std') return tr('skinStd');
+  return tr('ach' + (ACH_KEY[id] || id) + 'Name');
+}
+function buildSkinOpts(){
+  var html = '<button class="btn small setSkin" data-skin="std">' +
+    '<span class="sknPrev">' + mascotSVGFor('std') + '</span>' +
+    '<span class="sknName">' + esc(skinLabel('std')) + '</span></button>';
+  SKIN_IDS.forEach(function(id){
+    html += '<button class="btn small setSkin" data-skin="' + id + '">' +
+      '<span class="sknPrev">' + mascotSVGFor(id) + '</span>' +
+      '<span class="sknName">' + esc(skinLabel(id)) + '</span></button>';
+  });
+  $('skinOpts').innerHTML = html;
+  qsa('.setSkin').forEach(function(b){
+    b.addEventListener('click', function(){
+      var id = b.getAttribute('data-skin');
+      if (!skinUnlocked(id)){ tone(146.83, .1, .08); return; } // gesperrt: kurzer tiefer Bleep
+      mascSkin = id;
+      try { window.localStorage.setItem(MASC_SKIN_KEY, id); } catch (e) {}
+      $('mascotArt').innerHTML = mascotSVG();
+      refreshSkinBtns();
+      sfxClick();
+    });
+  });
+  refreshSkinBtns();
+}
+// Sperr- und Auswahlzustand der Skin-Knöpfe frisch halten – auch nach
+// Sprachwechsel und beim Wiederöffnen der Einstellungen.
+function refreshSkinBtns(){
+  qsa('.setSkin').forEach(function(b){
+    var id = b.getAttribute('data-skin'), ok = skinUnlocked(id);
+    b.classList.toggle('locked', !ok);
+    b.classList.toggle('selOpt', id === mascSkin && ok);
+    var nm = b.querySelector('.sknName');
+    if (nm) nm.textContent = skinLabel(id);
+    var lock = b.querySelector('.sknLock');
+    if (!ok && !lock) b.insertAdjacentHTML('beforeend', lockSVG());
+    else if (ok && lock) b.removeChild(lock);
+    b.title = ok ? '' : trf('skinLockHint', { name: skinLabel(id) });
+  });
 }
 function euFlagSVG(){
   // Pixelgrafik der Europaflagge: blaues Feld im Verhaeltnis 3:2 mit zwoelf
@@ -6296,6 +6550,7 @@ function initIcons(){
   $('camIcoR').innerHTML = right;
   $('undoIco').innerHTML = pixSVG(PIX_UNDO, '#ffd23f', 2);
   $('mascotArt').innerHTML = mascotSVG();
+  buildSkinOpts();
   $('euFlag').innerHTML = euFlagSVG();
   // Pixel-Logos der Überschriften (Header, Hauptmenü, Tutorial)
   $('logoH').innerHTML = pixText('TETROMINO', '#ffd23f', 4);
