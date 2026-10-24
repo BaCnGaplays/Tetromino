@@ -296,7 +296,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.54</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.57</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -406,7 +406,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.54</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.57</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -565,7 +565,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.54</li></ul>
+    <ul><li>Alpha 0.57</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -573,7 +573,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.54</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.57</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -4784,8 +4784,9 @@ document.addEventListener('click', function(e){
 // Klassik (Kanon in D von
 // Johann Pachelbel, um 1700), Metal (Galopp-Riff in E-Moll), Techno (Akkord-
 // Arpeggien über Puls-Bass), Entspannung (langsame Pentatonik) und Russian
-// Hardbass (schneller Folk-Riff in A-Moll über pumpendem Oktav-Bass).
-// Jeder Ton ist [Frequenz, Länge in Achteln]; 0 = Pause. Jede Schleife bringt
+// Hardbass (hämmender Oktav-Bass mit Pitch-Rutschern à la „Tri Poloski“).
+// Jeder Ton ist [Frequenz, Länge in Achteln], optional eine dritte Zahl als
+// Ziel-Frequenz eines abfallenden Pitch-Rutschers; 0 = Pause. Jede Schleife bringt
 // ihr eigenes Achtel-Tempo (stepMs), ihre Lautstärken, ihren Bass-Takt
 // (bassEvery = Bass-Anschlag alle wie viele Achtel) und ihre Bass-TonDauer
 // (bassDur, in Achteln) mit. Die Titelwahl persistiert unter dem
@@ -4852,18 +4853,19 @@ var MUS_TRACKS = {
     ],
     bass: [ [131,2],[110,2],[87,2],[98,2] ]
   },
-  hardbass: { stepMs: 150, bassEvery: 1, bassDur: 0.80, leadVol: 0.045, bassVol: 0.050,
-    lead: [ // schneller Folk-Riff in a-moll (Kalinka-Anklang)
-      [440,1],[440,1],[440,2],[523,1],[440,1],[392,2],
-      [440,1],[440,1],[440,2],[349,1],[392,1],[440,2],
-      [659,1],[659,1],[659,2],[587,1],[523,1],[494,2],
-      [523,1],[494,1],[523,1],[659,1],[440,4]
+  hardbass: { stepMs: 140, bassEvery: 1, bassDur: 0.60, leadVol: 0.048, bassVol: 0.050,
+    lead: [ // Hardbass à la „Tri Poloski“ (Davay, 2016): spitzige Staccato-
+           // Achtel, Wiederholungston mit Sprüngen, Pitch-Rutscher (Wobble)
+      [440,1],[440,1],[523,1],[440,1],[659,1],[440,1],[523,1],[440,1],
+      [440,1],[440,1],[523,1],[440,1],[659,1],[440,1],[587,1],[523,1],
+      [392,1],[392,1],[494,1],[392,1],[659,1],[392,1],[494,1],[392,1],
+      [880,2,440],[659,1],[523,1],[440,2,220],[349,1],[392,1]
     ],
-    bass: [ // pumpender Oktav-Bass über a-moll / F / G / a-moll
-      [110,1],[110,1],[220,1],[110,1],[110,1],[110,1],[220,1],[110,1],
-      [87,1],[87,1],[175,1],[87,1],[87,1],[87,1],[175,1],[87,1],
-      [98,1],[98,1],[196,1],[98,1],[98,1],[98,1],[196,1],[98,1],
-      [110,1],[110,1],[220,1],[110,1],[110,1],[220,1],[110,1],[110,1]
+    bass: [ // hämmernder Staccato-Oktav-Bass a-moll / F / G / a-moll
+      [110,1],[220,1],[110,1],[220,1],[110,1],[220,1],[110,1],[220,1],
+      [87,1],[175,1],[87,1],[175,1],[87,1],[175,1],[87,1],[175,1],
+      [98,1],[196,1],[98,1],[196,1],[98,1],[196,1],[98,1],[196,1],
+      [110,1],[220,1],[110,1],[220,1],[110,1],[220,1],[110,1],[220,1]
     ]
   }
 };
@@ -4878,7 +4880,7 @@ function musTick(){
   if (!musOn) return;
   var trk = musTrack();
   var lead = trk.lead[musStep % trk.lead.length];
-  if (lead[0]) tone(lead[0], lead[1] * trk.stepMs / 1000 * 0.9, trk.leadVol, 0, null, 'mus');
+  if (lead[0]) tone(lead[0], lead[1] * trk.stepMs / 1000 * 0.9, trk.leadVol, 0, lead[2] || null, 'mus');
   var bass = trk.bass[Math.floor(musStep / trk.bassEvery) % trk.bass.length];
   if (musStep % trk.bassEvery === 0 && bass[0]) tone(bass[0], trk.stepMs / 1000 * trk.bassDur, trk.bassVol, 0, null, 'mus');
   musStep++;
