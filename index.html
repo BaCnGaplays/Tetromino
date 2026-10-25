@@ -383,7 +383,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.83</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.85</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -495,7 +495,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.83</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.85</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -711,7 +711,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.83</li></ul>
+    <ul><li>Alpha 0.85</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -719,7 +719,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.83</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.85</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -738,7 +738,7 @@
       <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>
       <li>Einzelspieler: der Computer steuert die jeweils andere Farbe; vor dem Start wird Weiß oder Schwarz gewählt (Standard: Weiß). Drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>
       <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>
-      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>
+      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Auf Leicht ist dies beliebig oft m&ouml;glich, auf Mittel nur einmal je Zug (bis zum eigenen n&auml;chsten Zug). Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>
       <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>
       <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>
       <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt kurz die roboterhafte Tetromino-Stimme des Mask&ouml;ttchens.</li>
@@ -853,7 +853,7 @@ var RULES_DE =
 '      <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>\n' +
 '      <li>Einzelspieler: der Computer steuert die jeweils andere Farbe; vor dem Start wird Weiß oder Schwarz gewählt (Standard: Weiß). Drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>\n' +
 '      <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>\n' +
-'      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>\n' +
+'      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Auf Leicht ist dies beliebig oft m&ouml;glich, auf Mittel nur einmal je Zug (bis zum eigenen n&auml;chsten Zug). Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>\n' +
 '      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>\n' +
 '      <li>Die Tetromino-Hilfe (Sprechblase) empfiehlt unabh&auml;ngig von der Schwierigkeitsstufe stets den optimalen Zug; die Stufen betreffen nur die Zugwahl des Computers.</li>\n' +
 '      <li>Tutorial: f&uuml;nf Lektionen &ndash; je eine pro Figur (T, L, S, K&ouml;nigstein, Dame) &ndash; mit je mehreren Teilaufgaben vom Anklicken bis zum Schlagen; jede Lektion ist einzeln w&auml;hlbar, absolvierte Lektionen werden gr&uuml;n markiert. Der Aufgabentext steht in der einklappbaren Aufgaben-Box der Sprechblase, Hinweise erscheinen kurz als Popup und bleiben gelb in der Box; nach jeder gel&ouml;sten Lektion bietet ein Endscreen Weiter, Neustart und Hauptmen&uuml; an. Der Knopf „Aufgabe zur&uuml;cksetzen“ baut das Brett der aktuellen Teilaufgabe neu auf &ndash; etwa wenn ein versehentlicher Zug die Aufgabe unl&ouml;sbar gemacht hat. Bei jeder neuen Anweisung, jedem Hinweis und jedem Lob ert&ouml;nt kurz die roboterhafte Tetromino-Stimme des Mask&ouml;ttchens.</li>\n' +
@@ -953,7 +953,7 @@ var RULES_CS =
 '      <li>Více hráčů: dva hráči se střídají u stejného displeje (bílá proti černé) – buď rychlým startem s náhodným rozestavením, nebo s vlastním počátečním číslem (seed) pro přesně opakovatelné partie.</li>\n' +
 '      <li>Jeden hráč: počítač ovládá druhou barvu; před startem se volí bílá nebo černá (výchozí: bílá). Tři stupně obtížnosti. Lehká: vysoká míra náhody, místy slabé tahy, počítač někdy obětuje vlastní figurky. Střední: dobré tahy s určitou rozptýleností, ale bez obětování figurek. Těžká: optimální volba s výhledem na dva půltahy.</li>\n' +
 '      <li>Počáteční číslo (seed): stejné číslo vytváří stejné rozestavení; počáteční číslo běžné partie stojí ve stavovém řádku, takže se partie dají přesně opakovat.</li>\n' +
-'      <li>Vzít tah zpět: V režimu jednoho hráče na stupních Lehká a Střední vrátí tlačítko se šipkou U-Turn vedle šipek pohledu poslední celý tah – vlastní půltah i tah počítače. Partie pokračuje od dřívější pozice; už odemčené úspěchy a statistika zůstávají nedotčeny.</li>\n' +
+'      <li>Vzít tah zpět: V režimu jednoho hráče na stupních Lehká a Střední vrátí tlačítko se šipkou U-Turn vedle šipek pohledu poslední celý tah – vlastní půltah i tah počítače. Na stupni Lehká lze tah vzít zpět libovolně často, na stupni Střední jen jednou za tah (až do vlastního dalšího tahu). Partie pokračuje od dřívější pozice; už odemčené úspěchy a statistika zůstávají nedotčeny.</li>\n' +
 '      <li>Replay: Po konci partie proti počítači otevře tlačítko „Sledovat replay“ průběh partie. Posuvník dole ve hracím poli listuje pozicemi půltah za půltahem, pohled lze otáčet jako obvykle, tahy zůstávají až do konce replaye uzamčeny. Replay se neukládá a končí, jakmile začne nová partie.</li>\n' +
 '      <li>Tetromino-nápověda (bublina) doporučuje vždy optimální tah nezávisle na stupni obtížnosti; stupně se týkají jen volby tahů počítače.</li>\n' +
 '      <li>Tutoriál: pět lekcí – po jedné na figurku (T, L, S, královský kámen, dáma) – s několika dílčími úkoly od kliknutí až po braní; každou lekci lze vybrat jednotlivě, absolvované lekce se označují zeleně. Text úkolu stojí ve sklopitelné schránce úkolu v bublině, tipy se krátce ukazují jako vyskakovací okno a zůstávají žlutě ve schránce; po každé vyřešené lekci nabízí závěrečná obrazovka Pokračovat, Restart a Hlavní menu. Tlačítko „Resetovat úkol“ postaví desku aktuálního dílčího úkolu znovu – například když nechtěný tah úkol zneschopnil. Při každém novém pokynu, tipu i pochvale maskota krátce zapípá robotickým hlasem.</li>\n' +
@@ -1051,7 +1051,7 @@ var RULES_PL =
 '      <li>Wielu graczy: dwaj gracze wymieniają się przy tym samym ekranie (biali przeciw czarnym) – albo szybkim startem z losowym rozstawieniem, albo z własną wartością startową (seed) dla dokładnie powtarzalnych partii.</li>\n' +
 '      <li>Jeden gracz: komputer steruje drugim kolorem; przed startem wybiera się białe lub czarne (domyślnie: białe). Trzy poziomy trudności. Łatwy: wysoki udział losowości, częściowo słabe ruchy, komputer czasem poświęca własne figury. Średni: dobre ruchy z pewnym rozrzutem, ale bez poświęcania figur. Trudny: optymalny, patrzący w przód wybór na dwa półruchy.</li>\n' +
 '      <li>Wartość startowa (seed): ta sama liczba tworzy to samo rozstawienie; wartość startowa bieżącej partii stoi na pasku stanu, dzięki czemu partie można dokładnie powtarzać.</li>\n' +
-'      <li>Cofanie ruchu: W trybie jednego gracza na poziomach Łatwy i Średni przycisk ze strzałką U-Turn obok strzałek widoku cofa ostatni pełny ruch – własny półruch i ruch komputera. Partia biegnie dalej od wcześniejszej pozycji; odblokowane osiągnięcia i statystyka pozostają nietknięte.</li>\n' +
+'      <li>Cofanie ruchu: W trybie jednego gracza na poziomach Łatwy i Średni przycisk ze strzałką U-Turn obok strzałek widoku cofa ostatni pełny ruch – własny półruch i ruch komputera. Na poziomie Łatwy można cofać dowolnie często, a na poziomie Średni tylko raz na ruch (do własnego następnego ruchu). Partia biegnie dalej od wcześniejszej pozycji; odblokowane osiągnięcia i statystyka pozostają nietknięte.</li>\n' +
 '      <li>Powtórka: Po zakończeniu partii z komputerem przycisk „Obejrzyj powtórkę” otwiera przebieg partii. Suwak na dole pola gry kartkuje pozycje półruch po półruchu, widok można obracać jak zwykle, ruchy pozostają do końca powtórki zablokowane. Powtórka nie jest zapisywana i kończy się, gdy tylko zaczyna się nowa partia.</li>\n' +
 '      <li>Tetromino-podpowiedź (dymek) poleca zawsze optymalny ruch niezależnie od poziomu trudności; poziomy dotyczą tylko wyboru ruchów komputera.</li>\n' +
 '      <li>Samouczek: pięć lekcji – po jednej na figurę (T, L, S, królewski kamień, dama) – z kilkoma zadaniami częściowymi od kliknięcia aż do bicia; każdą lekcję można wybrać pojedynczo, ukończone lekcje są oznaczane na zielono. Treść zadania stoi w rozkładanej skrzynce zadania w dymku, wskazówki pokazują się krótko jako wyskakujące okno i pozostają na żółto w skrzynce; po każdej rozwiązanej lekcji ekran końcowy oferuje Dalej, Restart i Menu główne. Przycisk „Zresetuj zadanie” buduje planszę bieżącego zadania na nowo – na przykład gdy przypadkowy ruch uczynił zadanie nierozwiązywalnym. Przy każdym nowym poleceniu, wskazówce i pochwała maskotka wydaje krótki robotyczny pisk.</li>\n' +
@@ -1149,7 +1149,7 @@ var RULES_ES =
 '      <li>Multijugador: dos jugadores se turnan en la misma pantalla (blancas contra negras) – bien mediante inicio rápido con una disposición aleatoria, bien con su propio valor inicial (semilla) para partidas repetibles con exactitud.</li>\n' +
 '      <li>Un jugador: el ordenador controla el otro color; antes de empezar se elige blanco o negro (por defecto: blanco). Tres niveles de dificultad. Fácil: gran parte de azar, jugadas en parte flojas, el ordenador en ocasiones sacrifica piezas propias. Medio: buenas jugadas con cierta dispersión, pero sin sacrificios de piezas. Difícil: selección óptima y previsor a lo largo de dos jugadas.</li>\n' +
 '      <li>Valor inicial (semilla): el mismo número genera la misma posición inicial; el valor inicial de la partida en curso aparece en la barra de estado, de modo que las partidas pueden repetirse con exactitud.</li>\n' +
-'      <li>Deshacer jugada: En el modo un jugador, en los niveles Fácil y Medio, el botón con la flecha en forma de U junto a las flechas de vista deshace la última jugada completa – la propia media jugada y la jugada del ordenador. La partida continúa desde la posición anterior; los logros ya desbloqueados y las estadísticas quedan intactos.</li>\n' +
+'      <li>Deshacer jugada: En el modo un jugador, en los niveles Fácil y Medio, el botón con la flecha en forma de U junto a las flechas de vista deshace la última jugada completa – la propia media jugada y la jugada del ordenador. En Fácil esto es posible cuantas veces se quiera; en Medio, solo una vez por jugada (hasta la propia siguiente jugada). La partida continúa desde la posición anterior; los logros ya desbloqueados y las estadísticas quedan intactos.</li>\n' +
 '      <li>Repetición: Al terminar una partida de duelo, el botón «Ver repetición» abre el curso de la partida. El control deslizante situado abajo en el campo de juego recorre las posiciones media jugada a media jugada, la vista puede girarse como de costumbre y las jugadas permanecen bloqueadas hasta el final de la repetición. La repetición no se guarda y termina en cuanto empieza una partida nueva.</li>\n' +
 '      <li>La ayuda de Tetromino (burbuja) recomienda siempre la jugada óptima, con independencia del nivel de dificultad; los niveles afectan únicamente a la elección de jugadas del ordenador.</li>\n' +
 '      <li>Tutorial: cinco lecciones – una por pieza (T, L, S, piedra rey, dama) – con varias tareas parciales, desde hacer clic hasta capturar; cada lección puede elegirse por separado y las lecciones completadas se marcan en verde. El texto de la tarea está en el recuadro plegable de tareas de la burbuja; los consejos aparecen brevemente como ventana emergente y permanecen en amarillo en el recuadro; tras cada lección resuelta, una pantalla final ofrece Continuar, Reiniciar y Menú principal. El botón «Restablecer tarea» reconstruye el tablero de la tarea parcial actual – por ejemplo, cuando una jugada involuntaria ha vuelto irresoluble la tarea. Con cada nueva instrucción, consejo o elogio, la mascota emite un breve pitido robótico.</li>\n' +
@@ -1450,7 +1450,7 @@ var TXT = {
     themeEdel: 'Edel', themeWinter: 'Winter',
     lblSkin: 'Tetromino-Skin', skinStd: 'Standard',
     skinLockHint: 'Noch gesperrt – Erfolg „{name}“ erforderlich.',
-    lblLight: 'Farbschema', lightOnLbl: 'Light-Modus: an (Beta)', lightOffLbl: 'Light-Modus: aus (Beta)',
+    lblLight: 'Farbschema', lightOnLbl: 'Light-Modus: an', lightOffLbl: 'Light-Modus: aus',
     themeHimmel: 'Himmel', themeHerbst: 'Herbst', themeKirsch: 'Kirschblüte', themeWeltraum: 'Weltraum',
     skinPirat: 'Pirat', skinZauberer: 'Zauberer', skinAstronaut: 'Astronaut', skinRoboter: 'Roboter',
     skinBauarbeiter: 'Bauarbeiter', skinKoch: 'Koch', skinFeuerwehr: 'Feuerwehr', skinArzt: 'Arzt',
@@ -1470,7 +1470,7 @@ var TXT = {
     srcTitleHtml: 'Quellcode <span class="verTag">{v}</span>',
     srcHint: 'Vollständiger Quellcode dieser Datei. Nach dem Markieren können Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.',
     srcSelAllLbl: 'Alles markieren', srcCloseLbl: 'Schließen',
-    undoTt: 'Zug zurücknehmen: der eigene und der Computerzug werden zurückgesetzt (nur auf Leicht und Mittel)',
+    undoTt: 'Zug zurücknehmen: der eigene und der Computerzug werden zurückgesetzt (Leicht beliebig oft, Mittel nur einmal je Zug)',
     camLTt: 'Ansicht um 90° nach links drehen (Pfeiltaste links)',
     camRTt: 'Ansicht um 90° nach rechts drehen (Pfeiltaste rechts)',
     tutResetLbl: 'Aufgabe zurücksetzen',
@@ -1690,7 +1690,7 @@ var TXT = {
     themeEdel: 'Noble', themeWinter: 'Winter',
     lblSkin: 'Tetromino skin', skinStd: 'Default',
     skinLockHint: 'Still locked – requires the achievement “{name}”.',
-    lblLight: 'Colour scheme', lightOnLbl: 'Light mode: on (Beta)', lightOffLbl: 'Light mode: off (Beta)',
+    lblLight: 'Colour scheme', lightOnLbl: 'Light mode: on', lightOffLbl: 'Light mode: off',
     themeHimmel: 'Sky', themeHerbst: 'Autumn', themeKirsch: 'Cherry Blossom', themeWeltraum: 'Space',
     skinPirat: 'Pirate', skinZauberer: 'Wizard', skinAstronaut: 'Astronaut', skinRoboter: 'Robot',
     skinBauarbeiter: 'Construction Worker', skinKoch: 'Chef', skinFeuerwehr: 'Firefighter', skinArzt: 'Doctor',
@@ -1710,7 +1710,7 @@ var TXT = {
     srcTitleHtml: 'Source code <span class="verTag">{v}</span>',
     srcHint: 'Complete source code of this file. After selecting it, you can copy it with Ctrl+C (or Cmd+C).',
     srcSelAllLbl: 'Select all', srcCloseLbl: 'Close',
-    undoTt: 'Take back the move: your own move and the computer’s move are reverted (Easy and Medium only)',
+    undoTt: 'Take back the move: your own move and the computer’s move are reverted (Easy: any number of times; Medium: once per move)',
     camLTt: 'Rotate the view 90° to the left (left arrow key)',
     camRTt: 'Rotate the view 90° to the right (right arrow key)',
     tutResetLbl: 'Reset task',
@@ -1737,7 +1737,7 @@ var TXT = {
 '      <li>Multiplayer: two players take turns on the same screen (White versus Black) – either via quick start with a random setup or with your own seed for exactly repeatable games.</li>\n' +
 '      <li>Single player: the computer controls the other color; before the start, White or Black is chosen (default: White). Three difficulty levels. Easy: a high share of randomness, sometimes weak moves, the computer occasionally sacrifices its own pieces. Medium: good moves with some spread, but without sacrifices. Hard: optimal, forward-looking selection across two half-moves.</li>\n' +
 '      <li>Seed: the same number generates the same starting position; the seed of the running game is shown in the status bar, so games can be repeated exactly.</li>\n' +
-'      <li>Take back a move: In single player on the levels Easy and Medium, the button with the U-turn arrow next to the view arrows reverts the last full move – your own half-move and the computer’s move. The game continues from the earlier position; unlocked achievements and the statistics remain untouched.</li>\n' +
+'      <li>Take back a move: In single player on the levels Easy and Medium, the button with the U-turn arrow next to the view arrows reverts the last full move – your own half-move and the computer’s move. On Easy this is possible any number of times; on Medium only once per move (until your next move). The game continues from the earlier position; unlocked achievements and the statistics remain untouched.</li>\n' +
 '      <li>Replay: After a duel game ends, the button “Watch replay” opens the course of the game. The slider below the board steps through the positions half-move by half-move, the view can be rotated as usual, and moves stay locked until the end of the replay. The replay is not saved and ends as soon as a new game begins.</li>\n' +
 '      <li>The Tetromino help (speech bubble) always recommends the optimal move, regardless of the difficulty level; the levels only affect the computer’s move choice.</li>\n' +
 '      <li>Tutorial: five lessons – one per piece (T, L, S, king piece, queen) – each with several subtasks from clicking to capturing; each lesson can be selected individually, completed lessons are marked green. The task text is in the collapsible task box of the speech bubble, hints appear briefly as a popup and remain in yellow in the box; after each solved lesson, an end screen offers continue, restart and main menu. The button “Reset task” rebuilds the board of the current subtask – for example when an accidental move made the task unsolvable. Whenever a new instruction, hint or praise appears, the mascot gives a short robotic speaking beep.</li>\n' +
@@ -2023,7 +2023,7 @@ var TXT = {
     themeEdel: 'Noblesse', themeWinter: 'Hiver',
     lblSkin: 'Skin de Tetromino', skinStd: 'Standard',
     skinLockHint: 'Encore verrouillé – nécessite le succès « {name} ».',
-    lblLight: 'Palette de couleurs', lightOnLbl: 'Mode clair : activé (bêta)', lightOffLbl: 'Mode clair : désactivé (bêta)',
+    lblLight: 'Palette de couleurs', lightOnLbl: 'Mode clair : activé', lightOffLbl: 'Mode clair : désactivé',
     themeHimmel: 'Ciel', themeHerbst: 'Automne', themeKirsch: 'Fleur de cerisier', themeWeltraum: 'Espace',
     skinPirat: 'Pirate', skinZauberer: 'Magicien', skinAstronaut: 'Astronaute', skinRoboter: 'Robot',
     skinBauarbeiter: 'Ouvrier du bâtiment', skinKoch: 'Chef cuisinier', skinFeuerwehr: 'Pompier', skinArzt: 'Médecin',
@@ -2043,7 +2043,7 @@ var TXT = {
     srcTitleHtml: 'Code source <span class="verTag">{v}</span>',
     srcHint: 'Code source complet de ce fichier. Après l’avoir sélectionné, vous pouvez le copier avec Ctrl+C (ou Cmd+C).',
     srcSelAllLbl: 'Tout sélectionner', srcCloseLbl: 'Fermer',
-    undoTt: 'Annuler le coup : votre coup et celui de l’ordinateur sont annulés (uniquement en Facile et Moyen)',
+    undoTt: 'Annuler le coup : votre coup et celui de l’ordinateur sont annulés (Facile : autant de fois que voulu ; Moyen : une seule fois par coup)',
     camLTt: 'Pivotez la vue de 90° vers la gauche (touche flèche gauche)',
     camRTt: 'Pivotez la vue de 90° vers la droite (touche flèche droite)',
     tutResetLbl: 'Réinitialiser la tâche',
@@ -2070,7 +2070,7 @@ var TXT = {
 '      <li>Multijoueur : deux joueurs alternent sur le même écran (Blanc contre Noir) – soit par démarrage rapide avec une disposition aléatoire, soit avec votre propre valeur de départ pour des parties exactement reproductibles.</li>\n' +
 '      <li>Solo : l’ordinateur dirige l’autre couleur ; avant le début, l’on choisit Blanc ou Noir (par défaut : Blanc). Trois niveaux de difficulté. Facile : forte part de hasard, parfois des coups faibles, l’ordinateur sacrifie parfois ses propres pièces. Moyen : bons coups avec de la dispersion, mais sans sacrifice. Difficile : choix optimal et prévoyant sur deux demi-coups.</li>\n' +
 '      <li>Valeur de départ (seed) : le même nombre produit la même disposition initiale ; la valeur de la partie en cours s’affiche dans la barre d’état, de sorte que les parties se répètent exactement.</li>\n' +
-'      <li>Annuler un coup : en solo aux niveaux Facile et Moyen, le bouton à la flèche en demi-tour près des flèches de vue annule le dernier coup complet – votre demi-coup et celui de l’ordinateur. La partie reprend depuis la position antérieure ; les succès déjà débloqués et les statistiques restent intacts.</li>\n' +
+'      <li>Annuler un coup : en solo aux niveaux Facile et Moyen, le bouton à la flèche en demi-tour près des flèches de vue annule le dernier coup complet – votre demi-coup et celui de l’ordinateur. En Facile, cela est possible autant de fois que voulu ; en Moyen, une seule fois par coup (jusqu’à votre prochain coup). La partie reprend depuis la position antérieure ; les succès déjà débloqués et les statistiques restent intacts.</li>\n' +
 '      <li>Replay : à la fin d’une partie en duel, le bouton « Voir le replay » ouvre le déroulé de la partie. Le curseur sous le plateau parcourt les positions demi-coup par demi-coup, la vue pivote comme d’habitude, et les coups restent verrouillés jusqu’à la fin du replay. Le replay n’est pas sauvegardé et disparaît dès qu’une nouvelle partie commence.</li>\n' +
 '      <li>L’aide de Tetromino (bulle) recommande toujours le coup optimal, quel que soit le niveau de difficulté ; les niveaux n’influencent que le choix des coups de l’ordinateur.</li>\n' +
 '      <li>Tutoriel : cinq leçons – une par pièce (T, L, S, pièce roi, dame) – avec chacune plusieurs sous-tâches, du clic à la capture ; chaque leçon se choisit séparément, les leçons terminées sont marquées en vert. Le texte de la tâche figure dans la zone de tâche repliable de la bulle, les indices apparaissent brièvement en popup puis restent en jaune dans la zone ; après chaque leçon résolue, un écran de fin propose continuer, recommencer et menu principal. Le bouton « Réinitialiser la tâche » reconstruit le plateau de la sous-tâche en cours – par exemple si un coup maladroit l’a rendue insoluble. À chaque nouvelle consigne, indice ou éloge, la mascotte émet un bref pépiement robotique.</li>\n' +
@@ -2357,7 +2357,7 @@ var TXT = {
     themeEdel: 'Elegantní', themeWinter: 'Zima',
     lblSkin: 'Skin Tetromina', skinStd: 'Standardní',
     skinLockHint: 'Zatím zamčeno – vyžaduje úspěch „{name}“.',
-    lblLight: 'Barevné schéma', lightOnLbl: 'Světlý režim: zapnut (beta)', lightOffLbl: 'Světlý režim: vypnut (beta)',
+    lblLight: 'Barevné schéma', lightOnLbl: 'Světlý režim: zapnut', lightOffLbl: 'Světlý režim: vypnut',
     themeHimmel: 'Nebe', themeHerbst: 'Podzim', themeKirsch: 'Sakura', themeWeltraum: 'Vesmír',
     skinPirat: 'Pirát', skinZauberer: 'Kouzelník', skinAstronaut: 'Astronaut', skinRoboter: 'Robot',
     skinBauarbeiter: 'Stavební dělník', skinKoch: 'Kuchař', skinFeuerwehr: 'Hasič', skinArzt: 'Lékař',
@@ -2377,7 +2377,7 @@ var TXT = {
     srcTitleHtml: 'Zdrojový kód <span class="verTag">{v}</span>',
     srcHint: 'Úplný zdrojový kód tohoto souboru. Po označení ho můžete zkopírovat klávesami Ctrl+C (resp. Cmd+C).',
     srcSelAllLbl: 'Označit vše', srcCloseLbl: 'Zavřít',
-    undoTt: 'Vzít tah zpět: vlastní půltah i tah počítače se vrátí (jen na stupních Lehká a Střední)',
+    undoTt: 'Vzít tah zpět: vlastní půltah i tah počítače se vrátí (Lehká: libovolně často; Střední: jednou za tah)',
     camLTt: 'Otočit pohled o 90° vlevo (šipka vlevo)',
     camRTt: 'Otočit pohled o 90° vpravo (šipka vpravo)',
     tutResetLbl: 'Resetovat úkol',
@@ -2597,7 +2597,7 @@ var TXT = {
     themeEdel: 'Szlachetny', themeWinter: 'Zima',
     lblSkin: 'Skórka Tetromino', skinStd: 'Standardowa',
     skinLockHint: 'Nadal zablokowany – wymaga osiągnięcia „{name}”.',
-    lblLight: 'Schemat kolorów', lightOnLbl: 'Tryb jasny: włączony (beta)', lightOffLbl: 'Tryb jasny: wyłączony (beta)',
+    lblLight: 'Schemat kolorów', lightOnLbl: 'Tryb jasny: włączony', lightOffLbl: 'Tryb jasny: wyłączony',
     themeHimmel: 'Niebo', themeHerbst: 'Jesień', themeKirsch: 'Kwiat wiśni', themeWeltraum: 'Kosmos',
     skinPirat: 'Pirat', skinZauberer: 'Czarodziej', skinAstronaut: 'Astronauta', skinRoboter: 'Robot',
     skinBauarbeiter: 'Budowlaniec', skinKoch: 'Kucharz', skinFeuerwehr: 'Strażak', skinArzt: 'Lekarz',
@@ -2617,7 +2617,7 @@ var TXT = {
     srcTitleHtml: 'Kod źródłowy <span class="verTag">{v}</span>',
     srcHint: 'Kompletny kod źródłowy tego pliku. Po zaznaczeniu można go skopiować klawiszami Ctrl+C (odpowiednio Cmd+C).',
     srcSelAllLbl: 'Zaznacz wszystko', srcCloseLbl: 'Zamknij',
-    undoTt: 'Cofnij ruch: własny półruch i ruch komputera zostają cofnięte (tylko na Łatwym i Średnim)',
+    undoTt: 'Cofnij ruch: własny półruch i ruch komputera zostają cofnięte (Łatwy: dowolnie często; Średni: raz na ruch)',
     camLTt: 'Obróć widok o 90° w lewo (strzałka w lewo)',
     camRTt: 'Obróć widok o 90° w prawo (strzałka w prawo)',
     tutResetLbl: 'Zresetuj zadanie',
@@ -2838,7 +2838,7 @@ var TXT = {
     themeEdel: 'Noble', themeWinter: 'Invierno',
     lblSkin: 'Skin de Tetromino', skinStd: 'Estándar',
     skinLockHint: 'Todavía bloqueado – requiere el logro «{name}».',
-    lblLight: 'Esquema de color', lightOnLbl: 'Modo claro: activado (beta)', lightOffLbl: 'Modo claro: desactivado (beta)',
+    lblLight: 'Esquema de color', lightOnLbl: 'Modo claro: activado', lightOffLbl: 'Modo claro: desactivado',
     themeHimmel: 'Cielo', themeHerbst: 'Otoño', themeKirsch: 'Flor de cerezo', themeWeltraum: 'Espacio',
     skinPirat: 'Pirata', skinZauberer: 'Mago', skinAstronaut: 'Astronauta', skinRoboter: 'Robot',
     skinBauarbeiter: 'Obrero', skinKoch: 'Cocinero', skinFeuerwehr: 'Bombero', skinArzt: 'Médico',
@@ -2858,7 +2858,7 @@ var TXT = {
     srcTitleHtml: 'Código fuente <span class=\"verTag\">{v}</span>',
     srcHint: 'Código fuente completo de este archivo. Tras seleccionarlo puede copiarlo con Ctrl+C (respectivamente Cmd+C).',
     srcSelAllLbl: 'Seleccionar todo', srcCloseLbl: 'Cerrar',
-    undoTt: 'Deshacer la jugada: la propia jugada y la del ordenador se revierten (solo en Fácil y Medio)',
+    undoTt: 'Deshacer la jugada: la propia jugada y la del ordenador se revierten (Fácil: cuantas veces se quiera; Medio: una vez por jugada)',
     camLTt: 'Girar la vista 90° a la izquierda (tecla de flecha izquierda)',
     camRTt: 'Girar la vista 90° a la derecha (tecla de flecha derecha)',
     tutResetLbl: 'Restablecer tarea',
@@ -3225,7 +3225,10 @@ applyTheme();
 // gespeichert und beim Laden sofort angewendet.
 var LIGHT_KEY = 'tetraLight', lightOn = false;
 function applyLightBg(){
-  if (lightOn) PAL.bg = '#dfe4f2';
+  // Der Light-Modus hellt ausschließlich den Hintergrund des Original-Themas
+  // auf; alle Welten (Winter, Himmel, Herbst, Kirschblüte, Weltraum, Edel,
+  // Blocks, Monochrom) behalten stets ihre eigene Hintergrundfarbe.
+  if (lightOn && theme === 'orig') PAL.bg = '#dfe4f2';
 }
 (function(){
   try { lightOn = window.localStorage.getItem(LIGHT_KEY) === '1'; } catch (e) {}
@@ -3886,6 +3889,8 @@ function finalizeMove(){
     if (achPending){ ann = (ann ? ann + ' ' : '') + achPending; achPending = ''; }
   }
   if (mode === '2p' || mode === 'ai') hist.push(takeSnap()); // Verlauf für Zurücknehmen und Replay
+  // Mittel: Der eigene frische Zug gibt die Rücknahme wieder frei.
+  if (mode === 'ai' && p.color === humanSide) undosUsed = 0;
   updateHUD();
   if (!gameOver && mode === 'ai' && turn === aiColor) aiSchedule();
 }
@@ -4083,12 +4088,18 @@ function restoreSnap(s){
 // Zurücknehmen: verfügbar im Einzelspieler auf Leicht oder Mittel, sobald
 // ein voller Zug (eigener plus Computer-Halbzug) vorliegt und der Spieler
 // wieder am Zug ist. Nach dem Partieende und im Replay bleibt der Knopf weg.
+// Auf Mittel ist genau eine Rücknahme je Zug erlaubt: Nach dem Zurücknehmen
+// verschwindet der Knopf, bis der Spieler erneut gezogen hat; auf Leicht
+// bleibt das Zurücknehmen unbegrenzt möglich.
+var undosUsed = 0; // Mittel: 1, nachdem für den aktuellen Zug zurückgenommen wurde
 function undoAvailable(){
-  return mode === 'ai' && (aiLevel === 1 || aiLevel === 2) && !gameOver && !replayOn &&
+  return mode === 'ai' && (aiLevel === 1 || (aiLevel === 2 && undosUsed === 0)) &&
+    !gameOver && !replayOn &&
     phase !== 'anim' && turn === humanSide && hist.length >= 3;
 }
 function takeBackMove(){
   if (!undoAvailable()) return;
+  if (aiLevel === 2) undosUsed = 1; // Mittel: keine zweite Rücknahme für denselben Zug
   if (aiTimer){ clearTimeout(aiTimer); aiTimer = null; }
   var idx = hist.length - 3;
   var snap = hist[idx];
@@ -4134,6 +4145,7 @@ function newGame(seed){
   // Partieverlauf (Zurücknehmen, Replay) je Partie neu: Ein Replay endet mit
   // der Partie; sobald die nächste beginnt, ist der alte Verlauf verworfen.
   replayOn = false; hist = [];
+  undosUsed = 0; // Rücknahme-Limit (Mittel) gilt je Partie neu
   $('replayBar').classList.add('hidden');
   if (mode === '2p' || mode === 'ai') hist.push(takeSnap()); // Anfangsaufstellung
   $('overOverlay').classList.add('hidden');
