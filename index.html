@@ -89,6 +89,13 @@
     border:2px solid #ff5b5b;box-shadow:0 3px 0 #000;padding:6px 10px;margin:0;pointer-events:auto;cursor:pointer;
     font-size:12px;color:#ff9b9b;font-weight:bold;line-height:1.5;opacity:1;transition:opacity .45s}
   #ckPop.fade{opacity:0}
+  #drBossPop{position:absolute;top:112px;right:56px;max-width:420px;z-index:7;background:rgba(13,13,32,.97);
+    border:2px solid var(--accent);box-shadow:0 3px 0 #000;padding:8px 10px;margin:0;pointer-events:none;
+    display:flex;align-items:center;gap:10px;font-size:12px;color:#ffd23f;font-weight:bold;line-height:1.5;
+    opacity:1;transition:opacity .6s}
+  #drBossPop.fade{opacity:0}
+  #drBossMasc{flex:0 0 auto;line-height:0}
+  #drBossMasc svg{width:32px;height:26px;display:block}
   .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,1);display:flex;align-items:center;
     justify-content:center;padding:16px;z-index:100;overflow:hidden}
   /* Overlay-Boxen (Haupt-, Tutorial-, End- und Spielstands-Menü) füllen den
@@ -248,8 +255,18 @@
   .setKey{min-width:88px}
   .setKey.wait{border-color:#ff5a5a;color:#ff9a6a}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-  #drBar{display:flex;flex-wrap:wrap;gap:8px;align-items:center;margin-top:6px}
-  #drHand{display:flex;flex-wrap:wrap;gap:6px;align-items:center}
+  #drBar{position:absolute;left:6px;right:6px;bottom:6px;z-index:5;display:flex;flex-wrap:wrap;
+    gap:6px;align-items:center;justify-content:center;margin:0;pointer-events:none}
+  #drBar .drMini{pointer-events:auto}
+  #drAdjustPanel{position:absolute;left:6px;right:6px;bottom:6px;z-index:6;background:rgba(20,20,50,.93);
+    border:2px solid #7fe07f;box-shadow:0 3px 0 #000;padding:4px 8px;margin:0;text-align:center}
+  #drBar.adjUp{bottom:78px}
+  #drAdjLbl{font-size:10px;color:#7fe07f;text-transform:uppercase;letter-spacing:1px}
+  .drAdjRow{display:flex;align-items:center;justify-content:center;gap:6px;margin:4px 0 0;flex-wrap:wrap}
+  .drAdj{min-width:44px;min-height:40px;display:inline-flex;align-items:center;justify-content:center;
+    font-size:16px;padding:4px 8px}
+  #drAdjHide{min-width:32px;min-height:32px;padding:2px 6px;font-size:11px}
+  #drHand{display:flex;flex-wrap:wrap;gap:6px;align-items:center;justify-content:center}
   .drMini{width:36px;padding:2px 2px 1px;display:flex;flex-direction:column;align-items:center;
     background:#fdf6e3;border:2px solid #1b1b2f;border-radius:5px;box-shadow:2px 2px 0 #000}
   .drMini.selOpt{border-color:#7fe07f;box-shadow:0 0 6px rgba(127,224,127,0.6)}
@@ -358,7 +375,7 @@
   html.light #overReason, html.light .statRow, html.light .achDesc,
   html.light .badge i, html.light #logList{color:#3a3a5a}
   html.light .catBody b, html.light .slotBody b{color:#1c1c34}
-  html.light #tutHint, html.light #fbPop, html.light #annPanel, html.light #endMeta,
+  html.light #tutHint, html.light #fbPop, html.light #annPanel, html.light #endMeta, html.light #drBossPop,
   html.light #diffCap, html.light #sideCap, html.light .achName,
   html.light #achToast .toastName{color:#8a6500}
   html.light #achToast .toastSig{color:#8a6500;background:#f2e4c0}
@@ -370,7 +387,7 @@
   html.light .btn:hover:not(:disabled), html.light .btn:focus-visible{background-color:#c4ccee}
   html.light .btn.selOpt{background-color:#4a3a10;color:#fff}
   html.light #turnbar, html.light #replayBar{background:rgba(240,242,250,.96);box-shadow:0 3px 0 #8a8aa8}
-  html.light #tutPanel, html.light #annPanel, html.light #fbPop, html.light #ckPop{background:rgba(240,242,250,.97);box-shadow:0 3px 0 #8a8aa8}
+  html.light #tutPanel, html.light #annPanel, html.light #fbPop, html.light #ckPop, html.light #drBossPop{background:rgba(240,242,250,.97);box-shadow:0 3px 0 #8a8aa8}
   html.light #axisPanel, html.light #damePanel{background:rgba(238,240,250,.96);box-shadow:0 3px 0 #8a8aa8}
   html.light canvas{border:4px solid #6a6a9a;box-shadow:0 0 0 4px #8a8aa8,0 6px 0 #8a8aa8}
   html.light #scan{background:repeating-linear-gradient(0deg,rgba(20,20,60,.07) 0 1px,transparent 1px 3px)}
@@ -415,6 +432,8 @@
        verkleinern, damit alles ohne Scroll-Leisten ins Bild passt. */
     #drSide{left:2px}
     #drSide .drSlot,#drSide #drHandSlot{width:38px;height:38px}
+    .drAdj{min-width:38px;min-height:36px;font-size:14px}
+    #drBar.adjUp{bottom:72px}
     .drCard canvas{width:26px;height:26px}
     .drRank{font-size:9px}
     .modal{padding:8px}
@@ -426,7 +445,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.94</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.99</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -452,6 +471,18 @@
         </div>
         <div id="drBar" class="hidden">
           <div id="drHand"></div>
+        </div>
+        <div id="drAdjustPanel" class="hidden">
+          <div id="drAdjLbl">Stein ausrichten</div>
+          <div class="drAdjRow">
+            <button class="btn drAdj" id="drAdjCcw">&#8634;</button>
+            <button class="btn drAdj" id="drAdjW">&#8592;</button>
+            <button class="btn drAdj" id="drAdjN">&#8593;</button>
+            <button class="btn drAdj" id="drAdjS">&#8595;</button>
+            <button class="btn drAdj" id="drAdjE">&#8594;</button>
+            <button class="btn drAdj" id="drAdjCw">&#8635;</button>
+            <button class="btn drAdj" id="drAdjHide">&#10005;</button>
+          </div>
         </div>
         <div id="replayBar" class="hidden">
           <span id="replayLbl">Replay</span>
@@ -479,6 +510,10 @@
         <div id="fbTail" class="bubTail"></div>
         <div id="ckPop" class="hidden"><div id="ckText"></div></div>
         <div id="ckTail" class="bubTail"></div>
+        <div id="drBossPop" class="hidden">
+          <span id="drBossMasc"></span>
+          <span id="drBossMsg"></span>
+        </div>
         <div id="annPanel" class="hidden">
           <div id="annText"></div>
         </div>
@@ -547,7 +582,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.94</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.99</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -800,7 +835,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.94</li></ul>
+    <ul><li>Alpha 0.99</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -808,7 +843,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.94</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.99</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -826,7 +861,7 @@
     <ul>
       <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>
       <li>Einzelspieler: der Computer steuert die jeweils andere Farbe; vor dem Start wird Weiß oder Schwarz gewählt (Standard: Weiß). Drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>
-      <li>Deathrun (Wellen &uuml;berleben): der gew&auml;hlte Startstein beginnt in der Brettmitte. Jede Runde erscheint eine Gegnerwelle, die vollst&auml;ndig geschlagen werden muss; die Gegner spielen zun&auml;chst schwach und werden mit jeder Runde intelligenter. Die Wellengr&ouml;&szlig;e w&auml;chst alle drei Runden um einen Stein (Runde 1&ndash;2: zwei, Runde 4&ndash;5: drei, Runde 7&ndash;8: vier, h&ouml;chstens acht); alle drei Runde greift der Boss „Arbeiteraufstand“ an &ndash; nur Steine einer Sorte, je Boss eine Figur mehr (drei beim ersten Boss, vier beim zweiten …). Jede geschlagene Figur bringt einen Tetroken. Nach jeder Runde &ouml;ffnet ein Kartenladen mit genau einer Steinkarte, zwei Zug-Karten und einer Slot-Karte &ndash; sind alle f&uuml;nf Slots frei, r&uuml;ckt eine zweite Steinkarte nach; die Kosten richten sich nach der Seltenheit (1&ndash;5 Tetroken). Zug-Karten (180&deg;-Drehungen, Versetzung um ein Feld in alle Richtungen, Schlagen bei Versetzung, Phantom, Stapeln) verzaubern je genau eine eigene Figur: Karte antippen, dann die Figur; verzauberte Figuren schimmern golden und k&ouml;nnen mehrere Zug-Karten tragen. Steinkarten legen neue Figuren auf die Bank, Bank-Slot-Karten schalten die f&uuml;nf Slots frei (anfangs gesperrt, je Karte wird ein Slot frei). Karten lassen sich sperren und bleiben dann im Angebot der n&auml;chsten Runde. Das Angebot l&auml;sst sich im Shop neu mischen; gesperrte Karten bleiben dabei stehen, und jede Nutzung kostet einen Tetroken mehr als die vorherige. Die Gegnerwelle jeder Runde steht schon beim Platzieren sichtbar auf dem Brett; der Startstein wird vor der ersten Runde frei platziert, Stein-Karten landen auf der Bank und werden vor der Runde frei platziert oder w&auml;hrend der Runde f&uuml;r einen Halbzug auf das Brett gezogen; platzierte Figuren lassen sich bis zum Start der Runde beliebig verschieben. Ab dem f&uuml;nfzehnten Halbzug br&ouml;ckeln wieder Felder. Sind alle eigenen Figuren geschlagen, endet der Run mit einer Ergebnis&uuml;bersicht; die beste erreichte Runde wird in der Statistik vermerkt. Bedrohte eigene Figuren zittern sichtbar. Im Deathrun gilt keine Schachregel.</li>
+      <li>Deathrun (Wellen &uuml;berleben): der gew&auml;hlte Startstein beginnt in der Brettmitte. Jede Runde erscheint eine Gegnerwelle, die vollst&auml;ndig geschlagen werden muss; die Gegner spielen zun&auml;chst schwach und werden mit jeder Runde intelligenter. Die Wellengr&ouml;&szlig;e w&auml;chst alle drei Runden um einen Stein (Runde 1&ndash;2: zwei, Runde 4&ndash;5: drei, Runde 7&ndash;8: vier, h&ouml;chstens acht); alle drei Runde greift der Boss „Arbeiteraufstand“ an &ndash; nur Steine einer Sorte, je Boss eine Figur mehr (drei beim ersten Boss, vier beim zweiten …). Jede geschlagene Figur bringt einen Tetroken. Nach jeder Runde &ouml;ffnet ein Kartenladen mit genau einer Steinkarte, zwei Zug-Karten und einer Slot-Karte &ndash; sind alle f&uuml;nf Slots frei, r&uuml;ckt eine zweite Steinkarte nach; die Kosten richten sich nach der Seltenheit (1&ndash;5 Tetroken). Zug-Karten (180&deg;-Drehungen, Versetzung um ein Feld in alle Richtungen, Schlagen bei Versetzung, Phantom, Stapeln) verzaubern je genau eine eigene Figur: Karte antippen, dann die Figur; verzauberte Figuren schimmern golden und k&ouml;nnen mehrere Zug-Karten tragen; die Phantom-Karte wirkt wie bei der Dame: Je Figur existiert nur ein einziges Phantom, das bei der n&auml;chsten Versetzung an der letzten Zugstelle neu erscheint und bis dahin bei jeder Drehung der Figur mitschwingt, dabei Gegner auf seinen Zielw&uuml;geln schl&auml;gt und herabf&auml;llt, sobald es den Bodenkontakt verliert. Steinkarten legen neue Figuren auf die Bank, Bank-Slot-Karten schalten die f&uuml;nf Slots frei (anfangs gesperrt, je Karte wird ein Slot frei). Karten lassen sich sperren und bleiben dann im Angebot der n&auml;chsten Runde. Das Angebot l&auml;sst sich im Shop neu mischen; gesperrte Karten bleiben dabei stehen, und jede Nutzung kostet einen Tetroken mehr als die vorherige. Die Gegnerwelle jeder Runde steht schon beim Platzieren sichtbar auf dem Brett; der Startstein wird vor der ersten Runde frei platziert, Stein-Karten landen auf der Bank und werden vor der Runde frei platziert oder w&auml;hrend der Runde f&uuml;r einen Halbzug auf das Brett gezogen; platzierte Figuren lassen sich bis zum Start der Runde beliebig verschieben; die zuletzt gesetzte Figur bleibt dabei gr&uuml;n unterlegt und l&auml;sst sich zus&auml;tzlich mit den Pfeiltasten um einzelne Felder verr&uuml;cken und mit R im Liegen drehen (Umschalt+R gegenl&auml;ufig); dieselbe Steuerung bietet die Knopfleiste unter dem Brett auch zum Antippen. In den Runden 1, 4, 7 &hellip; liegen zwei Steine der Welle garantiert nebeneinander, damit der erste Zug bei g&uuml;nstiger Platzierung einen Doppelschlag erlaubt. Ab dem f&uuml;nfzehnten Halbzug br&ouml;ckeln w&auml;hrend der Runde Felder; zu Beginn jeder neuen Runde ist das Brett wieder intakt. Ein Run ist sp&auml;testens nach vierzig Halbz&uuml;gen gewonnen; nur Bossrunden verl&auml;ngern den Run, dort muss die Welle vollst&auml;ndig geschlagen werden, und Tetromino k&uuml;ndigt sie mit der Einblendung &bdquo;Der Arbeiteraufstand geht los.&ldquo; an. Sind alle eigenen Figuren geschlagen, endet der Run mit einer Ergebnis&uuml;bersicht; die beste erreichte Runde wird in der Statistik vermerkt. Bedrohte eigene Figuren zittern sichtbar. Im Deathrun gelten die K&ouml;nigsstein-Regeln nicht: kein Schach und keine K&ouml;nigs-Schlagbeschr&auml;nkung; f&auml;llt der K&ouml;nigsstein herab, endet der Run dadurch nicht &ndash; Ziel ist das &Uuml;berleben mit beliebigem Stein.</li>
       <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>
       <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Auf Leicht ist dies beliebig oft m&ouml;glich, auf Mittel nur einmal je Zug (bis zum eigenen n&auml;chsten Zug). Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>
       <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>
@@ -942,7 +977,7 @@ var RULES_DE =
 '    <ul>\n' +
 '      <li>Mehrspieler: zwei Spieler wechseln sich am selben Bildschirm ab (Wei&szlig; gegen Schwarz) &ndash; wahlweise per Schnellstart mit zuf&auml;lliger Aufstellung oder mit eigenem Startwert (Seed) f&uuml;r exakt wiederholbare Partien.</li>\n' +
 '      <li>Einzelspieler: der Computer steuert die jeweils andere Farbe; vor dem Start wird Weiß oder Schwarz gewählt (Standard: Weiß). Drei Schwierigkeitsstufen. Leicht: hoher Zufallsanteil, teils schwache Z&uuml;ge, der Computer opfert mitunter eigene Figuren. Mittel: gute Z&uuml;ge mit Streuung, aber ohne Figurenopfer. Schwer: optimale, vorausschauende Auswahl &uuml;ber zwei Halbz&uuml;ge.</li>\n' +
-'      <li>Deathrun (Wellen &uuml;berleben): der gew&auml;hlte Startstein beginnt in der Brettmitte. Jede Runde erscheint eine Gegnerwelle, die vollst&auml;ndig geschlagen werden muss; die Gegner spielen zun&auml;chst schwach und werden mit jeder Runde intelligenter. Die Wellengr&ouml;&szlig;e w&auml;chst alle drei Runden um einen Stein (Runde 1&ndash;2: zwei, Runde 4&ndash;5: drei, Runde 7&ndash;8: vier, h&ouml;chstens acht); alle drei Runde greift der Boss „Arbeiteraufstand“ an &ndash; nur Steine einer Sorte, je Boss eine Figur mehr (drei beim ersten Boss, vier beim zweiten …). Jede geschlagene Figur bringt einen Tetroken. Nach jeder Runde &ouml;ffnet ein Kartenladen mit genau einer Steinkarte, zwei Zug-Karten und einer Slot-Karte &ndash; sind alle f&uuml;nf Slots frei, r&uuml;ckt eine zweite Steinkarte nach; die Kosten richten sich nach der Seltenheit (1&ndash;5 Tetroken). Zug-Karten (180&deg;-Drehungen, Versetzung um ein Feld in alle Richtungen, Schlagen bei Versetzung, Phantom, Stapeln) verzaubern je genau eine eigene Figur: Karte antippen, dann die Figur; verzauberte Figuren schimmern golden und k&ouml;nnen mehrere Zug-Karten tragen. Steinkarten legen neue Figuren auf die Bank, Bank-Slot-Karten schalten die f&uuml;nf Slots frei (anfangs gesperrt, je Karte wird ein Slot frei). Karten lassen sich sperren und bleiben dann im Angebot der n&auml;chsten Runde. Das Angebot l&auml;sst sich im Shop neu mischen; gesperrte Karten bleiben dabei stehen, und jede Nutzung kostet einen Tetroken mehr als die vorherige. Die Gegnerwelle jeder Runde steht schon beim Platzieren sichtbar auf dem Brett; der Startstein wird vor der ersten Runde frei platziert, Stein-Karten landen auf der Bank und werden vor der Runde frei platziert oder w&auml;hrend der Runde f&uuml;r einen Halbzug auf das Brett gezogen; platzierte Figuren lassen sich bis zum Start der Runde beliebig verschieben. Ab dem f&uuml;nfzehnten Halbzug br&ouml;ckeln wieder Felder. Sind alle eigenen Figuren geschlagen, endet der Run mit einer Ergebnis&uuml;bersicht; die beste erreichte Runde wird in der Statistik vermerkt. Bedrohte eigene Figuren zittern sichtbar. Im Deathrun gilt keine Schachregel.</li>\n' +
+'      <li>Deathrun (Wellen &uuml;berleben): der gew&auml;hlte Startstein beginnt in der Brettmitte. Jede Runde erscheint eine Gegnerwelle, die vollst&auml;ndig geschlagen werden muss; die Gegner spielen zun&auml;chst schwach und werden mit jeder Runde intelligenter. Die Wellengr&ouml;&szlig;e w&auml;chst alle drei Runden um einen Stein (Runde 1&ndash;2: zwei, Runde 4&ndash;5: drei, Runde 7&ndash;8: vier, h&ouml;chstens acht); alle drei Runde greift der Boss „Arbeiteraufstand“ an &ndash; nur Steine einer Sorte, je Boss eine Figur mehr (drei beim ersten Boss, vier beim zweiten …). Jede geschlagene Figur bringt einen Tetroken. Nach jeder Runde &ouml;ffnet ein Kartenladen mit genau einer Steinkarte, zwei Zug-Karten und einer Slot-Karte &ndash; sind alle f&uuml;nf Slots frei, r&uuml;ckt eine zweite Steinkarte nach; die Kosten richten sich nach der Seltenheit (1&ndash;5 Tetroken). Zug-Karten (180&deg;-Drehungen, Versetzung um ein Feld in alle Richtungen, Schlagen bei Versetzung, Phantom, Stapeln) verzaubern je genau eine eigene Figur: Karte antippen, dann die Figur; verzauberte Figuren schimmern golden und k&ouml;nnen mehrere Zug-Karten tragen; die Phantom-Karte wirkt wie bei der Dame: Je Figur existiert nur ein einziges Phantom, das bei der n&auml;chsten Versetzung an der letzten Zugstelle neu erscheint und bis dahin bei jeder Drehung der Figur mitschwingt, dabei Gegner auf seinen Zielw&uuml;geln schl&auml;gt und herabf&auml;llt, sobald es den Bodenkontakt verliert. Steinkarten legen neue Figuren auf die Bank, Bank-Slot-Karten schalten die f&uuml;nf Slots frei (anfangs gesperrt, je Karte wird ein Slot frei). Karten lassen sich sperren und bleiben dann im Angebot der n&auml;chsten Runde. Das Angebot l&auml;sst sich im Shop neu mischen; gesperrte Karten bleiben dabei stehen, und jede Nutzung kostet einen Tetroken mehr als die vorherige. Die Gegnerwelle jeder Runde steht schon beim Platzieren sichtbar auf dem Brett; der Startstein wird vor der ersten Runde frei platziert, Stein-Karten landen auf der Bank und werden vor der Runde frei platziert oder w&auml;hrend der Runde f&uuml;r einen Halbzug auf das Brett gezogen; platzierte Figuren lassen sich bis zum Start der Runde beliebig verschieben; die zuletzt gesetzte Figur bleibt dabei gr&uuml;n unterlegt und l&auml;sst sich zus&auml;tzlich mit den Pfeiltasten um einzelne Felder verr&uuml;cken und mit R im Liegen drehen (Umschalt+R gegenl&auml;ufig); dieselbe Steuerung bietet die Knopfleiste unter dem Brett auch zum Antippen. In den Runden 1, 4, 7 &hellip; liegen zwei Steine der Welle garantiert nebeneinander, damit der erste Zug bei g&uuml;nstiger Platzierung einen Doppelschlag erlaubt. Ab dem f&uuml;nfzehnten Halbzug br&ouml;ckeln w&auml;hrend der Runde Felder; zu Beginn jeder neuen Runde ist das Brett wieder intakt. Ein Run ist sp&auml;testens nach vierzig Halbz&uuml;gen gewonnen; nur Bossrunden verl&auml;ngern den Run, dort muss die Welle vollst&auml;ndig geschlagen werden, und Tetromino k&uuml;ndigt sie mit der Einblendung &bdquo;Der Arbeiteraufstand geht los.&ldquo; an. Sind alle eigenen Figuren geschlagen, endet der Run mit einer Ergebnis&uuml;bersicht; die beste erreichte Runde wird in der Statistik vermerkt. Bedrohte eigene Figuren zittern sichtbar. Im Deathrun gelten die K&ouml;nigsstein-Regeln nicht: kein Schach und keine K&ouml;nigs-Schlagbeschr&auml;nkung; f&auml;llt der K&ouml;nigsstein herab, endet der Run dadurch nicht &ndash; Ziel ist das &Uuml;berleben mit beliebigem Stein.</li>\n' +
 '      <li>Startwert (Seed): dieselbe Zahl erzeugt dieselbe Startaufstellung; der Startwert der laufenden Partie steht in der Statusleiste, sodass sich Partien exakt wiederholen lassen.</li>\n' +
 '      <li>Zug zur&uuml;cknehmen: Im Einzelspieler auf den Stufen Leicht und Mittel nimmt der Knopf mit dem U-Turn-Pfeil neben den Ansichtspfeilen den letzten vollen Zug zur&uuml;ck &ndash; den eigenen Halbzug und den Computerzug. Auf Leicht ist dies beliebig oft m&ouml;glich, auf Mittel nur einmal je Zug (bis zum eigenen n&auml;chsten Zug). Die Partie l&auml;uft ab der fr&uuml;heren Stellung weiter; bereits freigeschaltete Erfolge und die Statistik bleiben unber&uuml;hrt.</li>\n' +
 '      <li>Replay: Nach dem Ende einer Duell-Partie &ouml;ffnet der Knopf „Replay ansehen“ den Partieverlauf. Der Schieberegler unten im Spielfeld bl&auml;ttert die Stellungen Halbzug f&uuml;r Halbzug durch, die Ansicht l&auml;sst sich wie gewohnt drehen, Z&uuml;ge bleiben bis zum Ende des Replays gesperrt. Das Replay wird nicht gespeichert und endet, sobald eine neue Partie beginnt.</li>\n' +
@@ -1043,7 +1078,7 @@ var RULES_CS =
 '    <ul>\n' +
 '      <li>Více hráčů: dva hráči se střídají u stejného displeje (bílá proti černé) – buď rychlým startem s náhodným rozestavením, nebo s vlastním počátečním číslem (seed) pro přesně opakovatelné partie.</li>\n' +
 '      <li>Jeden hráč: počítač ovládá druhou barvu; před startem se volí bílá nebo černá (výchozí: bílá). Tři stupně obtížnosti. Lehká: vysoká míra náhody, místy slabé tahy, počítač někdy obětuje vlastní figurky. Střední: dobré tahy s určitou rozptýleností, ale bez obětování figurek. Těžká: optimální volba s výhledem na dva půltahy.</li>\n' +
-'      <li>Deathrun (přežijte vlny): vybraný startovní kámen začíná uprostřed desky. Každé kolo přivádí nepřátelskou vlnu, kterou je třeba zcela sebrat; nepřátelé zpočátku hrají slabě a s každým kolem se chytřejí. Vlna roste o kámen každé tři kola (kola 1–2: dva, 4–5: tři, 7–8: čtyři, nejvýše osm); každé třetí kolo útočí boss „Vzpoura dělníků“ – pouze kameny jediné sorty, o jeden více na bosse (tři u prvního, čtyři u druhého…). Každý sebraný kámen vynáší jeden Tetroken. Po každém kole se otevírá obchod přesně s jednou kamennou kartou, dvěma tahovými kartami a jednou kartou slotu – po odemčení všech pěti slotů nastupuje místo ní druhá kamenná karta; ceny sledují vzácnost (1–5 Tetrokenů). Tahové karty (otočky o 180°, posun o jedno pole všemi směry, braní při posunu, fantom, skládání) očarují každá právě jednu vlastní figurku: klepněte na kartu a pak na figurku; očarované figurky zlatě se lesknou a mohou nést více tahových karet. Kamenné karty přidávají figurky na lavici, karty slotů odemkají pět slotů (na začátku zamčených, každá kartou jeden odemčený). Karty lze zamknout a zůstanou tak v nabídce dalšího kola. Nabídku lze v obchodě promíchat znovu; zamčené karty zůstanou na místě a každé použití stojí o jeden Tetroken více než předchozí. Nepřátelská vlna každého kola stojí na desce viditelně už během rozstavění; startovní kámen se umísťuje volně už před prvním kolem, kamenné karty míří na lavici a umísťují se volně před každým kolem, nebo vstoupí na desku během kola za jeden půltah; rozestavěné figurky lze libovolně přesouvat až do zahájení kola. Od patnáctého půltahu se pole znovu drolí. Jsou-li všechny vlastní figurky sebrány, run končí přehledem výsledků; nejlepší dosažené kolo se zaznamená do statistiky. Ohrožené vlastní figurky viditelně třesou. V deathrunu neplatí šachové pravidlo.</li>\n' +
+'      <li>Deathrun (přežijte vlny): vybraný startovní kámen začíná uprostřed desky. Každé kolo přivádí nepřátelskou vlnu, kterou je třeba zcela sebrat; nepřátelé zpočátku hrají slabě a s každým kolem se chytřejí. Vlna roste o kámen každé tři kola (kola 1–2: dva, 4–5: tři, 7–8: čtyři, nejvýše osm); každé třetí kolo útočí boss „Vzpoura dělníků“ – pouze kameny jediné sorty, o jeden více na bosse (tři u prvního, čtyři u druhého…). Každý sebraný kámen vynáší jeden Tetroken. Po každém kole se otevírá obchod přesně s jednou kamennou kartou, dvěma tahovými kartami a jednou kartou slotu – po odemčení všech pěti slotů nastupuje místo ní druhá kamenná karta; ceny sledují vzácnost (1–5 Tetrokenů). Tahové karty (otočky o 180°, posun o jedno pole všemi směry, braní při posunu, fantom, skládání) očarují každá právě jednu vlastní figurku: klepněte na kartu a pak na figurku; očarované figurky zlatě se lesknou a mohou nést více tahových karet; karta fantom funguje jako dáma: každá figurka má jen jediný fantom, který se při příštím posunu znovu objeví na poslední pozici tahu a do té doby se otáčí spolu s každou rotací figurky, na svých cílových polích bere soupeře a spadne, jakmile ztratí kontakt s podkladem. Kamenné karty přidávají figurky na lavici, karty slotů odemkají pět slotů (na začátku zamčených, každá kartou jeden odemčený). Karty lze zamknout a zůstanou tak v nabídce dalšího kola. Nabídku lze v obchodě promíchat znovu; zamčené karty zůstanou na místě a každé použití stojí o jeden Tetroken více než předchozí. Nepřátelská vlna každého kola stojí na desce viditelně už během rozstavění; startovní kámen se umísťuje volně už před prvním kolem, kamenné karty míří na lavici a umísťují se volně před každým kolem, nebo vstoupí na desku během kola za jeden půltah; rozestavěné figurky lze libovolně přesouvat až do zahájení kola; naposledy položená figurka zůstává zeleně podbarvená a lze ji navíc šipkami posouvat o jednotlivá pole a klávesou R otáčet na místě (Shift+R opačně); stejné ovládání nabízí i tlačítková lišta pod deskou. V kolech 1, 4, 7 … dva kameny vlny zaručeně leží vedle sebe, aby první tah umožnil dvojí braní při optimálním rozestavení. Od patnáctého půltahu se pole během kola drolí; na začátku každého nového kola je deska znovu celá. Run je vyhrán nejpozději po čtyřiceti půltazích; jen kola s bossem run prodlužují – tam je třeba sebrat vlnu celou a Tetromino ji ohlašuje výsuvkou „Vzpoura dělníků letí!“. Jsou-li všechny vlastní figurky sebrány, run končí přehledem výsledků; nejlepší dosažené kolo se zaznamená do statistiky. Ohrožené vlastní figurky viditelně třesou. V deathrunu neplatí pravidla královského kamene: žádný šach ani omezení brání krále; padlý královský kámen run neukončuje – cílem je přežít s libovolným kamenem.</li>\n' +
 '      <li>Počáteční číslo (seed): stejné číslo vytváří stejné rozestavení; počáteční číslo běžné partie stojí ve stavovém řádku, takže se partie dají přesně opakovat.</li>\n' +
 '      <li>Vzít tah zpět: V režimu jednoho hráče na stupních Lehká a Střední vrátí tlačítko se šipkou U-Turn vedle šipek pohledu poslední celý tah – vlastní půltah i tah počítače. Na stupni Lehká lze tah vzít zpět libovolně často, na stupni Střední jen jednou za tah (až do vlastního dalšího tahu). Partie pokračuje od dřívější pozice; už odemčené úspěchy a statistika zůstávají nedotčeny.</li>\n' +
 '      <li>Replay: Po konci partie proti počítači otevře tlačítko „Sledovat replay“ průběh partie. Posuvník dole ve hracím poli listuje pozicemi půltah za půltahem, pohled lze otáčet jako obvykle, tahy zůstávají až do konce replaye uzamčeny. Replay se neukládá a končí, jakmile začne nová partie.</li>\n' +
@@ -1142,7 +1177,7 @@ var RULES_PL =
 '    <ul>\n' +
 '      <li>Wielu graczy: dwaj gracze wymieniają się przy tym samym ekranie (biali przeciw czarnym) – albo szybkim startem z losowym rozstawieniem, albo z własną wartością startową (seed) dla dokładnie powtarzalnych partii.</li>\n' +
 '      <li>Jeden gracz: komputer steruje drugim kolorem; przed startem wybiera się białe lub czarne (domyślnie: białe). Trzy poziomy trudności. Łatwy: wysoki udział losowości, częściowo słabe ruchy, komputer czasem poświęca własne figury. Średni: dobre ruchy z pewnym rozrzutem, ale bez poświęcania figur. Trudny: optymalny, patrzący w przód wybór na dwa półruchy.</li>\n' +
-'      <li>Deathrun (przetrwaj fale): wybrany kamień startowy rozpoczyna na środku planszy. W każdej rundzie pojawia się fala przeciwników, którą trzeba w całości zbić; przeciwnicy grają początkowo słabo i z każdą rundą stają się sprytniejsi. Fala rośnie o kamień co trzy rundy (rundy 1–2: dwa, 4–5: trzy, 7–8: cztery, najwyżej osiem); co trzecią rundę atakuje boss „Bunt robotników” – tylko kamienie jednego rodzaju, o jeden więcej na bossa (trzy przy pierwszym, cztery przy drugim…). Każde zbicie wrogiej figury daje jeden Tetroken. Po każdej rundzie otwiera się sklep dokładnie z jedną kartą kamienia, dwiema kartami ruchów i jedną kartą slotu – po odblokowaniu wszystkich pięciu slotów wchodzi w jej miejsce druga karta kamienia; ceny zależą od rzadkości (1–5 Tetrokenów). Karty ruchów (obroty o 180°, przesunięcie o jedno pole w każdym kierunku, bicie przy przesunięciu, fantom, układanie) czarują każda dokładnie jedną własną figurę: dotknij karty, a potem figury; zaczarowane figury lśnią złotem i mogą nosić kilka kart ruchów. Karty kamieni dodają figury na ławkę, karty slotów odblokowują pięć slotów (na początku zablokowanych, każda kartą jeden odblokowany). Karty można zablokować i pozostają wtedy w ofercie następnej rundy. Ofertę można przetasować ponownie w sklepie; zablokowane karty pozostają na miejscu, a każde użycie kosztuje o jeden Tetroken więcej niż poprzednie. Fala przeciwników każdej rundy stoi na planszy widocznie już podczas rozstawiania; kamień startowy rozstawia się swobodnie już przed pierwszą rundą, karty kamieni trafiają na ławkę i rozstawia się je swobodnie przed każdą rundą albo wchodzą na planszę w trakcie rundy za jeden półruch; rozstawione figury można dowolnie przestawiać aż do rozpoczęcia rundy. Od piętnastego półruchu pola znów się kruszą. Gdy wszystkie własne figury zostaną zbite, run kończy się przeglądem wyników; najlepsza osiągnięta runda zapisuje się w statystykach. Zagrożone własne figury widocznie drżą. W deathrunie nie obowiązuje reguła szacha.</li>\n' +
+'      <li>Deathrun (przetrwaj fale): wybrany kamień startowy rozpoczyna na środku planszy. W każdej rundzie pojawia się fala przeciwników, którą trzeba w całości zbić; przeciwnicy grają początkowo słabo i z każdą rundą stają się sprytniejsi. Fala rośnie o kamień co trzy rundy (rundy 1–2: dwa, 4–5: trzy, 7–8: cztery, najwyżej osiem); co trzecią rundę atakuje boss „Bunt robotników” – tylko kamienie jednego rodzaju, o jeden więcej na bossa (trzy przy pierwszym, cztery przy drugim…). Każde zbicie wrogiej figury daje jeden Tetroken. Po każdej rundzie otwiera się sklep dokładnie z jedną kartą kamienia, dwiema kartami ruchów i jedną kartą slotu – po odblokowaniu wszystkich pięciu slotów wchodzi w jej miejsce druga karta kamienia; ceny zależą od rzadkości (1–5 Tetrokenów). Karty ruchów (obroty o 180°, przesunięcie o jedno pole w każdym kierunku, bicie przy przesunięciu, fantom, układanie) czarują każda dokładnie jedną własną figurę: dotknij karty, a potem figury; zaczarowane figury lśnią złotem i mogą nosić kilka kart ruchów; karta fantoma działa jak dama: każda figura ma tylko jednego fantoma, który przy następnym przesunięciu pojawia się na nowo na ostatnim miejscu ruchu, a do tego czasu towarzyszy każdej rotacji figury, na swoich polach docelowych zbija przeciwników i spada, gdy tylko straci kontakt z podłożem. Karty kamieni dodają figury na ławkę, karty slotów odblokowują pięć slotów (na początku zablokowanych, każda kartą jeden odblokowany). Karty można zablokować i pozostają wtedy w ofercie następnej rundy. Ofertę można przetasować ponownie w sklepie; zablokowane karty pozostają na miejscu, a każde użycie kosztuje o jeden Tetroken więcej niż poprzednie. Fala przeciwników każdej rundy stoi na planszy widocznie już podczas rozstawiania; kamień startowy rozstawia się swobodnie już przed pierwszą rundą, karty kamieni trafiają na ławkę i rozstawia się je swobodnie przed każdą rundą albo wchodzą na planszę w trakcie rundy za jeden półruch; rozstawione figury można dowolnie przestawiać aż do rozpoczęcia rundy; ostatnio ustawiona figura pozostaje zielono podświetlona i można ją dodatkowo strzałkami przesuwać o pojedyncze pola oraz obracać na miejscu klawiszem R (Shift+R odwrotnie); to samo sterowanie oferuje także pasek przycisków pod planszą. W rundach 1, 4, 7 … dwa kamienie fali gwarantowanie leżą obok siebie, aby przy optymalnym ustawieniu pierwszy ruch pozwolił na podwójne zbicie. Od piętnastego półruchu pola kruszą się w trakcie rundy; na początku każdej nowej rundy plansza jest znowu cała. Run jest wygrany najpóźniej po czterdziestu półruchach; tylko rundy z bossem wydłużają runa – tam falę trzeba zbić w całości, a Tetromino zapowiada ją ramką „Bunt robotników rusza!”. Gdy wszystkie własne figury zostaną zbite, run kończy się przeglądem wyników; najlepsza osiągnięta runda zapisuje się w statystykach. Zagrożone własne figury widocznie drżą. W deathrunie nie obowiązują reguły królewskiego kamienia: brak szacha i ograniczenia bicia króla; spadnięty królewski kamień nie kończy runa – celem jest przetrwanie dowolnym kamieniem.</li>\n' +
 '      <li>Wartość startowa (seed): ta sama liczba tworzy to samo rozstawienie; wartość startowa bieżącej partii stoi na pasku stanu, dzięki czemu partie można dokładnie powtarzać.</li>\n' +
 '      <li>Cofanie ruchu: W trybie jednego gracza na poziomach Łatwy i Średni przycisk ze strzałką U-Turn obok strzałek widoku cofa ostatni pełny ruch – własny półruch i ruch komputera. Na poziomie Łatwy można cofać dowolnie często, a na poziomie Średni tylko raz na ruch (do własnego następnego ruchu). Partia biegnie dalej od wcześniejszej pozycji; odblokowane osiągnięcia i statystyka pozostają nietknięte.</li>\n' +
 '      <li>Powtórka: Po zakończeniu partii z komputerem przycisk „Obejrzyj powtórkę” otwiera przebieg partii. Suwak na dole pola gry kartkuje pozycje półruch po półruchu, widok można obracać jak zwykle, ruchy pozostają do końca powtórki zablokowane. Powtórka nie jest zapisywana i kończy się, gdy tylko zaczyna się nowa partia.</li>\n' +
@@ -1241,7 +1276,7 @@ var RULES_ES =
 '    <ul>\n' +
 '      <li>Multijugador: dos jugadores se turnan en la misma pantalla (blancas contra negras) – bien mediante inicio rápido con una disposición aleatoria, bien con su propio valor inicial (semilla) para partidas repetibles con exactitud.</li>\n' +
 '      <li>Un jugador: el ordenador controla el otro color; antes de empezar se elige blanco o negro (por defecto: blanco). Tres niveles de dificultad. Fácil: gran parte de azar, jugadas en parte flojas, el ordenador en ocasiones sacrifica piezas propias. Medio: buenas jugadas con cierta dispersión, pero sin sacrificios de piezas. Difícil: selección óptima y previsor a lo largo de dos jugadas.</li>\n' +
-'      <li>Deathrun (sobrevive a las oleadas): la piedra inicial elegida comienza en el centro del tablero. Cada ronda trae una oleada enemiga que hay que capturar por completo; los enemigos juegan al principio con debilidad y se vuelven más inteligentes con cada ronda. La oleada crece en una pieza cada tres rondas (rondas 1–2: dos, 4–5: tres, 7–8: cuatro, ocho como máximo); cada tercera ronda ataca el jefe «Revolución obrera» – solo piedras de una sola clase, una más por jefe (tres en el primero, cuatro en el segundo…). Cada captura da un Tetroken. Tras cada ronda se abre una tienda de cartas exactamente con una carta de piedra, dos cartas de movimiento y una carta de slot – al desbloquear los cinco slots entra en su lugar una segunda carta de piedra; los precios siguen la rareza (1–5 Tetroken). Las cartas de movimiento (giros de 180°, desplazamiento de una casilla en todas las direcciones, captura al desplazar, fantasma, apilar) encantan cada una exactamente a una figura propia: toca la carta y luego la figura; las figuras encantadas brillan en dorado y pueden llevar varias cartas de movimiento. Las cartas de piedras añaden figuras al banquillo, las cartas de slots desbloquean los cinco slots (bloqueados al principio, uno desbloqueado por carta). Las cartas se pueden reservar y quedan entonces en la oferta de la ronda siguiente. La oferta se puede mezclar de nuevo en la tienda; las cartas reservadas permanecen en su sitio y cada uso cuesta un Tetroken más que el anterior. La oleada enemiga de cada ronda ya está visible en el tablero durante la colocación; la piedra inicial se coloca libremente antes de la primera ronda, las cartas de piedra van al banquillo y se colocan libremente antes de cada ronda o entran al tablero durante la ronda por una media jugada; las figuras colocadas se pueden mover libremente hasta el inicio de la ronda. A partir de la decimoquinta media jugada las casillas vuelven a desmoronarse. Cuando todas las figuras propias son capturadas, el run termina con un resumen de resultados; la mejor ronda alcanzada queda anotada en las estadísticas. Las figuras propias amenazadas tiemblan visiblemente. En el deathrun no rige la regla de jaque.</li>\n' +
+'      <li>Deathrun (sobrevive a las oleadas): la piedra inicial elegida comienza en el centro del tablero. Cada ronda trae una oleada enemiga que hay que capturar por completo; los enemigos juegan al principio con debilidad y se vuelven más inteligentes con cada ronda. La oleada crece en una pieza cada tres rondas (rondas 1–2: dos, 4–5: tres, 7–8: cuatro, ocho como máximo); cada tercera ronda ataca el jefe «Revolución obrera» – solo piedras de una sola clase, una más por jefe (tres en el primero, cuatro en el segundo…). Cada captura da un Tetroken. Tras cada ronda se abre una tienda de cartas exactamente con una carta de piedra, dos cartas de movimiento y una carta de slot – al desbloquear los cinco slots entra en su lugar una segunda carta de piedra; los precios siguen la rareza (1–5 Tetroken). Las cartas de movimiento (giros de 180°, desplazamiento de una casilla en todas las direcciones, captura al desplazar, fantasma, apilar) encantan cada una exactamente a una figura propia: toca la carta y luego la figura; las figuras encantadas brillan en dorado y pueden llevar varias cartas de movimiento; la carta fantasma actúa como la dama: cada figura tiene un solo fantasma, que reaparece en la última posición del desplazamiento al desplazarse de nuevo y, hasta entonces, acompaña a cada giro de la figura, captura adversarios en sus casillas de destino y cae en cuanto pierde el contacto con el suelo. Las cartas de piedras añaden figuras al banquillo, las cartas de slots desbloquean los cinco slots (bloqueados al principio, uno desbloqueado por carta). Las cartas se pueden reservar y quedan entonces en la oferta de la ronda siguiente. La oferta se puede mezclar de nuevo en la tienda; las cartas reservadas permanecen en su sitio y cada uso cuesta un Tetroken más que el anterior. La oleada enemiga de cada ronda ya está visible en el tablero durante la colocación; la piedra inicial se coloca libremente antes de la primera ronda, las cartas de piedra van al banquillo y se colocan libremente antes de cada ronda o entran al tablero durante la ronda por una media jugada; las figuras colocadas se pueden mover libremente hasta el inicio de la ronda; la última figura colocada queda marcada en verde y además se puede mover de una en una casilla con las flechas y girar en el sitio con R (Mayús+R al revés); el mismo control ofrece también la barra de botones bajo el tablero. En las rondas 1, 4, 7 …, dos piedras de la oleada están garantizadamente colocadas una junto a otra, de modo que la primera jugada permita una captura doble con una colocación óptima. A partir de la decimoquinta media jugada las casillas se desmoronan durante la ronda; al comienzo de cada nueva ronda el tablero vuelve a estar intacto. Un run se gana como muy tarde después de cuarenta medias jugadas; solo las rondas de jefe alargan el run: allí hay que capturar la oleada por completo, y Tetromino lo anuncia con el cartel «¡Empieza la revolución obrera!». Cuando todas las figuras propias son capturadas, el run termina con un resumen de resultados; la mejor ronda alcanzada queda anotada en las estadísticas. Las figuras propias amenazadas tiemblan visiblemente. En el deathrun no rigen las reglas de la piedra rey: sin jaque ni restricción de captura del rey; una piedra rey que cae no termina el run – el objetivo es sobrevivir con cualquier piedra.</li>\n' +
 '      <li>Valor inicial (semilla): el mismo número genera la misma posición inicial; el valor inicial de la partida en curso aparece en la barra de estado, de modo que las partidas pueden repetirse con exactitud.</li>\n' +
 '      <li>Deshacer jugada: En el modo un jugador, en los niveles Fácil y Medio, el botón con la flecha en forma de U junto a las flechas de vista deshace la última jugada completa – la propia media jugada y la jugada del ordenador. En Fácil esto es posible cuantas veces se quiera; en Medio, solo una vez por jugada (hasta la propia siguiente jugada). La partida continúa desde la posición anterior; los logros ya desbloqueados y las estadísticas quedan intactos.</li>\n' +
 '      <li>Repetición: Al terminar una partida de duelo, el botón «Ver repetición» abre el curso de la partida. El control deslizante situado abajo en el campo de juego recorre las posiciones media jugada a media jugada, la vista puede girarse como de costumbre y las jugadas permanecen bloqueadas hasta el final de la repetición. La repetición no se guarda y termina en cuanto empieza una partida nueva.</li>\n' +
@@ -1511,13 +1546,13 @@ var TXT = {
     drBtn: 'Deathrun', drPickCap: 'Startstein wählen', drGoLbl: 'Runde starten',
     drBenchCap: 'Bank', drHandLbl: 'Startstein',
     chipDr: 'Deathrun · Runde {r} · {tk} Tetroken', drTkUnit: 'Tetroken', drOwned: 'gekauft',
-    drShopH: 'Tetroken-Shop', drShopSub: 'Nach jeder Runde bietet der Shop eine Stein-Karte, zwei Zug-Karten und eine Slot-Karte – bei fünf freien Slots stattdessen eine zweite Stein-Karte. Der Knopf rechts sperrt eine Karte für das nächste Angebot. Zug-Karten verzaubern je eine eigene Figur: Karte antippen, dann die Figur; verzauberte Figuren schimmern golden und tragen mehrere Karten. Neu mischen ersetzt die ungesperrten Karten; jede Nutzung kostet einen Tetroken mehr.',
+    drAdjCap: 'Stein ausrichten', drAdjRotCw: 'Im Liegen drehen (R)', drAdjRotCcw: 'Im Liegen gegenläufig drehen (Umschalt+R)', drAdjHide: 'Leiste ausblenden', drAdjustHint: 'Pfeiltasten verrücken die zuletzt gesetzte Figur, R dreht sie im Liegen (Umschalt+R gegenläufig).', drShopH: 'Tetroken-Shop', drShopSub: 'Nach jeder Runde bietet der Shop eine Stein-Karte, zwei Zug-Karten und eine Slot-Karte – bei fünf freien Slots stattdessen eine zweite Stein-Karte. Der Knopf rechts sperrt eine Karte für das nächste Angebot. Zug-Karten verzaubern je eine eigene Figur: Karte antippen, dann die Figur; verzauberte Figuren schimmern golden und tragen mehrere Karten. Neu mischen ersetzt die ungesperrten Karten; jede Nutzung kostet einen Tetroken mehr.',
     drLockLbl: 'Karte sperren: Sie bleibt im nächsten Angebot.',
-    drShopCloseLbl: 'Weiter zur nächsten Runde', drEndH: 'Run beendet', drRetryLbl: 'Neuer Run',
-    drEndStats: 'Runden: {r} · Schläge: {k} · Tetroken: {t} · Karten: {c}', drNewBest: 'Neuer Rekord!', drBestFmt: 'Bester Run: {n} Runden',
+    drShopCloseLbl: 'Weiter zur nächsten Runde', drEndH: 'Run beendet', drRetryLbl: 'Neuer Run', drWinH: 'Run gewonnen!', drBossGo: 'Der Arbeiteraufstand geht los.',
+    drEndStats: 'Runden: {r} · Schläge: {k} · Tetroken: {t} · Karten: {c}', drNewBest: 'Neuer Rekord!', drBestFmt: 'Bester Run: {n} Runden', annDrWin: 'Run nach {n} Halbzügen gewonnen!', chipDrLow: 'Deathrun · Runde {r} · {tk} Tetroken · noch {h} Halbzüge',
     statDr: 'Deathrun – beste Runde: {n}', chipDrTk: 'Tetroken: {n}', drSlots: 'Bank {n}/{m}',
     drCr180: 'Karte: 180°-Drehungen', drCtrans: 'Karte: Versetzung, ein Feld in alle Richtungen', drCtcap: 'Karte: Schlagen bei Versetzung',
-    drCphant: 'Karte: Phantom bei Versetzung', drCstack: 'Karte: Stapeln erlaubt', drCslot: 'Karte: schaltet einen Bank-Slot frei (max. 5)',
+    drCphant: 'Karte: Phantom bei Versetzung, schwingt bei Drehungen mit', drCstack: 'Karte: Stapeln erlaubt', drCslot: 'Karte: schaltet einen Bank-Slot frei (max. 5)',
     drCStone: 'Stein-Karte: {t} auf die Bank',
     annDrRound: 'Runde {n}: {k} Gegner sind auf dem Brett!', annDrBoss: 'Arbeiteraufstand! {n} {t}-Steine rücken an!', annDrClear: 'Runde {n} geschafft!',
     annDrShop: 'Shop offen: neue Karten im Angebot.',
@@ -1774,13 +1809,13 @@ var TXT = {
     drBtn: 'Deathrun', drPickCap: 'Choose your starting piece', drGoLbl: 'Start round',
     drBenchCap: 'Bench', drHandLbl: 'Starting piece',
     chipDr: 'Deathrun · Round {r} · {tk} Tetroken', drTkUnit: 'Tetroken', drOwned: 'purchased',
-    drShopH: 'Tetroken shop', drShopSub: 'After every round the shop offers one stone card, two move cards and one slot card – with five slots unlocked a second stone card instead. The button on the right locks a card for the next offer. Move cards enchant a single one of your pieces: tap the card, then the piece; enchanted pieces shimmer gold and can carry several cards. Reshuffle replaces the unlocked cards; each use costs one Tetroken more.',
+    drAdjCap: 'Adjust the piece', drAdjRotCw: 'Rotate in place (R)', drAdjRotCcw: 'Rotate in place, opposite direction (Shift+R)', drAdjHide: 'Hide the bar', drAdjustHint: 'Arrow keys nudge the last placed piece, R rotates it in place (Shift+R counter-rotates).', drShopH: 'Tetroken shop', drShopSub: 'After every round the shop offers one stone card, two move cards and one slot card – with five slots unlocked a second stone card instead. The button on the right locks a card for the next offer. Move cards enchant a single one of your pieces: tap the card, then the piece; enchanted pieces shimmer gold and can carry several cards. Reshuffle replaces the unlocked cards; each use costs one Tetroken more.',
     drLockLbl: 'Lock card: it stays in the next offer.',
-    drShopCloseLbl: 'Continue to the next round', drEndH: 'Run over', drRetryLbl: 'New run',
-    drEndStats: 'Rounds: {r} · Captures: {k} · Tetroken: {t} · Cards: {c}', drNewBest: 'New record!', drBestFmt: 'Best run: {n} rounds',
+    drShopCloseLbl: 'Continue to the next round', drEndH: 'Run over', drRetryLbl: 'New run', drWinH: 'Run won!', drBossGo: 'The workers’ uprising is starting.',
+    drEndStats: 'Rounds: {r} · Captures: {k} · Tetroken: {t} · Cards: {c}', drNewBest: 'New record!', drBestFmt: 'Best run: {n} rounds', annDrWin: 'Run won after {n} half-moves!', chipDrLow: 'Deathrun · Round {r} · {tk} Tetroken · {h} half-moves left',
     statDr: 'Deathrun – best round: {n}', chipDrTk: 'Tetroken: {n}', drSlots: 'Bench {n}/{m}',
     drCr180: 'Card: 180° rotations', drCtrans: 'Card: shift one square in any direction', drCtcap: 'Card: capture while shifting',
-    drCphant: 'Card: phantom on shifts', drCstack: 'Card: stacking allowed', drCslot: 'Card: unlocks one bench slot (max. 5)',
+    drCphant: 'Card: phantom on shifts, swings along on rotations', drCstack: 'Card: stacking allowed', drCslot: 'Card: unlocks one bench slot (max. 5)',
     drCStone: 'Stone card: {t} to the bench',
     annDrRound: 'Round {n}: {k} enemies on the board!', annDrBoss: 'Workers’ uprising! {n} {t}-pieces advance!', annDrClear: 'Round {n} cleared!',
     annDrShop: 'Shop open: new cards on offer.',
@@ -1876,7 +1911,7 @@ var TXT = {
 '    <ul>\n' +
 '      <li>Multiplayer: two players take turns on the same screen (White versus Black) – either via quick start with a random setup or with your own seed for exactly repeatable games.</li>\n' +
 '      <li>Single player: the computer controls the other color; before the start, White or Black is chosen (default: White). Three difficulty levels. Easy: a high share of randomness, sometimes weak moves, the computer occasionally sacrifices its own pieces. Medium: good moves with some spread, but without sacrifices. Hard: optimal, forward-looking selection across two half-moves.</li>\n' +
-'      <li>Deathrun (survive the waves): the chosen starting piece begins in the centre of the board. Each round spawns an enemy wave that must be captured completely; the enemies start out weak and grow smarter with every round. The wave grows by one piece every three rounds (rounds 1–2: two, 4–5: three, 7–8: four, at most eight); every third round the boss “Workers’ uprising” attacks – pieces of a single type only, one more per boss (three at the first, four at the second…). Every captured piece earns one Tetroken. After every round a card shop opens with exactly one stone card, two move cards and one slot card – once all five slots are unlocked a second stone card takes its place; prices follow rarity (1–5 Tetroken). Move cards (180° rotations, a one-square shift in any direction, capture while shifting, phantom, stacking) each enchant exactly one of your pieces: tap the card, then the piece; enchanted pieces shimmer gold and can carry several move cards. Stone cards add new pieces to the bench, bench-slot cards unlock the five slots (initially locked, one unlocked per card). Cards can be locked and then stay in the offer of the next round. The offer can be reshuffled in the shop; locked cards stay in place, and every use costs one Tetroken more than the previous one. The enemy wave of each round is already visible on the board during placement; the starting piece is placed freely before the first round, stone cards go to the bench and are placed freely before each round or brought onto the board during the round for one half-move; placed pieces can be moved freely until the round starts. From the fifteenth half-move squares crumble again. Once all your own pieces are captured the run ends with a results screen; the best round reached is recorded in the statistics. Threatened own pieces visibly tremble. The check rule does not apply in the deathrun.</li>\n' +
+'      <li>Deathrun (survive the waves): the chosen starting piece begins in the centre of the board. Each round spawns an enemy wave that must be captured completely; the enemies start out weak and grow smarter with every round. The wave grows by one piece every three rounds (rounds 1–2: two, 4–5: three, 7–8: four, at most eight); every third round the boss “Workers’ uprising” attacks – pieces of a single type only, one more per boss (three at the first, four at the second…). Every captured piece earns one Tetroken. After every round a card shop opens with exactly one stone card, two move cards and one slot card – once all five slots are unlocked a second stone card takes its place; prices follow rarity (1–5 Tetroken). Move cards (180° rotations, a one-square shift in any direction, capture while shifting, phantom, stacking) each enchant exactly one of your pieces: tap the card, then the piece; enchanted pieces shimmer gold and can carry several move cards; the phantom card works like the queen: each piece has only a single phantom, which reappears at the last shift position on the next shift and until then swings along with every rotation of the piece, capturing opponents on its target cubes and falling as soon as it loses ground contact. Stone cards add new pieces to the bench, bench-slot cards unlock the five slots (initially locked, one unlocked per card). Cards can be locked and then stay in the offer of the next round. The offer can be reshuffled in the shop; locked cards stay in place, and every use costs one Tetroken more than the previous one. The enemy wave of each round is already visible on the board during placement; the starting piece is placed freely before the first round, stone cards go to the bench and are placed freely before each round or brought onto the board during the round for one half-move; placed pieces can be moved freely until the round starts; the last placed piece stays outlined in green and can also be nudged one square at a time with the arrow keys and rotated in place with R (Shift+R counter-rotates); the same controls are also offered as tappable buttons on the bar below the board. In rounds 1, 4, 7 … two stones of the wave are guaranteed to lie next to each other, so that the first move allows a double capture with optimal placement. From the fifteenth half-move squares crumble during the round; at the start of each new round the board is intact again. A run is won at the latest after forty half-moves; only boss rounds extend the run – there the wave must be captured completely, and Tetromino announces them with the popup “The workers’ uprising is starting.” Once all your own pieces are captured the run ends with a results screen; the best round reached is recorded in the statistics. Threatened own pieces visibly tremble. The king-piece rules do not apply in the deathrun: no check and no king-capture restriction; a fallen king piece does not end the run – the goal is to survive with any piece.</li>\n' +
 '      <li>Seed: the same number generates the same starting position; the seed of the running game is shown in the status bar, so games can be repeated exactly.</li>\n' +
 '      <li>Take back a move: In single player on the levels Easy and Medium, the button with the U-turn arrow next to the view arrows reverts the last full move – your own half-move and the computer’s move. On Easy this is possible any number of times; on Medium only once per move (until your next move). The game continues from the earlier position; unlocked achievements and the statistics remain untouched.</li>\n' +
 '      <li>Replay: After a duel game ends, the button “Watch replay” opens the course of the game. The slider below the board steps through the positions half-move by half-move, the view can be rotated as usual, and moves stay locked until the end of the replay. The replay is not saved and ends as soon as a new game begins.</li>\n' +
@@ -2131,13 +2166,13 @@ var TXT = {
     drBtn: 'Deathrun', drPickCap: 'Choisir sa pierre de départ', drGoLbl: 'Commencer la manche',
     drBenchCap: 'Banc', drHandLbl: 'Pierre de départ',
     chipDr: 'Deathrun · Manche {r} · {tk} Tetroken', drTkUnit: 'Tetroken', drOwned: 'acheté',
-    drShopH: 'Boutique Tetroken', drShopSub: 'Après chaque manche, la boutique propose une carte de pierre, deux cartes de mouvement et une carte d’emplacement – avec cinq emplacements déverrouillés, une deuxième carte de pierre à la place. Le bouton à droite réserve une carte pour la prochaine offre. Les cartes de mouvement ensorcellent une seule de vos figurines : touchez la carte, puis la figurine ; les figurines ensorcelées brillent en or et peuvent porter plusieurs cartes. Remélanger remplace les cartes non réservées ; chaque utilisation coûte un Tetroken de plus.',
+    drAdjCap: 'Ajuster la pièce', drAdjRotCw: 'Pivoter sur place (R)', drAdjRotCcw: 'Pivoter sur place, sens inverse (Maj+R)', drAdjHide: 'Masquer la barre', drAdjustHint: 'Les flèches décalent la dernière pièce posée, R la fait pivoter sur place (Maj+R en sens inverse).', drShopH: 'Boutique Tetroken', drShopSub: 'Après chaque manche, la boutique propose une carte de pierre, deux cartes de mouvement et une carte d’emplacement – avec cinq emplacements déverrouillés, une deuxième carte de pierre à la place. Le bouton à droite réserve une carte pour la prochaine offre. Les cartes de mouvement ensorcellent une seule de vos figurines : touchez la carte, puis la figurine ; les figurines ensorcelées brillent en or et peuvent porter plusieurs cartes. Remélanger remplace les cartes non réservées ; chaque utilisation coûte un Tetroken de plus.',
     drLockLbl: 'Réserver la carte : elle reste dans la prochaine offre.',
-    drShopCloseLbl: 'Continuer vers la manche suivante', drEndH: 'Run terminé', drRetryLbl: 'Nouveau run',
-    drEndStats: 'Manches : {r} · Prises : {k} · Tetroken : {t} · Cartes : {c}', drNewBest: 'Nouveau record !', drBestFmt: 'Meilleur run : {n} manches',
+    drShopCloseLbl: 'Continuer vers la manche suivante', drEndH: 'Run terminé', drRetryLbl: 'Nouveau run', drWinH: 'Run gagné !', drBossGo: 'La révolte des ouvriers se lance !',
+    drEndStats: 'Manches : {r} · Prises : {k} · Tetroken : {t} · Cartes : {c}', drNewBest: 'Nouveau record !', drBestFmt: 'Meilleur run : {n} manches', annDrWin: 'Run gagné après {n} demi-coups !', chipDrLow: 'Deathrun · Manche {r} · {tk} Tetroken · encore {h} demi-coups',
     statDr: 'Deathrun – meilleure manche : {n}', chipDrTk: 'Tetroken : {n}', drSlots: 'Banc {n}/{m}',
     drCr180: 'Carte : rotations de 180°', drCtrans: 'Carte : déplacement d’une case dans toutes les directions', drCtcap: 'Carte : prise en déplacement',
-    drCphant: 'Carte : fantôme en déplacement', drCstack: 'Carte : empilement autorisé', drCslot: 'Carte : déverrouille un emplacement du banc (max. 5)',
+    drCphant: 'Carte : fantôme en déplacement, accompagne les rotations', drCstack: 'Carte : empilement autorisé', drCslot: 'Carte : déverrouille un emplacement du banc (max. 5)',
     drCStone: 'Carte pierre : {t} sur le banc',
     annDrRound: 'Manche {n} : {k} ennemis sur le plateau !', annDrBoss: 'Révolte des ouvriers ! {n} pierres {t} avancent !', annDrClear: 'Manche {n} réussie !',
     annDrShop: 'Boutique ouverte : de nouvelles cartes au comptoir.',
@@ -2233,7 +2268,7 @@ var TXT = {
 '    <ul>\n' +
 '      <li>Multijoueur : deux joueurs alternent sur le même écran (Blanc contre Noir) – soit par démarrage rapide avec une disposition aléatoire, soit avec votre propre valeur de départ pour des parties exactement reproductibles.</li>\n' +
 '      <li>Solo : l’ordinateur dirige l’autre couleur ; avant le début, l’on choisit Blanc ou Noir (par défaut : Blanc). Trois niveaux de difficulté. Facile : forte part de hasard, parfois des coups faibles, l’ordinateur sacrifie parfois ses propres pièces. Moyen : bons coups avec de la dispersion, mais sans sacrifice. Difficile : choix optimal et prévoyant sur deux demi-coups.</li>\n' +
-'      <li>Deathrun (survivre aux vagues) : la pierre de départ choisie commence au centre du plateau. Chaque manche fait apparaître une vague ennemie qu’il faut capturer entièrement ; les ennemis jouent d’abord faiblement et deviennent plus intelligents à chaque manche. La vague grossit d’une pièce tous les trois tours (manches 1–2 : deux, 4–5 : trois, 7–8 : quatre, huit au plus) ; toutes les trois manches, le boss « Révolte des ouvriers » attaque – uniquement des pierres d’une seule sorte, une de plus par boss (trois au premier, quatre au deuxième…). Chaque prise rapporte un Tetroken. Après chaque manche, une boutique de cartes ouvre avec exactement une carte de pierre, deux cartes de mouvement et une carte d’emplacement – une fois les cinq emplacements déverrouillés, une deuxième carte de pierre prend sa place ; les prix suivent la rareté (1–5 Tetroken). Les cartes de mouvement (rotations de 180°, déplacement d’une case dans toutes les directions, prise en déplacement, fantôme, empilement) ensorcellent chacune exactement une de vos figurines : touchez la carte, puis la figurine ; les figurines ensorcelées brillent en or et peuvent porter plusieurs cartes de mouvement. Les cartes de pierres ajoutent des figurines au banc, les cartes d’emplacements déverrouillent les cinq emplacements (verrouillés au départ, un déverrouillé par carte). Les cartes peuvent être réservées et restent alors dans l’offre de la manche suivante. L’offre peut être remélangée dans la boutique ; les cartes réservées restent en place, et chaque utilisation coûte un Tetroken de plus que la précédente. La vague ennemie de chaque manche est déjà visible sur le plateau pendant le placement ; la pierre de départ se place librement avant la première manche, les cartes de pierre vont sur le banc et se placent librement avant chaque manche ou entrent sur le plateau pendant la manche pour un demi-coup ; les figurines placées peuvent être déplacées librement jusqu’au début de la manche. À partir du quinzième demi-coup, des cases s’effritent à nouveau. Quand toutes vos figurines sont prises, le run s’achève sur un bilan ; la meilleure manche atteinte est consignée dans les statistiques. Les figurines menacées tremblent visiblement. La règle d’échec ne s’applique pas au deathrun.</li>\n' +
+'      <li>Deathrun (survivre aux vagues) : la pierre de départ choisie commence au centre du plateau. Chaque manche fait apparaître une vague ennemie qu’il faut capturer entièrement ; les ennemis jouent d’abord faiblement et deviennent plus intelligents à chaque manche. La vague grossit d’une pièce tous les trois tours (manches 1–2 : deux, 4–5 : trois, 7–8 : quatre, huit au plus) ; toutes les trois manches, le boss « Révolte des ouvriers » attaque – uniquement des pierres d’une seule sorte, une de plus par boss (trois au premier, quatre au deuxième…). Chaque prise rapporte un Tetroken. Après chaque manche, une boutique de cartes ouvre avec exactement une carte de pierre, deux cartes de mouvement et une carte d’emplacement – une fois les cinq emplacements déverrouillés, une deuxième carte de pierre prend sa place ; les prix suivent la rareté (1–5 Tetroken). Les cartes de mouvement (rotations de 180°, déplacement d’une case dans toutes les directions, prise en déplacement, fantôme, empilement) ensorcellent chacune exactement une de vos figurines : touchez la carte, puis la figurine ; les figurines ensorcelées brillent en or et peuvent porter plusieurs cartes de mouvement ; la carte fantôme agit comme la dame : chaque figurine ne possède qu’un seul fantôme, qui réapparaît à la dernière position de déplacement lors du déplacement suivant et, jusque-là, accompagne chaque rotation de la figurine, capture des adversaires sur ses cubes d’arrivée et tombe dès qu’il perd le contact avec le sol. Les cartes de pierres ajoutent des figurines au banc, les cartes d’emplacements déverrouillent les cinq emplacements (verrouillés au départ, un déverrouillé par carte). Les cartes peuvent être réservées et restent alors dans l’offre de la manche suivante. L’offre peut être remélangée dans la boutique ; les cartes réservées restent en place, et chaque utilisation coûte un Tetroken de plus que la précédente. La vague ennemie de chaque manche est déjà visible sur le plateau pendant le placement ; la pierre de départ se place librement avant la première manche, les cartes de pierre vont sur le banc et se placent librement avant chaque manche ou entrent sur le plateau pendant la manche pour un demi-coup ; les figurines placées peuvent être déplacées librement jusqu’au début de la manche ; la dernière figurine posée reste soulignée en vert et peut en outre être décalée d’une case à la fois avec les flèches et pivotée sur place avec R (Maj+R en sens inverse) ; la même commande est aussi proposée sous forme de boutons tactiles sur la barre sous le plateau. Aux manches 1, 4, 7 …, deux pierres de la vague sont garanties côte à côte, de sorte que le premier coup permet une double prise avec un placement optimal. À partir du quinzième demi-coup, des cases s’effritent pendant la manche ; au début de chaque nouvelle manche, le plateau est de nouveau intact. Un run est gagné au plus tard après quarante demi-coups ; seules les manches de boss prolongent le run : là, il faut capturer la vague en entier, et Tetromino l’annonce avec l’encart « La révolte des ouvriers se lance ! ». Quand toutes vos figurines sont prises, le run s’achève sur un bilan ; la meilleure manche atteinte est consignée dans les statistiques. Les figurines menacées tremblent visiblement. Les règles de la pièce roi ne s’appliquent pas au deathrun : pas d’échec ni de restriction de prise du roi ; une pièce roi qui tombe ne met pas fin au run – l’objectif est de survivre avec n’importe quelle pièce.</li>\n' +
 '      <li>Valeur de départ (seed) : le même nombre produit la même disposition initiale ; la valeur de la partie en cours s’affiche dans la barre d’état, de sorte que les parties se répètent exactement.</li>\n' +
 '      <li>Annuler un coup : en solo aux niveaux Facile et Moyen, le bouton à la flèche en demi-tour près des flèches de vue annule le dernier coup complet – votre demi-coup et celui de l’ordinateur. En Facile, cela est possible autant de fois que voulu ; en Moyen, une seule fois par coup (jusqu’à votre prochain coup). La partie reprend depuis la position antérieure ; les succès déjà débloqués et les statistiques restent intacts.</li>\n' +
 '      <li>Replay : à la fin d’une partie en duel, le bouton « Voir le replay » ouvre le déroulé de la partie. Le curseur sous le plateau parcourt les positions demi-coup par demi-coup, la vue pivote comme d’habitude, et les coups restent verrouillés jusqu’à la fin du replay. Le replay n’est pas sauvegardé et disparaît dès qu’une nouvelle partie commence.</li>\n' +
@@ -2489,13 +2524,13 @@ var TXT = {
     drBtn: 'Deathrun', drPickCap: 'Vyberte startovní kámen', drGoLbl: 'Začít kolo',
     drBenchCap: 'Lavice', drHandLbl: 'Startovní kámen',
     chipDr: 'Deathrun · Kolo {r} · {tk} Tetroken', drTkUnit: 'Tetroken', drOwned: 'koupeno',
-    drShopH: 'Obchod s Tetrokeny', drShopSub: 'Po každém kole obchod nabízí kamennou kartu, dvě tahové karty a kartu slotu – s pěti odemčenými sloty místo toho druhou kamennou kartu. Tlačítko vpravo zamkne kartu pro další nabídku. Tahové karty očarují jedinou vlastní figurku: klepněte na kartu a pak na figurku; očarované figurky zlatě se lesknou a mohou nést více karet. Promíchat nahradí nezamčené karty; každé použití stojí o Tetroken víc.',
+    drAdjCap: 'Upravit kámen', drAdjRotCw: 'Otočit na místě (R)', drAdjRotCcw: 'Otočit na místě opačně (Shift+R)', drAdjHide: 'Skrýt lištu', drAdjustHint: 'Šipky posunou naposledy položený kámen, R jej otočí na místě (Shift+R opačně).', drShopH: 'Obchod s Tetrokeny', drShopSub: 'Po každém kole obchod nabízí kamennou kartu, dvě tahové karty a kartu slotu – s pěti odemčenými sloty místo toho druhou kamennou kartu. Tlačítko vpravo zamkne kartu pro další nabídku. Tahové karty očarují jedinou vlastní figurku: klepněte na kartu a pak na figurku; očarované figurky zlatě se lesknou a mohou nést více karet. Promíchat nahradí nezamčené karty; každé použití stojí o Tetroken víc.',
     drLockLbl: 'Kartu zamknout: zůstane v další nabídce.',
-    drShopCloseLbl: 'Pokračovat do dalšího kola', drEndH: 'Run u konce', drRetryLbl: 'Nový run',
-    drEndStats: 'Kola: {r} · Zajaté: {k} · Tetroken: {t} · Karty: {c}', drNewBest: 'Nový rekord!', drBestFmt: 'Nejlepší run: {n} kol',
+    drShopCloseLbl: 'Pokračovat do dalšího kola', drEndH: 'Run u konce', drRetryLbl: 'Nový run', drWinH: 'Run vyhrán!', drBossGo: 'Vzpoura dělníků letí!',
+    drEndStats: 'Kola: {r} · Zajaté: {k} · Tetroken: {t} · Karty: {c}', drNewBest: 'Nový rekord!', drBestFmt: 'Nejlepší run: {n} kol', annDrWin: 'Run vyhrán po {n} půltazích!', chipDrLow: 'Deathrun · Kolo {r} · {tk} Tetroken · ještě {h} půltahů',
     statDr: 'Deathrun – nejlepší kolo: {n}', chipDrTk: 'Tetroken: {n}', drSlots: 'Lavice {n}/{m}',
     drCr180: 'Karta: otáčky o 180°', drCtrans: 'Karta: posun o jedno pole všemi směry', drCtcap: 'Karta: braní při posunu',
-    drCphant: 'Karta: fantom při posunu', drCstack: 'Karta: stohování povoleno', drCslot: 'Karta: odemkne jeden slot lavice (max. 5)',
+    drCphant: 'Karta: fantom při posunu, otáčí se spolu s rotacemi', drCstack: 'Karta: stohování povoleno', drCslot: 'Karta: odemkne jeden slot lavice (max. 5)',
     drCStone: 'Kamenná karta: {t} na lavici',
     annDrRound: 'Kolo {n}: {k} nepřátel na desce!', annDrBoss: 'Vzpoura dělníků! {n} kamenů {t} postupuje!', annDrClear: 'Kolo {n} zvládnuto!',
     annDrShop: 'Otevřen obchod: nové karty v nabídce.',
@@ -2752,13 +2787,13 @@ var TXT = {
     drBtn: 'Deathrun', drPickCap: 'Wybierz kamień startowy', drGoLbl: 'Rozpocznij rundę',
     drBenchCap: 'Ławka', drHandLbl: 'Kamień startowy',
     chipDr: 'Deathrun · Runda {r} · {tk} Tetrokenów', drTkUnit: 'Tetrokeny', drOwned: 'kupione',
-    drShopH: 'Sklep Tetrokenów', drShopSub: 'Po każdej rundzie sklep oferuje kartę kamienia, dwie karty ruchów i kartę slotu – przy pięciu odblokowanych slotach zamiast tego drugą kartę kamienia. Przycisk po prawej blokuje kartę na następną ofertę. Karty ruchów czarują jedną własną figurę: dotknij karty, a potem figury; zaczarowane figury lśnią złotem i mogą nosić kilka kart. Przetasowanie zastępuje odblokowane karty; każde użycie kosztuje o jeden Tetroken więcej.',
+    drAdjCap: 'Dostosuj kamień', drAdjRotCw: 'Obróć na miejscu (R)', drAdjRotCcw: 'Obróć na miejscu odwrotnie (Shift+R)', drAdjHide: 'Ukryj pasek', drAdjustHint: 'Strzałki przesuwają ostatnio ustawiony kamień, R obraca go na miejscu (Shift+R odwrotnie).', drShopH: 'Sklep Tetrokenów', drShopSub: 'Po każdej rundzie sklep oferuje kartę kamienia, dwie karty ruchów i kartę slotu – przy pięciu odblokowanych slotach zamiast tego drugą kartę kamienia. Przycisk po prawej blokuje kartę na następną ofertę. Karty ruchów czarują jedną własną figurę: dotknij karty, a potem figury; zaczarowane figury lśnią złotem i mogą nosić kilka kart. Przetasowanie zastępuje odblokowane karty; każde użycie kosztuje o jeden Tetroken więcej.',
     drLockLbl: 'Zablokuj kartę: zostanie w następnej ofercie.',
-    drShopCloseLbl: 'Dalej do następnej rundy', drEndH: 'Run zakończony', drRetryLbl: 'Nowy run',
-    drEndStats: 'Rundy: {r} · Zbicia: {k} · Tetrokeny: {t} · Karty: {c}', drNewBest: 'Nowy rekord!', drBestFmt: 'Najlepszy run: {n} rund',
+    drShopCloseLbl: 'Dalej do następnej rundy', drEndH: 'Run zakończony', drRetryLbl: 'Nowy run', drWinH: 'Run wygrany!', drBossGo: 'Bunt robotników rusza!',
+    drEndStats: 'Rundy: {r} · Zbicia: {k} · Tetrokeny: {t} · Karty: {c}', drNewBest: 'Nowy rekord!', drBestFmt: 'Najlepszy run: {n} rund', annDrWin: 'Run wygrany po {n} półruchach!', chipDrLow: 'Deathrun · Runda {r} · {tk} Tetrokenów · jeszcze {h} półruchów',
     statDr: 'Deathrun – najlepsza runda: {n}', chipDrTk: 'Tetroken: {n}', drSlots: 'Ławka {n}/{m}',
     drCr180: 'Karta: obroty o 180°', drCtrans: 'Karta: przesunięcie o jedno pole w każdym kierunku', drCtcap: 'Karta: bicie przy przesunięciu',
-    drCphant: 'Karta: fantom przy przesunięciu', drCstack: 'Karta: układanie dozwolone', drCslot: 'Karta: odblokowuje jeden slot ławki (maks. 5)',
+    drCphant: 'Karta: fantom przy przesunięciu, towarzyszy rotacjom', drCstack: 'Karta: układanie dozwolone', drCslot: 'Karta: odblokowuje jeden slot ławki (maks. 5)',
     drCStone: 'Karta kamienia: {t} na ławkę',
     annDrRound: 'Runda {n}: {k} wrogów na planszy!', annDrBoss: 'Bunt robotników! {n} kamieni {t} nadciąga!', annDrClear: 'Runda {n} zaliczona!',
     annDrShop: 'Sklep otwarty: nowe karty w ofercie.',
@@ -3016,13 +3051,13 @@ var TXT = {
     drBtn: 'Deathrun', drPickCap: 'Elige tu piedra inicial', drGoLbl: 'Comenzar ronda',
     drBenchCap: 'Banquillo', drHandLbl: 'Piedra inicial',
     chipDr: 'Deathrun · Ronda {r} · {tk} Tetroken', drTkUnit: 'Tetroken', drOwned: 'comprado',
-    drShopH: 'Tienda de Tetroken', drShopSub: 'Tras cada ronda la tienda ofrece una carta de piedra, dos cartas de movimiento y una carta de slot – con cinco slots desbloqueados, en su lugar una segunda carta de piedra. El botón de la derecha reserva una carta para la siguiente oferta. Las cartas de movimiento encantan una sola figura propia: toca la carta y luego la figura; las figuras encantadas brillan en dorado y pueden llevar varias cartas. Mezclar de nuevo sustituye a las cartas no reservadas; cada uso cuesta un Tetroken más.',
+    drAdjCap: 'Ajustar la pieza', drAdjRotCw: 'Girar en el sitio (R)', drAdjRotCcw: 'Girar en el sitio al revés (Mayús+R)', drAdjHide: 'Ocultar la barra', drAdjustHint: 'Las flechas mueven la última pieza colocada, R la gira en el sitio (Mayús+R al revés).', drShopH: 'Tienda de Tetroken', drShopSub: 'Tras cada ronda la tienda ofrece una carta de piedra, dos cartas de movimiento y una carta de slot – con cinco slots desbloqueados, en su lugar una segunda carta de piedra. El botón de la derecha reserva una carta para la siguiente oferta. Las cartas de movimiento encantan una sola figura propia: toca la carta y luego la figura; las figuras encantadas brillan en dorado y pueden llevar varias cartas. Mezclar de nuevo sustituye a las cartas no reservadas; cada uso cuesta un Tetroken más.',
     drLockLbl: 'Reservar carta: queda en la siguiente oferta.',
-    drShopCloseLbl: 'Seguir con la siguiente ronda', drEndH: 'Run terminado', drRetryLbl: 'Nuevo run',
-    drEndStats: 'Rondas: {r} · Capturas: {k} · Tetroken: {t} · Cartas: {c}', drNewBest: '¡Nuevo récord!', drBestFmt: 'Mejor run: {n} rondas',
+    drShopCloseLbl: 'Seguir con la siguiente ronda', drEndH: 'Run terminado', drRetryLbl: 'Nuevo run', drWinH: 'Run ganado', drBossGo: '¡Empieza la revolución obrera!',
+    drEndStats: 'Rondas: {r} · Capturas: {k} · Tetroken: {t} · Cartas: {c}', drNewBest: '¡Nuevo récord!', drBestFmt: 'Mejor run: {n} rondas', annDrWin: '¡Run ganado tras {n} medias jugadas!', chipDrLow: 'Deathrun · Ronda {r} · {tk} Tetroken · quedan {h} medias jugadas',
     statDr: 'Deathrun – mejor ronda: {n}', chipDrTk: 'Tetroken: {n}', drSlots: 'Banquillo {n}/{m}',
     drCr180: 'Carta: giros de 180°', drCtrans: 'Carta: desplazamiento de una casilla en todas direcciones', drCtcap: 'Carta: capturar al desplazar',
-    drCphant: 'Carta: fantasma al desplazar', drCstack: 'Carta: apilar permitido', drCslot: 'Carta: desbloquea un slot del banquillo (máx. 5)',
+    drCphant: 'Carta: fantasma al desplazar, acompaña a los giros', drCstack: 'Carta: apilar permitido', drCslot: 'Carta: desbloquea un slot del banquillo (máx. 5)',
     drCStone: 'Carta de piedra: {t} al banquillo',
     annDrRound: '¡Ronda {n}: {k} enemigos en el tablero!', annDrBoss: '¡Revolución obrera! ¡{n} piedras {t} avanzan!', annDrClear: '¡Ronda {n} superada!',
     annDrShop: 'Tienda abierta: cartas nuevas en la oferta.',
@@ -3146,7 +3181,7 @@ function applyLang(){
     swBack: 'swBackLbl',
     drBtn: 'drBtn', drPickCap: 'drPickCap', drGo: 'drGoLbl', drShopH: 'drShopH',
     drShopClose: 'drShopCloseLbl', drEndH: 'drEndH', drRetry: 'drRetryLbl',
-    drEndMenu: 'endMenuLbl', drSideCap: 'drBenchCap',
+    drEndMenu: 'endMenuLbl', drSideCap: 'drBenchCap', drAdjLbl: 'drAdjCap',
     menuBack: 'menuBackLbl', tutLogoH: 'tutLogoH', tutSub: 'tutSub', hTutPick: 'hTutPick',
     tutBack: 'tutBackLbl', endRetry: 'endRetryLbl', endMenu: 'endMenuLbl',
     overBtn: 'overBtnLbl', overReplayBtn: 'overReplayLbl', overMenuBtn: 'endMenuLbl',
@@ -3872,15 +3907,22 @@ function trySlide(p, tx, ty, safety){
   var steps = Math.max(Math.abs(tx), Math.abs(ty));
   if (steps === 0 || (tx !== 0 && ty !== 0)) return null; // nur geradlinig
   var ux = Math.round(tx / steps), uy = Math.round(ty / steps);
-  var capMode;
+  var capMode, ok = true;
   if (p.type === 'O') capMode = 'none';
-  else if (p.type === 'L'){ if (p.moved) return null; capMode = 'end'; }
-  else if (p.type === 'I'){ if (!isUpright(p) || steps !== 1) return null; capMode = 'always'; }
-  else if (drSlideMax(p) > 0){ // Deathrun-Karte: Versetzung für T und S
-    if (steps > drSlideMax(p)) return null;
+  else if (p.type === 'L'){ if (p.moved) ok = false; else capMode = 'end'; }
+  else if (p.type === 'I'){ if (!isUpright(p) || steps !== 1) ok = false; else capMode = 'always'; }
+  else if (drSlideMax(p) > 0){ // Deathrun-Karte: Versetzung um ein Feld
+    if (steps > drSlideMax(p)) ok = false;
+    else capMode = drCharm(p, 'tcap') ? 'always' : 'none';
+  }
+  else ok = false;
+  // Versetzungs-Karte in jeder Position und bei jeder Figur: Wo die eigene
+  // Regel der Figur nicht hergibt – L nach dem Erstzug, I im Liegen, jede
+  // Distanz über ein Feld hinaus –, erlaubt die Karte die ein-Feld-Versetzung.
+  if (!ok){
+    if (drSlideMax(p) <= 0 || steps > drSlideMax(p)) return null;
     capMode = drCharm(p, 'tcap') ? 'always' : 'none';
   }
-  else return null;
   // Deathrun-Karte „Schlagen bei Versetzung“: auch für O und die Karten-
   // Versetzungen aktiv.
   if (p.type === 'O' && drOn() && p.color === 'w' && drCharm(p, 'tcap')) capMode = 'always';
@@ -4032,13 +4074,15 @@ function finalizeMove(){
   // Ebene sieben, z = 6), wird der Erfolg freigeschaltet.
   if (chessRulesOn() && p.type === 'S' && (mode !== 'ai' || p.color === humanSide) &&
       a.res.newCubes.some(function(c){ return c.z >= 6; })) unlockAch('aufstand');
-  // Phantom der Dame: bei Versetzung altes Phantom entfernen und an der
-  // letzten Zugstelle neu erscheinen lassen; bei Drehung dreht das Phantom
-  // mit und kann dabei Gegner schlagen.
-  if (p.type === 'O' && !p.phantom){
+  // Phantom der Dame – und der Deathrun-Karte „Phantom“ für jede verzauberte
+  // Figur: Bei der Versetzung verschwindet das alte Phantom und erscheint an
+  // der letzten Zugstelle neu; bis zur nächsten Bewegung schwingt es bei
+  // jeder Drehung der Figur um denselben Drehpunkt mit, schlägt Gegner auf
+  // seinen Zielwürfeln und fällt herab, sobald es den Bodenkontakt verliert.
+  if (!p.phantom && (p.type === 'O' || (drOn() && p.color === 'w' && drCharm(p, 'phant')))){
     if (a.axis === 't'){
       pieces = pieces.filter(function(q){ return !(q.phantom && q.master === p); });
-      pieces.push({ id: nextId++, color: p.color, type: 'O', phantom: true, master: p,
+      pieces.push({ id: nextId++, color: p.color, type: p.type, phantom: true, master: p,
         cubes: a.cubes0.map(function(c){ return { x: c.x, y: c.y, z: c.z }; }), moved: true });
     } else {
       var sw = phantomSwing(p, a.axis, a.dir, pivotIdx);
@@ -4056,6 +4100,12 @@ function finalizeMove(){
           });
           if (p.color === 'w') capturedByW = capturedByW.concat(phCap);
           else capturedByB = capturedByB.concat(phCap);
+          // Deathrun: Auch die Schläge des mitschwingenden Phantoms bringen
+          // je geschlagener Figur einen Tetroken.
+          if (drOn() && p.color === 'w'){
+            DR.tk += phCap.length;
+            DR.kills += phCap.filter(function(q){ return !q.phantom; }).length;
+          }
           shakeUntil = performance.now() + 220;
           sfxCap();
         }
@@ -4083,12 +4133,6 @@ function finalizeMove(){
         }
       }
     }
-  }
-  // Deathrun-Karte „Phantom“: Auch andere eigene Steine hinterlassen bei
-  // einer Versetzung ein blockierendes Phantom (inert, ohne Mitschwingen).
-  if (drOn() && p.color === 'w' && p.type !== 'O' && drCharm(p, 'phant') && a.axis === 't'){
-    pieces.push({ id: nextId++, color: p.color, type: p.type, phantom: true, master: p,
-      cubes: a.cubes0.map(function(c){ return { x: c.x, y: c.y, z: c.z }; }), moved: true });
   }
   occ = rebuildOcc(pieces);
   moveNo++;
@@ -4395,8 +4439,11 @@ function newGame(seed){
   if (drTimer){ clearTimeout(drTimer); drTimer = null; }
   // Deathrun-Bedienelemente ruhen in den anderen Modi.
   $('drBar').classList.add('hidden');
+  $('drBar').classList.remove('adjUp');
   $('drSide').classList.add('hidden');
   $('drGo').classList.add('hidden');
+  $('drAdjustPanel').classList.add('hidden');
+  drBossPopHide();
   gameSeed = (typeof seed === 'number' && seed >= 0) ? (Math.floor(seed) % 1000000)
     : Math.floor(Math.random() * 1000000);
   srandSeed(gameSeed);
@@ -4528,7 +4575,8 @@ function aiSchedule(){
 // und bedrohte eigene Steine zittern sichtbar.
 var DR = { phase: 'off', round: 0, tk: 0, kills: 0, cards: 0,
   slots: 0, bench: [], placing: null, threat: {}, locked: {}, offer: [],
-  spells: [], charmSel: null, rerolls: 0, waveK: 0, waveT: null, hand: null };
+  spells: [], charmSel: null, rerolls: 0, waveK: 0, waveT: null, hand: null,
+  adjust: null, adjHidden: false };
 var drTimer = null;
 var DR_SHAPES = {
   I: [[0,0],[1,0],[2,0],[3,0]], O: [[0,0],[1,0],[0,1],[1,1]],
@@ -4559,10 +4607,12 @@ function drCharm(p, u){ return !!(p && p.charms && p.charms.indexOf(u) >= 0); }
 // Karten-Effekte auf die Bewegungsregeln (nur eigene Steine im Deathrun)
 function drTurn180(p){ return drOn() && p.color === 'w' && drCharm(p, 'r180'); }
 function drSlideMax(p){
-  // Versetzungs-Karte: T und S versetzen sich ein Feld weit; O, L und I
-  // behalten ihre eigenen Versetzungsregeln.
+  // Versetzungs-Karte: Jede verzauberte Figur versetzt sich ein Feld weit –
+  // in jeder Lage und Position. Die eigenen Regeln der Figur bleiben daneben
+  // (O turmartig beliebig weit, L im Erstzug, I aufrecht); wo die eigene
+  // Regel nicht hergibt, springt die Karte ein.
   if (!drOn() || p.color !== 'w' || !drCharm(p, 'trans')) return 0;
-  return (p.type === 'T' || p.type === 'S') ? 1 : 0;
+  return 1;
 }
 function drStacks(p){ return drOn() && p.color === 'w' && drCharm(p, 'stack'); }
 function drAILevel(){ return Math.min(3, 1 + Math.floor((DR.round - 1) / 3)); }
@@ -4581,7 +4631,7 @@ function drStartRun(type){
   DR = { phase: 'place', round: 0, tk: 0, kills: 0, cards: 0, slots: 0,
     bench: [], placing: null, threat: {}, locked: {}, offer: [],
     spells: [], charmSel: null, rerolls: 0,
-    waveK: 0, waveT: null, hand: { type: type } };
+    waveK: 0, waveT: null, hand: { type: type }, adjust: null, adjHidden: false };
   turn = 'w'; resetSelection();
   logEntries = [tr('logDrNew')];
   closeMenu();
@@ -4594,12 +4644,18 @@ function drStartRun(type){
 // der Platzierungsphase sichtbar auf dem Brett; danach Rundenstart per Knopf.
 function drNextRound(){
   DR.round++;
-  DR.phase = 'place'; DR.placing = null;
+  DR.phase = 'place'; DR.placing = null; DR.adjust = null; DR.adjHidden = false;
+  // Bröckeln gilt je Runde: Jede neue Welle beginnt auf einem intakten Brett
+  // (eingebrochene Felder heilen, offene Ankündigungen verfallen). Damit ist
+  // das Brett auch zu Beginn jedes neuen Runs garantiert unversehrt; das
+  // Bröckeln setzt innerhalb der Runde ab dem fünfzehnten Halbzug ein.
+  resetFieldEvents();
   resetSelection();
   var w = drSpawnWave();
   DR.waveK = w.k; DR.waveT = w.t;
   drThreatUpdate();
   ann = w.t ? trf('annDrBoss', { n: w.k, t: w.t }) : trf('annDrRound', { n: DR.round, k: w.k });
+  if (w.t) drBossPopShow(); // Bossrunde: Tetromino kündigt den Arbeiteraufstand an
   drBarUpdate();
   updateHUD();
 }
@@ -4626,7 +4682,7 @@ function drStartRound(){
   if (DR.hand && !drAutoPlaceItem(DR.hand)){ updateHUD(tr('drMsgBlocked')); return; }
   if (DR.placing && DR.placing.fromBoard && !drAutoPlaceItem(DR.placing)){ updateHUD(tr('drMsgBlocked')); return; }
   if (!drReal('w').length){ updateHUD(tr('drMsgNeedPiece')); return; }
-  DR.phase = 'play'; DR.placing = null; DR.charmSel = null;
+  DR.phase = 'play'; DR.placing = null; DR.charmSel = null; DR.adjust = null;
   turn = 'w'; resetSelection();
   ann = '';
   sfxClick();
@@ -4639,13 +4695,82 @@ function drStartRound(){
 function drBossType(){
   return (DR.round % 3 === 0) ? 'IOTLS'.charAt(Math.floor(Math.random() * 5)) : null;
 }
+// Doppelschlag-Runden 1, 4, 7 …: Diese Rundengruppen-Anfänge stellen sicher,
+// dass zwei Steine der Welle direkt nebeneinander liegen, damit der erste Zug
+// bei optimaler Platzierung einen Doppelschlag erlaubt. Die übrigen Runden
+// behalten die freie Zufallsverteilung.
+function drPairAdjacent(wave){
+  var i, j, a, b, u, v;
+  for (i = 0; i < wave.length; i++) for (j = i + 1; j < wave.length; j++){
+    a = wave[i]; b = wave[j];
+    for (u = 0; u < a.cubes.length; u++) for (v = 0; v < b.cubes.length; v++){
+      if (Math.abs(a.cubes[u].x - b.cubes[v].x) +
+          Math.abs(a.cubes[u].y - b.cubes[v].y) === 1) return true;
+    }
+  }
+  return false;
+}
+// Sucht einen Standort für b direkt neben a (Kante an Kante), frei von
+// Bröckeln und Belegung (b selbst darf wegrücken); bevorzugt wird der Stand
+// mit dem größten Abstand zu den eigenen Figuren.
+function drPairSpot(a, b, own){
+  var sh = DR_SHAPES[b.type], best = null, i, ci, k, dx, dy, tx, ty, bx, by,
+    ok, dist, cell, op, oc, dd;
+  for (i = 0; i < a.cubes.length; i++){
+    for (dx = -1; dx <= 1; dx++) for (dy = -1; dy <= 1; dy++){
+      if (Math.abs(dx) + Math.abs(dy) !== 1) continue;
+      tx = a.cubes[i].x + dx; ty = a.cubes[i].y + dy;
+      for (ci = 0; ci < sh.length; ci++){
+        bx = tx - sh[ci][0]; by = ty - sh[ci][1];
+        ok = true; dist = 999;
+        for (k = 0; k < sh.length; k++){
+          cell = { x: sh[k][0] + bx, y: sh[k][1] + by, z: 0 };
+          if (cell.x < 0 || cell.x >= N || cell.y < 0 || cell.y >= N) { ok = false; break; }
+          if (crumbled[cell.x + ',' + cell.y]) { ok = false; break; }
+          if (occ[ck(cell)] && occ[ck(cell)] !== b) { ok = false; break; }
+          for (op = 0; op < own.length; op++){
+            for (oc = 0; oc < own[op].cubes.length; oc++){
+              dd = Math.abs(own[op].cubes[oc].x - cell.x) +
+                Math.abs(own[op].cubes[oc].y - cell.y);
+              if (dd < dist) dist = dd;
+            }
+          }
+        }
+        if (ok && (!best || dist > best.dist)) best = { x: bx, y: by, dist: dist };
+      }
+    }
+  }
+  return best;
+}
+// Kein Nachbarschafts-Paar in der Welle? Dann rückt ein Stein direkt neben
+// einen anderen; gelingt kein Standort (extrem volle Bretter), bleibt die
+// Welle wie sie ist.
+function drWavePairFix(wave){
+  var i, j, a, b, spot, idx;
+  if (drPairAdjacent(wave)) return true;
+  for (i = 0; i < wave.length; i++){
+    for (j = 0; j < wave.length; j++){
+      if (i === j) continue;
+      a = wave[i]; b = wave[j];
+      spot = drPairSpot(a, b, drReal('w'));
+      if (!spot) continue;
+      idx = pieces.indexOf(b);
+      if (idx < 0) continue;
+      b.cubes = DR_SHAPES[b.type].map(function(c){
+        return { x: c[0] + spot.x, y: c[1] + spot.y, z: 0 }; });
+      occ = rebuildOcc(pieces);
+      return true;
+    }
+  }
+  return false;
+}
 // Gegnerwelle: flache Steine auf freie, intakte Felder mit Abstand zu den
 // eigenen Steinen. Zwischen den Bossen wächst die gemischte Welle alle drei
 // Runden um einen Stein (Runde 1–2: zwei, 4–5: drei, 7–8: vier …).
 function drSpawnWave(){
   var bt = drBossType();
   var count = Math.min(8, bt ? 2 + DR.round / 3 : 2 + Math.floor((DR.round - 1) / 3)), types = 'IOTLS';
-  var placed = 0, tries = 0, t, sh, x, y, i, ok, dist;
+  var placed = 0, tries = 0, t, sh, x, y, i, ok, dist, wave = [];
   var own = drReal('w');
   while (placed < count && tries < 500){
     tries++;
@@ -4668,10 +4793,16 @@ function drSpawnWave(){
       }
     }
     if (!ok) continue;
-    pieces.push(mkPiece(nextId++, 'b', t, sh.map(function(c){ return [c[0] + x, c[1] + y, 0]; })));
+    var np = mkPiece(nextId++, 'b', t, sh.map(function(c){ return [c[0] + x, c[1] + y, 0]; }));
+    pieces.push(np);
+    wave.push(np);
     occ = rebuildOcc(pieces);
     placed++;
   }
+  // Rundengruppen-Anfang 1, 4, 7 …: garantiertes Nachbarschafts-Paar für den
+  // Doppelschlag im ersten Zug. Bossrunden liegen nie auf 1, 4, 7 …, ihre
+  // Wellen bleiben unverändert.
+  if (!bt && (DR.round - 1) % 3 === 0) drWavePairFix(wave);
   return { k: placed, t: bt };
 }
 // Bedrohungsberechnung: Kann ein Gegner im nächsten Halbzug eine eigene
@@ -4688,6 +4819,13 @@ function drJitterX(pp){
   return Math.round(Math.sin(performance.now() * 0.04 + pp.id * 2.1) * 1.5);
 }
 // Halbzug-Verarbeitung im Deathrun (nach jedem finalizeMove)
+// ---------- Run-Limit und Bossrunden ----------
+// Ein Run ist nach vierzig gespielten Halbzügen gewonnen – außer in einer
+// Bossrunde: Dort verlängert sich der Run, bis die Boss-Welle vollständig
+// geschlagen ist; erst dieser Sieg über den Boss beendet den Run.
+var DR_MAX_HALF = 40;
+function drBossRound(){ return !!DR.waveT; }
+function drHalfLeft(){ return Math.max(0, DR_MAX_HALF - moveNo); }
 function drAfterMove(p, cap){
   if (drTimer){ clearTimeout(drTimer); drTimer = null; }
   if (p.color === 'w' && cap.length){
@@ -4697,6 +4835,9 @@ function drAfterMove(p, cap){
     DR.kills += cap.filter(function(q){ return !q.phantom; }).length;
   }
   drThreatUpdate();
+  // Run-Limit: Sind vierzig Halbzüge gespielt, endet der Run als Sieg; eine
+  // laufende Bossrunde nimmt das Limit nicht vorweg.
+  if (moveNo >= DR_MAX_HALF && !drBossRound()){ drVictory(); return; }
   var enemies = drReal('b');
   if (!enemies.length){ drRoundClear(); return; }
   if (!drReal('w').length){
@@ -4721,6 +4862,9 @@ function drNextRoundForcePlace(){
 function drRoundClear(){
   sfxWin();
   ann = trf('annDrClear', { n: DR.round });
+  // Wurde das Limit mit dem letzten Schlag erreicht, endet der Run direkt
+  // im Sieg – auch wenn der Schlag eine Bosswelle vollständig beseitigt hat.
+  if (moveNo >= DR_MAX_HALF){ drVictory(); return; }
   drOpenShop();
 }
 // Gegner-KI: nutzt die Duell-Bewertung mit rundenabhängiger Stufe.
@@ -4886,9 +5030,79 @@ function drPlaceAt(item, x, y){
   var bi = DR.bench.indexOf(item);
   if (bi >= 0) DR.bench.splice(bi, 1);
   if (DR.hand === item) DR.hand = null;
+  if (DR.placing === item) DR.placing = null; // Platzierung ist mit dem Setzen abgeschlossen
   occ = rebuildOcc(pieces);
   drThreatUpdate();
   sfxMove();
+  // Feinjustierung: Die zuletzt gesetzte Figur bleibt angewählt (grün
+  // unterlegt) und lässt sich in der Platzierungsphase mit den Pfeiltasten
+  // um einzelne Felder verrücken und mit R im Liegen drehen.
+  if (DR.phase === 'place'){
+    DR.adjust = np;
+    DR.adjHidden = false; // die Knopfleiste erscheint zur neuen Figur erneut
+    updateHUD(tr('drAdjustHint'));
+  }
+}
+// ---------- Feinjustierung nach dem Platzieren ----------
+// Aktive Figur der Feinjustierung: die zuletzt in der Platzierungsphase
+// gesetzte Figur, solange kein anderer Stein zum Platzieren gewählt ist.
+function drAdjustActive(){
+  if (!drOn() || DR.phase !== 'place' || !DR.adjust || DR.placing) return null;
+  return (pieces.indexOf(DR.adjust) >= 0) ? DR.adjust : null;
+}
+// Zielfelder einer Feinjustierung: im Brett, intakte Bodenplatte (nur für
+// Würfel auf Höhe null) und weder von einer anderen Figur noch von einem
+// Phantom belegt; die eigene Figur darf an ihrer jetzigen Position bleiben.
+function drAdjustCubesOk(p, cubes){
+  var i, c, o;
+  for (i = 0; i < cubes.length; i++){
+    c = cubes[i];
+    if (c.x < 0 || c.x >= N || c.y < 0 || c.y >= N) return false;
+    if (c.z === 0 && crumbled[c.x + ',' + c.y]) return false;
+    o = occ[ck(c)];
+    if (o && o !== p) return false;
+  }
+  return true;
+}
+// Pfeiltasten: verrücken die aktive Figur um ein Feld in Bildschirmrichtung
+// (kamerarelativ, gleiche Richtungsrechnung wie die Versetzung der Dame).
+function drAdjustNudge(sdir){
+  var p = drAdjustActive();
+  if (!p) return false;
+  var d = slideDirOf(sdir);
+  var nc = p.cubes.map(function(c){ return { x: c.x + d[0], y: c.y + d[1], z: c.z }; });
+  if (!drAdjustCubesOk(p, nc)){ updateHUD(tr('drMsgBlocked')); return false; }
+  p.cubes = nc;
+  occ = rebuildOcc(pieces);
+  drThreatUpdate();
+  sfxMove();
+  updateHUD();
+  return true;
+}
+// R (Umschalt+R gegenläufig): dreht die liegende Figur um 90° um die
+// Senkrechte. Drehpunkt ist der erste eigene Würfel, um den eine gültige
+// Drehung möglich ist – platzierte Figuren liegen flach, daher bleibt die
+// Figur nach der Drehung vollständig auf Höhe null.
+function drAdjustRotate(dir){
+  var p = drAdjustActive();
+  if (!p) return false;
+  var i, pv = null, nc = null;
+  for (i = 0; i < p.cubes.length; i++){
+    pv = p.cubes[i];
+    nc = p.cubes.map(function(c){
+      var o = rotOffset('z', dir, c.x - pv.x, c.y - pv.y, c.z - pv.z);
+      return { x: pv.x + o[0], y: pv.y + o[1], z: pv.z + o[2] };
+    });
+    if (drAdjustCubesOk(p, nc)) break;
+    pv = null; nc = null;
+  }
+  if (!nc){ updateHUD(tr('drMsgBlocked')); return false; }
+  p.cubes = nc;
+  occ = rebuildOcc(pieces);
+  drThreatUpdate();
+  sfxMove();
+  updateHUD();
+  return true;
 }
 // Stein wählen (Hand, Bank oder angehobene Brettfigur): grüne Platzierungs-
 // felder erscheinen, ein weiterer Tipp auf denselben Stein hebt die Wahl auf.
@@ -5000,6 +5214,7 @@ function drBringAt(x, y){
   occ = rebuildOcc(pieces);
   var enemies = drReal('b');
   if (!enemies.length){ drRoundClear(); updateHUD(); return; }
+  if (moveNo >= DR_MAX_HALF && !drBossRound()){ drVictory(); updateHUD(); return; }
   if (!drReal('w').length && !DR.bench.length){ drRunOver(); updateHUD(); return; }
   drThreatUpdate();
   drBarUpdate();
@@ -5024,6 +5239,13 @@ function drPickOwn(pos){
 function drPickUp(p){
   var idx = pieces.indexOf(p);
   if (idx >= 0) pieces.splice(idx, 1);
+  // Das Phantom endet mit seiner Figur: Wird die Figur für die Neuplatzierung
+  // vom Brett genommen, verschwindet auch ihr Phantom (eines Masters beraubt
+  // würde es sonst als verwaister Geist auf dem Brett zurückbleiben und beim
+  // Wiederplatzieren an einer neuen, fremden Figur vorbei dauerhaft blockie-
+  // ren). An der nächsten Versetzung der neu platzierten Figur entsteht ein
+  // frisches Phantom an deren letzter Zugstelle.
+  pieces = pieces.filter(function(q){ return !(q.phantom && q.master === p); });
   occ = rebuildOcc(pieces);
   if (DR.placing && DR.placing.fromBoard && !drAutoPlaceItem(DR.placing))
     updateHUD(tr('drMsgBlocked'));
@@ -5090,9 +5312,22 @@ function drClickBring(pos){
 // ein Schloss, besetzte lassen sich antippen oder auf das Brett ziehen.
 function drBarUpdate(){
   var on = drOn() && !gameOver;
+  var adj = on && drAdjustActive() && !DR.adjHidden;
+  // Solange die Ausricht-Leiste offen ist, rückt die Kartenleiste darüber,
+  // damit Mini-Karten und Knöpfe sich nicht überdecken.
+  $('drBar').classList.toggle('adjUp', !!adj);
   $('drBar').classList.toggle('hidden', !on);
   $('drSide').classList.toggle('hidden', !on);
+  $('drAdjustPanel').classList.toggle('hidden', !adj);
   $('drGo').classList.toggle('hidden', !on || DR.phase !== 'place');
+  if (adj){
+    // Knopftitel in der aktuellen Sprache (Pfeilrichtungen wie die Kbd-Belegung)
+    $('drAdjN').title = tr('dN'); $('drAdjE').title = tr('dE');
+    $('drAdjS').title = tr('dS'); $('drAdjW').title = tr('dW');
+    $('drAdjCw').title = tr('drAdjRotCw');
+    $('drAdjCcw').title = tr('drAdjRotCcw');
+    $('drAdjHide').title = tr('drAdjHide');
+  }
   if (!on) return;
   // Startstein auf der Hand oder angehobene Brettfigur (freies Verschieben
   // bis zur Platzierung bzw. bis zum Rundenstart)
@@ -5152,11 +5387,68 @@ function drBarUpdate(){
   });
 }
 // ---------- Run-Ende und Statistik ----------
+// Boss-Ankündigung: Tetromino meldet den Arbeiteraufstand als Einblendung
+// mit Bild, die nach fünf Sekunden sankt ausblendet (Klicks gehen durch).
+var drBossPopTimer = null;
+function drBossPopHide(){
+  if (drBossPopTimer){ clearTimeout(drBossPopTimer); drBossPopTimer = null; }
+  var el = $('drBossPop');
+  el.classList.remove('fade');
+  el.classList.add('hidden');
+}
+function drBossPopShow(){
+  $('drBossMasc').innerHTML = mascotSVG();
+  $('drBossMsg').textContent = tr('drBossGo');
+  var el = $('drBossPop');
+  el.classList.remove('fade');
+  el.classList.remove('hidden');
+  if (drBossPopTimer) clearTimeout(drBossPopTimer);
+  drBossPopTimer = setTimeout(function(){
+    el.classList.add('fade');
+    drBossPopTimer = setTimeout(function(){
+      el.classList.add('hidden');
+      drBossPopTimer = null;
+    }, 700);
+  }, 5000);
+}
+// Run gewonnen: vierzig Halbzüge sind gespielt (nicht in einer Bossrunde) oder
+// die Welle wurde mit dem vierzigsten Halbzug bzw. nach dem Limit besiegt.
+// Die laufende Runde zählt als abgeschlossen, der Rekord nimmt sie mit auf.
+function drVictory(){
+  if (DR.phase === 'over') return;
+  DR.phase = 'over';
+  gameOver = true; phase = 'over';
+  if (drTimer){ clearTimeout(drTimer); drTimer = null; }
+  drBossPopHide();
+  $('drAdjustPanel').classList.add('hidden');
+  $('drBar').classList.remove('adjUp');
+  pieces = pieces.filter(function(q){ return !q.phantom; });
+  occ = rebuildOcc(pieces);
+  var completed = DR.round; // die mit dem Sieg abgerundete Runde zählt
+  var s = activeSlot();
+  var prev = (s && typeof s.drBest === 'number') ? s.drBest : 0;
+  var newBest = completed > prev;
+  if (s && newBest){
+    s.drBest = completed;
+    s.updated = nowIso();
+    persistSaves();
+  }
+  $('drEndH').textContent = tr('drWinH');
+  $('drEndStats').textContent = trf('drEndStats', { r: completed, k: DR.kills, t: DR.tk, c: DR.cards });
+  $('drEndBest').textContent = newBest ? tr('drNewBest')
+    : trf('drBestFmt', { n: prev });
+  $('drEnd').classList.remove('hidden');
+  ann = trf('annDrWin', { n: moveNo });
+  sfxWin();
+}
 function drRunOver(){
   if (DR.phase === 'over') return;
   DR.phase = 'over';
   gameOver = true; phase = 'over';
   if (drTimer){ clearTimeout(drTimer); drTimer = null; }
+  drBossPopHide();
+  $('drAdjustPanel').classList.add('hidden');
+  $('drBar').classList.remove('adjUp');
   // Run-Ende: Mit dem Run verschwinden auch alle Phantome vom Brett.
   pieces = pieces.filter(function(q){ return !q.phantom; });
   occ = rebuildOcc(pieces);
@@ -5169,6 +5461,7 @@ function drRunOver(){
     s.updated = nowIso();
     persistSaves();
   }
+  $('drEndH').textContent = tr('drEndH');
   $('drEndStats').textContent = trf('drEndStats', { r: completed, k: DR.kills, t: DR.tk, c: DR.cards });
   $('drEndBest').textContent = newBest ? tr('drNewBest')
     : trf('drBestFmt', { n: prev });
@@ -5771,11 +6064,27 @@ window.addEventListener('keydown', function(e){
       kbdNav((e.key === 'ArrowUp' || e.key === 'ArrowLeft') ? -1 : 1);
       return;
     }
+    // Deathrun-Platzierung: Pfeiltasten verrücken die zuletzt gesetzte,
+    // grün unterlegte Figur um ein Feld (kamerarelativ); die Ansicht lässt
+    // sich in diesem Zustand über die Knöpfe neben dem Brett drehen.
+    if (drAdjustActive()){
+      e.preventDefault();
+      drAdjustNudge(e.key === 'ArrowUp' ? 'N' : e.key === 'ArrowDown' ? 'S' :
+        e.key === 'ArrowLeft' ? 'W' : 'E');
+      return;
+    }
     if (e.key === 'ArrowLeft'){ e.preventDefault(); rotateView(-1); }
     else if (e.key === 'ArrowRight'){ e.preventDefault(); rotateView(1); }
   }
   else {
     if (kbdBlocked()) return;
+    // Deathrun-Platzierung: R dreht die zuletzt gesetzte, liegende Figur um
+    // 90° um die Senkrechte, Umschalt+R dreht in die Gegenrichtung.
+    if (drAdjustActive() && (e.key === 'r' || e.key === 'R')){
+      e.preventDefault();
+      drAdjustRotate(e.shiftKey ? -1 : 1);
+      return;
+    }
     var act = kbdActionOf(e.key);
     if (act){ e.preventDefault(); doKbdAction(act); }
   }
@@ -5934,7 +6243,9 @@ function updateHUD(statusOverride){
   speech = st;
   $('modeChip').textContent = mode === 'ai'
     ? trf('chipAi', { lvl: tr('lvl' + aiLevel), seed: gameSeed, side: sideName(humanSide) })
-    : (mode === 'dr' ? trf('chipDr', { r: DR.round, tk: DR.tk })
+    : (mode === 'dr' ? ((drHalfLeft() <= 10 && !gameOver)
+      ? trf('chipDrLow', { r: DR.round, tk: DR.tk, h: drHalfLeft() })
+      : trf('chipDr', { r: DR.round, tk: DR.tk }))
     : (mode === 'tutorial' ? tr('chipTut') : trf('chip2p', { seed: gameSeed })));
   if (drOn()) drBarUpdate();
   var tutVis = (mode === 'tutorial' && tut.step >= 0);
@@ -6558,6 +6869,14 @@ function draw(now){
           strokePoly(ftop, '#7fe07f');
           placeHitPolys.push({ top: ftop, x: it.x, y: it.y });
         }
+        // Feinjustierung: Die Unterlage der zuletzt gesetzten Figur pulsiert
+        // sanft grün – Pfeiltasten verrücken sie, R dreht sie im Liegen.
+        if (drOn() && DR.phase === 'place' && DR.adjust &&
+            DR.adjust.cubes.some(function(c){ return c.x === it.x && c.y === it.y; })){
+          var adjGlow = 0.5 + 0.5 * Math.sin(now * 0.006);
+          poly(ftop, 'rgba(127,224,127,' + (0.10 + 0.12 * adjGlow).toFixed(3) + ')');
+          strokePoly(ftop, '#7fe07f');
+        }
         if (isWarn){
           // Bröckel-Markierung: rötlicher Schimmer, roter Rand und Risse
           poly(ftop, 'rgba(255,90,90,0.14)');
@@ -7125,6 +7444,19 @@ qsa('.drPick').forEach(function(btn){
   btn.addEventListener('click', function(){ drStartRun(btn.getAttribute('data-dr')); });
 });
 $('drGo').addEventListener('click', drStartRound);
+// Feinjustier-Leiste unter dem Brett: dieselben Bewegungen wie die Tasten,
+// zusätzlich zum Antippen geeignet (Touch). Die Pfeile verrücken die zuletzt
+// gesetzte Figur kamerarelativ um ein Feld, die Drehknöpfe drehen sie im
+// Liegen, das ✕ blendet die Leiste aus (bis zur nächsten Platzierung).
+$('drAdjCcw').addEventListener('click', function(){ drAdjustRotate(-1); });
+$('drAdjCw').addEventListener('click', function(){ drAdjustRotate(1); });
+$('drAdjN').addEventListener('click', function(){ drAdjustNudge('N'); });
+$('drAdjE').addEventListener('click', function(){ drAdjustNudge('E'); });
+$('drAdjS').addEventListener('click', function(){ drAdjustNudge('S'); });
+$('drAdjW').addEventListener('click', function(){ drAdjustNudge('W'); });
+$('drAdjHide').addEventListener('click', function(){
+  DR.adjHidden = true; sfxClick(); drBarUpdate();
+});
 // Bank-Steine lassen sich zusätzlich zum Antippen direkt auf das Brett
 // ziehen: Das Ziel ist dasselbe grüne Platzierungsfeld wie beim Antippen.
 cv.addEventListener('dragover', function(e){
