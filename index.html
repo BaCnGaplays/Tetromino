@@ -235,14 +235,16 @@
   .setTheme{display:flex;flex-direction:column;align-items:center;gap:4px;padding:6px 4px}
   .thmPrev{width:40px;height:40px;image-rendering:pixelated;border:1px solid #000;background:#000}
   .thmName{font-size:9px;letter-spacing:1px}
-  .setSkin{display:flex;flex-direction:column;align-items:center;gap:2px;padding:4px 3px;position:relative}
-  .sknPrev svg{display:block;width:40px;height:auto;image-rendering:pixelated}
-  .sknName{font-size:8px;letter-spacing:0.5px;max-width:92px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+  .setSkin{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:4px;padding:6px 4px;position:relative}
+  .sknPrev{width:40px;height:40px;display:flex;align-items:center;justify-content:center;overflow:hidden}
+  .sknPrev svg{display:block;max-width:40px;max-height:40px;height:auto;image-rendering:pixelated}
+  .sknName{font-size:9px;letter-spacing:1px;width:100%;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;text-align:center}
   .setSkin.locked{cursor:not-allowed}
   .setSkin.locked .sknPrev{filter:grayscale(1);opacity:.45}
   .setSkin.locked .sknName{color:#7a7a92}
   .sknLock{position:absolute;right:1px;bottom:1px}
-  #skinOpts{display:flex;flex-wrap:wrap;gap:4px}
+  #skinOpts,#themeOpts{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:8px;
+    flex:1 1 150px;min-width:0;width:100%}
   .setKey{min-width:88px}
   .setKey.wait{border-color:#ff5a5a;color:#ff9a6a}
   .btnRow{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
@@ -297,6 +299,67 @@
   .modalBox h2{margin:0 0 10px;color:var(--accent);text-transform:uppercase;letter-spacing:2px;font-size:16px}
   .modalBox h3{color:#b8b8e0;font-size:12px;margin:12px 0 4px;text-transform:uppercase}
   .modalBox ul{margin:4px 0;padding-left:18px}
+  /* ---------- Light-Modus ----------
+     Heller Anstrich sämtlicher Oberflächen: Die Grundvariablen werden auf
+     helle Töne gelegt; zusätzlich überschreiben gezielte Regeln die im
+     Dunkel-Look fest codierten Hintergründe, Ränder, Schatten und Text-
+     farben. Die Spielfläche behält ihre Themenfarben; nur der Szenen-
+     hintergrund hellt sich per Skript auf. Gewählt wird der Modus in den
+     Grafik-Einstellungen; die Wahl wird dauerhaft gespeichert. */
+  html.light{
+    --bg:#e6e8f2; --panel:#f2f4fa; --panel-edge:#8a90b8; --ink:#1c1c34;
+    --accent:#b8860b; --btn:#d8dcf0; --btn-edge:#7070a8;
+  }
+  html.light h1{color:#b8860b;text-shadow:2px 2px 0 #d8b8a8}
+  html.light .menuBox h1{color:#b8860b;text-shadow:3px 3px 0 #d8b8a8}
+  html.light #overTitle{color:#b8860b;text-shadow:3px 3px 0 #d8b8a8}
+  html.light header .sub, html.light .menuBox .sub, html.light #halfNo,
+  html.light #axLegend, html.light .catCount, html.light .slotMeta,
+  html.light .achDate, html.light .sideLbl, html.light .bubBlock h2{color:#5a5a84}
+  html.light .setLbl, html.light .menuBox h3, html.light .modalBox h3{color:#4a4a72}
+  html.light #replayLbl, html.light #taskBody, html.light #helpBody,
+  html.light #overReason, html.light .statRow, html.light .achDesc,
+  html.light .badge i, html.light #logList{color:#3a3a5a}
+  html.light .catBody b, html.light .slotBody b{color:#1c1c34}
+  html.light #tutHint, html.light #fbPop, html.light #annPanel, html.light #endMeta,
+  html.light #diffCap, html.light #sideCap, html.light .achName,
+  html.light #achToast .toastName{color:#8a6500}
+  html.light #achToast .toastSig{color:#8a6500;background:#f2e4c0}
+  html.light #slideInfo, html.light #saveNote{color:#b84a10}
+  html.light .setKey.wait{border-color:#d84a4a;color:#b84a10}
+  html.light #ckPop{color:#b83030}
+  html.light #tutHead, html.light #mascotName{color:#2a7a2a}
+  html.light .btn{color:#1c1c34}
+  html.light .btn:hover:not(:disabled), html.light .btn:focus-visible{background-color:#c4ccee}
+  html.light .btn.selOpt{background-color:#4a3a10;color:#fff}
+  html.light #turnbar, html.light #replayBar{background:rgba(240,242,250,.96);box-shadow:0 3px 0 #8a8aa8}
+  html.light #tutPanel, html.light #annPanel, html.light #fbPop, html.light #ckPop{background:rgba(240,242,250,.97);box-shadow:0 3px 0 #8a8aa8}
+  html.light #axisPanel, html.light #damePanel{background:rgba(238,240,250,.96);box-shadow:0 3px 0 #8a8aa8}
+  html.light canvas{border:4px solid #6a6a9a;box-shadow:0 0 0 4px #8a8aa8,0 6px 0 #8a8aa8}
+  html.light #scan{background:repeating-linear-gradient(0deg,rgba(20,20,60,.07) 0 1px,transparent 1px 3px)}
+  html.light .modeChip{background:#f2f4fa;color:#8a6500}
+  html.light .verTag{border-color:#a05000;color:#b84a10;background:#f2f4fa}
+  html.light .menuOverlay{background:rgba(214,218,234,1)}
+  html.light #overOverlay{background:rgba(214,218,234,.85)}
+  html.light .modal{background:rgba(214,218,234,.88)}
+  html.light .menuBox, html.light .modalBox, html.light #overBox, html.light #achToast{
+    box-shadow:0 6px 0 #7a7aa0;
+    background-image:repeating-linear-gradient(0deg,rgba(0,0,40,.05) 0 1px,transparent 1px 3px)}
+  html.light #achToast{box-shadow:4px 4px 0 #7a7aa0}
+  html.light #diffRow, html.light #sideRow{background:#eceef8;box-shadow:0 4px 0 #8a8aa8}
+  html.light .slotRow, html.light .achRow{background:#eceef8;box-shadow:2px 2px 0 #8a8aa8}
+  html.light .slotRow{border-color:#9096c0}
+  html.light .achRow.locked{border-color:#9096c0}
+  html.light .achRow.locked .achSig{background:#c0c6e0;color:#4a4a6a}
+  html.light #seedInput{background:#f2f4fa}
+  html.light #srcArea{background:#f2f4fa;color:#2a4a2a;border-color:#9096c0}
+  html.light .badge{background:#eef0fa}
+  html.light .bubBlock{border-top-color:#a0a4cc}
+  html.light *{scrollbar-color:#8a90b8 #e6e8f2}
+  html.light ::-webkit-scrollbar-track{background:#e6e8f2;box-shadow:inset 1px 0 0 #b0b0c8,inset 0 1px 0 #b0b0c8}
+  html.light ::-webkit-scrollbar-thumb{background:#c0c6e0}
+  html.light ::-webkit-scrollbar-thumb:hover{background:#a8b0d8}
+  html.light ::-webkit-scrollbar-corner{background:#e6e8f2}
   @media (max-width:560px){
     .menuBox{padding:14px 10px}
     .menuBox h1{font-size:22px}
@@ -320,7 +383,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.74</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.83</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -432,7 +495,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Alpha 0.74</span></div>
+    <div class="sub"><span class="verTag">Alpha 0.83</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -457,6 +520,7 @@
     <button id="tutBtn" class="btn menuBtn">Tutorials</button>
     <h3 id="hOther">Sonstiges</h3>
     <button id="mSaveBtn" class="btn menuBtn">Spielstand, Statistik &amp; Erfolge</button>
+    <button id="mSkinBtn" class="btn menuBtn">Skins und Welten</button>
     <button id="mRulesBtn" class="btn menuBtn">Regeln anzeigen</button>
     <button id="mSetBtn" class="btn menuBtn">Einstellungen</button>
     <button id="mInfoBtn" class="btn menuBtn">Open Source &amp; Urheberschaft</button>
@@ -471,6 +535,27 @@
     <h3 id="hTutPick">Lektion w&auml;hlen</h3>
     <div id="tutList"></div>
     <div class="btnRow"><button id="tutBack" class="btn small">Zur&uuml;ck</button></div>
+  </div>
+</div>
+
+<div id="swOverlay" class="menuOverlay hidden">
+  <div class="menuBox">
+    <h1 id="swLogoH">Skins und Welten</h1>
+    <h3 id="swThemesH" class="setSecH">Welten (Brettthemen)</h3>
+    <div class="setOpts swOpts" id="themeOpts">
+      <button class="btn small setTheme selOpt" data-theme="orig"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Original</span></button>
+      <button class="btn small setTheme" data-theme="mono"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Monochrom</span></button>
+      <button class="btn small setTheme" data-theme="blocks"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Blocks</span></button>
+      <button class="btn small setTheme" data-theme="edel"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Edel</span></button>
+      <button class="btn small setTheme" data-theme="winter"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Winter</span></button>
+      <button class="btn small setTheme" data-theme="himmel"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Himmel</span></button>
+      <button class="btn small setTheme" data-theme="herbst"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Herbst</span></button>
+      <button class="btn small setTheme" data-theme="kirsch"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Kirschbl&uuml;te</span></button>
+      <button class="btn small setTheme" data-theme="weltraum"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Weltraum</span></button>
+    </div>
+    <h3 id="swSkinsH" class="setSecH">Tetromino-Skins</h3>
+    <div class="setOpts swOpts" id="skinOpts"></div>
+    <div class="btnRow"><button id="swBack" class="btn small">Zur&uuml;ck</button></div>
   </div>
 </div>
 
@@ -497,7 +582,7 @@
     </div>
     <h3 id="hStats">Statistik (aktiver Spielstand)</h3>
     <div id="statList"></div>
-    <h3 id="hAch">Erfolge (aktiver Spielstand)</h3>
+    <h3 id="hAch" class="setSecH">Erfolge (aktiver Spielstand)</h3>
     <div id="achList"></div>
     <div id="saveNote" class="hidden"></div>
     <div class="btnRow"><button id="saveBack" class="btn small">Zur&uuml;ck</button></div>
@@ -519,22 +604,13 @@
     <h3 id="setHGraphik" class="setSecH">Grafik</h3>
     <div id="setSecGraphik">
       <div class="setRow"><span class="setLbl" id="setLblFs">Vollbild</span><button id="setFs" class="btn small">Vollbildmodus: aus</button></div>
+      <div class="setRow"><span class="setLbl" id="setLblLight">Farbschema</span><button id="setLight" class="btn small">Light-Modus: aus</button></div>
       <div class="setRow"><span class="setLbl" id="setLblCam">Startansicht</span>
         <div class="setOpts">
           <button class="btn small setCam" data-cam="w">Wei&szlig; unten</button>
           <button class="btn small setCam selOpt" data-cam="keep">Beibehalten</button>
           <button class="btn small setCam" data-cam="b">Schwarz unten</button>
         </div></div>
-      <div class="setRow"><span class="setLbl" id="setLblTheme">Brettthema</span>
-        <div class="setOpts">
-          <button class="btn small setTheme selOpt" data-theme="orig"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Original</span></button>
-          <button class="btn small setTheme" data-theme="mono"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Monochrom</span></button>
-          <button class="btn small setTheme" data-theme="blocks"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Blocks</span></button>
-          <button class="btn small setTheme" data-theme="edel"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Edel</span></button>
-          <button class="btn small setTheme" data-theme="winter"><canvas class="thmPrev" width="10" height="10"></canvas><span class="thmName">Winter</span></button>
-        </div></div>
-      <div class="setRow"><span class="setLbl" id="setLblSkin">Tetromino-Skin</span>
-        <div class="setOpts" id="skinOpts"></div></div>
     </div>
     <h3 id="setHSound" class="setSecH">Ton</h3>
     <div id="setSecSound">
@@ -635,7 +711,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Alpha 0.74</li></ul>
+    <ul><li>Alpha 0.83</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -643,7 +719,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.74</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Alpha 0.83</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -1337,7 +1413,7 @@ var TXT = {
     sideCap: 'Farbe wählen (Einzelspieler)', sideWBtn: 'Weiß spielen', sideBBtn: 'Schwarz spielen',
     tutBtnLbl: 'Tutorials',
     mSaveBtn: 'Spielstand, Statistik & Erfolge', mRulesBtn: 'Regeln anzeigen',
-    mSetBtn: 'Einstellungen', mInfoBtn: 'Open Source & Urheberschaft',
+    mSetBtn: 'Einstellungen', mInfoBtn: 'Open Source & Urheberschaft', mSkinBtn: 'Skins und Welten', swLogoH: 'Skins und Welten', swThemesH: 'Welten (Brettthemen)', swSkinsH: 'Tetromino-Skins', swBackLbl: 'Zurück',
     menuBackLbl: 'Zurück zum Spiel (Esc)',
     tutLogoH: 'Tutorial',
     tutSub: 'Fünf Lektionen – jede Figur mit ihren Sonderwegen; absolvierte Lektionen sind grün markiert',
@@ -1362,6 +1438,8 @@ var TXT = {
     trkTechno: 'Techno', trkEntspannung: 'Entspannung', trkHardbass: 'Russian Hardbass',
     achRusRootsName: 'Russische Wurzeln',
     achRusRootsDesc: 'Die Spielmusik in den Einstellungen auf Russian Hardbass umgestellt – eine Hommage an den russischen Erfinder des fallenden-Stein-Klassikers.',
+    achAufstandName: 'Der Aufstand beginnt',
+    achAufstandDesc: 'Den S-Stein durch geschicktes Stapeln auf seine maximal mögliche Höhe von sieben Blöcken gebracht.',
     durSlowLbl: 'Langsam', durNormLbl: 'Normal', durFastLbl: 'Schnell',
     lblCam: 'Startansicht', camWLbl: 'Weiß unten', camBLbl: 'Schwarz unten', camKeepLbl: 'Beibehalten',
     lblTalkVol: 'Tetromino-Stimme', lblSlideDur: 'Versetzungs-Animation',
@@ -1372,6 +1450,16 @@ var TXT = {
     themeEdel: 'Edel', themeWinter: 'Winter',
     lblSkin: 'Tetromino-Skin', skinStd: 'Standard',
     skinLockHint: 'Noch gesperrt – Erfolg „{name}“ erforderlich.',
+    lblLight: 'Farbschema', lightOnLbl: 'Light-Modus: an (Beta)', lightOffLbl: 'Light-Modus: aus (Beta)',
+    themeHimmel: 'Himmel', themeHerbst: 'Herbst', themeKirsch: 'Kirschblüte', themeWeltraum: 'Weltraum',
+    skinPirat: 'Pirat', skinZauberer: 'Zauberer', skinAstronaut: 'Astronaut', skinRoboter: 'Roboter',
+    skinBauarbeiter: 'Bauarbeiter', skinKoch: 'Koch', skinFeuerwehr: 'Feuerwehr', skinArzt: 'Arzt',
+    skinRegen: 'Regenmantel', skinFee: 'Blumenfee', skinSchneemann: 'Schneemann', skinSonnenbad: 'Sonnenbad',
+    skinVogelscheuche: 'Vogelscheuche', skinGaertner: 'Gärtner', skinGewitter: 'Gewitter', skinVampir: 'Vampir',
+    skinKuerbis: 'Kürbis', skinSkelett: 'Skelett', skinRitter: 'Ritter', skinBarde: 'Barde',
+    skinNoir: 'Noir-Detektiv', skinNinja: 'Ninja', skinSamurai: 'Samurai', skinWissenschafter: 'Wissenschaftler',
+    skinGlitch: 'Glitch', skinChampion: 'Arcade-Champion', skinPappkarton: 'Pappkarton', skinTruhe: 'Schatztruhe',
+    skinGelee: 'Gelee', skinAutomat: 'Arcade-Automat',
     setCloseLbl: 'Schließen',
     seedH2: 'Partie mit Startwert',
     seedIntroHtml: SEEDINTRO_DE,
@@ -1565,7 +1653,7 @@ var TXT = {
     sideCap: 'Choose a color (single player)', sideWBtn: 'Play White', sideBBtn: 'Play Black',
     tutBtnLbl: 'Tutorials',
     mSaveBtn: 'Save game, statistics & achievements', mRulesBtn: 'Show rules',
-    mSetBtn: 'Settings', mInfoBtn: 'Open Source & authorship',
+    mSetBtn: 'Settings', mInfoBtn: 'Open Source & authorship', mSkinBtn: 'Skins  Worlds', swLogoH: 'Skins  Worlds', swThemesH: 'Worlds (board themes)', swSkinsH: 'Tetromino skins', swBackLbl: 'Back',
     menuBackLbl: 'Back to the game (Esc)',
     tutLogoH: 'Tutorial',
     tutSub: 'Five lessons – every piece with its special moves; completed lessons are marked green',
@@ -1590,6 +1678,8 @@ var TXT = {
     trkTechno: 'Techno', trkEntspannung: 'Relaxing', trkHardbass: 'Russian Hardbass',
     achRusRootsName: 'Russian Roots',
     achRusRootsDesc: 'Switched the game music to Russian Hardbass in the settings – a homage to the Russian inventor of the falling-block classic.',
+    achAufstandName: 'The Uprising Begins',
+    achAufstandDesc: 'Stacked the S-piece through skilful piling to its maximum possible height of seven blocks.',
     durSlowLbl: 'Slow', durNormLbl: 'Normal', durFastLbl: 'Fast',
     lblCam: 'Start view', camWLbl: 'White at bottom', camBLbl: 'Black at bottom', camKeepLbl: 'Keep current',
     lblTalkVol: 'Tetromino voice', lblSlideDur: 'Shift animation',
@@ -1600,6 +1690,16 @@ var TXT = {
     themeEdel: 'Noble', themeWinter: 'Winter',
     lblSkin: 'Tetromino skin', skinStd: 'Default',
     skinLockHint: 'Still locked – requires the achievement “{name}”.',
+    lblLight: 'Colour scheme', lightOnLbl: 'Light mode: on (Beta)', lightOffLbl: 'Light mode: off (Beta)',
+    themeHimmel: 'Sky', themeHerbst: 'Autumn', themeKirsch: 'Cherry Blossom', themeWeltraum: 'Space',
+    skinPirat: 'Pirate', skinZauberer: 'Wizard', skinAstronaut: 'Astronaut', skinRoboter: 'Robot',
+    skinBauarbeiter: 'Construction Worker', skinKoch: 'Chef', skinFeuerwehr: 'Firefighter', skinArzt: 'Doctor',
+    skinRegen: 'Raincoat', skinFee: 'Flower Fairy', skinSchneemann: 'Snowman', skinSonnenbad: 'Sunbather',
+    skinVogelscheuche: 'Scarecrow', skinGaertner: 'Gardener', skinGewitter: 'Thunderstorm', skinVampir: 'Vampire',
+    skinKuerbis: 'Pumpkin', skinSkelett: 'Skeleton', skinRitter: 'Knight', skinBarde: 'Bard',
+    skinNoir: 'Noir Detective', skinNinja: 'Ninja', skinSamurai: 'Samurai', skinWissenschafter: 'Scientist',
+    skinGlitch: 'Glitch', skinChampion: 'Arcade Champion', skinPappkarton: 'Cardboard Box', skinTruhe: 'Treasure Chest',
+    skinGelee: 'Jelly', skinAutomat: 'Arcade Machine',
     setCloseLbl: 'Close',
     seedH2: 'Game with seed',
     seedIntroHtml: 'The same seed produces the same starting position – games can thus be repeated and replayed exactly. The seed of the running game is shown in the status bar behind the game mode.',
@@ -1886,7 +1986,7 @@ var TXT = {
     sideCap: 'Choisir une couleur (solo)', sideWBtn: 'Jouer avec les Blancs', sideBBtn: 'Jouer avec les Noirs',
     tutBtnLbl: 'Tutoriels',
     mSaveBtn: 'Sauvegarde, statistiques et succès', mRulesBtn: 'Afficher les règles',
-    mSetBtn: 'Paramètres', mInfoBtn: 'Open Source et paternité',
+    mSetBtn: 'Paramètres', mInfoBtn: 'Open Source et paternité', mSkinBtn: 'Skins et mondes', swLogoH: 'Skins et mondes', swThemesH: 'Mondes (thèmes du plateau)', swSkinsH: 'Skins Tetromino', swBackLbl: 'Retour',
     menuBackLbl: 'Retour au jeu (Échap)',
     tutLogoH: 'Tutoriel',
     tutSub: 'Cinq leçons – chaque pièce avec ses chemins particuliers ; les leçons terminées sont marquées en vert',
@@ -1911,6 +2011,8 @@ var TXT = {
     trkTechno: 'Techno', trkEntspannung: 'Détente', trkHardbass: 'Russian Hardbass',
     achRusRootsName: 'Racines russes',
     achRusRootsDesc: 'Musique du jeu réglée sur Russian Hardbass dans les paramètres – hommage à l’inventeur russe du classique des blocs qui tombent.',
+    achAufstandName: 'L’insurrection commence',
+    achAufstandDesc: 'La pièce S empilée par un empilement habile jusqu’à sa hauteur maximale de sept blocs.',
     durSlowLbl: 'Lente', durNormLbl: 'Normale', durFastLbl: 'Rapide',
     lblCam: 'Vue de départ', camWLbl: 'Blancs en bas', camBLbl: 'Noirs en bas', camKeepLbl: 'Conserver',
     lblTalkVol: 'Voix de Tetromino', lblSlideDur: 'Animation de déplacement',
@@ -1921,6 +2023,16 @@ var TXT = {
     themeEdel: 'Noblesse', themeWinter: 'Hiver',
     lblSkin: 'Skin de Tetromino', skinStd: 'Standard',
     skinLockHint: 'Encore verrouillé – nécessite le succès « {name} ».',
+    lblLight: 'Palette de couleurs', lightOnLbl: 'Mode clair : activé (bêta)', lightOffLbl: 'Mode clair : désactivé (bêta)',
+    themeHimmel: 'Ciel', themeHerbst: 'Automne', themeKirsch: 'Fleur de cerisier', themeWeltraum: 'Espace',
+    skinPirat: 'Pirate', skinZauberer: 'Magicien', skinAstronaut: 'Astronaute', skinRoboter: 'Robot',
+    skinBauarbeiter: 'Ouvrier du bâtiment', skinKoch: 'Chef cuisinier', skinFeuerwehr: 'Pompier', skinArzt: 'Médecin',
+    skinRegen: 'Imperméable', skinFee: 'Fée des fleurs', skinSchneemann: 'Bonhomme de neige', skinSonnenbad: 'Baigneur au soleil',
+    skinVogelscheuche: 'Épouvantail', skinGaertner: 'Jardinier', skinGewitter: 'Orage', skinVampir: 'Vampire',
+    skinKuerbis: 'Citrouille', skinSkelett: 'Squelette', skinRitter: 'Chevalier', skinBarde: 'Barde',
+    skinNoir: 'Détective noir', skinNinja: 'Ninja', skinSamurai: 'Samouraï', skinWissenschafter: 'Scientifique',
+    skinGlitch: 'Glitch', skinChampion: 'Champion d’arcade', skinPappkarton: 'Carton', skinTruhe: 'Coffre au trésor',
+    skinGelee: 'Gelée', skinAutomat: 'Borne d’arcade',
     setCloseLbl: 'Fermer',
     seedH2: 'Partie avec valeur de départ',
     seedIntroHtml: 'Une même valeur de départ (seed) produit la même disposition initiale – les parties peuvent ainsi être répétées et rejouées à l’identique. La valeur de la partie en cours s’affiche dans la barre d’état derrière le mode de jeu.',
@@ -2208,7 +2320,7 @@ var TXT = {
     sideCap: 'Zvolit barvu (jeden hráč)', sideWBtn: 'Hrát bílou', sideBBtn: 'Hrát černou',
     tutBtnLbl: 'Tutoriály',
     mSaveBtn: 'Uložená hra, statistiky a úspěchy', mRulesBtn: 'Zobrazit pravidla',
-    mSetBtn: 'Nastavení', mInfoBtn: 'Open Source a autorská práva',
+    mSetBtn: 'Nastavení', mInfoBtn: 'Open Source a autorská práva', mSkinBtn: 'Skiny a světy', swLogoH: 'Skiny a světy', swThemesH: 'Světy (témata desky)', swSkinsH: 'Skiny Tetromino', swBackLbl: 'Zpět',
     menuBackLbl: 'Zpět do hry (Esc)',
     tutLogoH: 'Tutoriál',
     tutSub: 'Pět lekcí – každá figurka se svými zvláštními tahy; absolvované lekce jsou zeleně označeny',
@@ -2233,6 +2345,8 @@ var TXT = {
     trkTechno: 'Techno', trkEntspannung: 'Relaxace', trkHardbass: 'Russian Hardbass',
     achRusRootsName: 'Ruské kořeny',
     achRusRootsDesc: 'Herní hudba přepnuta na Russian Hardbass v nastavení – pocta ruskému vynálezci klasiky padajících kamenů.',
+    achAufstandName: 'Počíná povstání',
+    achAufstandDesc: 'Kámen S nahromážděn obratným skládáním do maximální možné výšky sedmi bloků.',
     durSlowLbl: 'Pomalu', durNormLbl: 'Normálně', durFastLbl: 'Rychle',
     lblCam: 'Pohled na začátku', camWLbl: 'Bílé dole', camBLbl: 'Černé dole', camKeepLbl: 'Ponechat',
     lblTalkVol: 'Hlas Tetromina', lblSlideDur: 'Animace přesunu',
@@ -2243,6 +2357,16 @@ var TXT = {
     themeEdel: 'Elegantní', themeWinter: 'Zima',
     lblSkin: 'Skin Tetromina', skinStd: 'Standardní',
     skinLockHint: 'Zatím zamčeno – vyžaduje úspěch „{name}“.',
+    lblLight: 'Barevné schéma', lightOnLbl: 'Světlý režim: zapnut (beta)', lightOffLbl: 'Světlý režim: vypnut (beta)',
+    themeHimmel: 'Nebe', themeHerbst: 'Podzim', themeKirsch: 'Sakura', themeWeltraum: 'Vesmír',
+    skinPirat: 'Pirát', skinZauberer: 'Kouzelník', skinAstronaut: 'Astronaut', skinRoboter: 'Robot',
+    skinBauarbeiter: 'Stavební dělník', skinKoch: 'Kuchař', skinFeuerwehr: 'Hasič', skinArzt: 'Lékař',
+    skinRegen: 'Plášť do deště', skinFee: 'Květinová víla', skinSchneemann: 'Sněhulák', skinSonnenbad: 'Opalující se',
+    skinVogelscheuche: 'Strašák', skinGaertner: 'Zahrádkář', skinGewitter: 'Bouřka', skinVampir: 'Upír',
+    skinKuerbis: 'Dýně', skinSkelett: 'Kostra', skinRitter: 'Rytíř', skinBarde: 'Bard',
+    skinNoir: 'Noir detektiv', skinNinja: 'Ninja', skinSamurai: 'Samuraj', skinWissenschafter: 'Vědec',
+    skinGlitch: 'Glitch', skinChampion: 'Arcadový šampion', skinPappkarton: 'Kartonová krabice', skinTruhe: 'Pokladnice',
+    skinGelee: 'Želé', skinAutomat: 'Arcadový automat',
     setCloseLbl: 'Zavřít',
     seedH2: 'Partie s počátečním číslem',
     seedIntroHtml: SEEDINTRO_CS,
@@ -2436,7 +2560,7 @@ var TXT = {
     sideCap: 'Wybierz kolor (jeden gracz)', sideWBtn: 'Graj białymi', sideBBtn: 'Graj czarnymi',
     tutBtnLbl: 'Samouczki',
     mSaveBtn: 'Zapis gry, statystyki i osiągnięcia', mRulesBtn: 'Pokaż zasady',
-    mSetBtn: 'Ustawienia', mInfoBtn: 'Open Source i autorstwo',
+    mSetBtn: 'Ustawienia', mInfoBtn: 'Open Source i autorstwo', mSkinBtn: 'Skiny i światy', swLogoH: 'Skiny i światy', swThemesH: 'Światy (motywy planszy)', swSkinsH: 'Skiny Tetromino', swBackLbl: 'Wróć',
     menuBackLbl: 'Z powrotem do gry (Esc)',
     tutLogoH: 'Samouczek',
     tutSub: 'Pięć lekcji – każda figura ze swoimi specjalnymi ruchami; ukończone lekcje są oznaczone na zielono',
@@ -2461,6 +2585,8 @@ var TXT = {
     trkTechno: 'Techno', trkEntspannung: 'Relaks', trkHardbass: 'Russian Hardbass',
     achRusRootsName: 'Rosyjskie korzenie',
     achRusRootsDesc: 'Muzyka gry przełączona na Russian Hardbass w ustawieniach – ukłon w stronę rosyjskiego wynalazcy klasycznej układanki ze spadającymi klockami.',
+    achAufstandName: 'Początek powstania',
+    achAufstandDesc: 'Kamień S dzięki zręcznemu piętrzeniu osiągnął maksymalną wysokość siedmiu bloków.',
     durSlowLbl: 'Wolno', durNormLbl: 'Normalnie', durFastLbl: 'Szybko',
     lblCam: 'Widok początkowy', camWLbl: 'Białe na dole', camBLbl: 'Czarne na dole', camKeepLbl: 'Zachowaj bieżący',
     lblTalkVol: 'Głos Tetromino', lblSlideDur: 'Animacja przestawienia',
@@ -2471,6 +2597,16 @@ var TXT = {
     themeEdel: 'Szlachetny', themeWinter: 'Zima',
     lblSkin: 'Skórka Tetromino', skinStd: 'Standardowa',
     skinLockHint: 'Nadal zablokowany – wymaga osiągnięcia „{name}”.',
+    lblLight: 'Schemat kolorów', lightOnLbl: 'Tryb jasny: włączony (beta)', lightOffLbl: 'Tryb jasny: wyłączony (beta)',
+    themeHimmel: 'Niebo', themeHerbst: 'Jesień', themeKirsch: 'Kwiat wiśni', themeWeltraum: 'Kosmos',
+    skinPirat: 'Pirat', skinZauberer: 'Czarodziej', skinAstronaut: 'Astronauta', skinRoboter: 'Robot',
+    skinBauarbeiter: 'Budowlaniec', skinKoch: 'Kucharz', skinFeuerwehr: 'Strażak', skinArzt: 'Lekarz',
+    skinRegen: 'Płaszcz przeciwdeszczowy', skinFee: 'Kwiatowa wróżka', skinSchneemann: 'Bałwan', skinSonnenbad: 'Plażowicz',
+    skinVogelscheuche: 'Strach na wróble', skinGaertner: 'Ogrodnik', skinGewitter: 'Burza', skinVampir: 'Wampir',
+    skinKuerbis: 'Dynia', skinSkelett: 'Szkielet', skinRitter: 'Rycerz', skinBarde: 'Bard',
+    skinNoir: 'Detektyw noir', skinNinja: 'Ninja', skinSamurai: 'Samuraj', skinWissenschafter: 'Naukowiec',
+    skinGlitch: 'Glitch', skinChampion: 'Mistrz automatów', skinPappkarton: 'Kartonowe pudełko', skinTruhe: 'Skrzynia skarbów',
+    skinGelee: 'Galaretka', skinAutomat: 'Automat',
     setCloseLbl: 'Zamknij',
     seedH2: 'Partia z wartością startową',
     seedIntroHtml: SEEDINTRO_PL,
@@ -2665,7 +2801,7 @@ var TXT = {
     sideCap: 'Elegir color (un jugador)', sideWBtn: 'Jugar con blancas', sideBBtn: 'Jugar con negras',
     tutBtnLbl: 'Tutoriales',
     mSaveBtn: 'Partida guardada, estadísticas y logros', mRulesBtn: 'Mostrar las reglas',
-    mSetBtn: 'Ajustes', mInfoBtn: 'Open Source y autoría',
+    mSetBtn: 'Ajustes', mInfoBtn: 'Open Source y autoría', mSkinBtn: 'Skins y mundos', swLogoH: 'Skins y mundos', swThemesH: 'Mundos (temas del tablero)', swSkinsH: 'Skins de Tetromino', swBackLbl: 'Volver',
     menuBackLbl: 'Volver al juego (Esc)',
     tutLogoH: 'Tutorial',
     tutSub: 'Cinco lecciones – cada pieza con sus recorridos especiales; las lecciones completadas están marcadas en verde',
@@ -2690,6 +2826,8 @@ var TXT = {
     trkTechno: 'Techno', trkEntspannung: 'Relajación', trkHardbass: 'Russian Hardbass',
     achRusRootsName: 'Raíces rusas',
     achRusRootsDesc: 'Música del juego cambiada a Russian Hardbass en los ajustes – homenaje al inventor ruso del clásico de las piezas que caen.',
+    achAufstandName: 'Comienza la insurrección',
+    achAufstandDesc: 'La pieza S apilada con habilidad hasta su altura máxima posible de siete bloques.',
     durSlowLbl: 'Lento', durNormLbl: 'Normal', durFastLbl: 'Rápido',
     lblCam: 'Vista inicial', camWLbl: 'Blancas abajo', camBLbl: 'Negras abajo', camKeepLbl: 'Mantener actual',
     lblTalkVol: 'Voz de Tetromino', lblSlideDur: 'Animación de desplazamiento',
@@ -2700,6 +2838,16 @@ var TXT = {
     themeEdel: 'Noble', themeWinter: 'Invierno',
     lblSkin: 'Skin de Tetromino', skinStd: 'Estándar',
     skinLockHint: 'Todavía bloqueado – requiere el logro «{name}».',
+    lblLight: 'Esquema de color', lightOnLbl: 'Modo claro: activado (beta)', lightOffLbl: 'Modo claro: desactivado (beta)',
+    themeHimmel: 'Cielo', themeHerbst: 'Otoño', themeKirsch: 'Flor de cerezo', themeWeltraum: 'Espacio',
+    skinPirat: 'Pirata', skinZauberer: 'Mago', skinAstronaut: 'Astronauta', skinRoboter: 'Robot',
+    skinBauarbeiter: 'Obrero', skinKoch: 'Cocinero', skinFeuerwehr: 'Bombero', skinArzt: 'Médico',
+    skinRegen: 'Impermeable', skinFee: 'Hada de las flores', skinSchneemann: 'Muñeco de nieve', skinSonnenbad: 'Bañista',
+    skinVogelscheuche: 'Espantapájaros', skinGaertner: 'Jardinero', skinGewitter: 'Tormenta', skinVampir: 'Vampiro',
+    skinKuerbis: 'Calabaza', skinSkelett: 'Esqueleto', skinRitter: 'Caballero', skinBarde: 'Bardo',
+    skinNoir: 'Detective noir', skinNinja: 'Ninja', skinSamurai: 'Samurái', skinWissenschafter: 'Científico',
+    skinGlitch: 'Glitch', skinChampion: 'Campeón de arcade', skinPappkarton: 'Caja de cartón', skinTruhe: 'Cofre del tesoro',
+    skinGelee: 'Gelatina', skinAutomat: 'Máquina arcade',
     setCloseLbl: 'Cerrar',
     seedH2: 'Partida con valor inicial',
     seedIntroHtml: SEEDINTRO_ES,
@@ -2760,6 +2908,8 @@ function applyLang(){
     menuBtn: 'menuBtnLbl', mpBtn: 'menuMp', spBtn: 'menuSp', mpQuick: 'quickStart',
     seedOpen: 'seedOpenLbl', sideCap: 'sideCap', tutBtn: 'tutBtnLbl',
     mSaveBtn: 'mSaveBtn', mRulesBtn: 'mRulesBtn', mSetBtn: 'mSetBtn', mInfoBtn: 'mInfoBtn',
+    mSkinBtn: 'mSkinBtn', swLogoH: 'swLogoH', swThemesH: 'swThemesH', swSkinsH: 'swSkinsH',
+    swBack: 'swBackLbl',
     menuBack: 'menuBackLbl', tutLogoH: 'tutLogoH', tutSub: 'tutSub', hTutPick: 'hTutPick',
     tutBack: 'tutBackLbl', endRetry: 'endRetryLbl', endMenu: 'endMenuLbl',
     overBtn: 'overBtnLbl', overReplayBtn: 'overReplayLbl', overMenuBtn: 'endMenuLbl',
@@ -2771,7 +2921,7 @@ function applyLang(){
     setLblMusVol: 'lblMusVol', setLblMusTrack: 'lblMusTrack', setLblFs: 'lblFs', setLblDur: 'lblDur', setLblLang: 'lblLang',
     setLblCam: 'lblCam', setLblTalkVol: 'lblTalkVol', setLblSlideDur: 'lblSlideDur',
     setLblAnnDur: 'lblAnnDur', setLblTwoTap: 'lblTwoTap', kbdReset: 'kbdResetLbl',
-    setLblTheme: 'lblTheme', setLblSkin: 'lblSkin',
+    setLblTheme: 'lblTheme', setLblSkin: 'lblSkin', setLblLight: 'lblLight',
     setHKbd: 'kbdH',
     setClose: 'setCloseLbl', seedH2: 'seedH2', seedDiffHead: 'seedDiffHeadLbl',
     seedSideHead: 'seedSideHeadLbl', hSeed: 'hSeed', seedRandom: 'seedRandomLbl',
@@ -2832,7 +2982,8 @@ function applyLang(){
   // die Mini-Vorschauen zeigen stets die Farben des jeweiligen Themas.
   qsa('.setTheme').forEach(function(b){
     var t = b.getAttribute('data-theme');
-    var tmap = { orig: 'themeOrig', mono: 'themeMono', blocks: 'themeBlocks', edel: 'themeEdel', winter: 'themeWinter' };
+    var tmap = { orig: 'themeOrig', mono: 'themeMono', blocks: 'themeBlocks', edel: 'themeEdel', winter: 'themeWinter',
+      himmel: 'themeHimmel', herbst: 'themeHerbst', kirsch: 'themeKirsch', weltraum: 'themeWeltraum' };
     b.querySelector('.thmName').textContent = tr(tmap[t] || 'themeOrig');
     b.classList.toggle('selOpt', t === theme);
   });
@@ -2884,6 +3035,7 @@ function setLang(l){
   if (!$('saveOverlay').classList.contains('hidden')) renderSaveMenu();
   if (!$('tutOverlay').classList.contains('hidden')) openTutMenu();
   if (!$('setModal').classList.contains('hidden')) refreshSettings();
+  if (!$('swOverlay').classList.contains('hidden')) drawThemePreviews();
 }
 // ---------- Kamera ----------
 var view = 0; // Drehung der Ansicht um die senkrechte Achse (0..3, je 90°)
@@ -2925,11 +3077,14 @@ var PAL = {
 };
 var TYPE_COLOR = { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' };
 // ---------- Brettthemen ----------
-// Fünf Themen steuern die Farbgebung von Brett und Steinen: das Original,
+// Neun Themen steuern die Farbgebung von Brett und Steinen: das Original,
 // ein monochromes Blau-Thema, das Blocks-Thema (Minecraft-Anmutung), bei
 // dem eingebrochene Bodenplatten zu glühender Lava werden, das edle
-// Gold-und-Silber-Thema mit Glanzlicht auf den Steinen sowie das Winter-
-// Thema mit schneebedecktem Brett, Eisloch statt Lava und fallenem Schnee. applyTheme()
+// Gold-und-Silber-Thema mit Glanzlicht, das Winter-Thema mit Schnee und
+// Eisloch, das Himmel-Thema auf einer Wolke mit ziehenden Wolken, das
+// Herbst-Thema mit fallendem Laub, die Kirschblüte im japanischen Stil
+// mit fallenden Blütenblättern sowie das Weltraum-Thema als Raumschiff
+// mit Container-Steinen und funkelnden Sternen. applyTheme()
 // überschreibt die Felder von PAL und TYPE_COLOR an Ort und Stelle, sodass
 // alle bestehenden Referenzen (Zeichnung, Masköttchen, Erfolgsseiten)
 // automatisch die neuen Farben übernehmen. Die Wahl wird dauerhaft unter
@@ -2991,13 +3146,64 @@ var THEMES = {
     // Marken bleiben unverändert, die weiße Partei wirkt als warmes
     // Elfenbein, damit sie sich vom kühlen Schnee abhebt.
     type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  himmel: {
+    pal: {
+      bg: '#5aa8e0', floorA: '#f4f8ff', floorB: '#dbe6f4', edgeA: '#c0d0ea', edgeB: '#a0b8d8',
+      rimInk: '#2c3a5e', slabL: '#e8f0fa', slabR: '#c8d8ec', slabLine: '#8aa4c8',
+      w: { top: '#f8f8f0', l: '#d4d4e8', r: '#9c9cd0', line: '#2a2a4a' },
+      b: { top: '#5a6a8e', l: '#3e4c6e', r: '#28344e', line: '#101828' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Das Brett ruht auf einer Wolke: pastellige Weiß- und Blautöne, hinter
+    // dem Brett ziehen im Bildtakt weitere Wolken vorüber.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  herbst: {
+    pal: {
+      bg: '#1a1226', floorA: '#c8a048', floorB: '#a0782e', edgeA: '#8a6a24', edgeB: '#6a4e1a',
+      rimInk: '#f0e0c0', slabL: '#8a5a34', slabR: '#5d3a22', slabLine: '#241608',
+      w: { top: '#f8f8f0', l: '#d4d4e8', r: '#9c9cd0', line: '#2a2a4a' },
+      b: { top: '#7c6a48', l: '#584a30', r: '#3a3020', line: '#181008' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Herbstliches Gras in trockenen Goldtönen; über der Szene fallen
+    // Laubblätter, auf den Feldern ruht bereits liegendes Laub.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  kirsch: {
+    pal: {
+      bg: '#221530', floorA: '#e8d8a8', floorB: '#d0b888', edgeA: '#8a2a3a', edgeB: '#6a1a2a',
+      rimInk: '#f0e4d0', slabL: '#5a2a22', slabR: '#3e1a14', slabLine: '#180a06',
+      w: { top: '#ffffff', l: '#f0e0ea', r: '#d4b8c8', line: '#7a3a4e' },
+      b: { top: '#ff9ec8', l: '#e070a4', r: '#b05084', line: '#4a1030' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Japanischer Stil: helles Tatami-Holz mit lackroten Kanten; die eine
+    // Partei spielt weiße, die andere rosa Steine; über der Szene schweben
+    // rosa Kirschblütenblätter zur Erde.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
+  },
+  weltraum: {
+    pal: {
+      bg: '#050514', floorA: '#9aa4b8', floorB: '#78829a', edgeA: '#525c74', edgeB: '#3a4258',
+      rimInk: '#d8e2f4', slabL: '#4a5468', slabR: '#303a4c', slabLine: '#121828',
+      w: { top: '#b8c2d4', l: '#8e98ac', r: '#66708a', line: '#2a3044' },
+      b: { top: '#4a566e', l: '#343e54', r: '#202838', line: '#080c18' },
+      sel: '#ffd23f', piv: '#ffffff', danger: '#ff5a5a'
+    },
+    // Das Brett ist ein Raumschiff-Deck aus Metallplatten; die Steine
+    // tragen als Frachtcontainer feine Wellrippen, im Hintergrund funkeln
+    // Sterne.
+    type: { I: '#31c7ef', O: '#f7d308', T: '#ad4d9c', L: '#ef7c1a', S: '#3fbf3f' }
   }
 };
 var THEME_KEY = 'tetraTheme', theme = 'orig';
 (function(){
   try {
     var t = window.localStorage.getItem(THEME_KEY);
-    if (t === 'mono' || t === 'blocks' || t === 'edel' || t === 'winter') theme = t;
+    if (t === 'mono' || t === 'blocks' || t === 'edel' || t === 'winter' ||
+        t === 'himmel' || t === 'herbst' || t === 'kirsch' || t === 'weltraum') theme = t;
   } catch (e) {}
 })();
 function applyTheme(){
@@ -3011,6 +3217,35 @@ function applyTheme(){
   for (k in T.type) TYPE_COLOR[k] = T.type[k];
 }
 applyTheme();
+// ---------- Light-Modus ----------
+// Heller Anstrich der gesamten Oberfläche per html.light-Klasse (siehe
+// CSS); die Spielfläche behält ihre Themenfarben, nur der Szenen-
+// hintergrund (PAL.bg) weicht im Light-Modus auf ein helles Blaugrau.
+// Die Wahl wird dauerhaft unter dem localStorage-Schlüssel tetraLight
+// gespeichert und beim Laden sofort angewendet.
+var LIGHT_KEY = 'tetraLight', lightOn = false;
+function applyLightBg(){
+  if (lightOn) PAL.bg = '#dfe4f2';
+}
+(function(){
+  try { lightOn = window.localStorage.getItem(LIGHT_KEY) === '1'; } catch (e) {}
+  if (lightOn){
+    document.documentElement.classList.add('light');
+    applyLightBg();
+  }
+})();
+function setLight(on){
+  lightOn = on;
+  try { window.localStorage.setItem(LIGHT_KEY, on ? '1' : '0'); } catch (e) {}
+  document.documentElement.classList.toggle('light', on);
+  applyTheme(); // Themen-Hintergrund wiederherstellen ...
+  applyLightBg(); // ... und im Light-Modus erneut aufhellen
+  refreshLightBtn();
+}
+function refreshLightBtn(){
+  $('setLight').textContent = lightOn ? tr('lightOnLbl') : tr('lightOffLbl');
+  $('setLight').classList.toggle('selOpt', lightOn);
+}
 var SHAPES = {
   I: [[0,1],[1,1],[2,1],[3,1]],
   O: [[0,0],[1,0],[0,1],[1,1]],
@@ -3540,6 +3775,12 @@ function finalizeMove(){
   // schlägt, gilt als Opferkandidat für den unmittelbaren Gegenzug.
   if (chessRulesOn())
     lastLSacId = (a.axis === 't' && p.type === 'L' && cap.length) ? p.id : null;
+  // „Der Aufstand beginnt“: Der S-Stein darf als einziger auf Figuren
+  // stapeln und ragt bei optimaler Stapelung höchstens sieben Blöcke in
+  // Z-Richtung; erreicht der eigene S-Stein diese Maximalhöhe (Würfel auf
+  // Ebene sieben, z = 6), wird der Erfolg freigeschaltet.
+  if (chessRulesOn() && p.type === 'S' && (mode !== 'ai' || p.color === humanSide) &&
+      a.res.newCubes.some(function(c){ return c.z >= 6; })) unlockAch('aufstand');
   // Phantom der Dame: bei Versetzung altes Phantom entfernen und an der
   // letzten Zugstelle neu erscheinen lassen; bei Drehung dreht das Phantom
   // mit und kann dabei Gegner schlagen.
@@ -4475,7 +4716,7 @@ function startKeyCapture(id){
 function endKeyCapture(){ refreshKbdRows(); }
 function kbdOpenPanel(){ // Wurzel des offenen Menüs/Dialogs, sonst null
   var ids = ['rulesModal','setModal','infoModal','srcModal','seedModal','endOverlay',
-    'tutOverlay','saveOverlay','menuOverlay'], i;
+    'tutOverlay','saveOverlay','swOverlay','menuOverlay'], i;
   for (i = 0; i < ids.length; i++){
     var el = $(ids[i]);
     if (!el && typeof el !== 'undefined') continue;
@@ -4565,6 +4806,7 @@ window.addEventListener('keydown', function(e){
       var mEl = $(modals[i]);
       if (!mEl.classList.contains('hidden')){ mEl.classList.add('hidden'); return; }
     }
+    if (!$('swOverlay').classList.contains('hidden')){ closeSwMenu(); return; }
     if (!$('tutOverlay').classList.contains('hidden')){ closeTutMenu(); return; }
     if (!$('saveOverlay').classList.contains('hidden')){ closeSaveMenu(); return; }
     if (!$('menuOverlay').classList.contains('hidden')){ closeMenu(); return; }
@@ -4904,6 +5146,23 @@ function edelGlanz(top, left, right){
   ctx.beginPath(); ctx.moveTo(left[0][0], left[0][1]); ctx.lineTo(left[1][0], left[1][1]); ctx.stroke();
   ctx.beginPath(); ctx.moveTo(right[0][0], right[0][1]); ctx.lineTo(right[1][0], right[1][1]); ctx.stroke();
 }
+function containerTexture(top, left, right){
+  // Weltraum-Thema: feine Wellrippen auf allen drei Flächen, sodass die
+  // Steine wie Frachtcontainer wirken.
+  var faces = [top, left, right], i, t, f, a, b, c, d;
+  ctx.strokeStyle = 'rgba(20,26,40,0.38)';
+  ctx.lineWidth = 1;
+  for (i = 0; i < faces.length; i++){
+    a = faces[i][0]; b = faces[i][1]; c = faces[i][3]; d = faces[i][2];
+    for (t = 1; t <= 3; t++){
+      f = t / 4;
+      ctx.beginPath();
+      ctx.moveTo(a[0] + (b[0] - a[0]) * f, a[1] + (b[1] - a[1]) * f);
+      ctx.lineTo(c[0] + (d[0] - c[0]) * f, c[1] + (d[1] - c[1]) * f);
+      ctx.stroke();
+    }
+  }
+}
 function drawCube(x, y, z, pal, oy, st){
   st = st || {};
   var v = vw(x, y, z);
@@ -4920,6 +5179,9 @@ function drawCube(x, y, z, pal, oy, st){
   poly(top, st.tint || pal.top);
   if (theme === 'blocks' && !st.tint && (pal === PAL.w || pal === PAL.b))
     blockTexture(top, left, right, pal === PAL.w, x, y, z);
+  // Weltraum-Thema: Die Steine tragen die Wellrippen von Frachtcontainern.
+  if (theme === 'weltraum' && !st.tint && (pal === PAL.w || pal === PAL.b))
+    containerTexture(top, left, right);
   // Edles Thema: Glanzlicht auf den Gold- und Silbersteinen – ein helles,
   // gestaffeltes Glanzflecken-Muster auf der Deckfläche und ein feiner
   // Schimmer entlang der oberen Kanten der Seitenflächen.
@@ -5011,6 +5273,132 @@ function snowInit(){
     });
   }
 }
+// ---------- Hintergrund-Welten: Wolken, Sterne, Laub, Blüten ----------
+// Himmel zeichnet ziehende, geschichtete Wolken und Weltraum ein funkelndes
+// Sternenfeld hinter das Brett; Herbst und Kirschblüte lassen zusätzlich
+// Laub- beziehungsweise Blütenblätter über die Szene fallen (analog zum
+// Winterschnee, mit eigener Farb-, Fall- und Pendelcharakteristik).
+var clouds = null, cloudsLast = 0, stars = null;
+var WCOLS = {
+  // Herbst: große Blätter in Braun, Orange und Rot; c2 liefert die dunklere
+  // Blattader für den gezeichneten Detail-Pixel.
+  herbst: [['#ef7c1a', '#a84a08'], ['#e05a20', '#94380c'], ['#c8342a', '#7a1812'],
+           ['#b8860b', '#6e4e04'], ['#8a5a34', '#4e3018']],
+  // Kirschblüte: typisch rosa Blütenblätter mit hellem Herz; c2 ist der
+  // hellere Glanz-Pixel.
+  kirsch: [['#ff9ec8', '#ffd4e6'], ['#ff8ab8', '#ffd0e2'], ['#ffc0d8', '#ffeaf2'],
+           ['#ff70a8', '#ffc8dc']]
+};
+var WXN = 70, wxp = [], wxLast = 0;
+function wxpInit(t){
+  var cols = WCOLS[t], i, r = [], ci;
+  for (i = 0; i < WXN; i++){
+    ci = (Math.random() * cols.length) | 0;
+    r.push({ x: Math.random() * CANW, y: Math.random() * CANH,
+      v: (t === 'herbst' ? 14 : 10) + Math.random() * (t === 'herbst' ? 26 : 16),
+      // Herbstblätter sind groß (drei oder vier Pixel), Blütenblätter
+      // kleiner (zwei oder drei Pixel)
+      s: t === 'herbst' ? (Math.random() < 0.55 ? 4 : 3) : (Math.random() < 0.5 ? 3 : 2),
+      ph: Math.random() * Math.PI * 2,
+      sw: (t === 'herbst' ? 8 : 10) + Math.random() * (t === 'herbst' ? 16 : 14),
+      c: cols[ci][0], c2: cols[ci][1] });
+  }
+  return r;
+}
+function drawClouds(now){
+  var i, cl, dt = cloudsLast ? Math.min(0.05, (now - cloudsLast) / 1000) : 0.016;
+  cloudsLast = now;
+  if (!clouds){
+    clouds = [];
+    for (i = 0; i < 7; i++)
+      clouds.push({ x: Math.random() * CANW, y: 10 + Math.random() * (CANH - 20),
+        w: 46 + Math.random() * 70, v: 5 + Math.random() * 12,
+        a: 0.22 + Math.random() * 0.26 });
+  }
+  for (i = 0; i < clouds.length; i++){
+    cl = clouds[i];
+    cl.x += cl.v * dt;
+    if (cl.x - cl.w / 2 > CANW) cl.x = -cl.w / 2;
+    ctx.fillStyle = 'rgba(255,255,255,' + cl.a.toFixed(2) + ')';
+    ctx.fillRect(rr(cl.x - cl.w / 2), rr(cl.y - 6), rr(cl.w), 12);
+    ctx.fillRect(rr(cl.x - cl.w / 2 + 10), rr(cl.y - 12), rr(cl.w - 30), 12);
+    ctx.fillRect(rr(cl.x - cl.w / 2 + 4), rr(cl.y + 2), rr(cl.w - 12), 8);
+  }
+}
+function drawStars(now){
+  var i, st;
+  if (!stars){
+    stars = [];
+    for (i = 0; i < 60; i++)
+      stars.push({ x: Math.random() * CANW, y: Math.random() * CANH,
+        s: Math.random() < 0.18 ? 2 : 1, ph: Math.random() * Math.PI * 2 });
+  }
+  for (i = 0; i < stars.length; i++){
+    st = stars[i];
+    ctx.fillStyle = 'rgba(255,255,255,' +
+      (0.30 + 0.50 * (0.5 + 0.5 * Math.sin(now * 0.002 + st.ph))).toFixed(3) + ')';
+    ctx.fillRect(rr(st.x), rr(st.y), st.s, st.s);
+  }
+}
+// Weltraum: kleine Pixel-Raumschlacht im Hintergrund. Drei helle Jäger
+// patrouillieren von links, drei dunkle Abfangjäger von rechts; beide
+// Seiten tauschen gelegentlich kurze Laserblitze aus. Die Schiffe sind
+// generische Pixel-Silhouetten, die Szene bleibt bewusst dezent hinter
+// dem Brett, alle Bewegungen laufen langsam und gerundet (Pixelraster).
+var battle = null, battleLast = 0;
+function battleInit(){
+  var i, s = { ships: [], shots: [] };
+  for (i = 0; i < 3; i++)
+    s.ships.push({ x: 16 + Math.random() * 70, y: 26 + i * 30 + Math.random() * 18,
+      vx: 5 + Math.random() * 4, side: 0, ph: Math.random() * Math.PI * 2, cd: 0.8 + Math.random() * 2.4 });
+  for (i = 0; i < 3; i++)
+    s.ships.push({ x: CANW - 16 - Math.random() * 70, y: 40 + i * 26 + Math.random() * 18,
+      vx: -(5 + Math.random() * 4), side: 1, ph: Math.random() * Math.PI * 2, cd: 0.8 + Math.random() * 2.4 });
+  return s;
+}
+function drawBattle(now){
+  var dt = battleLast ? Math.min(0.05, (now - battleLast) / 1000) : 0.016, i, sh, k;
+  battleLast = now;
+  if (!battle) battle = battleInit();
+  for (i = 0; i < battle.ships.length; i++){
+    sh = battle.ships[i];
+    sh.x += sh.vx * dt;
+    sh.ph += dt * 1.6;
+    sh.cd -= dt;
+    if (sh.cd <= 0){ // Feuer: kurzer Laserblitz in Flugrichtung
+      sh.cd = 1.2 + Math.random() * 3.2;
+      battle.shots.push({ x: sh.x + (sh.side ? -2 : 2), y: sh.y,
+        vx: sh.vx > 0 ? 55 + Math.random() * 25 : -(55 + Math.random() * 25),
+        c: sh.side ? '#ff6a5a' : '#8fffbf' });
+    }
+    if (sh.vx > 0 && sh.x > CANW + 6) sh.x = -6;
+    if (sh.vx < 0 && sh.x < -6) sh.x = CANW + 6;
+    var sy = rr(sh.y + Math.sin(sh.ph) * 3), sx = rr(sh.x);
+    if (sh.side === 0){
+      // heller Jäger: geflügelte Nadel mit Cockpit-Pixel
+      ctx.fillStyle = '#e8ecf4';
+      ctx.fillRect(sx - 3, sy, 7, 1);           // Tragfläche
+      ctx.fillRect(sx, sy - 1, 1, 3);           // Rumpf
+      ctx.fillStyle = '#7fd4ff';
+      ctx.fillRect(sx, sy, 1, 1);               // Cockpit
+    } else {
+      // dunkler Abfangjäger: Doppelflügel-Silhouette
+      ctx.fillStyle = '#5a5a74';
+      ctx.fillRect(sx - 2, sy - 2, 1, 5);       // linker Flügel
+      ctx.fillRect(sx + 2, sy - 2, 1, 5);       // rechter Flügel
+      ctx.fillStyle = '#3a3a52';
+      ctx.fillRect(sx, sy, 1, 1);               // Kern
+    }
+  }
+  for (i = battle.shots.length - 1; i >= 0; i--){
+    battle.shots[i].x += battle.shots[i].vx * dt;
+    if (battle.shots[i].x < -8 || battle.shots[i].x > CANW + 8){
+      battle.shots.splice(i, 1); continue;
+    }
+    ctx.fillStyle = battle.shots[i].c;
+    ctx.fillRect(rr(battle.shots[i].x), rr(battle.shots[i].y), 3, 1);
+  }
+}
 function draw(now){
   var t = now / 1000;
   // Weiche Kamera-Anpassung für hohe Türme
@@ -5027,6 +5415,13 @@ function draw(now){
   ctx.setTransform(1, 0, 0, 1, 0, 0);
   ctx.fillStyle = PAL.bg;
   ctx.fillRect(0, 0, CANW, CANH);
+  // Hintergrund-Welten hinter dem Brett: ziehende Wolken (Himmel) und
+  // funkelnde Sterne (Weltraum); beim Verlassen des Themas aufräumen.
+  if (theme === 'himmel') drawClouds(now);
+  else if (theme === 'weltraum'){ drawStars(now); drawBattle(now); }
+  if (clouds && theme !== 'himmel'){ clouds = null; cloudsLast = 0; }
+  if (stars && theme !== 'weltraum') stars = null;
+  if (battle && theme !== 'weltraum'){ battle = null; battleLast = 0; }
   var shx = 0, shy = 0;
   if (now < shakeUntil){ shx = Math.round(Math.sin(now * 0.09) * 2); shy = Math.round(Math.cos(now * 0.11) * 2); }
   ctx.translate(shx, shy);
@@ -5148,6 +5543,20 @@ function draw(now){
           poly(ftop, '#0d2038');
           poly(ftop, 'rgba(110,180,235,' + (0.10 + 0.12 * ip).toFixed(3) + ')');
           strokePoly(ftop, '#081426');
+        } else if (theme === 'himmel'){
+          // Himmel-Thema: In der Wolkendecke klafft eine Lücke; der helle
+          // Himmel scheint durch die Öffnung nach unten.
+          poly(ftop, '#7ec0ee');
+          poly(ftop, 'rgba(255,255,255,0.35)');
+          strokePoly(ftop, '#a8c8e8');
+        } else if (theme === 'weltraum'){
+          // Weltraum-Thema: Die Metallplatte öffnet sich zum freien All;
+          // einzelne Sterne schimmern durch die Lücke.
+          poly(ftop, '#020208');
+          ctx.fillStyle = '#ffffff';
+          ctx.fillRect(fsx - 3, fsy + TH - 1, 1, 1);
+          ctx.fillRect(fsx + 3, fsy + TH + 2, 1, 1);
+          strokePoly(ftop, '#12182a');
         } else {
           // eingebrochene Bodenplatte: dunkles Loch
           poly(ftop, '#05051a');
@@ -5163,6 +5572,23 @@ function draw(now){
           ctx.fillStyle = 'rgba(255,255,255,' + (0.20 + 0.40 * gp).toFixed(3) + ')';
           ctx.fillRect(fsx - 3, fsy + TH - 2, 1, 1);
           ctx.fillRect(fsx + 4, fsy + TH + 3, 1, 1);
+        }
+        if (theme === 'herbst'){
+          // Herbst-Thema: liegendes Laub in Braun, Orange und Rot auf den Feldern
+          ctx.fillStyle = '#ef7c1a'; ctx.fillRect(fsx - 3, fsy + TH - 2, 2, 1);
+          ctx.fillStyle = '#c8342a'; ctx.fillRect(fsx + 3, fsy + TH + 2, 2, 1);
+          ctx.fillStyle = '#8a5a34'; ctx.fillRect(fsx - 1, fsy + TH + 3, 1, 1);
+        }
+        if (theme === 'kirsch'){
+          // Kirschblüte: ruhende, rosa Blütenblätter auf den Feldern
+          ctx.fillStyle = '#ff9ec8'; ctx.fillRect(fsx - 2, fsy + TH, 2, 1);
+          ctx.fillStyle = '#ffc0d8'; ctx.fillRect(fsx + 3, fsy + TH + 2, 1, 1);
+        }
+        if (theme === 'weltraum'){
+          // Weltraum-Thema: Nieten in den Metallplatten
+          ctx.fillStyle = 'rgba(20,26,40,0.5)';
+          ctx.fillRect(fsx - 4, fsy + TH - 1, 1, 1);
+          ctx.fillRect(fsx + 4, fsy + TH + 1, 1, 1);
         }
         if (isWarn){
           // Bröckel-Markierung: rötlicher Schimmer, roter Rand und Risse
@@ -5271,6 +5697,32 @@ function draw(now){
       ctx.fillRect(rr(fx2), rr(fl.y), fl.s, fl.s);
     }
   } else if (snow.length){ snow = []; snowLast = 0; }
+
+  // Herbst und Kirschblüte: Laub- und Blütenblätter fallen analog zum
+  // Winterschnee über die Szene, jedes mit eigenem Farb-, Fall- und
+  // Pendelverhalten.
+  if (theme === 'herbst' || theme === 'kirsch'){
+    if (!wxp.length) wxp = wxpInit(theme);
+    var wdt = wxLast ? Math.min(0.05, (now - wxLast) / 1000) : 0.016;
+    wxLast = now;
+    for (i = 0; i < wxp.length; i++){
+      var wfl = wxp[i];
+      wfl.y += wfl.v * wdt;
+      wfl.ph += wdt * (theme === 'herbst' ? 1.3 : 1.0);
+      if (wfl.y > CANH + 2){ wfl.y = -3; wfl.x = Math.random() * CANW; }
+      var wfx = wfl.x + Math.sin(wfl.ph) * wfl.sw;
+      if (wfx < -2) wfx += CANW + 4; else if (wfx > CANW + 2) wfx -= CANW + 4;
+      // Blatt beziehungsweise Blüte: Grundfläche plus Detail-Pixel (Herbst:
+      // dunkle Blattader, Kirschblüte: heller Glanz im Herz der Blüte)
+      ctx.fillStyle = wfl.c;
+      ctx.fillRect(rr(wfx), rr(wfl.y), wfl.s, wfl.s);
+      ctx.fillStyle = wfl.c2;
+      if (theme === 'herbst')
+        ctx.fillRect(rr(wfx) + 1, rr(wfl.y) + (wfl.s > 3 ? 1 : 0), wfl.s - 2, 1);
+      else
+        ctx.fillRect(rr(wfx) + (wfl.s > 2 ? 1 : 0), rr(wfl.y), 1, wfl.s);
+    }
+  } else if (wxp.length){ wxp = []; wxLast = 0; }
 
   // Ansage nach Ablauf der Anzeigedauer automatisch ausblenden; sind die
   // Figurenliste oder die Zugliste ausgeklappt, bleibt die Blase als
@@ -5589,6 +6041,7 @@ function refreshSettings(){
   refreshFsBtn();
   refreshMusTrackBtns();
   refreshSkinBtns();
+  refreshLightBtn();
 }
 function openSettings(){
   refreshSettings();
@@ -5728,6 +6181,31 @@ $('tutReset').addEventListener('click', function(){
 });
 $('mRulesBtn').addEventListener('click', function(){ $('rulesModal').classList.remove('hidden'); });
 $('mSetBtn').addEventListener('click', openSettings);
+// Skins und Welten: eigenes Menü im Hauptmenü. Die Brettthemen und der
+// Tetromino-Skin wanderten aus den Grafik-Einstellungen hierher; die
+// Vorschauen (Themen-Canvases, Skin-Masköttchen) werden bei jedem Öffnen
+// frisch gezeichnet, damit Sprachwechsel und Themenwechsel sofort sichtbar
+// werden. Die Knöpfe beider Gruppen teilen sich das Rasterlayout und sind
+// damit untereinander gleich groß.
+function openSwMenu(){
+  drawThemePreviews();
+  refreshSkinBtns();
+  $('swOverlay').classList.remove('hidden');
+}
+function closeSwMenu(){ $('swOverlay').classList.add('hidden'); }
+$('mSkinBtn').addEventListener('click', openSwMenu);
+$('swBack').addEventListener('click', closeSwMenu);
+// Beide Abschnitte des Skins-und-Welten-Menüs sind unabhängig voneinander
+// einklappbar (gleiche Mechanik wie in den Einstellungen); beide beginnen
+// aufgeklappt, und der Zustand bleibt für die geöffnete Sitzung erhalten.
+var SW_SECS = [['swThemesH','themeOpts'],['swSkinsH','skinOpts']];
+SW_SECS.forEach(function(p){
+  $(p[0]).addEventListener('click', function(){
+    $(p[0]).classList.toggle('closed');
+    $(p[1]).classList.toggle('hidden');
+    sfxClick();
+  });
+});
 $('mInfoBtn').addEventListener('click', openInfo);
 // Spielstand-Overlay: Öffnen aus dem Hauptmenü, Slot-Verwaltung über
 // delegierte Klicks (data-act auf den Knöpfen der Slot-Zeilen).
@@ -5918,6 +6396,7 @@ $('setMute').addEventListener('click', function(){ toggleMute(); refreshSettings
 $('setFs').addEventListener('click', function(){ toggleFullscreen(); });
 document.addEventListener('fullscreenchange', function(){ refreshFsBtn(); });
 document.addEventListener('webkitfullscreenchange', function(){ refreshFsBtn(); });
+$('setLight').addEventListener('click', function(){ setLight(!lightOn); });
 $('setMus').addEventListener('click', function(){ toggleMusic(); refreshSettings(); });
 qsa('.setMusTrack').forEach(function(b){
   b.addEventListener('click', function(){
@@ -5981,6 +6460,7 @@ qsa('.setTheme').forEach(function(btn){
     theme = btn.getAttribute('data-theme');
     try { window.localStorage.setItem(THEME_KEY, theme); } catch (e) {}
     applyTheme();
+    applyLightBg();
     qsa('.setTheme').forEach(function(b){ b.classList.toggle('selOpt', b === btn); });
     sfxClick();
   });
@@ -6023,6 +6503,26 @@ function drawThemePreviews(){
     if (btn.getAttribute('data-theme') === 'winter'){
       // Abgelagerte Schneeflocken auf dem dunklen Stein in der Mini-Vorschau
       g.fillStyle = '#ffffff'; g.fillRect(6, 4, 1, 1); g.fillRect(8, 6, 1, 1);
+    }
+    if (btn.getAttribute('data-theme') === 'himmel'){
+      // Wolken-Andeutung in der Mini-Vorschau
+      g.fillStyle = 'rgba(255,255,255,0.9)'; g.fillRect(2, 2, 4, 1); g.fillRect(3, 1, 2, 1);
+    }
+    if (btn.getAttribute('data-theme') === 'herbst'){
+      // Große Laubblätter in Braun, Orange und Rot in der Mini-Vorschau
+      g.fillStyle = '#ef7c1a'; g.fillRect(3, 3, 2, 2);
+      g.fillStyle = '#c8342a'; g.fillRect(6, 6, 2, 2);
+      g.fillStyle = '#8a5a34'; g.fillRect(2, 7, 1, 1);
+    }
+    if (btn.getAttribute('data-theme') === 'kirsch'){
+      // Rosa Blütenblätter in der Mini-Vorschau
+      g.fillStyle = '#ff9ec8'; g.fillRect(4, 4, 1, 1);
+      g.fillStyle = '#ff70a8'; g.fillRect(2, 7, 1, 1);
+    }
+    if (btn.getAttribute('data-theme') === 'weltraum'){
+      // Sterne und Nieten in der Mini-Vorschau
+      g.fillStyle = '#ffffff'; g.fillRect(4, 3, 1, 1);
+      g.fillStyle = 'rgba(255,255,255,0.6)'; g.fillRect(2, 7, 1, 1);
     }
   });
 }
@@ -6090,6 +6590,15 @@ SET_SECS.forEach(function(p){
     $(p[1]).classList.toggle('hidden');
     sfxClick();
   });
+});
+// Erfolge-Abschnitt im Spielstand-Menü: dieselbe Einklapp-Mechanik wie in
+// den Einstellungen (Überschrift anklicken, plus/minus in der Ecke); die
+// Liste beginnt aufgeklappt und wird je Sitzung gemerkt, solange das Menü
+// geöffnet bleibt.
+$('hAch').addEventListener('click', function(){
+  $('hAch').classList.toggle('closed');
+  $('achList').classList.toggle('hidden');
+  sfxClick();
 });
 // Vorgabe beim Öffnen der Einstellungen: Alle vier Abschnitte erscheinen
 // eingeklappt (Pluszeichen in der Überschrift); nur die Sprachwahl oben
@@ -6268,24 +6777,31 @@ function pixText(str, color, scale){
 }
 // 8-Bit-Maskottchen „Tetromino“ (T-Figur mit Augen) für die Tutorial-Sprechblase
 // ---------- Tetromino-Skins ----------
-// Siebzehn Spezialskins schmücken das Masköttchen; jeder hängt an genau
+// Achtzehn Erfolgs-Skins schmücken das Masköttchen; jeder hängt an genau
 // einem Erfolg: Ist der Erfolg im aktiven Spielstand freigeschaltet, lässt
 // sich der Skin in den Einstellungen unter Grafik wählen; andernfalls
 // zeigt die Auswahl lediglich eine ausgegraute Vorschau mit Schloss, und
-// ein Klick quittiert mit einem tiefen Bleep. Die Wahl wird dauerhaft unter
-// dem localStorage-Schlüssel mascSkin gespeichert.
+// ein Klick quittiert mit einem tiefen Bleep. Dazu kommen dreißig frei
+// wählbare Community-Skins ohne Erfolgsbindung, vom Piraten bis zum
+// Arcade-Automaten. Die Wahl wird dauerhaft unter dem localStorage-
+// Schlüssel mascSkin gespeichert.
 var MASC_SKIN_KEY = 'mascSkin', mascSkin = 'std';
 var SKIN_IDS = ['firstWin', 'firstDraw', 'blitz', 'lehrling', 'geselle', 'gm', 'seedAll',
   'perpetual', 'lSac', 'phantomHit', 'phantomSac', 'firstFall', 'phantomFall', 'tronFall',
-  'dameFremd', 'easter', 'rusRoots'];
+  'dameFremd', 'easter', 'rusRoots', 'aufstand'];
+var FREE_SKINS = ['pirat', 'zauberer', 'astronaut', 'roboter', 'bauarbeiter', 'koch',
+  'feuerwehr', 'arzt', 'regen', 'fee', 'schneemann', 'sonnenbad', 'vogelscheuche',
+  'gaertner', 'gewitter', 'vampir', 'kuerbis', 'skelett', 'ritter', 'barde', 'noir',
+  'ninja', 'samurai', 'wissenschafter', 'glitch', 'champion', 'pappkarton', 'truhe',
+  'gelee', 'automat'];
 (function(){
   try {
     var sk = window.localStorage.getItem(MASC_SKIN_KEY);
-    if (sk === 'std' || SKIN_IDS.indexOf(sk) >= 0) mascSkin = sk;
+    if (sk === 'std' || SKIN_IDS.indexOf(sk) >= 0 || FREE_SKINS.indexOf(sk) >= 0) mascSkin = sk;
   } catch (e) {}
 })();
 function skinUnlocked(id){
-  if (id === 'std') return true;
+  if (id === 'std' || FREE_SKINS.indexOf(id) >= 0) return true;
   var s = activeSlot();
   return !!(s && s.ach && s.ach[id]);
 }
@@ -6433,6 +6949,246 @@ function skinDecor(id){
         '<rect x="7.4" y="-1.5" width="1.2" height="1.2" fill="#ffd23f"/>' +
         '<rect x="-1.4" y="2" width="2.6" height="0.6" fill="rgba(255,60,40,0.6)"/>' +
         '<rect x="15" y="5" width="2.6" height="0.6" fill="rgba(255,60,40,0.6)"/>';
+    case 'aufstand': // Karl Marx: Haar, Vollbart, dunkler Anzug
+      return '<rect x="6.5" y="5.5" width="3" height="6" fill="#2a2a3a"/>' +
+        '<rect x="4.6" y="1.8" width="1.4" height="0.6" fill="#c8c8cc"/>' +
+        '<rect x="9.9" y="1.8" width="1.4" height="0.6" fill="#c8c8cc"/>' +
+        '<rect x="3" y="-1.4" width="10" height="1.9" fill="#c8c8cc"/>' +
+        '<rect x="2" y="-0.6" width="1.2" height="2.6" fill="#c8c8cc"/>' +
+        '<rect x="12.8" y="-0.6" width="1.2" height="2.6" fill="#c8c8cc"/>' +
+        '<rect x="3.5" y="4.3" width="9" height="3.2" fill="#c8c8cc"/>' +
+        '<rect x="4.3" y="7.5" width="7.4" height="1.8" fill="#b8b8c2"/>' +
+        '<rect x="5.2" y="9.3" width="5.6" height="1.2" fill="#a8a8b4"/>';
+    case 'pirat': // Dreimaster, Augenklappe, Goldzahn
+      return '<rect x="4" y="2" width="2" height="2" fill="#101024"/>' +
+        '<rect x="9.6" y="2" width="2.8" height="0.7" fill="#101024"/>' +
+        '<rect x="3.2" y="1.6" width="1" height="0.6" fill="#101024"/>' +
+        '<rect x="7.4" y="4.6" width="1.2" height="0.7" fill="#ffd23f"/>' +
+        '<rect x="1.4" y="-1.6" width="13.2" height="1.7" fill="#2a2a3a" stroke="#101024" stroke-width="0.25"/>' +
+        '<rect x="6.4" y="-1.6" width="1.2" height="1.7" fill="#e8e8ec"/>' +
+        '<rect x="7.2" y="-3.4" width="0.6" height="1.8" fill="#e8e8ec"/>' +
+        '<polygon points="7.4,-3.4 10.4,-2.6 7.4,-1.8" fill="#c8342a"/>';
+    case 'zauberer': // Spitzhut, Stern, Zauberstab
+      return '<polygon points="8,-4.6 3.6,0.6 12.4,0.6" fill="#2a3a9a" stroke="#101828" stroke-width="0.3"/>' +
+        '<rect x="6.9" y="-4.8" width="1.6" height="1.6" fill="#ffd23f"/>' +
+        '<rect x="2.6" y="-0.2" width="10.8" height="1" fill="#1a2468"/>' +
+        '<rect x="7.5" y="4.2" width="1" height="1" fill="#ffd23f"/>' +
+        '<rect x="12.8" y="1.4" width="0.8" height="7" fill="#6a4a30" transform="rotate(-24 13.2 4.9)"/>' +
+        '<rect x="13.8" y="0.9" width="1.4" height="1.4" fill="#7fd4ff"/>';
+    case 'astronaut': // Helm, Visier, Antenne
+      return '<rect x="1.6" y="-0.4" width="12.8" height="6.4" rx="1.6" fill="#dce4f0" stroke="#101024" stroke-width="0.5"/>' +
+        '<rect x="3.6" y="1.2" width="8.8" height="3.4" rx="1.2" fill="#3a6ad4"/>' +
+        '<rect x="4.4" y="1.8" width="1.4" height="1.4" fill="#ffffff" opacity="0.7"/>' +
+        '<rect x="7.5" y="-2.2" width="0.8" height="1.9" fill="#c8ccd8"/>' +
+        '<circle cx="7.9" cy="-2.6" r="0.8" fill="#c8342a"/>' +
+        '<rect x="6" y="6.4" width="4" height="1.2" fill="#dce4f0" stroke="#101024" stroke-width="0.3"/>';
+    case 'roboter': // Antenne, LED-Augen, Brustpanel
+      return '<rect x="4" y="2" width="2" height="2" fill="#1aff6a"/>' +
+        '<rect x="10" y="2" width="2" height="2" fill="#1aff6a"/>' +
+        '<rect x="4.8" y="2.8" width="0.8" height="0.8" fill="#101024"/>' +
+        '<rect x="10.8" y="2.8" width="0.8" height="0.8" fill="#101024"/>' +
+        '<rect x="7.6" y="-1.9" width="0.8" height="2.5" fill="#8a8a96"/>' +
+        '<circle cx="8" cy="-2.4" r="0.9" fill="#ff3f3f"/>' +
+        '<rect x="5.5" y="6.5" width="5" height="3" fill="#2a2a3a" stroke="#8a8a96" stroke-width="0.3"/>' +
+        '<rect x="6.3" y="7.3" width="1" height="1" fill="#1aff6a"/>' +
+        '<rect x="8.7" y="7.3" width="1" height="1" fill="#ffd23f"/>';
+    case 'bauarbeiter': // gelber Helm, orange Weste
+      return '<rect x="2.2" y="-0.6" width="11.6" height="1.8" rx="0.8" fill="#ffd23f" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="6.8" y="-1.6" width="2.4" height="1.2" fill="#ffd23f" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="3.4" y="6" width="9.2" height="5" fill="#ff8c26" opacity="0.92"/>' +
+        '<rect x="6.5" y="6" width="3" height="1.2" fill="#ffd23f"/>';
+    case 'koch': // Kochmütze, Halstuch
+      return '<rect x="4" y="-2.8" width="8" height="2.6" rx="1.2" fill="#ffffff" stroke="#c8ccd8" stroke-width="0.3"/>' +
+        '<rect x="4.6" y="-1.2" width="6.8" height="1" fill="#f0f0f4"/>' +
+        '<rect x="3" y="5.4" width="10" height="1.2" fill="#c8342a"/>' +
+        '<polygon points="7,6.6 9,6.6 8,8.2" fill="#c8342a"/>';
+    case 'feuerwehr': // roter Helm, gelbe Jacke
+      return '<rect x="2.2" y="-0.6" width="11.6" height="1.8" rx="0.8" fill="#c8342a" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="7.4" y="-2.4" width="1.2" height="1.9" fill="#ffd23f"/>' +
+        '<rect x="3.2" y="5.6" width="9.6" height="5.2" fill="#ffd23f" opacity="0.92"/>' +
+        '<rect x="6.5" y="5.6" width="3" height="1.2" fill="#2a2a3a"/>' +
+        '<rect x="7" y="7.4" width="2" height="2" fill="#c8342a"/>';
+    case 'arzt': // Häubchen, Halstuch, Klinik- Emblem
+      return '<rect x="3.4" y="-1.4" width="9.2" height="2" rx="1" fill="#7fd4ff" stroke="#101024" stroke-width="0.25"/>' +
+        '<rect x="3.4" y="5.4" width="9.2" height="1.2" fill="#ffffff"/>' +
+        '<rect x="6.4" y="7" width="3.2" height="3.2" fill="#ffffff" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="7.6" y="7.6" width="0.8" height="2" fill="#c8342a"/>' +
+        '<rect x="7" y="8.2" width="2" height="0.8" fill="#c8342a"/>';
+    case 'regen': // gelber Hut, Regenschirm
+      return '<rect x="2.4" y="-0.5" width="11.2" height="1.7" rx="0.8" fill="#ffd23f" stroke="#101024" stroke-width="0.3"/>' +
+        '<polygon points="-2.6,2.4 3.4,-1.4 -2.6,-1.4" fill="#ffd23f" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="-2.9" y="-1.4" width="0.5" height="5" fill="#101024"/>' +
+        '<rect x="0.5" y="0.2" width="0.6" height="1.4" fill="#7fb8ff"/>' +
+        '<rect x="1.9" y="2.4" width="0.6" height="1.4" fill="#7fb8ff"/>' +
+        '<rect x="0.8" y="4.6" width="0.6" height="1.4" fill="#7fb8ff"/>';
+    case 'fee': // Blütenhut, Flügel, Funkelsterne
+      return '<polygon points="8,-3 4.4,0.4 11.6,0.4" fill="#3ac86a" stroke="#101024" stroke-width="0.3"/>' +
+        '<circle cx="8" cy="-3.2" r="0.9" fill="#ff9edb"/>' +
+        '<rect x="2.6" y="-0.4" width="10.8" height="1" fill="#2aa855"/>' +
+        '<polygon points="1.2,5 -1.4,2.6 1.6,3.4" fill="#ffffff" opacity="0.85"/>' +
+        '<polygon points="14.8,5 17.2,2.6 14.4,3.4" fill="#ffffff" opacity="0.85"/>' +
+        '<rect x="16" y="0.4" width="1" height="1" fill="#ffd23f"/>' +
+        '<rect x="-2" y="7" width="1" height="1" fill="#ffd23f"/>';
+    case 'schneemann': // weißer Körper, Karottennase, Zylinder
+      return '<rect x="2.5" y="0.5" width="11" height="5" fill="#ffffff" stroke="#a8c0d8" stroke-width="0.6"/>' +
+        '<rect x="6.5" y="5.5" width="3" height="6" fill="#ffffff" stroke="#a8c0d8" stroke-width="0.6"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#101024"/><rect x="10" y="2" width="2" height="2" fill="#101024"/>' +
+        '<polygon points="7.4,3.2 8.6,3.2 8,4.8" fill="#ff8c26"/>' +
+        '<rect x="5" y="-2.6" width="6" height="1.4" fill="#2a2a3a"/>' +
+        '<rect x="3.8" y="-1.4" width="8.4" height="0.9" fill="#2a2a3a"/>';
+    case 'sonnenbad': // Strohhut, Sonnenbrille
+      return '<rect x="1.8" y="0.2" width="12.4" height="1" fill="#e8c06a"/>' +
+        '<polygon points="4.6,0.2 11.4,0.2 10.4,-2.6 5.6,-2.6" fill="#e8c06a" stroke="#b08a3a" stroke-width="0.3"/>' +
+        '<rect x="3.4" y="2.4" width="9.2" height="1.4" fill="#101024"/>' +
+        '<rect x="4" y="2.8" width="2" height="0.6" fill="#7fd4ff"/>' +
+        '<rect x="10" y="2.8" width="2" height="0.6" fill="#7fd4ff"/>';
+    case 'vogelscheuche': // Strohhut, Flicken, Stitch-Naht
+      return '<rect x="2" y="1.8" width="12" height="1.2" fill="#e8c06a"/>' +
+        '<polygon points="5.4,1.8 10.6,1.8 9.8,-1.6 6.2,-1.6" fill="#e8c06a" stroke="#b08a3a" stroke-width="0.3"/>' +
+        '<rect x="9.4" y="3" width="2.4" height="2" fill="#c8a24a" stroke="#8a6a20" stroke-width="0.3"/>' +
+        '<rect x="3.4" y="6.2" width="2.4" height="2" fill="#c8a24a" stroke="#8a6a20" stroke-width="0.3" transform="rotate(12 4.6 7.2)"/>';
+    case 'gaertner': // grüner Hut, Gießkanne, Blume
+      return '<rect x="2.6" y="-0.4" width="10.8" height="1.6" rx="0.8" fill="#3ac86a" stroke="#101024" stroke-width="0.3"/>' +
+        '<circle cx="8" cy="-1.2" r="0.7" fill="#ffd23f"/>' +
+        '<rect x="12.2" y="5.4" width="3.2" height="2.4" fill="#8a96a8" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="15.4" y="5.8" width="1" height="1.6" fill="#8a96a8" transform="rotate(-30 15.9 6.6)"/>' +
+        '<rect x="0.4" y="4" width="0.6" height="3" fill="#2aa855"/>' +
+        '<circle cx="0.7" cy="3.5" r="0.9" fill="#ff9edb"/>';
+    case 'gewitter': // Wolkenhut, Blitz, Regentropfen
+      return '<circle cx="5" cy="-0.6" r="1.6" fill="#c8d0e0"/><circle cx="8" cy="-1.4" r="1.9" fill="#c8d0e0"/><circle cx="11" cy="-0.6" r="1.6" fill="#c8d0e0"/>' +
+        '<rect x="3" y="0.2" width="10" height="0.9" fill="#a8b4cc"/>' +
+        '<polygon points="9.4,4 7.4,7 8.6,7 7.8,10 10.4,6.6 9.2,6.6 10.2,4" fill="#ffd23f" stroke="#e8a800" stroke-width="0.2"/>' +
+        '<rect x="2" y="6.4" width="0.6" height="1.2" fill="#7fb8ff"/>' +
+        '<rect x="14.6" y="6.4" width="0.6" height="1.2" fill="#7fb8ff"/>';
+    case 'vampir': // Kragen, Umhang, Fangzähne
+      return '<rect x="4" y="2" width="2" height="2" fill="#c8342a"/><rect x="10" y="2" width="2" height="2" fill="#c8342a"/>' +
+        '<rect x="4.9" y="2.9" width="0.8" height="0.8" fill="#101024"/><rect x="10.3" y="2.9" width="0.8" height="0.8" fill="#101024"/>' +
+        '<rect x="6.4" y="4.2" width="0.7" height="1.1" fill="#ffffff"/><rect x="8.9" y="4.2" width="0.7" height="1.1" fill="#ffffff"/>' +
+        '<polygon points="2.5,5.5 6.5,6.8 2.5,8" fill="#2a2a3a"/>' +
+        '<polygon points="13.5,5.5 9.5,6.8 13.5,8" fill="#2a2a3a"/>' +
+        '<rect x="5.4" y="6" width="5.2" height="5.6" fill="#2a2a3a" opacity="0.85"/>';
+    case 'kuerbis': // Kürbiskörper, Rippen, Gesicht, Stiel
+      return '<rect x="2.5" y="0.5" width="11" height="5" fill="#ff8c26" stroke="#c05a00" stroke-width="0.6"/>' +
+        '<rect x="6.5" y="5.5" width="3" height="6" fill="#ff8c26" stroke="#c05a00" stroke-width="0.6"/>' +
+        '<rect x="4.7" y="0.7" width="0.8" height="4.6" fill="#c05a00" opacity="0.6"/>' +
+        '<rect x="10.5" y="0.7" width="0.8" height="4.6" fill="#c05a00" opacity="0.6"/>' +
+        '<polygon points="4.4,2 6.4,2.6 4.4,3.4" fill="#101024"/>' +
+        '<polygon points="11.6,2 9.6,2.6 11.6,3.4" fill="#101024"/>' +
+        '<polygon points="7.4,3.6 8.6,3.6 8,5" fill="#101024"/>' +
+        '<rect x="7.4" y="-2.4" width="1.2" height="2" fill="#3a7a2a" transform="rotate(-14 8 -1.4)"/>';
+    case 'skelett': // Knochenkörper, Augenhöhlen, Rippen, Zylinder
+      return '<rect x="2.5" y="0.5" width="11" height="5" fill="#f0f0f4" stroke="#a8a8b4" stroke-width="0.5"/>' +
+        '<rect x="6.5" y="5.5" width="3" height="6" fill="#f0f0f4" stroke="#a8a8b4" stroke-width="0.5"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#101024"/><rect x="10" y="2" width="2" height="2" fill="#101024"/>' +
+        '<rect x="5.4" y="6.6" width="5.2" height="0.7" fill="#a8a8b4"/>' +
+        '<rect x="5.4" y="8" width="5.2" height="0.7" fill="#a8a8b4"/>' +
+        '<rect x="5.4" y="9.4" width="5.2" height="0.7" fill="#a8a8b4"/>' +
+        '<rect x="5" y="-2.6" width="6" height="1.4" fill="#101024"/>' +
+        '<rect x="3.8" y="-1.4" width="8.4" height="0.9" fill="#101024"/>';
+    case 'ritter': // Helm, Visier, Federkleide, Schild
+      return '<rect x="2.2" y="-0.6" width="11.6" height="3.6" rx="1.4" fill="#c8ccd8" stroke="#101024" stroke-width="0.4"/>' +
+        '<rect x="3.2" y="1.6" width="9.6" height="0.7" fill="#101024"/>' +
+        '<rect x="4.4" y="2.4" width="0.6" height="1" fill="#101024"/>' +
+        '<rect x="11" y="2.4" width="0.6" height="1" fill="#101024"/>' +
+        '<polygon points="13.8,-1.4 16.6,-3.4 15.8,0.6" fill="#c8342a"/>' +
+        '<rect x="-1.4" y="5.4" width="4" height="4.6" fill="#8a96a8" stroke="#101024" stroke-width="0.4"/>' +
+        '<rect x="0.2" y="6.8" width="0.8" height="1.8" fill="#c8342a"/>' +
+        '<rect x="-0.6" y="7.4" width="2.4" height="0.8" fill="#c8342a"/>';
+    case 'barde': // Hut mit Feder, Laute
+      return '<rect x="3" y="-0.2" width="10" height="1.4" fill="#6a4a30" stroke="#3a2414" stroke-width="0.3"/>' +
+        '<rect x="5.2" y="-2.6" width="5.6" height="2.4" fill="#6a4a30" stroke="#3a2414" stroke-width="0.3"/>' +
+        '<polygon points="12.8,-0.2 15,-3.4 14.2,-0.4" fill="#7fd4ff"/>' +
+        '<circle cx="1.4" cy="8.2" r="2.6" fill="#c8a24a" stroke="#3a2414" stroke-width="0.4"/>' +
+        '<rect x="1" y="4.4" width="0.8" height="3.8" fill="#3a2414"/>' +
+        '<rect x="2.2" y="7.4" width="1.2" height="0.6" fill="#3a2414"/>' +
+        '<rect x="2.6" y="8.6" width="1.2" height="0.6" fill="#3a2414"/>';
+    case 'noir': // Fedora, Trenchcoat, Pfeife
+      return '<rect x="3.2" y="0" width="9.6" height="1.2" fill="#2a2a3a"/>' +
+        '<rect x="5" y="-2.4" width="6" height="2.4" fill="#2a2a3a"/>' +
+        '<rect x="5.6" y="-1" width="4.8" height="0.4" fill="#101024"/>' +
+        '<rect x="4.8" y="6" width="6.4" height="5.6" fill="#4a4a5c" opacity="0.9"/>' +
+        '<rect x="4.8" y="8" width="6.4" height="0.6" fill="#c8a24a"/>' +
+        '<rect x="10.4" y="4.2" width="2.6" height="0.6" fill="#3a2414" transform="rotate(16 11.7 4.5)"/>' +
+        '<rect x="12.6" y="4.8" width="1" height="0.8" fill="#3a2414"/>' +
+        '<circle cx="13.4" cy="5.4" r="0.5" fill="#c8ccd8" opacity="0.7"/>';
+    case 'ninja': // Kapuze, Sehschlitz, roter Schal
+      return '<rect x="2" y="-1" width="12" height="4.4" rx="1.2" fill="#1a1a24" stroke="#101024" stroke-width="0.4"/>' +
+        '<rect x="3" y="1.6" width="10" height="1.4" fill="#e8e8ec"/>' +
+        '<rect x="4" y="1.6" width="2" height="1.4" fill="#101024"/>' +
+        '<rect x="10" y="1.6" width="2" height="1.4" fill="#101024"/>' +
+        '<rect x="5" y="1.8" width="1" height="1" fill="#c8342a"/>' +
+        '<rect x="10" y="1.8" width="1" height="1" fill="#c8342a"/>' +
+        '<rect x="2.4" y="5.2" width="11.2" height="1.4" fill="#c8342a"/>' +
+        '<polygon points="2.4,5.2 -0.8,7.6 2,7.2" fill="#c8342a"/>';
+    case 'samurai': // Kabuto, Mädate, Schnurrbart, Katana
+      return '<rect x="2.4" y="-0.8" width="11.2" height="2.4" rx="1" fill="#c8342a" stroke="#101024" stroke-width="0.4"/>' +
+        '<rect x="7.2" y="-3.4" width="1.6" height="2.8" fill="#ffd23f" stroke="#b08a00" stroke-width="0.2"/>' +
+        '<polygon points="2.4,-0.8 0.6,-3 3.4,-1.6" fill="#c8342a"/>' +
+        '<polygon points="13.6,-0.8 15.4,-3 12.6,-1.6" fill="#c8342a"/>' +
+        '<rect x="5" y="4" width="6" height="0.7" fill="#101024"/>' +
+        '<rect x="12" y="1" width="0.7" height="8.6" fill="#c8ccd8" stroke="#8a96a8" stroke-width="0.3" transform="rotate(14 12.4 5.3)"/>' +
+        '<rect x="14" y="9.4" width="2.2" height="0.7" fill="#101024" transform="rotate(14 15 9.8)"/>';
+    case 'wissenschafter': // graue Haare, Kittel, Brille
+      return '<rect x="2.6" y="-0.8" width="10.8" height="1.4" fill="#c8ccd8"/>' +
+        '<rect x="2.2" y="0" width="1.2" height="2.4" fill="#c8ccd8"/>' +
+        '<rect x="12.6" y="0" width="1.2" height="2.4" fill="#c8ccd8"/>' +
+        '<rect x="3.4" y="2.2" width="3.4" height="2" rx="0.5" fill="none" stroke="#101024" stroke-width="0.5"/>' +
+        '<rect x="9.2" y="2.2" width="3.4" height="2" rx="0.5" fill="none" stroke="#101024" stroke-width="0.5"/>' +
+        '<rect x="6.8" y="2.9" width="2.4" height="0.6" fill="#101024"/>' +
+        '<rect x="4" y="2.8" width="2.2" height="0.8" fill="#7fd4ff" opacity="0.6"/>' +
+        '<rect x="9.8" y="2.8" width="2.2" height="0.8" fill="#7fd4ff" opacity="0.6"/>' +
+        '<rect x="3.4" y="5.6" width="9.2" height="6" fill="#ffffff" opacity="0.55"/>';
+    case 'glitch': // Pixelblöcke, Scanlines
+      return '<rect x="3.2" y="1" width="2" height="1.4" fill="#ff3f7f"/>' +
+        '<rect x="11" y="3" width="2.2" height="1.4" fill="#3fff9e"/>' +
+        '<rect x="7.6" y="0.6" width="1.4" height="0.9" fill="#7f3fff"/>' +
+        '<rect x="5" y="3.8" width="1.4" height="1" fill="#3fc8ff"/>' +
+        '<rect x="2.5" y="0.5" width="11" height="0.5" fill="#101024" opacity="0.5"/>' +
+        '<rect x="2.5" y="2.4" width="11" height="0.4" fill="#101024" opacity="0.35"/>' +
+        '<rect x="2.5" y="3.6" width="11" height="0.4" fill="#101024" opacity="0.35"/>' +
+        '<rect x="6.5" y="8" width="3" height="1" fill="#ff3f7f" opacity="0.7"/>' +
+        '<rect x="8" y="10" width="2" height="1" fill="#3fff9e" opacity="0.7"/>';
+    case 'champion': // Krone, Medaille, Funkel
+      return '<polygon points="4,-0.6 4,-2.8 6.2,-1.4 8,-3.2 9.8,-1.4 12,-2.8 12,-0.6" fill="#ffd23f" stroke="#b08a00" stroke-width="0.3"/>' +
+        '<rect x="4.6" y="0" width="6.8" height="0.7" fill="#ffd23f"/>' +
+        '<circle cx="0.6" cy="8.4" r="1.4" fill="#ffd23f" stroke="#b08a00" stroke-width="0.3"/>' +
+        '<rect x="2.4" y="5.6" width="1" height="2" fill="#c8342a" transform="rotate(20 2.9 6.6)"/>' +
+        '<rect x="15.4" y="1" width="1" height="1" fill="#ffd23f"/>' +
+        '<rect x="14" y="4.4" width="0.8" height="0.8" fill="#ffffff"/>';
+    case 'pappkarton': // Karton mit Klebestreifen und Aufkleber
+      return '<rect x="2.2" y="0.2" width="11.6" height="5.6" fill="#d8b078" stroke="#8a6a3a" stroke-width="0.5"/>' +
+        '<rect x="6.6" y="5.6" width="2.8" height="5.8" fill="#d8b078" stroke="#8a6a3a" stroke-width="0.5"/>' +
+        '<rect x="6.2" y="0.2" width="3.6" height="1.4" fill="#e8dcc0" opacity="0.9"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#101024"/><rect x="10" y="2" width="2" height="2" fill="#101024"/>' +
+        '<rect x="4.9" y="2.9" width="0.9" height="0.9" fill="#ffffff"/><rect x="10.4" y="2.9" width="0.9" height="0.9" fill="#ffffff"/>' +
+        '<rect x="11.6" y="3.6" width="1.8" height="1.8" fill="#7fd4ff" opacity="0.8" transform="rotate(14 12.5 4.5)"/>';
+    case 'truhe': // Holzdeckel, Schloss, Goldmünzen
+      return '<rect x="2.4" y="0.4" width="11.2" height="2.2" rx="1.1" fill="#8a5a2a" stroke="#4a2e10" stroke-width="0.5"/>' +
+        '<rect x="2.4" y="2.6" width="11.2" height="2.9" fill="#a8783a" stroke="#4a2e10" stroke-width="0.5"/>' +
+        '<rect x="6.8" y="-0.2" width="2.4" height="2.2" fill="#ffd23f" stroke="#b08a00" stroke-width="0.3"/>' +
+        '<rect x="7.6" y="0.4" width="0.8" height="1" fill="#4a2e10"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#101024"/><rect x="10" y="2" width="2" height="2" fill="#101024"/>' +
+        '<rect x="4.9" y="2.9" width="0.9" height="0.9" fill="#ffd23f"/><rect x="10.4" y="2.9" width="0.9" height="0.9" fill="#ffd23f"/>' +
+        '<circle cx="1" cy="9.6" r="0.9" fill="#ffd23f" stroke="#b08a00" stroke-width="0.2"/>' +
+        '<circle cx="2.6" cy="10.8" r="0.9" fill="#ffd23f" stroke="#b08a00" stroke-width="0.2"/>';
+    case 'gelee': // transparente Kappe, Glitzer
+      return '<rect x="2.6" y="-1.2" width="10.8" height="3" rx="1.4" fill="#7fffa8" opacity="0.5" stroke="#3ac86a" stroke-width="0.4"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#101024"/><rect x="10" y="2" width="2" height="2" fill="#101024"/>' +
+        '<rect x="4.9" y="2.9" width="0.9" height="0.9" fill="#7fffa8"/><rect x="10.4" y="2.9" width="0.9" height="0.9" fill="#7fffa8"/>' +
+        '<rect x="6.5" y="6" width="3" height="5" fill="#7fffa8" opacity="0.35" stroke="#3ac86a" stroke-width="0.4"/>' +
+        '<rect x="5" y="0.4" width="0.8" height="0.8" fill="#ffffff" opacity="0.9"/>' +
+        '<rect x="10.6" y="-0.4" width="0.8" height="0.8" fill="#ffffff" opacity="0.9"/>' +
+        '<rect x="14.8" y="2.6" width="0.8" height="0.8" fill="#ffd23f"/>';
+    case 'automat': // Arcade-Marquee, Bildschirm, Joystick
+      return '<rect x="1.8" y="-2.8" width="12.4" height="2.2" fill="#2a2a3a" stroke="#101024" stroke-width="0.4"/>' +
+        '<rect x="3" y="-2.3" width="10" height="1.2" fill="#c8342a"/>' +
+        '<rect x="4" y="-2.2" width="0.8" height="1" fill="#ffd23f"/><rect x="6.2" y="-2.2" width="0.8" height="1" fill="#7fd4ff"/>' +
+        '<rect x="8.4" y="-2.2" width="0.8" height="1" fill="#3ac86a"/><rect x="10.6" y="-2.2" width="0.8" height="1" fill="#ff9edb"/>' +
+        '<rect x="4" y="2" width="2" height="2" fill="#101024"/><rect x="10" y="2" width="2" height="2" fill="#101024"/>' +
+        '<rect x="4.9" y="2.9" width="0.9" height="0.9" fill="#ff3f7f"/><rect x="10.4" y="2.9" width="0.9" height="0.9" fill="#3fff9e"/>' +
+        '<rect x="13.4" y="5" width="0.7" height="3.6" fill="#2a2a3a" transform="rotate(10 13.7 6.8)"/>' +
+        '<circle cx="13" cy="4.4" r="1.1" fill="#c8342a" stroke="#101024" stroke-width="0.3"/>' +
+        '<rect x="1.2" y="6.6" width="1.4" height="1.4" fill="#ffd23f"/><rect x="0.4" y="9" width="1.4" height="1.4" fill="#7fd4ff"/>';
   }
   return '';
 }
@@ -6467,12 +7223,19 @@ function lockSVG(){
 }
 function skinLabel(id){
   if (id === 'std') return tr('skinStd');
+  if (FREE_SKINS.indexOf(id) >= 0)
+    return tr('skin' + id.charAt(0).toUpperCase() + id.slice(1));
   return tr('ach' + (ACH_KEY[id] || id) + 'Name');
 }
 function buildSkinOpts(){
   var html = '<button class="btn small setSkin" data-skin="std">' +
     '<span class="sknPrev">' + mascotSVGFor('std') + '</span>' +
     '<span class="sknName">' + esc(skinLabel('std')) + '</span></button>';
+  FREE_SKINS.forEach(function(id){
+    html += '<button class="btn small setSkin" data-skin="' + id + '">' +
+      '<span class="sknPrev">' + mascotSVGFor(id) + '</span>' +
+      '<span class="sknName">' + esc(skinLabel(id)) + '</span></button>';
+  });
   SKIN_IDS.forEach(function(id){
     html += '<button class="btn small setSkin" data-skin="' + id + '">' +
       '<span class="sknPrev">' + mascotSVGFor(id) + '</span>' +
@@ -6604,7 +7367,9 @@ var ACH = [
   { id: 'easter', sig: 'E', name: 'Tetromino gefunden',
     desc: 'Das versteckte Maskottchen auf dem Startbildschirm aufgestöbert.' },
   { id: 'rusRoots', sig: 'R', name: 'Russische Wurzeln',
-    desc: 'Die Spielmusik in den Einstellungen auf Russian Hardbass umgestellt – eine Hommage an den russischen Erfinder des fallenden-Stein-Klassikers.' }
+    desc: 'Die Spielmusik in den Einstellungen auf Russian Hardbass umgestellt – eine Hommage an den russischen Erfinder des fallenden-Stein-Klassikers.' },
+  { id: 'aufstand', sig: 'V', name: 'Der Aufstand beginnt',
+    desc: 'Den S-Stein durch geschicktes Stapeln auf seine maximal mögliche Höhe von sieben Blöcken gebracht.' }
 ];
 // Erfolgs-IDs auf i18n-Schlüssel abbilden (ach<Key>Name / ach<Key>Desc).
 var ACH_KEY = { firstWin: 'FirstWin', firstDraw: 'FirstDraw', blitz: 'Blitz',
@@ -6613,6 +7378,7 @@ var ACH_KEY = { firstWin: 'FirstWin', firstDraw: 'FirstDraw', blitz: 'Blitz',
   phantomSac: 'PhantomSac', firstFall: 'FirstFall', phantomFall: 'PhantomFall',
   tronFall: 'TronFall', dameFremd: 'DameFremd',
   rusRoots: 'RusRoots',
+  aufstand: 'Aufstand',
   easter: 'Easter' };
 function achName(a){ return tr('ach' + (ACH_KEY[a.id] || a.id) + 'Name'); }
 function achDesc(a){ return tr('ach' + (ACH_KEY[a.id] || a.id) + 'Desc'); }
