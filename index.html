@@ -99,9 +99,11 @@
   .menuOverlay{position:fixed;inset:0;background:rgba(8,8,26,1);display:flex;align-items:center;
     justify-content:center;padding:16px;z-index:100;overflow:hidden}
   /* Numerino-Banner im Hauptmenü: Retro-Werbefläche für das Schwesterspiel
-     der Reihe. Farbwelt nach dem Numerino-Titelbild (dunkelgrüne Fläche,
-     gelber Pixel-Schriftzug); das ✕-Knöpfchen blendet den Banner aus, bis
-     ein neues Spiel startet (newGame/tutStart melden ihn zurück). */
+     der Reihe, spiegelbildlich zum Tetromino-Banner in Numerino – Icon,
+     Titel und Untertitel neben blinkendem Pfeil. Farbwelt nach dem
+     Numerino-Titelbild (dunkelgrüne Fläche, gelbe Akzente); das
+     ✕-Knöpfchen blendet den Banner aus, bis ein neues Spiel startet
+     (newGame/tutStart melden ihn zurück). */
   #menuOverlay{flex-direction:column}
   #nrBannerWrap{position:relative;width:100%;max-width:520px;margin:0 0 12px}
   #nrBanner{display:flex;align-items:center;justify-content:center;gap:10px;
@@ -109,7 +111,11 @@
     background-image:repeating-linear-gradient(0deg,rgba(0,0,0,.14) 0 1px,transparent 1px 3px);
     padding:12px 10px;text-decoration:none;cursor:pointer}
   #nrBanner:hover{filter:brightness(1.18)}
-  #nrBannerArt svg{display:block;image-rendering:pixelated}
+  #nrIcon svg{display:block;image-rendering:pixelated;flex:0 0 auto}
+  .nrTxt{flex:0 0 auto;display:block;text-align:left}
+  #nrTtl{display:block;color:#ffcc00;font-size:15px;font-weight:bold;letter-spacing:2px;
+    text-transform:uppercase;text-shadow:2px 2px 0 #000}
+  #nrSub{display:block;font-size:9px;color:#c8e8d4;letter-spacing:1px;text-transform:uppercase;margin-top:1px}
   #nrPlay{font-size:15px;line-height:1;color:#ffcc00;text-shadow:2px 2px 0 #000;
     animation:nrBlink 1s steps(2,end) infinite}
   @keyframes nrBlink{0%,49%{opacity:1}50%,100%{opacity:0}}
@@ -505,7 +511,7 @@
 <div id="wrap">
   <header>
     <h1 id="logoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Beta 0.108</span></div>
+    <div class="sub"><span class="verTag">Beta 0.109</span></div>
   </header>
   <div id="main">
     <div id="left">
@@ -641,7 +647,11 @@
   <div id="eggWalk"></div>
   <div id="nrBannerWrap">
     <a id="nrBanner" href="https://bacngaplays.github.io/Numerino/" target="_blank" rel="noopener">
-      <span id="nrBannerArt"></span>
+      <span id="nrIcon"></span>
+      <span class="nrTxt">
+        <span id="nrTtl">Numerino</span>
+        <span id="nrSub">Sudoku-Roguelike der Reihe</span>
+      </span>
       <span id="nrPlay">&#9654;</span>
     </a>
     <button id="nrBannerClose" class="btn small">&#10005;</button>
@@ -650,7 +660,7 @@
     <div id="euFlag" title="In der Europ&auml;ischen Union entwickelt &ndash; einmal anklicken!"></div>
     <div id="euTag"></div>
     <h1 id="menuLogoH">Tetromino</h1>
-    <div class="sub"><span class="verTag">Beta 0.108</span></div>
+    <div class="sub"><span class="verTag">Beta 0.109</span></div>
     <h3 id="hMode">Spielmodus</h3>
     <button id="mpBtn" class="btn menuBtn">Mehrspieler (2 Spieler lokal)</button>
     <button id="spBtn" class="btn menuBtn">Einzelspieler gegen Computer</button>
@@ -906,7 +916,7 @@
     </ul>
     </div>
     <h3>Version</h3>
-    <ul><li>Beta 0.108</li></ul>
+    <ul><li>Beta 0.109</li></ul>
     <div class="btnRow"><button id="infoSrc" class="btn small">Quellcode anzeigen</button></div>
     <div class="btnRow"><button id="infoClose" class="btn">Schlie&szlig;en</button></div>
   </div>
@@ -914,7 +924,7 @@
 
 <div id="srcModal" class="modal hidden">
   <div class="modalBox" style="max-width:860px">
-    <h2 id="srcH2">Quellcode <span class="verTag">Beta 0.108</span></h2>
+    <h2 id="srcH2">Quellcode <span class="verTag">Beta 0.109</span></h2>
     <p id="srcHint" style="font-size:11px;color:#9a9ac8">Vollst&auml;ndiger Quellcode dieser Datei. Nach dem Markieren k&ouml;nnen Sie ihn mit Strg+C (bzw. Cmd+C) kopieren.</p>
     <textarea id="srcArea" readonly spellcheck="false"></textarea>
     <div class="btnRow">
@@ -1777,6 +1787,7 @@ var TXT = {
     drIslot: 'Schaltet einen weiteren Bank-Slot frei (maximal fünf).', drIshield: 'Zauber: Im nächsten Gegnerzug kann keine eigene Figur geschlagen werden – der Gegner weicht aus oder setzt aus. Wirkt je Welle einmal.',
     drIchoco: 'Zauber: Der Gegner setzt nach deinem nächsten Zug aus – du ziehst zweimal hintereinander. Wirkt je Welle einmal.', drIentan: 'Zauber: Der nächste Schlag auf eine echte Figur lässt einen Zwilling desselben Typs mitfallen. Wirkt je Welle einmal.',
     nrBannerTt: 'Numerino – das Schwesterspiel der Reihe: im neuen Tab öffnen', nrHideTt: 'Banner ausblenden – er erscheint beim nächsten Spielstart wieder',
+    nrBannerSub: 'Sudoku-Roguelike der Reihe',
     drCStone: 'Stein-Karte: {t} auf die Bank',
     annDrRound: 'Runde {n}: {k} Gegner sind auf dem Brett!', annDrBoss: 'Arbeiteraufstand! {n} {t}-Steine rücken an!', annDrClear: 'Runde {n} geschafft!',
     annDrShop: 'Shop offen: neue Karten im Angebot.',
@@ -2059,6 +2070,7 @@ var TXT = {
     drIslot: 'Unlocks one additional bench slot (maximum five).', drIshield: 'Spell: during the next enemy turn none of your pieces can be captured – the enemy evades or passes. Works once per wave.',
     drIchoco: 'Spell: the enemy skips its turn after your next move – you move twice in a row. Works once per wave.', drIentan: 'Spell: your next capture of a real piece also fells a twin of the same type. Works once per wave.',
     nrBannerTt: 'Numerino – the series’ companion game: opens in a new tab', nrHideTt: 'Hide the banner – it returns with the next game start',
+    nrBannerSub: 'The series’ Sudoku roguelike',
     drCStone: 'Stone card: {t} to the bench',
     annDrRound: 'Round {n}: {k} enemies on the board!', annDrBoss: 'Workers’ uprising! {n} {t}-pieces advance!', annDrClear: 'Round {n} cleared!',
     annDrShop: 'Shop open: new cards on offer.',
@@ -2464,6 +2476,7 @@ var TXT = {
     drIslot: 'Déverrouille un emplacement de banc supplémentaire (maximum cinq).', drIshield: 'Sort : pendant le prochain tour ennemi, aucune de vos figurines ne peut être prise – l’ennemi esquive ou passe. Agit une fois par vague.',
     drIchoco: 'Sort : l’ennemi passe son tour après votre prochain coup – vous jouez deux fois de suite. Agit une fois par vague.', drIentan: 'Sort : votre prochaine prise d’une figurine réelle abat aussi un jumeau du même type. Agit une fois par vague.',
     nrBannerTt: 'Numerino – le jeu compagnon de la série : s’ouvre dans un nouvel onglet', nrHideTt: 'Masquer la bannière – elle réapparaît au prochain démarrage d’une partie',
+    nrBannerSub: 'Le sudoku-roguelike de la série',
     drCStone: 'Carte pierre : {t} sur le banc',
     annDrRound: 'Manche {n} : {k} ennemis sur le plateau !', annDrBoss: 'Révolte des ouvriers ! {n} pierres {t} avancent !', annDrClear: 'Manche {n} réussie !',
     annDrShop: 'Boutique ouverte : de nouvelles cartes au comptoir.',
@@ -2870,6 +2883,7 @@ var TXT = {
     drIslot: 'Odemkne jeden další slot lavice (maximálně pět).', drIshield: 'Kouzlo: po dobu příštího nepřátelského tahu nesmí žádná vaše figurka padnout – nepřítel se vyhne nebo vynechá tah. Účinkuje jednou za vlnu.',
     drIchoco: 'Kouzlo: nepřítel vynechá tah po vašem příštím tahu – hrajete dvakrát za sebou. Účinkuje jednou za vlnu.', drIentan: 'Kouzlo: vaše příští braní skutečné figurky srazí i dvojče téhož typu. Účinkuje jednou za vlnu.',
     nrBannerTt: 'Numerino – sesterská hra série: otevře se v nové kartě', nrHideTt: 'Skrýt banner – znovu se objeví při příštím spuštění hry',
+    nrBannerSub: 'Sudoku-roguelike série',
     drCStone: 'Kamenná karta: {t} na lavici',
     annDrRound: 'Kolo {n}: {k} nepřátel na desce!', annDrBoss: 'Vzpoura dělníků! {n} kamenů {t} postupuje!', annDrClear: 'Kolo {n} zvládnuto!',
     annDrShop: 'Otevřen obchod: nové karty v nabídce.',
@@ -3152,6 +3166,7 @@ var TXT = {
     drIslot: 'Odblokowuje jeden dodatkowy slot ławki (maksymalnie pięć).', drIshield: 'Zaklęcie: podczas następnej wrogiej tury żadna twoja figura nie może zostać zbita – wróg się uchyla albo pomija ruch. Działa raz na falę.',
     drIchoco: 'Zaklęcie: wróg pomija ruch po twoim następnym posunięciu – grasz dwa razy pod rząd. Działa raz na falę.', drIentan: 'Zaklęcie: twoje następne bicie prawdziwej figury zbija też bliźniaka tego samego typu. Działa raz na falę.',
     nrBannerTt: 'Numerino – siostrzana gra serii: otworzy się w nowej karcie', nrHideTt: 'Ukryj baner – pojawi się ponownie przy następnym rozpoczęciu gry',
+    nrBannerSub: 'Sudoku-roguelike serii',
     drCStone: 'Karta kamienia: {t} na ławkę',
     annDrRound: 'Runda {n}: {k} wrogów na planszy!', annDrBoss: 'Bunt robotników! {n} kamieni {t} nadciąga!', annDrClear: 'Runda {n} zaliczona!',
     annDrShop: 'Sklep otwarty: nowe karty w ofercie.',
@@ -3435,6 +3450,7 @@ var TXT = {
     drIslot: 'Desbloquea un hueco adicional del banquillo (máximo cinco).', drIshield: 'Hechizo: durante el próximo turno enemigo ninguna figura tuya puede ser capturada – el enemigo esquiva o pasa. Actúa una vez por oleada.',
     drIchoco: 'Hechizo: el enemigo pierde el turno tras tu próximo movimiento – juegas dos veces seguidas. Actúa una vez por oleada.', drIentan: 'Hechizo: tu próxima captura de una figura real derriba también a un gemelo del mismo tipo. Actúa una vez por oleada.',
     nrBannerTt: 'Numerino – el juego hermano de la serie: se abre en una pestaña nueva', nrHideTt: 'Ocultar el banner – reaparece al comenzar la próxima partida',
+    nrBannerSub: 'Sudoku-roguelike de la serie',
     drCStone: 'Carta de piedra: {t} al banquillo',
     annDrRound: '¡Ronda {n}: {k} enemigos en el tablero!', annDrBoss: '¡Revolución obrera! ¡{n} piedras {t} avanzan!', annDrClear: '¡Ronda {n} superada!',
     annDrShop: 'Tienda abierta: cartas nuevas en la oferta.',
@@ -3677,6 +3693,7 @@ function applyLang(){
   $('axLegend').innerHTML = tr('axLegendHtml');
   $('seedIntro').innerHTML = tr('seedIntroHtml');
   $('srcHint').textContent = tr('srcHint');
+  $('nrSub').textContent = tr('nrBannerSub'); // Untertitel des Numerino-Banners
   var verEl = document.querySelector('#wrap .verTag');
   $('srcH2').innerHTML = trf('srcTitleHtml', { v: verEl ? verEl.textContent.trim() : '' });
   $('rulesBody').innerHTML = tr('rulesHtml');
@@ -8060,6 +8077,28 @@ $('nrBannerClose').addEventListener('click', function(){
   nrBannerHidden = true;
   nrBannerUpdate();
 });
+// Kleines Pixel-Icon für den Banner: eine Ziffernkarte mit gelbem Rand und
+// weißer Neuner – die Spielfigur aus Numerino, ins Bannerformat gebracht.
+function nrIconSVG(){
+  var rows = [
+    '###########',
+    '#.........#',
+    '#.........#',
+    '#..DDDD...#',
+    '#.....D...#',
+    '#..DDDD...#',
+    '#.....D...#',
+    '#..DDDD...#',
+    '#.........#',
+    '#.........#',
+    '###########'
+  ], r = '', x, y;
+  for (y = 0; y < rows.length; y++)
+    for (x = 0; x < rows[y].length; x++)
+      if (rows[y][x] === '#') r += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="#ffcc00"/>';
+      else if (rows[y][x] === 'D') r += '<rect x="' + x + '" y="' + y + '" width="1" height="1" fill="#e8f2ec"/>';
+  return '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 11 11" width="33" height="33" shape-rendering="crispEdges">' + r + '</svg>';
+}
 // ---------- Tutorial-Auswahl ----------
 // Der Tutorial-Knopf öffnet zunächst diese Auswahlseite: Alle elf Lektionen
 // sind einzeln wählbar; absolvierte Lektionen sind ablesbar (tut.done).
@@ -9505,8 +9544,8 @@ function initIcons(){
   $('menuLogoH').innerHTML = pixText('TETROMINO', '#ffd23f', 4);
   $('tutLogoH').innerHTML = pixText('TUTORIAL', '#ffd23f', 4);
   $('saveLogoH').innerHTML = pixText('SPIELSTAND', '#ffd23f', 4);
-  // Numerino-Banner: Pixel-Schriftzug im Farbschema des Schwester-Spiels
-  $('nrBannerArt').innerHTML = pixText('NUMERINO', '#ffcc00', 3);
+  // Numerino-Banner: Ziffernkarten-Icon im Farbschema des Schwester-Spiels
+  $('nrIcon').innerHTML = nrIconSVG();
 }
 
 // ---------- Spielstand, Statistik und Erfolge ----------
